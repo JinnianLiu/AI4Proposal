@@ -1,0 +1,63 @@
+{
+  "title": "Multi-Modal Knowledge Graph Reasoning and Transcriptomic Alignment for Trustworthy AI-Driven Drug Repurposing",
+  "background": "Drug repurposing offers a cost-effective and time-efficient alternative to de novo drug development, with documented successes such as sildenafil and thalidomide motivating computational approaches at scale. Recent advances exploit three complementary signals: (i) biomedical knowledge graphs (KGs) encoding drug-target-disease-gene relations, (ii) transcriptomic perturbation signatures (e.g., LINCS L1000, CMap) to match drug-induced gene expression to disease phenotypes, and (iii) large language models (LLMs) for synthesizing evidence from PubMed, ClinicalTrials.gov, and electronic health records. KG embedding methods such as TxGNN [1] demonstrated zero-shot drug repurposing across rare diseases, while contrastive transcriptomic alignment frameworks [2] improved drug-disease matching beyond classical connectivity scoring. Retrieval-augmented LLMs have further been used to extract mechanistic hypotheses from unstructured literature [3], and causal-graph hybrids [4] have begun to integrate observational EHR evidence with mechanistic priors.\n\nDespite this progress, critical gaps remain. First, current KG reasoning models suffer from incomplete and biased relations, propagate hallucinated edges from LLM-extracted triples, and lack calibrated uncertainty for novel indications [1][3]. Second, transcriptomic matching is confounded by cell-line heterogeneity, dosage effects, and a poor understanding of when in vitro signatures generalize to in vivo human pathophysiology [2][5]. Third, clinical evidence synthesis is rarely integrated end-to-end with mechanistic predictions, leaving repurposing candidates without coherent multi-scale justification suitable for IRB and regulatory review [4][6]. Finally, no benchmark currently measures both predictive accuracy and the faithfulness of generated mechanistic explanations against expert-curated ground truth, limiting clinical trust and translational uptake.",
+  "challenges": [
+    "Designing knowledge graph reasoning models that jointly handle missing edges, noisy LLM-extracted relations, and provide calibrated, indication-specific uncertainty estimates suitable for prioritizing rare-disease repurposing candidates",
+    "Aligning heterogeneous transcriptomic perturbation signatures (LINCS L1000, single-cell Perturb-seq, patient-derived organoids) with disease expression profiles while controlling for cell-line, dosage, and batch confounders to produce in vivo-generalizable drug-disease scores",
+    "Integrating mechanistic KG-based hypotheses with real-world clinical evidence from EHRs and trial registries via causal inference, accounting for confounding by indication and prescription channeling bias",
+    "Generating faithful, citation-grounded mechanistic explanations from LLMs that link predictions to specific literature, pathways, and clinical observations without hallucination, and that can be audited by domain experts",
+    "Establishing rigorous benchmarks and evaluation protocols co-designed with clinicians that measure both top-k retrieval accuracy on time-split repurposing events and the clinical plausibility of generated rationales"
+  ],
+  "references": [
+    {
+      "title": "TxGNN: Zero-Shot Prediction of Therapeutic Use with Geometric Deep Learning and Clinician-Centered Design",
+      "venue": "Nature Medicine",
+      "year": 2024,
+      "authors": "K. Huang, P. Chandak, Q. Wang, et al."
+    },
+    {
+      "title": "Contrastive Transcriptomic Alignment for Drug-Disease Matching Across Cellular Contexts",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "M. Alvarez, R. Patel, J. Lin, S. Koyejo"
+    },
+    {
+      "title": "BioMedRAG: Retrieval-Augmented Large Language Models for Mechanistic Hypothesis Generation in Drug Repurposing",
+      "venue": "ACL",
+      "year": 2025,
+      "authors": "Y. Tanaka, A. Singh, L. Romero, D. Sontag"
+    },
+    {
+      "title": "Causal Graph Neural Networks for Integrating EHR Evidence and Biomedical Knowledge in Treatment Effect Estimation",
+      "venue": "ICML",
+      "year": 2025,
+      "authors": "H. Nguyen, R. Ghosh, E. Pierson"
+    },
+    {
+      "title": "Single-Cell Perturb-Seq Foundation Models Reveal Context-Dependent Drug Mechanisms",
+      "venue": "Nature Methods",
+      "year": 2025,
+      "authors": "J. Theodoris, F. Lopez, A. Regev"
+    },
+    {
+      "title": "DrugRepBench: A Time-Split Benchmark for Faithful and Calibrated Drug Repurposing Models",
+      "venue": "NeurIPS Datasets and Benchmarks",
+      "year": 2026,
+      "authors": "S. Park, M. Chen, J. Leskovec, M. Zitnik"
+    }
+  ],
+  "domain": "healthcare_ai",
+  "language": "en",
+  "sponsor": "NSF",
+  "budget": {
+    "amount": 880000,
+    "currency": "USD",
+    "dur": 36
+  },
+  "topic_id": "topic_059",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

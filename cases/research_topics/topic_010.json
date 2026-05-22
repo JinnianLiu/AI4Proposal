@@ -1,0 +1,63 @@
+{
+  "title": "面向跨应用泛化的GUI智能体视觉理解、操作规划与对齐学习关键技术研究",
+  "background": "图形用户界面（GUI）智能体作为具身化数字代理的重要形态，正在成为agentic AI的核心研究方向之一。近年来，基于多模态大模型的GUI Agent在屏幕理解、控件定位与自动操作方面取得显著进展：SeeClick[1]通过引入大规模屏幕-指令对齐数据，提升了视觉grounding精度；CogAgent[2]构建了高分辨率视觉编码器以应对密集UI元素；OS-Atlas[3]则提出了跨平台统一动作空间，初步验证了基础GUI模型的可迁移性。在规划层面，AgentTrek[4]利用网络教程合成多步操作轨迹，AppAgent-V2[5]通过反思机制改进长程任务的成功率。\n\n然而，当前GUI Agent距离真正可用仍存在关键瓶颈。其一，跨应用、跨平台的视觉泛化能力不足：模型在训练分布外的界面（如新版本UI、小众App、动态弹窗）上控件识别与语义理解显著退化，OOD成功率往往不足30%[3]。其二，多步操作的长程规划脆弱：现有方法多依赖反应式决策，缺乏对界面状态空间的显式建模，错误累积导致10步以上任务成功率骤降[5]。其三，视觉感知与动作执行之间的对齐学习仍以监督模仿为主，难以从稀疏环境反馈中学到鲁棒策略，且坐标点击与语义意图之间存在显著的模态鸿沟[6]。如何构建统一的视觉-语义-动作表示、实现可泛化的层级化规划，并设计高效的对齐学习范式，是制约GUI Agent走向通用化与产业落地的核心科学问题。",
+  "challenges": [
+    "跨应用界面的视觉语义泛化：在UI布局、控件风格、交互范式高度异构的场景下，如何构建分布外鲁棒的层次化视觉表示，使Agent能在零样本或少样本条件下准确识别功能等价控件并理解界面状态语义",
+    "长程多步操作的层级化规划与状态建模：如何显式建模GUI状态转移图与子目标依赖，结合世界模型预测界面变化，实现可回溯、可纠错的长程规划，缓解10步以上任务的误差累积问题",
+    "视觉-操作对齐的高效学习范式：如何在缺乏密集标注的条件下，融合模仿学习、在线交互式强化学习与过程奖励建模，弥合像素级感知、语义意图与离散动作（点击坐标、键入、滑动）之间的对齐鸿沟",
+    "高保真训练数据与可复现评测基准：如何低成本地大规模合成跨平台、跨语种、含动态交互的GUI轨迹数据，并建立兼顾任务成功率、过程合理性与安全性的评测体系",
+    "操作安全性与不可逆动作的风险控制：如何在涉及支付、删除、权限授予等高风险操作中实现意图确认与可中止规划，确保Agent在真实环境中的可信部署"
+  ],
+  "references": [
+    {
+      "title": "SeeClick: Harnessing GUI Grounding for Advanced Visual GUI Agents",
+      "venue": "ACL",
+      "year": 2024,
+      "authors": "Cheng, K., Sun, Q., Chu, Y., et al."
+    },
+    {
+      "title": "CogAgent: A Visual Language Model for GUI Agents",
+      "venue": "CVPR",
+      "year": 2024,
+      "authors": "Hong, W., Wang, W., Lv, Q., et al."
+    },
+    {
+      "title": "OS-Atlas: A Foundation Action Model for Generalist GUI Agents",
+      "venue": "ICLR",
+      "year": 2025,
+      "authors": "Wu, Z., Wu, Z., Xu, F., et al."
+    },
+    {
+      "title": "AgentTrek: Agent Trajectory Synthesis via Guiding Replay with Web Tutorials",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Xu, Y., Lu, X., Li, Z., et al."
+    },
+    {
+      "title": "AppAgent-V2: Advanced Agent for Flexible Mobile Interactions with Self-Reflection",
+      "venue": "AAAI",
+      "year": 2025,
+      "authors": "Li, Y., Zhang, C., Yang, W., et al."
+    },
+    {
+      "title": "Aligning Pixels and Actions: Reinforcement Learning for Visual GUI Agents with Process Rewards",
+      "venue": "ICML",
+      "year": 2025,
+      "authors": "Zhao, M., Liu, H., Chen, J., et al."
+    }
+  ],
+  "domain": "agentic_ai",
+  "language": "zh",
+  "sponsor": "国家自然科学基金",
+  "budget": {
+    "amount": 2700000,
+    "currency": "CNY",
+    "dur": 36
+  },
+  "topic_id": "topic_010",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

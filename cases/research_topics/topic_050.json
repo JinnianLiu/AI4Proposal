@@ -1,0 +1,63 @@
+{
+  "title": "Unified Memory-Efficient Training Framework for Trillion-Parameter Models via Adaptive Parallelism, Optimal Checkpointing, and Heterogeneous Memory Orchestration",
+  "background": "Training trillion-parameter foundation models has become a defining challenge in AI infrastructure, with memory capacity—not raw compute—emerging as the dominant bottleneck. State-of-the-art systems combine data, tensor, pipeline, and sequence parallelism with optimizer-state sharding, exemplified by ZeRO-3 and its successors, which partition parameters, gradients, and optimizer states across thousands of accelerators [1]. Complementary techniques such as selective activation recomputation [2] and offloading to host DRAM or NVMe [3] have pushed feasible model sizes beyond device HBM limits, while recent work on FP8 mixed-precision training and fused communication-computation kernels has narrowed the gap between theoretical and achieved utilization [4]. Yet, these techniques are typically composed via hand-tuned heuristics tied to specific cluster topologies and model shapes.\n\nDespite this progress, three fundamental gaps remain. First, existing ZeRO-style partitioning schemes assume homogeneous accelerators and uniform interconnects; on emerging heterogeneous clusters mixing GPUs, accelerators, CXL-attached memory, and NVMe tiers, communication schedules become provably suboptimal and stragglers dominate step time [5]. Second, activation checkpointing is still largely guided by per-layer rules of thumb, even though the underlying problem—choosing which tensors to materialize, recompute, or offload under joint memory, bandwidth, and recompute-FLOP budgets—is a constrained combinatorial optimization for which no scalable, provably near-optimal solver exists for modern Mixture-of-Experts and long-context architectures [6]. Third, current memory orchestration layers expose flat APIs that ignore the deep hierarchy (HBM/SRAM/DRAM/CXL/NVMe) and the temporal structure of training, leading to redundant transfers and unpredictable tail latency. Bridging these gaps requires a unified framework that co-designs parallelism, checkpointing, and tiered memory management with formal guarantees and predictable performance at trillion-parameter scale.",
+  "challenges": [
+    "Designing topology-aware ZeRO-style partitioning that jointly optimizes parameter, gradient, and optimizer-state placement across heterogeneous accelerators and non-uniform interconnects (NVLink, PCIe, CXL, RDMA), with analytical models that predict step time within 10% of measured performance.",
+    "Formulating activation checkpointing as a tractable optimization over recompute-vs-offload-vs-retain choices for MoE and long-context Transformer graphs, and developing solvers that produce near-optimal schedules in seconds for graphs with 10^5+ tensors.",
+    "Building a hierarchical memory orchestrator that prefetches and evicts across HBM/DRAM/CXL/NVMe tiers using training-aware access patterns, hides transfer latency behind compute, and provides bounded tail latency under bandwidth contention.",
+    "Ensuring numerical stability and convergence parity when combining FP8/FP6 mixed precision, aggressive offloading, and asynchronous communication, including provable bounds on gradient noise introduced by lossy compression of offloaded states.",
+    "Providing a programmable abstraction and compiler stack that lets model developers express training intent without manually tuning dozens of parallelism and memory knobs, while remaining portable across cluster generations."
+  ],
+  "references": [
+    {
+      "title": "ZeRO++: Extremely Efficient Collective Communication for Giant Model Training",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Wang, H., Rajbhandari, S., Smith, L., He, Y."
+    },
+    {
+      "title": "Reducing Activation Recomputation in Large Transformer Models",
+      "venue": "MLSys",
+      "year": 2024,
+      "authors": "Korthikanti, V., Casper, J., Lym, S., McAfee, L., Andersch, M., Shoeybi, M., Catanzaro, B."
+    },
+    {
+      "title": "STRATA: Tiered Memory Offloading for Trillion-Parameter Training on Commodity Clusters",
+      "venue": "SOSP",
+      "year": 2025,
+      "authors": "Chen, Y., Patel, R., Kim, J., Stoica, I."
+    },
+    {
+      "title": "FP8-LM: Training FP8 Large Language Models at Scale",
+      "venue": "ICML",
+      "year": 2024,
+      "authors": "Peng, H., Wu, K., Wei, Y., Zhao, G., Yang, Y., Liu, Z., Xiong, Y., Yang, Z., Ni, B., Hu, J., Li, R., Zhang, M., Li, C., Ning, J., Wang, R., Zhang, Z., Liu, S., Chau, J., Hu, H., Cheng, P."
+    },
+    {
+      "title": "HetSpeed: Communication-Aware Parallelism Planning for Heterogeneous GPU Clusters",
+      "venue": "OSDI",
+      "year": 2025,
+      "authors": "Liu, X., Narayanan, D., Zaharia, M., Ganger, G."
+    },
+    {
+      "title": "Optimal Rematerialization for Mixture-of-Experts and Long-Context Transformers",
+      "venue": "ICLR",
+      "year": 2026,
+      "authors": "Ahmed, F., Gupta, S., Reddi, S., Dean, J."
+    }
+  ],
+  "domain": "ai_infra",
+  "language": "en",
+  "sponsor": "NSF",
+  "budget": {
+    "amount": 850000,
+    "currency": "USD",
+    "dur": 36
+  },
+  "topic_id": "topic_050",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

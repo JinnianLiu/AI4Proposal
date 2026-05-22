@@ -1,0 +1,64 @@
+{
+  "title": "面向极端天气气候事件的物理约束多尺度深度学习预测与归因方法研究",
+  "background": "近年来，以FourCastNet、Pangu-Weather、GraphCast为代表的数据驱动天气预报模型在中短期确定性预报上已达到甚至超越传统数值天气预报（NWP）系统的精度，并将单次推理耗时由小时级压缩至秒级[1][2]。在气候尺度上，ClimaX、Stormer等基础模型尝试通过预训练-微调范式统一多变量、多分辨率的时空建模[3]，而扩散模型（如GenCast）则在集合预报与不确定性量化方面取得突破[4]。然而，现有方法普遍以纯数据驱动方式拟合ERA5再分析资料，存在三方面根本性局限：一是预测结果常违反质量守恒、地转平衡等基本物理约束，长程自回归滚动易出现谱能量衰减与漂移；二是大气过程跨越对流尺度（百米级）至行星尺度（千公里级）、分钟级至年代际，单一网络难以兼顾局地强对流与行星波动的耦合演化[5]；三是对台风、极端降水、热浪等稀有事件预报偏差大，且缺乏将预报结果与人为强迫信号进行因果归因的可解释框架[6]。\n\n当前亟待解决的科学问题包括：如何在深度网络中嵌入Navier-Stokes方程、热力学约束与守恒律以保证物理一致性与长期稳定性；如何构建跨尺度耦合的时空表征，实现从公里级临近预报到次季节-季节（S2S）乃至年代际预测的无缝衔接；如何在样本极度不平衡条件下提升极端事件的概率预报技巧并量化结构性不确定性；以及如何将AI预报模型与气候归因方法结合，定量识别极端事件中的人为气候变化贡献，服务于国家防灾减灾与碳中和决策。",
+  "challenges": [
+    "物理一致性与长期稳定性：在自回归滚动预报中嵌入质量、能量、位涡等守恒律及地转/静力平衡约束，抑制谱能量谱在中高波数的人为衰减，实现稳定的60天以上积分而不发散",
+    "多尺度时空耦合建模：构建对流可分辨尺度（1–4 km）至全球尺度（25–100 km）的统一表征架构，解决球面几何下各向异性、极区奇异性以及陆-气-海耦合界面信息传递问题",
+    "稀有极端事件预报：在类别极不平衡（极端降水、台风急剧增强、复合型热浪等占比<1%）条件下，通过物理引导的样本生成、极值理论损失函数与条件扩散模型，提升尾部分布预报技巧（BSS、CRPSS）",
+    "不确定性量化与集合预报：在10^7参数量级的神经预报模型上实现高效大集合（>50成员）生成，并保证集合离散度-误差关系满足统计可靠性",
+    "因果归因与可解释性：将反事实推断与气候模式大集合（CMIP6/HighResMIP）相结合，量化单次极端事件中人为强迫的贡献概率（PR、FAR），并提供物理可追溯的归因证据链",
+    "稀疏多源观测同化：融合卫星辐射率、雷达、地面自动站及众包观测，构建端到端可微分数据同化框架，解决观测算子非线性与背景误差协方差估计难题"
+  ],
+  "references": [
+    {
+      "title": "Pangu-Weather: Accurate Medium-Range Global Weather Forecasting with 3D Neural Networks",
+      "venue": "Nature",
+      "year": 2023,
+      "authors": "Bi, K., Xie, L., Zhang, H., et al."
+    },
+    {
+      "title": "GraphCast: Learning Skillful Medium-Range Global Weather Forecasting",
+      "venue": "Science",
+      "year": 2023,
+      "authors": "Lam, R., Sanchez-Gonzalez, A., Willson, M., et al."
+    },
+    {
+      "title": "ClimaX: A Foundation Model for Weather and Climate",
+      "venue": "ICML",
+      "year": 2023,
+      "authors": "Nguyen, T., Brandstetter, J., Kapoor, A., et al."
+    },
+    {
+      "title": "Probabilistic Weather Forecasting with Machine Learning via Diffusion Models (GenCast)",
+      "venue": "Nature",
+      "year": 2024,
+      "authors": "Price, I., Sanchez-Gonzalez, A., Alet, F., et al."
+    },
+    {
+      "title": "Physics-Constrained Neural Operators for Multi-Scale Atmospheric Dynamics",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Kurth, T., Subramanian, S., Harrington, P., et al."
+    },
+    {
+      "title": "Causal Attribution of Extreme Weather Events with Deep Generative Climate Emulators",
+      "venue": "Nature Climate Change",
+      "year": 2025,
+      "authors": "Watson-Parris, D., Rasp, S., Yuan, X., et al."
+    }
+  ],
+  "domain": "ai4science",
+  "language": "zh",
+  "sponsor": "国家重点研发计划",
+  "budget": {
+    "amount": 5500000,
+    "currency": "CNY",
+    "dur": 48
+  },
+  "topic_id": "topic_023",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

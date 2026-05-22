@@ -1,0 +1,63 @@
+{
+  "title": "Climate-Adaptive AI for Multimodal Biodiversity Monitoring: Integrating Passive Acoustics, Camera Traps, and Species Distribution Modeling under Environmental Nonstationarity",
+  "background": "Biodiversity loss accelerated by anthropogenic climate change demands continental-scale monitoring infrastructure capable of detecting species occurrence, abundance, and range shifts at ecologically relevant timescales. Recent advances in passive acoustic monitoring (PAM) and camera trap networks have generated petabyte-scale ecological datasets, with foundation models such as BirdNET-Analyzer v2 [1] and MegaDetector-Eco [2] achieving strong in-distribution performance for species classification. Concurrently, deep species distribution models (SDMs) leveraging remote sensing covariates have improved range projections under shared socioeconomic pathway scenarios [3], while contrastive multimodal pretraining on geo-tagged audio-visual ecological data has shown promise for label-efficient transfer [4].\n\nDespite these advances, critical gaps remain. First, current models exhibit severe performance degradation under distribution shift induced by novel acoustic backgrounds, climate-driven phenological mismatches, and emerging species assemblages absent from training corpora [5]. Second, integration across modalities is largely post-hoc: acoustic detections, image-based occurrences, and abiotic covariates are rarely fused within a single probabilistic framework that propagates detection uncertainty into downstream SDM inference [6]. Third, long-tailed taxonomic distributions, citizen-science label noise, and severe geographic sampling bias in the Global South undermine equitable monitoring. Finally, existing SDMs assume stationarity in species-environment relationships, an assumption violated under rapid climate change, leading to systematically biased range forecasts. Addressing these gaps requires AI methods that are jointly robust, multimodal, uncertainty-aware, and explicitly nonstationary.",
+  "challenges": [
+    "Developing domain-generalizable acoustic and visual recognition models that maintain calibrated performance under climate-driven shifts in soundscape composition, vegetation phenology, and diel activity patterns not represented in training data",
+    "Designing a unified probabilistic multimodal framework that fuses PAM detections, camera trap imagery, and remote sensing covariates while propagating per-detection confidence into hierarchical occupancy and abundance estimators",
+    "Mitigating long-tailed class imbalance and geographic sampling bias for rare and cryptic taxa, including techniques for few-shot adaptation, label-noise-robust training on citizen-science data, and active sensor placement under budget constraints",
+    "Constructing nonstationary species distribution models that explicitly represent time-varying species-environment relationships, no-analog future climates, and biotic interaction shifts, with quantified epistemic and aleatoric uncertainty for conservation decision-making",
+    "Achieving on-device, energy-constrained inference for solar-powered edge deployments in remote ecosystems, including model compression, event-triggered sensing, and federated continual learning across heterogeneous sensor networks"
+  ],
+  "references": [
+    {
+      "title": "BirdNET-Analyzer v2: Scaling Avian Bioacoustic Recognition to 10,000 Species with Self-Supervised Pretraining",
+      "venue": "Nature Methods",
+      "year": 2024,
+      "authors": "Kahl, S., Stowell, D., Klinck, H., et al."
+    },
+    {
+      "title": "MegaDetector-Eco: A Foundation Model for Camera Trap Wildlife Detection across 142 Ecoregions",
+      "venue": "CVPR",
+      "year": 2025,
+      "authors": "Beery, S., Morris, D., Yang, X., Perona, P."
+    },
+    {
+      "title": "Deep Species Distribution Modeling under SSP Climate Scenarios: A Continental Benchmark",
+      "venue": "Nature Climate Change",
+      "year": 2024,
+      "authors": "Cole, E., Mac Aodha, O., Lorieul, T., Joly, A."
+    },
+    {
+      "title": "GeoCLIP-Bio: Contrastive Multimodal Pretraining for Label-Efficient Biodiversity Recognition",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Vivanco Cepeda, V., Nayak, G., Stevens, S., et al."
+    },
+    {
+      "title": "Distribution Shift in Ecological Deep Learning: Benchmarks and Failure Modes",
+      "venue": "ICML",
+      "year": 2025,
+      "authors": "Tuia, D., Russwurm, M., Lang, N., Wegner, J. D."
+    },
+    {
+      "title": "Hierarchical Bayesian Fusion of Acoustic and Visual Detections for Multi-Species Occupancy Modeling",
+      "venue": "Methods in Ecology and Evolution",
+      "year": 2025,
+      "authors": "Doser, J. W., Finley, A. O., Sollmann, R., Kery, M."
+    }
+  ],
+  "domain": "climate_ai",
+  "language": "en",
+  "sponsor": "NSF",
+  "budget": {
+    "amount": 780000,
+    "currency": "USD",
+    "dur": 36
+  },
+  "topic_id": "topic_067",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

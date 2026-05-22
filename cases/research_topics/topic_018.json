@@ -1,0 +1,63 @@
+{
+  "title": "面向硬件友好的大模型稀疏化推理：动态激活、MoE路由与稀疏注意力的协同优化",
+  "background": "随着大语言模型参数规模突破千亿乃至万亿量级，推理阶段的算力与显存开销已成为部署落地的核心瓶颈。稀疏化作为突破稠密计算桎梏的关键路径，近年来呈现出三条主要技术路线：基于神经元级别的动态稀疏激活、基于专家混合（MoE）的条件计算路由，以及面向长序列的稀疏注意力机制。Liu等人提出的Deja Vu框架[1]揭示了Transformer FFN层在推理时存在超过80%的上下文相关稀疏性，可通过轻量预测器实现动态跳过；Fedus等人系统综述了MoE路由策略[2]，指出Top-K门控在负载均衡与表达能力之间存在固有张力；针对长上下文场景，H2O[3]与StreamingLLM[4]通过KV-Cache稀疏化将注意力复杂度从二次方降至近线性；硬件层面，FlashAttention-3[5]结合Hopper架构的异步特性实现了稠密注意力的极致加速。\n\n然而，现有工作仍存在三方面根本性鸿沟。其一，算法层面的稀疏度提升与硬件层面的实测加速比严重脱节——非结构化稀疏在GPU上常因内存访问不规则而无法兑现理论收益，张量核心利用率不足30%[6]。其二，MoE路由的不均衡导致专家流水线气泡与跨设备All-to-All通信占据端到端延迟的40%以上，且现有路由策略对KV-Cache复用、批内token亲和性考虑不足。其三，动态激活、MoE路由与稀疏注意力三种机制目前各自孤立设计，缺乏统一的稀疏模式抽象与联合调度框架，难以在端侧异构硬件（如NPU、存算一体芯片）上协同发挥作用。亟需从算法-编译-硬件协同的视角重构稀疏推理范式。",
+  "challenges": [
+    "动态稀疏激活的预测开销与张量核心结构化约束之间的矛盾：如何设计低开销、高召回的激活预测器，并将非结构化神经元稀疏映射为N:M或块稀疏等硬件友好模式，使实测加速比逼近理论FLOPs削减比例",
+    "MoE路由的负载均衡、专家亲和性与通信代价的联合优化：如何在保持模型质量的前提下，降低跨设备All-to-All通信量、缓解专家热点与流水线气泡，并支持动态批处理下的弹性专家放置",
+    "长上下文稀疏注意力的KV-Cache管理：如何在token级别动态识别可丢弃或可压缩的历史状态，避免关键信息丢失导致的长程推理崩塌，同时保证分页内存访问的局部性与GPU带宽利用率",
+    "三类稀疏机制的统一抽象与编译优化：现有推理引擎（vLLM、TensorRT-LLM）对动态稀疏支持有限，需要构建跨稀疏模式的中间表示与算子融合策略，实现端到端的协同调度",
+    "稀疏化对模型精度的累积影响与可控降级：多重稀疏叠加下，如何建立精度-效率帕累托前沿的理论分析框架，并提供面向下游任务的鲁棒性保证"
+  ],
+  "references": [
+    {
+      "title": "Deja Vu: Contextual Sparsity for Efficient LLMs at Inference Time",
+      "venue": "ICML",
+      "year": 2023,
+      "authors": "Liu, Z., Wang, J., Dao, T., et al."
+    },
+    {
+      "title": "A Review of Sparse Expert Models in Deep Learning",
+      "venue": "JMLR",
+      "year": 2024,
+      "authors": "Fedus, W., Dean, J., Zoph, B."
+    },
+    {
+      "title": "H2O: Heavy-Hitter Oracle for Efficient Generative Inference of Large Language Models",
+      "venue": "NeurIPS",
+      "year": 2023,
+      "authors": "Zhang, Z., Sheng, Y., Zhou, T., et al."
+    },
+    {
+      "title": "Efficient Streaming Language Models with Attention Sinks",
+      "venue": "ICLR",
+      "year": 2024,
+      "authors": "Xiao, G., Tian, Y., Chen, B., Han, S., Lewis, M."
+    },
+    {
+      "title": "FlashAttention-3: Fast and Accurate Attention with Asynchrony and Low-Precision",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Shah, J., Bikshandi, G., Zhang, Y., Thakkar, V., Ramani, P., Dao, T."
+    },
+    {
+      "title": "Flash-LLM: Enabling Cost-Effective and Highly-Efficient Large Generative Model Inference with Unstructured Sparsity",
+      "venue": "VLDB",
+      "year": 2024,
+      "authors": "Xia, H., Zheng, Z., Li, Y., et al."
+    }
+  ],
+  "domain": "efficient_ml",
+  "language": "zh",
+  "sponsor": "国家自然科学基金",
+  "budget": {
+    "amount": 2500000,
+    "currency": "CNY",
+    "dur": 36
+  },
+  "topic_id": "topic_018",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

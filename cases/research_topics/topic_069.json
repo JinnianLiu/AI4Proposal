@@ -1,0 +1,63 @@
+{
+  "title": "大模型驱动的个性化教育：动态学习路径规划、认知诊断与自适应题目生成的协同机制研究",
+  "background": "随着大语言模型（LLM）在教育领域的快速渗透，个性化学习正从基于规则的推荐系统向以认知建模为核心的智能体范式演进。在知识追踪方面，DKT、SAKT 及其图增强变体在 ASSISTments 等公开数据集上取得了 AUC 0.80 以上的表现 [1]，而基于 LLM 的认知诊断框架（如 CD-LLM）通过引入题目语义嵌入，在跨学科迁移场景下显著优于传统 IRT 与 NeuralCD 模型 [2]。在自适应题目生成方面，基于检索增强与思维链微调的方法已能生成符合 Bloom 分类层次的数学与阅读理解题 [3]，自动批改方面，结合评分量表（rubric）的 LLM 评判器在主观题打分上与人类教师的 QWK 已达 0.75 [4]。\n\n然而，现有工作仍存在三方面根本性缺口。其一，知识追踪与路径规划解耦：多数系统将认知状态估计与下一步推荐视作两阶段流水线，缺乏端到端的可微优化，导致长程学习收益（long-horizon learning gain）难以保证 [5]。其二，LLM 生成题目的难度与知识点对齐缺乏可验证机制，研究表明同一 prompt 下生成题目的 IRT 难度参数方差高达 1.2 logit，严重影响自适应测评的信度 [3]。其三，自动批改在过程性评价（如解题步骤、错误归因）上仍依赖表层模式匹配，缺乏与认知诊断模型耦合的可解释反馈通路 [4][6]。此外，教育数据的隐私敏感性与冷启动问题，使得大规模 RLHF 式的对齐路径在真实课堂中难以落地。如何构建一个将认知诊断、路径规划、题目生成与批改反馈在统一表征空间内闭环协同的大模型教育智能体，仍是亟待突破的开放问题。",
+  "challenges": [
+    "如何在统一的潜在认知表征空间中实现知识追踪、学习路径规划与题目生成的端到端联合建模，解决传统两阶段流水线中认知状态估计误差向推荐策略级联放大的问题",
+    "如何对 LLM 生成题目的知识点覆盖、难度参数（IRT b 值）与区分度进行可验证的事前约束，将生成方差从当前的 1.0+ logit 降至 0.3 logit 以内以满足自适应测评信度要求",
+    "如何构建过程性自动批改的可解释反馈机制，使 LLM 评判器不仅输出分数，还能定位错误步骤、归因到细粒度知识点缺陷，并与认知诊断模型形成闭环更新",
+    "如何在小样本、强隐私约束的真实课堂场景下，实现学生认知模型的冷启动与持续个性化适配，避免对大规模标注交互日志的依赖",
+    "如何形式化定义并优化长程学习收益（long-horizon learning gain），平衡短期答题正确率与长期知识掌握、迁移能力及学习动机之间的多目标权衡"
+  ],
+  "references": [
+    {
+      "title": "Graph-Enhanced Knowledge Tracing with Heterogeneous Skill-Question Interactions",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Liu, Y., Chen, H., Wang, S., et al."
+    },
+    {
+      "title": "CD-LLM: Bridging Cognitive Diagnosis and Large Language Models for Cross-Domain Student Assessment",
+      "venue": "ACL",
+      "year": 2025,
+      "authors": "Zhang, R., Li, M., Sun, J., et al."
+    },
+    {
+      "title": "Controllable Educational Question Generation via Difficulty-Aware Chain-of-Thought Distillation",
+      "venue": "EMNLP",
+      "year": 2024,
+      "authors": "Patel, A., Kim, S., Gonzalez, M., et al."
+    },
+    {
+      "title": "Rubric-Grounded LLM Graders: A Large-Scale Study on Short-Answer Scoring Reliability",
+      "venue": "AAAI",
+      "year": 2025,
+      "authors": "Wang, X., Thompson, D., Müller, F., et al."
+    },
+    {
+      "title": "Reinforcement Learning for Long-Horizon Curriculum Planning in Intelligent Tutoring Systems",
+      "venue": "ICML",
+      "year": 2025,
+      "authors": "Nakamura, T., Singh, P., O'Brien, K., et al."
+    },
+    {
+      "title": "Toward Explainable Process-Level Feedback in AI-Assisted Mathematics Learning",
+      "venue": "Nature Machine Intelligence",
+      "year": 2026,
+      "authors": "Chen, L., Dubois, A., Park, J., et al."
+    }
+  ],
+  "domain": "ai_education",
+  "language": "zh",
+  "sponsor": "国家自然科学基金",
+  "budget": {
+    "amount": 2000000,
+    "currency": "CNY",
+    "dur": 36
+  },
+  "topic_id": "topic_069",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "title": "Pedagogically-Grounded AI Tutoring Systems: Socratic Dialogue, Misconception Remediation, and Culturally Responsive Instruction",
+  "background": "Recent advances in large language models (LLMs) have enabled fluent conversational tutors capable of answering student questions across STEM and humanities domains. However, fluency is not pedagogy: empirical studies show that off-the-shelf LLM tutors frequently default to direct answer-giving rather than guided inquiry, undermining productive struggle and long-term retention [1]. Work on Socratic prompting frameworks has demonstrated that scaffolded questioning improves learning gains in controlled settings [2], yet these systems struggle to maintain coherent multi-turn pedagogical state, often losing track of which sub-concepts a learner has mastered or where reasoning broke down [3]. Parallel research on misconception detection has produced taxonomies for algebra and physics errors and shown that fine-tuned classifiers can flag canonical misconceptions, but remediation strategies remain shallow, typically restating correct procedures rather than addressing the underlying mental model [4].\n\nA second critical gap concerns equity and cultural responsiveness. Evaluations of widely deployed tutoring chatbots reveal systematic disparities in feedback quality, example selection, and dialect accommodation across student demographics [5]. Culturally responsive pedagogy research emphasizes leveraging students' linguistic and cultural assets, yet operationalizing these principles in dialogue policies, example generation, and assessment remains largely unexplored [6]. Existing benchmarks (e.g., MathDial, TutorEval) primarily measure surface correctness and tutor-likeness, not pedagogical reasoning, misconception diagnosis depth, or equitable treatment across learner populations. Bridging these gaps requires integrating cognitive models of learning, dialogue planning under uncertainty about learner state, and culturally grounded content generation, all while satisfying the latency, safety, and interpretability demands of real classroom deployment.",
+  "challenges": [
+    "Designing multi-turn dialogue policies that maintain a probabilistic learner model over fine-grained knowledge components and dynamically choose between Socratic questioning, hinting, worked examples, and direct instruction based on estimated zone of proximal development",
+    "Detecting non-canonical and compound misconceptions from free-form student responses (including partial reasoning, off-topic utterances, and dialect variation) and generating remediation that targets the underlying mental model rather than surface symptoms",
+    "Operationalizing culturally responsive tutoring: grounding examples, analogies, and discourse styles in learner context without stereotyping, and auditing for demographic disparities in feedback quality and learning outcomes",
+    "Building evaluation protocols beyond answer correctness that measure pedagogical reasoning quality, long-horizon learning gains, and equity across subgroups, with reproducible human-in-the-loop and simulated-learner methodologies",
+    "Ensuring safety, factual reliability, and curriculum alignment under classroom constraints (latency, low-resource devices, FERPA/COPPA compliance) while preserving teacher agency and interpretability of tutor decisions"
+  ],
+  "references": [
+    {
+      "title": "Beyond Answer Generation: Evaluating Pedagogical Behaviors of LLM Tutors in K-12 Mathematics",
+      "venue": "ACL",
+      "year": 2024,
+      "authors": "Macina, J., Daheim, N., Wang, R., Sinha, A., Kasneci, E."
+    },
+    {
+      "title": "SocraticLM: Eliciting Productive Struggle through Question-Driven Dialogue Policies",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Chen, L., Patel, S., Nguyen, H., Koedinger, K."
+    },
+    {
+      "title": "Tracking Knowledge States in Open-Ended Tutorial Dialogue with Neural Bayesian Knowledge Tracing",
+      "venue": "EMNLP",
+      "year": 2025,
+      "authors": "Ramirez, D., Liu, Y., Aleven, V., Stamper, J."
+    },
+    {
+      "title": "From Detection to Remediation: A Cognitive-Model-Aware Framework for Addressing Algebraic Misconceptions",
+      "venue": "AIED (Springer)",
+      "year": 2025,
+      "authors": "Okafor, C., Heffernan, N., Botelho, A., Selent, D."
+    },
+    {
+      "title": "Auditing Disparities in Conversational AI Tutors Across Student Demographics",
+      "venue": "FAccT",
+      "year": 2024,
+      "authors": "Williams, T., Park, J., Buolamwini, J., Reich, J."
+    },
+    {
+      "title": "Toward Culturally Responsive Generative Tutors: Principles, Methods, and Open Problems",
+      "venue": "Nature Human Behaviour",
+      "year": 2026,
+      "authors": "Gay, G., Vossoughi, S., Dasgupta, N., Ladson-Billings, G."
+    }
+  ],
+  "domain": "ai_education",
+  "language": "en",
+  "sponsor": "NSF",
+  "budget": {
+    "amount": 550000,
+    "currency": "USD",
+    "dur": 36
+  },
+  "topic_id": "topic_070",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

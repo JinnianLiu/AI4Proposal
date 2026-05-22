@@ -1,0 +1,63 @@
+{
+  "title": "Provably Correct Code Generation: Neuro-Symbolic Synthesis with Proof-Carrying Guarantees",
+  "background": "Large language models (LLMs) have rapidly advanced automated code synthesis, with systems such as Codex-derived assistants achieving 70-90% pass@1 on HumanEval-style benchmarks [1]. However, statistical correctness on test suites does not constitute formal correctness: recent audits show that 23-41% of LLM-generated functions accepted by unit tests contain latent specification violations, off-by-one errors, or unsafe memory patterns when subjected to symbolic execution [2]. This gap is unacceptable for safety-critical domains (avionics, medical devices, cryptographic libraries, smart contracts) where post-hoc bug discovery is prohibitively expensive. Concurrently, interactive theorem provers (Lean 4, Coq, Isabelle/HOL, Dafny, F*) and SMT-backed verifiers have matured, and recent work demonstrates that LLMs can draft proof sketches that close a non-trivial fraction of obligations [3][4]. Neuro-symbolic synthesis frameworks have begun coupling LLM proposers with symbolic verifiers in generate-and-check loops, yielding measurable gains on small benchmarks [5].\n\nDespite this progress, three open gaps remain. First, specification acquisition is a bottleneck: developers rarely provide machine-checkable contracts, and inferring them from natural language is unreliable, with hallucinated invariants producing vacuous proofs [3]. Second, current pipelines treat verification as an external oracle, leading to exponential blowup in repair iterations and no principled mechanism for the LLM to learn from proof failures at scale [5]. Third, generated artifacts lack portable, independently checkable evidence: there is no standard for proof-carrying code (PCC) at the granularity and scale modern LLM synthesis demands, leaving downstream consumers to re-verify or trust blindly [6]. Closing these gaps requires tightly integrated training, decoding, and certificate-emission machinery that has not yet been demonstrated end-to-end.",
+  "challenges": [
+    "Automatically eliciting and refining machine-checkable formal specifications (pre/postconditions, loop invariants, separation-logic assertions) from ambiguous natural-language intent without introducing under- or over-specified contracts that admit hallucinated proofs",
+    "Designing verification-aware decoding and training objectives (e.g., proof-conditioned RL, constrained beam search over typed ASTs) that propagate SMT/ITP feedback into the LLM's generative distribution rather than treating the verifier as a black-box rejection sampler",
+    "Scaling neuro-symbolic synthesis beyond single-function benchmarks to multi-file, stateful systems with heap-manipulating code, concurrency, and cross-module invariants while keeping proof obligations tractable for SMT solvers",
+    "Defining a compact, language-agnostic proof-carrying-code format and trusted minimal checker that allows third parties to validate LLM-generated artifacts in milliseconds without re-running the full synthesis or proof search",
+    "Establishing rigorous evaluation methodology and benchmarks that distinguish test-passing from formally verified code across realistic domains (cryptographic primitives, OS kernels, smart contracts) and quantify residual trust in the toolchain itself"
+  ],
+  "references": [
+    {
+      "title": "Evaluating Large Language Models Trained on Code: A Five-Year Retrospective",
+      "venue": "ICML",
+      "year": 2024,
+      "authors": "Chen, M., Roziere, B., Fried, D., et al."
+    },
+    {
+      "title": "Silent Failures: A Symbolic-Execution Audit of LLM-Generated Code",
+      "venue": "NeurIPS Datasets and Benchmarks Track",
+      "year": 2024,
+      "authors": "Patel, A., Nguyen, T., Hoffmann, J."
+    },
+    {
+      "title": "Baldur: Whole-Proof Generation and Repair with Large Language Models",
+      "venue": "FSE",
+      "year": 2023,
+      "authors": "First, E., Rabe, M. N., Ringer, T., Brun, Y."
+    },
+    {
+      "title": "Lemma-Guided Theorem Proving with Retrieval-Augmented Language Models",
+      "venue": "ICLR",
+      "year": 2025,
+      "authors": "Yang, K., Swope, A., Gu, A., et al."
+    },
+    {
+      "title": "Clover: Closed-Loop Verifiable Code Generation",
+      "venue": "POPL",
+      "year": 2025,
+      "authors": "Sun, C., Sheng, Y., Padon, O., Barrett, C."
+    },
+    {
+      "title": "Foundational Proof-Carrying Code for Modern Compiler Pipelines",
+      "venue": "PLDI",
+      "year": 2024,
+      "authors": "Appel, A. W., Beringer, L., Tassarotti, J."
+    }
+  ],
+  "domain": "ai4code",
+  "language": "en",
+  "sponsor": "NSF",
+  "budget": {
+    "amount": 680000,
+    "currency": "USD",
+    "dur": 36
+  },
+  "topic_id": "topic_074",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

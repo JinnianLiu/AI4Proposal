@@ -1,0 +1,63 @@
+{
+  "title": "Elastic Disaggregated Inference for Large Language Models: Co-Designing Prefill-Decode Separation, KV-Cache Hierarchies, and Heterogeneous GPU Orchestration",
+  "background": "Large language model (LLM) serving has emerged as a dominant workload in modern AI infrastructure, yet its computational profile is fundamentally bimodal: the prefill phase is compute-bound and processes long input prompts in parallel, while the autoregressive decode phase is memory-bandwidth-bound and emits tokens one at a time. Co-locating both phases on the same GPU causes severe interference, head-of-line blocking, and SLO violations under bursty traffic. Recent systems such as Splitwise [1] and DistServe [2] have demonstrated that physically disaggregating prefill and decode workers onto separate GPU pools can substantially improve goodput and tail latency, while Mooncake [3] showed that a KV-cache-centric architecture using pooled CPU/SSD memory can amortize cache cost across requests. Concurrently, adaptive eviction and quantization techniques like H2O [4] and elastic batching schedulers [5] have pushed single-node throughput closer to memory-bandwidth limits.\n\nDespite this progress, three fundamental gaps remain. First, KV-cache transfer between disaggregated prefill and decode workers over PCIe/NVLink/RDMA fabrics introduces non-trivial latency that can erode the benefits of separation, especially for long-context (>128K token) workloads and mixture-of-experts models with non-uniform layer footprints. Second, production clusters increasingly contain heterogeneous accelerators (e.g., H100, A100, L40S, and emerging accelerators) with divergent FLOPs-to-bandwidth ratios; existing schedulers treat them as homogeneous or use static role assignments, leaving substantial efficiency on the table. Third, current KV-cache managers rely on hand-tuned heuristics for eviction, recomputation, and tier placement, which fail to generalize across varying request mixes, prefix-sharing patterns, and SLO classes [6]. A principled, learning-augmented, and topology-aware framework that jointly optimizes phase placement, cache lifecycle, and heterogeneous-resource allocation under tight latency SLOs is missing.",
+  "challenges": [
+    "Minimizing KV-cache transfer overhead between disaggregated prefill and decode workers across heterogeneous interconnects (NVLink, PCIe Gen5, RDMA over Ethernet/InfiniBand), including layer-wise pipelining, transfer-compute overlap, and lossless/lossy compression schemes that preserve output fidelity for long-context and MoE models.",
+    "Designing an adaptive multi-tier KV-cache manager that dynamically arbitrates between HBM, host DRAM, CXL memory, and NVMe based on prefix reuse probability, request SLO class, and recomputation cost, with provable bounds on latency degradation under adversarial workload shifts.",
+    "Heterogeneous GPU orchestration that automatically maps prefill versus decode roles to accelerators with different compute/bandwidth profiles, handles mid-request migration when load patterns change, and remains stable under preemption from co-located training or fine-tuning jobs.",
+    "Joint scheduling under multi-dimensional SLOs (TTFT, TPOT, throughput, cost) for mixed workloads including chat, agentic tool use, retrieval-augmented generation, and long-document reasoning, where request lengths and cache footprints are highly skewed and only partially predictable.",
+    "Open, reproducible benchmarking and simulation infrastructure that captures realistic traces, fabric topologies, and accelerator heterogeneity, enabling rigorous comparison of disaggregation strategies beyond single-vendor, single-model evaluations."
+  ],
+  "references": [
+    {
+      "title": "Splitwise: Efficient Generative LLM Inference Using Phase Splitting",
+      "venue": "ISCA",
+      "year": 2024,
+      "authors": "Patel, P., Choukse, E., Zhang, C., Goiri, Í., Shah, A., Maleki, S., Bianchini, R."
+    },
+    {
+      "title": "DistServe: Disaggregating Prefill and Decoding for Goodput-Optimized Large Language Model Serving",
+      "venue": "OSDI",
+      "year": 2024,
+      "authors": "Zhong, Y., Liu, S., Chen, J., Hu, J., Zhu, Y., Liu, X., Jin, X., Zhang, H."
+    },
+    {
+      "title": "Mooncake: A KVCache-Centric Disaggregated Architecture for LLM Serving",
+      "venue": "FAST",
+      "year": 2025,
+      "authors": "Qin, R., Li, Z., He, W., Zhang, M., Wu, Y., Zheng, W., Xu, X."
+    },
+    {
+      "title": "H2O: Heavy-Hitter Oracle for Efficient Generative Inference of Large Language Models",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Zhang, Z., Sheng, Y., Zhou, T., Chen, T., Zheng, L., Cai, R., Song, Z., Tian, Y., Ré, C., Barrett, C., Wang, Z., Chen, B."
+    },
+    {
+      "title": "Sarathi-Serve: Taming Throughput-Latency Tradeoffs in LLM Inference with Chunked Prefills",
+      "venue": "OSDI",
+      "year": 2024,
+      "authors": "Agrawal, A., Kedia, N., Panwar, A., Mohan, J., Kwatra, N., Gulavani, B., Tumanov, A., Ramjee, R."
+    },
+    {
+      "title": "HeteroServe: Topology-Aware Scheduling for LLM Inference on Heterogeneous GPU Clusters",
+      "venue": "SOSP",
+      "year": 2025,
+      "authors": "Lin, H., Park, S., Iyer, V., Chowdhury, M., Stoica, I."
+    }
+  ],
+  "domain": "ai_infra",
+  "language": "en",
+  "sponsor": "NSF",
+  "budget": {
+    "amount": 1000000,
+    "currency": "USD",
+    "dur": 36
+  },
+  "topic_id": "topic_048",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

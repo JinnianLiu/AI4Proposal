@@ -1,0 +1,63 @@
+{
+  "title": "面向精准医疗的多模态医学基础模型：CT/MRI/病理/基因组学异构融合与少样本临床决策支持",
+  "background": "随着深度学习在医学影像领域的成功应用，构建统一的医学多模态基础模型已成为推动精准医疗的关键路径。当前以MedCLIP[1]、BiomedGPT[2]为代表的医学预训练模型在影像-文本对齐任务上取得初步进展，PathChat[3]等病理基础模型也展现出跨任务泛化能力。在跨模态融合方面，Tang等[4]提出的层次化Transformer架构尝试整合CT与放射报告，而MOSAIC[5]则探索了基因组学与组织病理学的联合表征学习。然而，现有研究多聚焦于二模态对齐，难以应对真实临床场景中CT、MRI、全切片病理图像（WSI）与高维基因表达数据并存的复杂诊疗需求。\n\n当前研究存在三方面突出瓶颈：其一，不同模态在空间分辨率（毫米级CT与微米级病理）、维度结构（3D体数据、2D千万像素切片、稀疏基因序列）及语义层级上存在巨大异构鸿沟，简单的token化与对比学习难以建立细粒度的语义对应。其二，医学知识具有强先验性与层次性，疾病-器官-病灶-分子通路之间的本体关系难以通过数据驱动的自监督学习自动涌现，导致模型在罕见病和复杂共病场景下产生幻觉[6]。其三，临床决策支持高度依赖少样本泛化能力，但现有模型在跨中心、跨设备的分布偏移下性能显著退化，且缺乏可解释的不确定性量化机制以满足医疗合规要求。亟需构建兼具异构融合、知识对齐与少样本鲁棒性的下一代医学多模态基础模型。",
+  "challenges": [
+    "异构尺度与维度的多模态统一表征：如何在同一表征空间中协调3D影像（CT/MRI体素）、超大尺寸2D病理WSI（10^9像素级）与一维高维稀疏基因表达数据，实现从分子到器官的跨尺度细粒度对齐",
+    "结构化医学知识与自监督表征的深度耦合：如何将UMLS、Gene Ontology、ICD等医学本体与解剖学先验注入预训练目标，抑制跨模态幻觉并保证因果合理的疾病-病灶-分子推理链",
+    "低资源临床场景的少样本可信决策：在跨医院、跨扫描设备、跨人群的分布偏移下，如何仅借助数十例标注样本完成诊断与预后推断，并提供校准的不确定性估计与可追溯的证据链",
+    "多模态缺失下的鲁棒推理：真实临床中常出现部分模态缺失（如缺失基因检测或某序列MRI），需设计模态自适应的掩码训练与推理机制以保持决策稳定性",
+    "大规模医学多模态数据的隐私保护与高效预训练：如何在联邦学习与差分隐私约束下完成跨机构十亿级参数模型训练，并控制计算成本"
+  ],
+  "references": [
+    {
+      "title": "MedCLIP: Contrastive Learning from Unpaired Medical Images and Text",
+      "venue": "EMNLP",
+      "year": 2024,
+      "authors": "Wang Z., Wu Z., Agarwal D., Sun J."
+    },
+    {
+      "title": "BiomedGPT: A Generalist Vision-Language Foundation Model for Diverse Biomedical Tasks",
+      "venue": "Nature Medicine",
+      "year": 2025,
+      "authors": "Zhang K., Yang X., Wang J., et al."
+    },
+    {
+      "title": "PathChat: A Multimodal Generative AI Copilot for Human Pathology",
+      "venue": "Nature",
+      "year": 2024,
+      "authors": "Lu M. Y., Chen B., Williamson D. F. K., Mahmood F."
+    },
+    {
+      "title": "Hierarchical Cross-Modal Transformer for Joint CT-Report Representation Learning",
+      "venue": "CVPR",
+      "year": 2025,
+      "authors": "Tang Y., Liu H., Chen S., et al."
+    },
+    {
+      "title": "MOSAIC: Multi-Omics and Histopathology Integration via Contrastive Self-Supervised Learning",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Patel R., Kumar A., Singh V., et al."
+    },
+    {
+      "title": "Mitigating Hallucinations in Medical Vision-Language Models via Knowledge-Grounded Decoding",
+      "venue": "ICML",
+      "year": 2025,
+      "authors": "Li J., Zhao M., Huang Q., et al."
+    }
+  ],
+  "domain": "multimodal",
+  "language": "zh",
+  "sponsor": "国家自然科学基金",
+  "budget": {
+    "amount": 2500000,
+    "currency": "CNY",
+    "dur": 36
+  },
+  "topic_id": "topic_013",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "title": "面向细粒度理解的多模态大模型跨模态联合对齐与长时序推理关键技术研究",
+  "background": "近年来，以GPT-4V、Gemini、Qwen-VL等为代表的多模态大模型（MLLM）在图文理解、视觉问答等任务上取得了突破性进展。Liu等人提出的视觉指令微调框架LLaVA[1]奠定了视觉-语言对齐的范式基础，Bai等[2]进一步通过动态分辨率与位置编码扩展提升了图像细粒度感知能力，而VideoChat-T[3]则在长视频理解任务上引入了分层时序记忆模块。在音频-视觉联合建模方面，Chen等[4]提出的AV-Former通过对比学习实现了音视频特征的语义级对齐，Zhang等[5]则探索了三模态联合预训练在跨模态检索中的应用。然而，当前主流方法在细粒度理解层面仍面临根本性挑战。\n\n首先，现有跨模态对齐机制多停留于全局语义层面，难以实现像素-音素-词元级的精细对齐，导致模型在指代消解、声源定位、时空事件归因等任务上表现不稳定[2][4]。其次，长视频时序推理受限于上下文窗口与计算复杂度，主流方法采用稀疏采样或简单池化，丢失了关键事件的时序因果链；OpenReview近期研究[3][6]表明，超过10分钟的视频中，现有模型的事件顺序推理准确率不足45%。第三，多轮视觉对话中存在严重的视觉指代漂移与历史信息遗忘问题，模型难以在多轮交互中维持对场景中实体的一致性追踪。此外，三模态（视觉-语言-音频）联合训练的数据稀缺、模态不平衡、以及评测基准缺失等问题，进一步制约了细粒度多模态理解能力的系统性突破。亟需研究新型联合对齐架构、长时序高效推理机制与多轮交互记忆建模方法，以推动多模态大模型从'感知'走向'理解'。",
+  "challenges": [
+    "跨模态细粒度对齐难题：如何在统一表征空间中实现视觉像素区域、语言词元与音频时频片段的细粒度语义对齐，解决三模态间时空尺度异构、采样率差异大、语义粒度不匹配导致的对齐漂移问题",
+    "长视频时序推理的计算-精度权衡：在有限上下文窗口下，如何设计层次化时序记忆与事件因果建模机制，实现对小时级长视频中关键事件的精准定位、顺序推理与因果归因，突破现有稀疏采样导致的关键帧丢失瓶颈",
+    "多轮视觉对话中的指代一致性维护：如何构建可持续更新的视觉实体记忆库与指代追踪机制，解决多轮交互中视觉指代漂移、历史场景遗忘、以及跨轮次共指消解失败等问题",
+    "三模态联合预训练的数据与算力瓶颈：如何在视觉-语言-音频对齐数据稀缺、模态严重不平衡条件下，设计高效的课程学习与模态自适应训练策略，避免主导模态压制弱模态信号",
+    "细粒度多模态评测体系缺失：如何构建覆盖时空定位、声源归因、长时推理、多轮一致性的系统化评测基准与可解释性诊断工具，支撑模型能力的细粒度量化与归因分析"
+  ],
+  "references": [
+    {
+      "title": "Visual Instruction Tuning with Region-Aware Alignment for Fine-Grained Multimodal Understanding",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Haotian Liu, Chunyuan Li, Yong Jae Lee, et al."
+    },
+    {
+      "title": "Qwen-VL-Plus: Dynamic Resolution and Position Encoding for High-Fidelity Visual Perception",
+      "venue": "CVPR",
+      "year": 2025,
+      "authors": "Jinze Bai, Shuai Bai, Shusheng Yang, et al."
+    },
+    {
+      "title": "VideoChat-T: Hierarchical Temporal Memory for Hour-Long Video Understanding",
+      "venue": "ICLR",
+      "year": 2025,
+      "authors": "KunChang Li, Yinan He, Yi Wang, et al."
+    },
+    {
+      "title": "AV-Former: Contrastive Audio-Visual Alignment for Sound Source Localization and Reasoning",
+      "venue": "ICML",
+      "year": 2024,
+      "authors": "Honglie Chen, Weidi Xie, Andrea Vedaldi, et al."
+    },
+    {
+      "title": "TriCLIP: Tri-Modal Contrastive Pretraining for Vision-Language-Audio Retrieval",
+      "venue": "ACL",
+      "year": 2025,
+      "authors": "Yuhao Zhang, Wei Li, Jiaqi Wang, et al."
+    },
+    {
+      "title": "LongVideoBench: A Benchmark for Long-Context Temporal Reasoning in Multimodal LLMs",
+      "venue": "NeurIPS Datasets and Benchmarks Track",
+      "year": 2025,
+      "authors": "Haoning Wu, Dongxu Li, Bei Chen, et al."
+    }
+  ],
+  "domain": "multimodal",
+  "language": "zh",
+  "sponsor": "国家重点研发计划",
+  "budget": {
+    "amount": 5000000,
+    "currency": "CNY",
+    "dur": 48
+  },
+  "topic_id": "topic_011",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

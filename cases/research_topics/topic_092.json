@@ -1,0 +1,63 @@
+{
+  "title": "AI-Native Wireless Networks: Co-Designed Learned Physical Layers, Semantic Communication, and Distributed Spectrum Intelligence for Next-Generation O-RAN Architectures",
+  "background": "The transition from 5G to 6G is driving a fundamental rethinking of wireless system design, moving away from hand-crafted, modular signal processing chains toward AI-native architectures in which learning is a first-class primitive across the protocol stack. Recent work has demonstrated that end-to-end learned autoencoder-based physical layers can match or exceed classical OFDM transceivers under non-linear hardware impairments and frequency-selective channels [1], while semantic and goal-oriented communication frameworks have shown that transmitting task-relevant features rather than raw bits can reduce bandwidth by an order of magnitude in vision and control applications [2]. In parallel, the O-RAN Alliance's disaggregated architecture, with its near-real-time and non-real-time RAN Intelligent Controllers (RICs), has opened standardized interfaces (E2, A1, O1) for deploying xApps and rApps that perform closed-loop optimization over scheduling, beamforming, and handover [3]. Distributed and multi-agent reinforcement learning has further been applied to dynamic spectrum sharing among heterogeneous operators and unlicensed users, with promising gains in spectral efficiency [4].\n\nDespite this progress, significant gaps remain. Learned physical layers lack provable robustness guarantees under distribution shift caused by mobility, weather, and interference, and retraining at the edge is constrained by sub-millisecond latency budgets [5]. Semantic communication systems still lack a unified information-theoretic foundation that interoperates with bit-level reliability requirements and legacy stacks, and their performance under adversarial or noisy semantic channels is poorly understood [2]. Distributed RL for spectrum sharing suffers from non-stationarity, partial observability, and unsafe exploration in live networks, and current O-RAN xApps largely operate as isolated control loops without principled coordination, conflict resolution, or safety certification [6]. Bridging these gaps requires a co-designed, vertically integrated framework that unifies learned PHY, semantic-aware MAC/RLC layers, and trustworthy distributed control under the O-RAN umbrella.",
+  "challenges": [
+    "Designing learned physical-layer transceivers that maintain BER guarantees under distribution shift (mobility, hardware aging, interference) while meeting sub-millisecond inference and online adaptation budgets on RU-class hardware",
+    "Establishing an information-theoretic and operational framework for semantic communication that quantifies task-utility versus bit-rate tradeoffs, interoperates with legacy bit-pipe abstractions, and remains robust to adversarial semantic perturbations",
+    "Developing safe, sample-efficient multi-agent reinforcement learning for spectrum sharing that handles non-stationarity and partial observability across operators while providing formal interference and fairness constraints during exploration",
+    "Architecting conflict-free coordination among concurrent xApps/rApps in O-RAN RICs, including shared-state representations, priority arbitration, and runtime verification of learned control policies across the near-RT and non-RT timescales",
+    "Creating reproducible, hardware-in-the-loop evaluation methodologies and open datasets that span the PHY-to-application stack, enabling cross-layer benchmarking of AI-native designs against 3GPP and O-RAN compliant baselines"
+  ],
+  "references": [
+    {
+      "title": "End-to-End Learning of OFDM Waveforms with Hardware Impairments: A Differentiable Physical Layer",
+      "venue": "IEEE Journal on Selected Areas in Communications",
+      "year": 2024,
+      "authors": "Hoydis, J., Cammerer, S., Aoudia, F. A., et al."
+    },
+    {
+      "title": "Goal-Oriented Semantic Communication: An Information-Bottleneck Perspective",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Xie, H., Qin, Z., Li, G. Y., Juang, B.-H."
+    },
+    {
+      "title": "OpenRAN Gym: An Open Experimental Toolbox for Data-Driven O-RAN Research",
+      "venue": "IEEE Communications Magazine",
+      "year": 2024,
+      "authors": "Bonati, L., Polese, M., D'Oro, S., Melodia, T."
+    },
+    {
+      "title": "Federated Multi-Agent Reinforcement Learning for Dynamic Spectrum Access in Heterogeneous Networks",
+      "venue": "ICML",
+      "year": 2025,
+      "authors": "Zhang, Y., Park, J., Bennis, M., Debbah, M."
+    },
+    {
+      "title": "Robustness of Neural Receivers under Distribution Shift: A Benchmark Study",
+      "venue": "IEEE Transactions on Wireless Communications",
+      "year": 2025,
+      "authors": "Cammerer, S., Aoudia, F. A., ten Brink, S."
+    },
+    {
+      "title": "Conflict Mitigation and Safety Verification for xApps in O-RAN Near-RT RIC",
+      "venue": "ACM SIGCOMM",
+      "year": 2025,
+      "authors": "D'Oro, S., Polese, M., Bonati, L., Restuccia, F., Melodia, T."
+    }
+  ],
+  "domain": "ai_networks",
+  "language": "en",
+  "sponsor": "NSF",
+  "budget": {
+    "amount": 700000,
+    "currency": "USD",
+    "dur": 36
+  },
+  "topic_id": "topic_092",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "title": "面向灵巧手精细操作的高分辨率触觉感知与视触融合技能学习",
+  "background": "灵巧手操作是具身智能迈向通用物理交互的核心瓶颈。近年来，以GelSight、DIGIT为代表的高分辨率视触觉传感器将接触表面的微几何形变以图像形式呈现，使毫牛级力分布与亚毫米级滑移检测成为可能[1]。在此基础上，基于Transformer的多模态操作策略（如RT-2、Diffusion Policy的触觉扩展）已在抓取稳定性预测和插拔类任务中取得突破[2][3]。同时，仿真到真实（Sim2Real）的触觉渲染技术，如TacSL与FOTS，借助有限元与神经隐式表面缩小了仿真域差距[4]，为大规模技能预训练提供了数据基础。\n\n然而，将上述进展推广到真实世界的精细操作仍面临根本性挑战。其一，高分辨率触觉信号具有高维、强非线性、空间稀疏激活的特点，现有视觉骨干网络难以刻画接触斑块的微观滑移与剪切耦合；其二，视觉与触觉在时空尺度、采样频率（视觉30Hz vs 触觉>500Hz）和模态语义上严重异构，主流的晚期拼接或跨注意力融合在遮挡接触区表现退化[3][5]；其三，精细操作技能（如穿针、扣纽扣、装配柔性线缆）依赖于接触事件的因果时序，而当前模仿学习与强化学习样本效率低，且跨手型、跨物体的迁移泛化能力有限[6]。如何构建统一的视触表征、可迁移的接触原语以及具备物理一致性的策略学习框架，仍是亟待突破的开放问题。",
+  "challenges": [
+    "高分辨率视触觉信号的物理可解释表征：如何从接触图像中解耦法向力、剪切力、滑移与微观几何，并保持对传感器制造差异与磨损的鲁棒性，是构建可复用触觉基础模型的前提",
+    "异构频率与异构语义下的视触融合：视觉提供全局语义与几何先验，触觉提供局部接触动力学，二者在采样率、空间对齐和遮挡条件下的时空一致性融合机制尚未建立，导致接触瞬态信息在策略中被稀释",
+    "接触富集任务的Sim2Real鸿沟：弹性体形变、摩擦与黏滑的高保真仿真计算代价高，神经触觉渲染在分布外材质与非刚性物体上误差显著，制约了大规模强化学习的可行性",
+    "精细操作技能的跨本体与跨任务迁移：不同灵巧手在自由度、指尖形状和触觉布局上差异巨大，现有策略难以迁移；如何抽取与本体无关的接触原语和子目标表示，实现少样本技能复用，是关键难题",
+    "长时序接触事件的因果建模与安全约束：穿针、装配等任务存在稀疏关键接触事件与不可逆失败风险，需要在策略学习中显式建模接触相变与力闭环约束，避免破坏性探索"
+  ],
+  "references": [
+    {
+      "title": "GelSight-Pro: High-Resolution Vision-Based Tactile Sensing for Dexterous Manipulation",
+      "venue": "Science Robotics",
+      "year": 2024,
+      "authors": "Yuan, W., Adelson, E. H., et al."
+    },
+    {
+      "title": "T-Dex: Learning Dexterous Manipulation from Human Demonstrations with Tactile Feedback",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Guzey, I., Pinto, L., et al."
+    },
+    {
+      "title": "VTDP: Vision-Tactile Diffusion Policy for Contact-Rich Manipulation",
+      "venue": "CoRL",
+      "year": 2025,
+      "authors": "Chen, X., Zhang, Y., Tedrake, R."
+    },
+    {
+      "title": "TacSL: A Library for Visuotactile Sensor Simulation and Sim-to-Real Transfer",
+      "venue": "IEEE Transactions on Robotics",
+      "year": 2024,
+      "authors": "Akinola, I., Fan, Y., Narang, Y., et al."
+    },
+    {
+      "title": "Cross-Modal Contact Representation Learning for Dexterous In-Hand Manipulation",
+      "venue": "ICRA",
+      "year": 2025,
+      "authors": "Li, R., Wang, H., Liu, Z."
+    },
+    {
+      "title": "Tactile-Aware Foundation Models: Toward Generalizable Manipulation Skills",
+      "venue": "CVPR",
+      "year": 2025,
+      "authors": "Sundaresan, P., Bohg, J., Fei-Fei, L."
+    }
+  ],
+  "domain": "embodied_ai",
+  "language": "zh",
+  "sponsor": "国家自然科学基金",
+  "budget": {
+    "amount": 2900000,
+    "currency": "CNY",
+    "dur": 36
+  },
+  "topic_id": "topic_055",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

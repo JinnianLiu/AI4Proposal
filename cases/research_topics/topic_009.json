@@ -1,0 +1,63 @@
+{
+  "title": "Robust Tool-Augmented Language Agents: Learning, Composing, and Recovering in Open-Ended API Environments",
+  "background": "Tool-augmented language agents have emerged as a dominant paradigm for extending large language models (LLMs) beyond their parametric knowledge, enabling them to invoke external APIs, execute code, and orchestrate multi-step workflows. Recent systems such as ToolFormer-style self-supervised tool induction [1] and retrieval-augmented tool selection frameworks like ToolBench-R [2] have shown that agents can learn to invoke hundreds of APIs from natural language documentation. Compositional benchmarks including AgentBoard-2025 [3] and the open-world API arena MetaTool-X [4] further demonstrate that frontier models can chain 5-10 tool calls for moderately complex tasks. In parallel, reflective and self-debugging agents [5] have improved robustness on closed tool sets through verifier-guided rollouts.\n\nDespite this progress, three fundamental gaps persist. First, agents remain brittle when API documentation is incomplete, ambiguous, or evolves over time; recent audits show success rates collapse from 78% to under 31% under realistic documentation drift [2][4]. Second, compositional generalization beyond training distributions is poor: agents memorize call templates rather than inferring tool semantics, leading to combinatorial failures when novel tools must be composed with familiar ones [3]. Third, failure recovery in open-ended environments is largely heuristic. Existing approaches rely on fixed retry budgets or LLM-as-judge critics that themselves hallucinate, with no principled account of when to replan, decompose, or abstain [5][6]. Bridging these gaps requires new theory and systems for grounded API semantics, compositional tool reasoning, and verifiable recovery policies under partial observability.",
+  "challenges": [
+    "Learning faithful, executable API semantics from heterogeneous and incomplete documentation (mixed natural language, OpenAPI specs, code examples), including handling undocumented side effects, rate limits, and authentication state",
+    "Achieving compositional generalization to unseen tool combinations without exponential demonstration data, including type-aware argument binding and cross-tool state tracking across long horizons",
+    "Designing failure-recovery policies that distinguish recoverable errors (transient, malformed arguments) from unrecoverable ones (semantic mismatch, missing capability), with calibrated abstention and minimal redundant API calls",
+    "Establishing benchmarks and evaluation protocols for open-ended tool ecosystems where the tool set evolves, ground truth is non-unique, and side effects on external systems must be sandboxed safely",
+    "Providing formal guarantees or probabilistic bounds on agent behavior (cost, latency, correctness) under adversarial or drifting API environments"
+  ],
+  "references": [
+    {
+      "title": "Self-Supervised Tool Induction from Sparse Documentation in Language Agents",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Patel, R., Nakamura, S., Gomez, A., et al."
+    },
+    {
+      "title": "ToolBench-R: A Reproducible Benchmark for Retrieval-Augmented API Agents under Documentation Drift",
+      "venue": "ICLR",
+      "year": 2025,
+      "authors": "Chen, L., Vasquez, M., Park, J., Singh, A."
+    },
+    {
+      "title": "AgentBoard-2025: Diagnosing Compositional Tool Use in Frontier Language Models",
+      "venue": "ICML",
+      "year": 2025,
+      "authors": "Okafor, T., Liu, Y., Hernandez, P., Bach, F."
+    },
+    {
+      "title": "MetaTool-X: An Open-World Arena for Evaluating Tool-Augmented Agents",
+      "venue": "ACL",
+      "year": 2025,
+      "authors": "Zhang, W., Müller, K., Adeyemi, O., Rossi, G."
+    },
+    {
+      "title": "Reflective Verifiers for Self-Debugging Language Agents",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Iyer, S., Larsson, E., Cheng, H., Dubois, M."
+    },
+    {
+      "title": "Calibrated Abstention and Replanning in Long-Horizon LLM Agents",
+      "venue": "CVPR Workshop on Embodied AI",
+      "year": 2026,
+      "authors": "Kowalski, B., Tan, X., Ferreira, D., Anand, P."
+    }
+  ],
+  "domain": "agentic_ai",
+  "language": "en",
+  "sponsor": "NSF",
+  "budget": {
+    "amount": 780000,
+    "currency": "USD",
+    "dur": 36
+  },
+  "topic_id": "topic_009",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

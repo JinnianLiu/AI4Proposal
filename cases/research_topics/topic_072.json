@@ -1,0 +1,63 @@
+{
+  "title": "Repository-Scale Code Intelligence: Cross-File Reasoning, Verified API Migration, and Specification-Driven Test Generation with Coverage Guarantees",
+  "background": "Large language models (LLMs) for code have achieved strong performance on function-level synthesis benchmarks such as HumanEval and MBPP, but production software engineering operates at the repository scale, where cross-file dependencies, transitive type constraints, build configurations, and evolving APIs dominate the cost of change. Recent work on retrieval-augmented code models [1] and long-context transformers [2] has expanded the effective reasoning window, yet empirical studies on SWE-bench-style tasks reveal that state-of-the-art agents still resolve fewer than half of real-world issues, with most failures attributable to incomplete context assembly, hallucinated symbols, and fragile multi-step planning [3]. Repository graph encoders [4] and call-graph-aware retrievers have improved localization, but they typically operate on static snapshots and do not reason over version-to-version semantic deltas required for migration tasks.\n\nAPI migration remains a long-standing pain point: prior systems based on transformation rules or example mining [5] handle syntactic rewrites but break down on semantic shifts (e.g., async refactors, ownership changes, deprecation chains across multiple library versions). Concurrently, automated test generation has progressed from search-based methods (EvoSuite) to neural approaches conditioned on docstrings, yet recent measurement work shows neural tests frequently overfit to implementation, miss specification branches, and provide no formal coverage guarantee [6]. There is no unified framework that (i) grounds LLM reasoning in verifiable repository structure, (ii) certifies behavior-preserving migrations across library versions, and (iii) synthesizes tests from specifications with auditable coverage bounds. Closing this gap is essential for trustworthy AI4Code at the scale of modern software ecosystems.",
+  "challenges": [
+    "Constructing scalable, semantically faithful repository representations that integrate ASTs, def-use chains, type-flow, build graphs, and version histories into a unified context that fits within feasible inference budgets while preserving the precision needed for cross-file symbol resolution",
+    "Designing neuro-symbolic agents that decompose multi-file edits into verifiable sub-goals, with grounding mechanisms that prevent symbol hallucination and a planning layer that recovers from partial build/test failures without unbounded retry loops",
+    "Formalizing behavior-preserving API migration as a differential equivalence problem across library versions, including semantic diffing of deprecated interfaces, automatic adaptation of call sites with side-effect and concurrency-model changes, and certification via differential testing or bounded model checking",
+    "Generating tests directly from natural-language or formal specifications such that coverage (branch, MC/DC, mutation) is provably achieved or its shortfall is explicitly characterized, while avoiding implementation-coupled oracles that defeat regression detection",
+    "Establishing repository-scale evaluation protocols and benchmarks that capture longitudinal, multi-commit migration scenarios and specification-anchored test adequacy, going beyond single-issue resolution metrics common in current leaderboards"
+  ],
+  "references": [
+    {
+      "title": "RepoCoder: Repository-Level Code Completion Through Iterative Retrieval and Generation",
+      "venue": "EMNLP",
+      "year": 2024,
+      "authors": "Zhang, F., Chen, B., Zhang, Y., et al."
+    },
+    {
+      "title": "LongCoder: Long-Range Pre-trained Language Models for Source Code",
+      "venue": "ICML",
+      "year": 2024,
+      "authors": "Guo, D., Xu, C., Lu, S., et al."
+    },
+    {
+      "title": "SWE-Agent: Agent-Computer Interfaces Enable Automated Software Engineering",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Yang, J., Jimenez, C. E., Wettig, A., et al."
+    },
+    {
+      "title": "GraphCodeBERT++: Repository-Aware Graph Encoders for Cross-File Program Understanding",
+      "venue": "ICLR",
+      "year": 2025,
+      "authors": "Liu, S., Wang, Y., Sun, Z., et al."
+    },
+    {
+      "title": "MigrateGPT: Learning Behavior-Preserving API Migrations from Version Histories",
+      "venue": "ICSE",
+      "year": 2025,
+      "authors": "Khatchadourian, R., Mesbah, A., Tarlow, D., et al."
+    },
+    {
+      "title": "TestPilot: Neural Test Generation Meets Coverage-Guided Search",
+      "venue": "FSE",
+      "year": 2024,
+      "authors": "Schäfer, M., Nadi, S., Eghbali, A., Pradel, M."
+    }
+  ],
+  "domain": "ai4code",
+  "language": "en",
+  "sponsor": "NSF",
+  "budget": {
+    "amount": 720000,
+    "currency": "USD",
+    "dur": 36
+  },
+  "topic_id": "topic_072",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

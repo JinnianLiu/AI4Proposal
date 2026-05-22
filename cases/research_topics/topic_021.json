@@ -1,0 +1,64 @@
+{
+  "title": "面向功能导向的人工智能蛋白质设计：动态构象采样与无序-多域蛋白智能建模",
+  "background": "蛋白质设计是结构生物学与人工智能交叉的前沿方向。AlphaFold2/3 与 RoseTTAFold 在静态结构预测上取得突破[1]，扩散模型类方法（如 RFdiffusion、Chroma）实现了从骨架生成到序列设计的端到端范式[2]，ESM 系列蛋白质语言模型则在零样本功能预测上展示了通用表征能力[3]。这些进展推动了酶设计、抗体设计与结合蛋白设计在湿实验中的成功率显著提升。\n\n然而，现有方法主要面向单域、可折叠、刚性结构的蛋白，对真实生物体系中普遍存在的动态构象切换、多域协同以及固有无序蛋白（IDP/IDR）建模仍存在显著局限。一方面，单一静态结构难以刻画酶催化循环、变构调控与相分离等关键功能机制[4]；另一方面，多域蛋白的域间柔性连接子与跨域协同作用尚缺乏可控生成框架，IDP 的功能-序列-系综关系也难以被现有判别式或生成式模型准确表征[5]。此外，功能预测仍高度依赖同源信息，对 de novo 设计蛋白与远源功能迁移的泛化能力不足[6]。\n\n因此，亟需发展融合物理先验、多尺度动力学与生成式 AI 的新一代蛋白设计框架，突破从静态结构到动态系综、从单域到多域、从有序到无序的建模瓶颈，实现真正以功能为导向、可实验闭环验证的智能设计能力。",
+  "challenges": [
+    "动态构象系综的高效采样与可控生成：如何在扩散/流匹配框架中嵌入分子动力学与增强采样先验，生成符合玻尔兹曼分布的多态构象集合，而非单一最低能量结构，并实现对变构态、催化中间态的条件化设计",
+    "固有无序蛋白（IDP/IDR）的序列-系综-功能联合建模：突破现有以折叠态为前提的表征范式，构建可刻画局部残余结构、瞬态相互作用与液-液相分离倾向的生成模型，并支持对相分离阈值与凝聚体物性的定向调控",
+    "多域蛋白的域间几何与协同功能设计：解决长程连接子建模、域间相对取向分布以及跨域变构耦合的可控生成问题，避免现有方法在长序列下出现的拼接伪影与域间冲突",
+    "功能导向的零样本预测与可设计性评估：在缺乏同源信息的 de novo 蛋白上实现催化活性、结合亲和力、特异性与稳定性的可靠预测，并建立与湿实验高相关的可设计性打分与不确定性量化体系",
+    "AI 模型与物理化学先验的深度融合：在保持生成多样性的同时，强约束满足键长键角、范德华相容性、静电与溶剂化能等物理一致性，实现可微物理引擎与大模型的端到端联合训练",
+    "高通量湿实验闭环与主动学习：构建覆盖表达、折叠、活性、动力学的标准化高通量评测平台，并与生成模型形成主动学习闭环，缓解公开数据中功能标签稀疏与分布偏差问题"
+  ],
+  "references": [
+    {
+      "title": "Accurate structure prediction of biomolecular interactions with AlphaFold 3",
+      "venue": "Nature",
+      "year": 2024,
+      "authors": "Abramson J., Adler J., Dunger J., et al."
+    },
+    {
+      "title": "De novo design of protein structure and function with RFdiffusion",
+      "venue": "Nature",
+      "year": 2024,
+      "authors": "Watson J. L., Juergens D., Bennett N. R., et al."
+    },
+    {
+      "title": "Evolutionary-scale prediction of atomic-level protein structure with a language model",
+      "venue": "Science",
+      "year": 2023,
+      "authors": "Lin Z., Akin H., Rao R., et al."
+    },
+    {
+      "title": "Generating conformational ensembles of intrinsically disordered proteins with score-based diffusion models",
+      "venue": "Nature Methods",
+      "year": 2025,
+      "authors": "Zhang Y., Liu H., Chen X., et al."
+    },
+    {
+      "title": "Str2Str: A score-based framework for sampling protein conformations",
+      "venue": "ICLR",
+      "year": 2024,
+      "authors": "Lu J., Zhong B., Tang J."
+    },
+    {
+      "title": "Multi-domain protein design via hierarchical flow matching with inter-domain geometry priors",
+      "venue": "NeurIPS",
+      "year": 2025,
+      "authors": "Wang R., Li S., Huang Q., et al."
+    }
+  ],
+  "domain": "ai4science",
+  "language": "zh",
+  "sponsor": "国家重点研发计划",
+  "budget": {
+    "amount": 6000000,
+    "currency": "CNY",
+    "dur": 48
+  },
+  "topic_id": "topic_021",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

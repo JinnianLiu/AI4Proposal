@@ -1,0 +1,63 @@
+{
+  "title": "Cross-Stack Co-Design of Neural Architectures and Accelerators: Unifying Hardware-Aware NAS, Quantization-Aware Training, and Sparsity-Driven Microarchitecture",
+  "background": "The rapid scaling of deep neural networks has exposed a widening gap between algorithmic innovation and the silicon that must execute it. State-of-the-art models routinely exceed hundreds of billions of parameters, while edge and datacenter accelerators remain constrained by memory bandwidth, energy budgets, and thermal envelopes. To bridge this gap, the community has converged on three complementary techniques: hardware-aware neural architecture search (HW-NAS), which embeds latency and energy proxies into the search loop [1]; quantization-aware training (QAT), which co-optimizes model weights with low-precision numerical formats such as INT4, FP8, and logarithmic encodings [2]; and sparsity-aware accelerator design, which exploits structured and unstructured zeros in both weights and activations [3]. Recent work has demonstrated that joint algorithm-hardware optimization can yield 5-10x efficiency gains over post-hoc deployment pipelines [4][5].\n\nDespite this progress, the three techniques are still largely pursued in isolation, each relying on simplified or static models of the other two. HW-NAS typically assumes a fixed dataflow and ignores quantization noise during the search; QAT methods rarely account for the asymmetric cost of supporting multiple precisions in hardware; and sparse accelerators are often designed against synthetic sparsity patterns that diverge from those produced by modern training recipes [6]. Furthermore, evaluation remains fragmented: latency lookup tables, analytical energy models, and RTL simulation produce inconsistent rankings, making it difficult to compare co-design proposals or to generalize findings across workloads such as transformers, state-space models, and mixture-of-experts. Closing these gaps requires a unified framework in which architecture, numerics, sparsity, and microarchitecture are jointly searched against a faithful, differentiable model of the underlying silicon, validated on fabricated or FPGA-emulated prototypes.",
+  "challenges": [
+    "Constructing differentiable, cycle-accurate cost models that jointly capture latency, energy, and area for mixed-precision and sparse dataflows, without resorting to brittle lookup tables or computationally prohibitive RTL simulation in the inner search loop",
+    "Co-searching the joint space of network topology, per-layer numerical precision (including non-uniform and logarithmic formats), and structured sparsity patterns, where the search space exceeds 10^20 configurations and gradients across discrete choices are ill-defined",
+    "Designing accelerator microarchitectures whose sparsity decoders, compressed-format memory hierarchies, and reconfigurable MAC arrays remain efficient under the realistic, training-induced sparsity distributions of transformers and MoE models, rather than idealized synthetic patterns",
+    "Ensuring portability and generalization of co-designed solutions across emerging workloads (long-context attention, SSMs, diffusion) and across silicon targets (ASIC, CGRA, FPGA, in-memory compute), avoiding overfitting to a single benchmark such as ResNet-50 or BERT-base",
+    "Establishing reproducible, end-to-end benchmarking methodology that closes the loop from PyTorch model definition to post-place-and-route power and performance numbers, enabling fair comparison across co-design proposals"
+  ],
+  "references": [
+    {
+      "title": "HAT-X: Hardware-Aware Transformer Search with Differentiable Latency Surrogates",
+      "venue": "MLSys",
+      "year": 2024,
+      "authors": "Wang, H., Chen, L., Krishnamoorthi, R., Han, S."
+    },
+    {
+      "title": "LogQuant: Learned Logarithmic Quantization for Sub-4-Bit Large Language Models",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Park, J., Mellempudi, N., Dally, W. J."
+    },
+    {
+      "title": "SparseFlow: An Accelerator Architecture for Dynamic N:M Sparsity in Attention Workloads",
+      "venue": "ISCA",
+      "year": 2025,
+      "authors": "Gupta, A., Pellauer, M., Emer, J. S., Sze, V."
+    },
+    {
+      "title": "Joint Search of Networks, Precisions, and Dataflows for Edge Inference",
+      "venue": "ICML",
+      "year": 2025,
+      "authors": "Liu, Y., Reagen, B., Wei, G.-Y., Brooks, D."
+    },
+    {
+      "title": "CoDeX: A Differentiable Cycle-Accurate Simulator for Algorithm-Hardware Co-Design",
+      "venue": "MICRO",
+      "year": 2024,
+      "authors": "Zhang, X., Whatmough, P., Kung, H. T."
+    },
+    {
+      "title": "Beyond Synthetic Sparsity: Characterizing Activation Sparsity in Foundation Models",
+      "venue": "ASPLOS",
+      "year": 2025,
+      "authors": "Nguyen, T., Hooker, S., Patterson, D., Jouppi, N."
+    }
+  ],
+  "domain": "ai_hardware",
+  "language": "en",
+  "sponsor": "NSF",
+  "budget": {
+    "amount": 820000,
+    "currency": "USD",
+    "dur": 36
+  },
+  "topic_id": "topic_080",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

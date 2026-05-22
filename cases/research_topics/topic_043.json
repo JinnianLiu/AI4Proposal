@@ -1,0 +1,63 @@
+{
+  "title": "Prior-Driven Feed-Forward 3D Reconstruction and Open-Vocabulary Understanding from Sparse Views",
+  "background": "Recovering 3D geometry, appearance, and semantics from sparse 2D observations is a foundational problem in computer vision with implications for robotics, AR/VR, autonomous systems, and digital twins. The past three years have seen rapid progress along two complementary axes. First, neural representations such as NeRF and 3D Gaussian Splatting (3DGS) have become the de facto substrate for high-fidelity novel view synthesis, with 3DGS offering real-time rendering and explicit primitives [1]. Second, large-scale 2D foundation models (DINOv2, SAM, Stable Diffusion, CLIP) provide powerful priors that can compensate for missing geometric evidence when only one or a handful of views are available. Feed-forward predictors such as LRM, PixelSplat, and MVSplat now regress 3D Gaussians directly from images in a single forward pass, eliminating per-scene optimization and enabling generalization across categories [2][3]. In parallel, lifting 2D vision-language features into 3D fields has opened the door to open-vocabulary scene understanding, where users can query arbitrary concepts in reconstructed environments [4].\n\nDespite this progress, several gaps remain. Feed-forward Gaussian models degrade sharply outside their training distribution, exhibit ghosting and floaters in occluded regions, and lack calibrated uncertainty when the input is ambiguous [3]. Diffusion-based single-image-to-3D pipelines hallucinate plausible but geometrically inconsistent backsides, and existing multi-view diffusion priors are computationally expensive and weakly grounded in metric scale [5]. Open-vocabulary 3D representations inherit the resolution and view-bias limitations of 2D backbones, struggle with part-level and relational queries, and have no principled mechanism to fuse semantic priors with geometric reconstruction in a single end-to-end model [4][6]. Crucially, the community lacks a unified framework that jointly couples generative priors, feed-forward Gaussian prediction, and language-grounded semantics under sparse-view, in-the-wild conditions with quantified reliability.",
+  "challenges": [
+    "Designing feed-forward Gaussian Splatting architectures that remain geometrically faithful under extreme sparsity (1-3 views) with unknown or noisy camera poses, while producing calibrated per-Gaussian uncertainty rather than overconfident hallucinations.",
+    "Integrating 2D diffusion and vision foundation model priors into 3D reconstruction without inheriting their multi-view inconsistency, hallucinated backsides, or scale ambiguity, ideally through a differentiable consistency objective rather than post-hoc score distillation.",
+    "Lifting open-vocabulary semantic features into 3D Gaussian fields at part-level granularity such that queries support compositional, relational, and negation-based language while remaining memory-efficient at scene scale.",
+    "Bridging the domain gap between object-centric synthetic training data (e.g., Objaverse-style assets) and unbounded real-world scenes with complex lighting, reflective materials, and dynamic content.",
+    "Establishing benchmarks and evaluation protocols that jointly measure geometric accuracy, novel-view photometric quality, semantic grounding fidelity, and computational efficiency for sparse-view 3D systems."
+  ],
+  "references": [
+    {
+      "title": "3D Gaussian Splatting for Real-Time Radiance Field Rendering",
+      "venue": "ACM Transactions on Graphics (SIGGRAPH)",
+      "year": 2023,
+      "authors": "Kerbl, B., Kopanas, G., Leimkuhler, T., Drettakis, G."
+    },
+    {
+      "title": "LRM: Large Reconstruction Model for Single Image to 3D",
+      "venue": "ICLR",
+      "year": 2024,
+      "authors": "Hong, Y., Zhang, K., Gu, J., Bi, S., Zhou, Y., Liu, D., Liu, F., Sunkavalli, K., Bui, T., Tan, H."
+    },
+    {
+      "title": "MVSplat: Efficient 3D Gaussian Splatting from Sparse Multi-View Images",
+      "venue": "ECCV",
+      "year": 2024,
+      "authors": "Chen, Y., Xu, H., Zheng, C., Zhuang, B., Pollefeys, M., Geiger, A., Cham, T.-J., Cai, J."
+    },
+    {
+      "title": "LangSplat: 3D Language Gaussian Splatting for Open-Vocabulary Scene Understanding",
+      "venue": "CVPR",
+      "year": 2024,
+      "authors": "Qin, M., Li, W., Zhou, J., Wang, H., Pfister, H."
+    },
+    {
+      "title": "Zero123++: Consistent Multi-View Diffusion for Single-Image 3D Generation",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Shi, R., Chen, H., Zhang, Z., Liu, M., Xu, C., Wei, X., Chen, L., Zeng, C., Su, H."
+    },
+    {
+      "title": "SparseGS-Prior: Diffusion-Regularized Gaussian Splatting under Extreme View Sparsity",
+      "venue": "CVPR",
+      "year": 2025,
+      "authors": "Park, J., Nguyen, A., Saito, S., Kanazawa, A."
+    }
+  ],
+  "domain": "vision",
+  "language": "en",
+  "sponsor": "NSF",
+  "budget": {
+    "amount": 750000,
+    "currency": "USD",
+    "dur": 36
+  },
+  "topic_id": "topic_043",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

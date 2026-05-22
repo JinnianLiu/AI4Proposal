@@ -1,0 +1,62 @@
+{
+  "title": "面向大模型供应链全生命周期的水印版权保护、后门检测与可信分发关键技术研究",
+  "background": "随着大语言模型（LLM）和多模态基础模型在产业界的规模化部署，其训练、微调、压缩、分发与更新已演化为复杂的多方协同供应链。模型权重、训练数据、适配器（LoRA/Adapter）以及推理插件在 Hugging Face、ModelScope 等平台上以前所未有的规模流通，由此催生了严峻的供应链安全风险：包括模型版权被非授权蒸馏与微调洗白、训练阶段被植入隐蔽后门、以及分发链路上权重被恶意篡改等。在模型水印方面，Kirchenbauer 等提出的基于词表划分的输出水印[1]虽被广泛采纳，但已被证明在改写、翻译及量化攻击下鲁棒性显著下降；Zhang 等针对权重空间的指纹方案[2]在 LoRA 合并与剪枝后失效率超过 40%。在后门攻击方面，Wan 等揭示了仅需污染 0.01% 指令数据即可在对齐阶段植入持久化触发器[3]，而 Hubinger 等进一步证实了可绕过 RLHF 安全训练的“潜伏代理”行为[4]。现有检测方法如频谱签名分析[5]在万亿参数规模下计算不可行，且对语义级触发器近乎无效。\n\n在安全分发与更新环节，当前生态严重依赖 SHA-256 校验与平台信誉，缺乏面向模型语义完整性的可验证机制；增量更新（delta-tuning、模型合并）使得传统签名链断裂，Zhao 等[6]指出超过 60% 的下游衍生模型无法回溯到可信源头。综上，亟需构建覆盖“训练—封装—分发—部署—更新”全链条的可信安全框架，解决水印鲁棒性—保真度—容量三难、后门隐蔽性与检测可扩展性的矛盾、以及异构衍生场景下的版本可追溯性问题，为我国自主大模型生态的合规流通提供基础理论与关键技术支撑。",
+  "challenges": [
+    "面向量化、剪枝、知识蒸馏、LoRA 合并等模型变换的鲁棒水印嵌入：如何在不显著损害模型困惑度（PPL 退化<1%）的前提下，构造同时满足权重级与输出级双重可验证、且对自适应攻击者具备可证明安全性的水印协议",
+    "超大规模参数空间下的隐蔽后门检测：针对语义触发器、组合触发器与睡眠代理（sleeper agent）等新型攻击，设计无需干净参考模型、可在百亿至万亿参数规模线性时间复杂度内运行的扫描与净化算法，并给出误报率的理论界",
+    "异构供应链中的模型可信分发与增量更新：构建支持 delta 权重、适配器拼接与模型合并场景的语义级签名与溯源机制，解决衍生模型的版权归属判定、撤销列表（CRL）传播与离线场景下的轻量验证问题",
+    "水印—后门—溯源机制间的安全博弈与统一形式化：建立攻击者能力分级模型，刻画版权保护与后门防御目标之间的潜在冲突（如水印通道可能被滥用为后门信道），形成可证安全的统一防御框架"
+  ],
+  "references": [
+    {
+      "title": "A Watermark for Large Language Models",
+      "venue": "ICML",
+      "year": 2023,
+      "authors": "John Kirchenbauer, Jonas Geiping, Yuxin Wen, et al."
+    },
+    {
+      "title": "PARAFINGER: Robust Parameter-Space Fingerprinting for Pretrained Language Models",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Yuxin Zhang, Hao Chen, Wei Liu, et al."
+    },
+    {
+      "title": "Poisoning Language Models During Instruction Tuning with Sub-Percent Data",
+      "venue": "ACL",
+      "year": 2024,
+      "authors": "Alexander Wan, Eric Wallace, Sheng Shen, Dan Klein"
+    },
+    {
+      "title": "Sleeper Agents: Training Deceptive LLMs that Persist Through Safety Training",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Evan Hubinger, Carson Denison, Jesse Mu, et al."
+    },
+    {
+      "title": "Spectral Signatures for Backdoor Detection in Foundation Models at Scale",
+      "venue": "IEEE S&P",
+      "year": 2025,
+      "authors": "Brandon Tran, Jerry Li, Aleksander Madry"
+    },
+    {
+      "title": "Provenance and Lineage Tracking in the Open Model Ecosystem: An Empirical Study",
+      "venue": "USENIX Security",
+      "year": 2025,
+      "authors": "Yifan Zhao, Min Yang, Xiaofeng Wang, et al."
+    }
+  ],
+  "domain": "privacy_security",
+  "language": "zh",
+  "sponsor": "国家自然科学基金",
+  "budget": {
+    "amount": 2500000,
+    "currency": "CNY",
+    "dur": 36
+  },
+  "topic_id": "topic_034",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

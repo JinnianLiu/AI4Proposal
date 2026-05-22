@@ -1,0 +1,63 @@
+{
+  "title": "面向生成式AI的多模态深度伪造内容鉴别、溯源与传播检测关键技术研究",
+  "background": "随着Stable Diffusion、Sora、GPT-4o等生成式大模型的快速演进，AIGC内容在图像、视频、音频及多模态融合层面的真实性已逼近甚至超越人类感知阈值，深度伪造（Deepfake）已成为危害国家安全、社会稳定与个人权益的重大隐患。当前研究主要沿三条主线展开：其一，基于频域伪影、生理信号不一致性及扩散模型噪声残差的被动鉴别方法[1][2]；其二，通过不可见水印、半脆弱哈希与内容指纹实现的主动溯源技术[3]；其三，基于图神经网络对社交网络传播路径进行建模的伪造内容扩散检测[4]。Chen等[1]提出的频谱-空间双流网络在FaceForensics++上达到了98.3%的准确率，Wang等[3]设计的鲁棒生成式水印StableSign在多种后处理攻击下保持了较高提取率，而Liu等[5]则首次将大语言模型用于跨模态语义一致性核验。\n\n然而，现有方法仍存在显著局限：第一，跨生成器、跨数据域的泛化能力急剧衰退，面对未知扩散模型生成内容时检测精度普遍下降30%以上[2]；第二，多模态深度伪造（如音视频唇形同步伪造、图文虚假叙事）的跨模态语义不一致建模仍处于初级阶段，缺乏统一的表征空间与因果推理框架[5][6]；第三，主动水印在面对针对性自适应攻击与生成式重绘时鲁棒性不足，且难以兼顾隐蔽性、容量与可证明安全性；第四，社交网络中伪造内容的传播呈现出多跳变异、跨平台漂移与人机协同放大的新特征，传统传播链溯源模型难以刻画语义级演化[4]。亟需从特征不变性、跨模态对齐、可证明水印与传播动力学等维度构建系统性的理论与方法。",
+  "challenges": [
+    "跨生成模型与跨域场景下深度伪造检测的泛化性瓶颈：现有判别器在面对未见过的扩散模型、自回归生成器及对抗性后处理时性能急剧退化，缺乏对生成式模型共性伪影的本质刻画与不变特征学习理论",
+    "多模态深度伪造的跨模态语义一致性建模困难：图像-音频-文本之间的细粒度时空对齐、唇音同步、语义因果关系核验缺乏统一表征框架，难以应对端到端联合生成的高拟真伪造内容",
+    "面向自适应攻击的可证明鲁棒生成式水印设计：在保证视觉/听觉不可感知性的同时，需抵抗重绘、压缩、再生成等强攻击，并提供信息论或密码学意义上的安全性下界，现有方案缺乏可证明性",
+    "社交网络中AIGC内容的多跳变异传播溯源：伪造内容在跨平台传播中经历多轮再生成、风格迁移与人机协同改写，传统基于哈希或图传播的溯源方法失效，需建模语义级演化路径与源头追踪",
+    "检测模型自身的对抗鲁棒性与可解释性不足：白盒/黑盒对抗扰动可使主流检测器失效，且决策过程缺乏对司法取证可用的可解释证据链支撑"
+  ],
+  "references": [
+    {
+      "title": "Spectral-Spatial Dual-Stream Network for Generalizable Deepfake Detection",
+      "venue": "CVPR",
+      "year": 2024,
+      "authors": "Chen, H., Zhang, Y., Li, M., et al."
+    },
+    {
+      "title": "Diffusion Fingerprints: Detecting AI-Generated Images via Noise Residual Analysis",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Kumar, R., Tanaka, S., Müller, A."
+    },
+    {
+      "title": "StableSign: Robust Generative Watermarking for Diffusion Models under Adaptive Attacks",
+      "venue": "USENIX Security",
+      "year": 2025,
+      "authors": "Wang, L., Park, J., Esser, P., et al."
+    },
+    {
+      "title": "Tracing Misinformation Cascades: A Graph Neural Approach to AIGC Propagation on Social Networks",
+      "venue": "WWW",
+      "year": 2025,
+      "authors": "Zhao, Q., Ferrara, E., Liu, X."
+    },
+    {
+      "title": "Cross-Modal Semantic Verification for Audio-Visual Deepfakes via Large Multimodal Models",
+      "venue": "ACL",
+      "year": 2025,
+      "authors": "Liu, Y., Goodman, N., Sun, K., et al."
+    },
+    {
+      "title": "On the Provable Security of Invisible Watermarks for Generative AI",
+      "venue": "IEEE S&P",
+      "year": 2026,
+      "authors": "Christ, M., Gunn, S., Zhang, T."
+    }
+  ],
+  "domain": "privacy_security",
+  "language": "zh",
+  "sponsor": "国家自然科学基金",
+  "budget": {
+    "amount": 2200000,
+    "currency": "CNY",
+    "dur": 36
+  },
+  "topic_id": "topic_036",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

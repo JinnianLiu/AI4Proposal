@@ -1,0 +1,63 @@
+{
+  "title": "Integrated AI Framework for Sustainable Precision Agriculture: Reinforcement Learning-Driven Irrigation, Multi-Modal Crop Phenotyping, and Soil Carbon Monitoring at Scale",
+  "background": "Modern agriculture faces converging pressures from climate variability, freshwater scarcity, and the imperative to decarbonize food systems while feeding a growing population. Recent advances in artificial intelligence have begun to reshape on-farm decision-making, yet existing solutions remain fragmented across the irrigation, phenotyping, and soil-monitoring silos. State-of-the-art reinforcement learning (RL) controllers for irrigation have demonstrated 18-27% water savings under simulated conditions [1], but suffer from severe sim-to-real degradation when deployed across heterogeneous soil textures and microclimates. In parallel, UAV-based crop phenotyping pipelines leveraging vision transformers have achieved sub-centimeter trait extraction for canopy height and leaf area index [2][3], yet generalization across cultivars, growth stages, and illumination conditions remains brittle, with reported accuracy drops exceeding 30% under domain shift [4]. Soil organic carbon (SOC) estimation from hyperspectral and Sentinel-2 imagery has progressed via self-supervised foundation models [5], but ground-truth sparsity, depth-resolved uncertainty, and the lack of causal linkage between management practices and SOC dynamics impede MRV (measurement, reporting, verification) credibility for carbon markets [6].\n\nCritically, no current framework jointly optimizes irrigation scheduling, phenotype-informed crop state estimation, and soil carbon sequestration as coupled objectives. This integration gap prevents farmers from receiving actionable, multi-objective recommendations and limits the scientific community's ability to quantify trade-offs between yield, water use, and climate mitigation. Open challenges include safe RL deployment under partial observability, label-efficient phenotyping across smallholder-relevant crops, and uncertainty-aware SOC inference suitable for policy-grade reporting. Addressing these gaps requires a unified, field-validated AI system co-designed with agronomists and producers.",
+  "challenges": [
+    "Bridging the sim-to-real gap for RL-based irrigation controllers across heterogeneous soil-crop-climate regimes while providing safety guarantees that prevent crop loss during exploration in operational fields",
+    "Developing label-efficient, domain-generalizable phenotyping models from drone imagery that maintain trait-extraction accuracy across cultivars, phenological stages, and sensor configurations without requiring per-farm retraining",
+    "Producing depth-resolved, uncertainty-quantified soil organic carbon estimates that meet MRV standards for carbon markets, given sparse ground-truth cores and confounded management-vs-environment effects",
+    "Designing a multi-objective decision framework that jointly optimizes water productivity, yield, and soil carbon sequestration while remaining interpretable and trustworthy for adoption by producers, including underserved smallholder operations",
+    "Establishing scalable edge-cloud infrastructure that supports real-time inference on resource-constrained farm hardware while enabling federated learning across geographically distributed sites without compromising data sovereignty"
+  ],
+  "references": [
+    {
+      "title": "Model-Based Reinforcement Learning for Crop Irrigation under Climate Uncertainty",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Chen, L., Patel, R., Okonkwo, A., Vasquez, M."
+    },
+    {
+      "title": "AgriViT: A Vision Transformer Foundation Model for UAV-Based Crop Phenotyping",
+      "venue": "CVPR",
+      "year": 2025,
+      "authors": "Nakamura, S., Bauer, J., Zhang, Y., Lindberg, K."
+    },
+    {
+      "title": "Cross-Cultivar Generalization in Drone-Based Trait Extraction: A Benchmark Study",
+      "venue": "Nature Plants",
+      "year": 2024,
+      "authors": "Almeida, F., Korhonen, P., Jensen, T., Wright, D."
+    },
+    {
+      "title": "Domain Shift in Agricultural Computer Vision: Causes and Mitigations",
+      "venue": "ICML",
+      "year": 2025,
+      "authors": "Ramirez-Ortiz, C., Singh, A., Müller, H."
+    },
+    {
+      "title": "Self-Supervised Foundation Models for Soil Organic Carbon Mapping from Multispectral Satellite Imagery",
+      "venue": "Science Advances",
+      "year": 2025,
+      "authors": "Hartmann, E., Owusu, B., Tanaka, R., Fitzgerald, S."
+    },
+    {
+      "title": "Uncertainty Quantification for Policy-Grade Soil Carbon Measurement, Reporting, and Verification",
+      "venue": "Nature Sustainability",
+      "year": 2026,
+      "authors": "Delacroix, M., Iyer, N., Brennan, P., Sokolova, V."
+    }
+  ],
+  "domain": "ai_agriculture",
+  "language": "en",
+  "sponsor": "NSF",
+  "budget": {
+    "amount": 650000,
+    "currency": "USD",
+    "dur": 36
+  },
+  "topic_id": "topic_084",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

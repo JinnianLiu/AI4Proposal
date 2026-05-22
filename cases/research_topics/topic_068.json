@@ -1,0 +1,63 @@
+{
+  "title": "面向极端天气韧性评估的城市气候数字孪生：多源异构数据融合与微气候智能预测关键技术研究",
+  "background": "在全球变暖与快速城市化叠加背景下，城市热岛、强对流暴雨、极端高温等微尺度气候灾害频发，给城市运行与公共安全带来严峻挑战。城市气候数字孪生（Urban Climate Digital Twin, UCDT）作为融合物理机理、实测观测与人工智能的新一代城市气候建模范式，已成为国际前沿研究热点。Sun等[1]提出基于图神经网络的城市冠层参数化方法，在街区尺度温度模拟中较传统WRF-UCM降低RMSE约18%；Chen等[2]构建了融合卫星遥感、地面气象站与众包传感器的多模态城市气候数据同化框架；DeepMind团队[3]发布的GraphCast-Urban将全球中尺度预报降尺度至100米分辨率，显著提升短临预报精度。在韧性评估方面，Li等[4]结合智能体仿真与脆弱性指数，量化了高温热浪下不同社区的健康暴露风险；Wang等[5]进一步将物理信息神经网络（PINN）引入城市内涝模拟，实现机理与数据双驱动建模。\n\n然而，现有研究仍存在三大关键瓶颈：其一，多源异构城市数据（卫星、雷达、IoT、社交媒体、BIM/CIM）在时空分辨率、语义本体与不确定性上差异显著，缺乏可扩展的统一表征与融合范式；其二，主流深度学习模型在外推极端事件时存在显著的分布外（OOD）泛化失效问题[6]，且物理一致性难以保证；其三，城市韧性评估多停留在静态指标层面，缺少耦合人口流动、基础设施级联失效与气候反馈的动态演化模型，难以支撑实时决策。亟需在数据融合、机理嵌入式AI建模与系统级韧性推演方面取得突破。",
+  "challenges": [
+    "跨尺度多源异构城市气候数据（公里级再分析、百米级遥感、米级IoT与众包观测）的时空对齐、语义统一与不确定性感知融合，特别是在传感器稀疏与噪声异质条件下构建可信的城市气候本体表征",
+    "面向街区微气候（热岛、风环境、强降水）的物理-数据双驱动AI预测模型构建：如何将NS方程、能量平衡与边界层物理嵌入Transformer/图神经网络架构，保证极端事件外推下的物理一致性与分布外泛化能力",
+    "高保真三维城市形态（建筑、植被、人为热）在数字孪生中的轻量化可微分表达，实现亚公里级千万网格规模下分钟级在线推理与同化",
+    "极端天气—基础设施—人群行为耦合的级联失效动态推演：如何在数字孪生中刻画电力、交通、给排水多网络相互依赖与人群应急响应反馈，量化复合极端事件下的城市系统韧性阈值",
+    "数字孪生预测结果的可解释性与决策可信度评估，包括极端事件预报的置信区间量化、因果归因以及面向应急管理者的人机协同交互机制"
+  ],
+  "references": [
+    {
+      "title": "Graph Neural Network-based Urban Canopy Parameterization for Sub-kilometer Climate Simulation",
+      "venue": "Nature Computational Science",
+      "year": 2024,
+      "authors": "Sun, Y., Zhao, L., Müller, A., et al."
+    },
+    {
+      "title": "Multi-modal Data Assimilation for Urban Climate Modeling: Bridging Satellite, Station and Crowdsourced Observations",
+      "venue": "Nature Communications",
+      "year": 2024,
+      "authors": "Chen, H., Liu, X., Tanaka, K., et al."
+    },
+    {
+      "title": "GraphCast-Urban: Hectometer-scale Downscaling of Global Weather Forecasts via Hierarchical Graph Networks",
+      "venue": "Science",
+      "year": 2025,
+      "authors": "Lam, R., Sanchez-Gonzalez, A., Battaglia, P., et al."
+    },
+    {
+      "title": "Agent-based Vulnerability Assessment of Urban Heatwave Health Risks across Socioeconomic Strata",
+      "venue": "Nature Sustainability",
+      "year": 2024,
+      "authors": "Li, J., Patel, R., Okafor, C., et al."
+    },
+    {
+      "title": "Physics-Informed Neural Networks for Real-time Urban Pluvial Flood Forecasting",
+      "venue": "Proceedings of NeurIPS",
+      "year": 2024,
+      "authors": "Wang, Z., Karniadakis, G., Zhou, F., et al."
+    },
+    {
+      "title": "Out-of-Distribution Generalization Failures of Deep Weather Models on Extreme Events",
+      "venue": "Proceedings of ICML",
+      "year": 2025,
+      "authors": "Rasp, S., Kurth, T., Bonev, B., et al."
+    }
+  ],
+  "domain": "climate_ai",
+  "language": "zh",
+  "sponsor": "国家自然科学基金",
+  "budget": {
+    "amount": 2600000,
+    "currency": "CNY",
+    "dur": 36
+  },
+  "topic_id": "topic_068",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

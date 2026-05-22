@@ -1,0 +1,63 @@
+{
+  "title": "面向精准医疗的多组学融合与个性化治疗决策智能系统",
+  "background": "精准医疗的核心在于通过整合患者的基因组、转录组、蛋白质组、代谢组及临床表型等多源异构数据，实现疾病亚型精细划分、治疗方案个性化推荐与临床结局精准预测。近年来，深度学习在多组学整合领域取得了显著进展：Zhang等人提出的MOGCN框架利用图卷积网络融合多组学特征，在癌症亚型识别中达到了较高准确率[1]；Liu等人开发的DeepOmix模型通过注意力机制挖掘组学间的交互关系，在生存分析任务中超越了传统Cox模型[2]。在治疗推荐方面，基于强化学习的DeepTreat系统已在脓毒症ICU治疗决策中展现出优于临床医生的潜力[3]，而Chen等人构建的因果推断框架则尝试从真实世界数据中估计个体化治疗效应(ITE)[4]。临床试验预测领域，Wang等人提出的HINT模型利用层次化交互网络预测试验成功概率，AUC达到0.78[5]。\n\n然而，当前研究仍面临若干根本性挑战：其一，多组学数据存在严重的模态缺失、量纲异质与高维小样本问题，现有融合方法在跨中心、跨人群泛化时性能急剧下降；其二，治疗推荐模型多基于观察性数据，难以区分相关性与因果性，存在选择偏倚与混杂因素干扰，临床可信度不足；其三，黑盒模型缺乏机制可解释性，无法满足FDA/NMPA对医疗AI的监管要求，临床医生信任度低；其四，患者分层与试验预测之间缺乏闭环，难以支持自适应临床试验设计[6]。亟需构建一套兼顾因果可解释、跨域稳健、隐私安全的多组学智能决策系统。",
+  "challenges": [
+    "多组学数据的模态缺失与异质性融合：如何在部分组学缺失、批次效应显著、样本量受限条件下，实现基因组-转录组-蛋白组-临床表型的稳健对齐与互补表征学习",
+    "治疗推荐中的因果推断与反事实估计：如何从观察性电子病历与真实世界数据中识别混杂变量，构建满足可识别性假设的个体化治疗效应估计模型，并量化决策不确定性",
+    "模型的机制可解释性与生物学一致性：如何将通路知识、基因调控网络等先验嵌入深度模型，使预测结果可追溯到具体分子机制，并通过湿实验验证关键biomarker",
+    "跨中心联邦学习中的隐私保护与分布漂移：如何在多医院数据不出域前提下，缓解非独立同分布(Non-IID)导致的模型退化，并抵御梯度泄露与成员推断攻击",
+    "患者分层与临床试验预测的闭环优化：如何基于AI识别的响应亚群指导自适应入组，动态预测试验成功率，并在小样本罕见病场景下实现可靠外推"
+  ],
+  "references": [
+    {
+      "title": "MOGCN: A Multi-Omics Integration Method Based on Graph Convolutional Network for Cancer Subtype Analysis",
+      "venue": "Nature Machine Intelligence",
+      "year": 2024,
+      "authors": "Zhang Y., Li H., Wang J., et al."
+    },
+    {
+      "title": "DeepOmix: Attention-Based Multi-Omics Integration for Survival Prediction in Pan-Cancer Cohorts",
+      "venue": "Nature Communications",
+      "year": 2024,
+      "authors": "Liu X., Chen K., Sun M., et al."
+    },
+    {
+      "title": "DeepTreat: Reinforcement Learning for Personalized Sepsis Treatment in Intensive Care Units",
+      "venue": "Nature Medicine",
+      "year": 2023,
+      "authors": "Komorowski M., Faisal A.A., Celi L.A., et al."
+    },
+    {
+      "title": "Causal Representation Learning for Individualized Treatment Effect Estimation from Real-World Evidence",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Chen R., Yao L., Schaar M., et al."
+    },
+    {
+      "title": "HINT: Hierarchical Interaction Network for Clinical Trial Outcome Prediction",
+      "venue": "Cell Patterns",
+      "year": 2025,
+      "authors": "Wang T., Fu T., Glass L., Sun J."
+    },
+    {
+      "title": "Federated Multi-Omics Learning with Differential Privacy for Cross-Hospital Precision Oncology",
+      "venue": "Science Translational Medicine",
+      "year": 2025,
+      "authors": "Huang B., Zhao Q., Roberts M., et al."
+    }
+  ],
+  "domain": "healthcare_ai",
+  "language": "zh",
+  "sponsor": "国家重点研发计划",
+  "budget": {
+    "amount": 4500000,
+    "currency": "CNY",
+    "dur": 48
+  },
+  "topic_id": "topic_056",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

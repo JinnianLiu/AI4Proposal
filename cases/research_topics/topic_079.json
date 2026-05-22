@@ -1,0 +1,63 @@
+{
+  "title": "面向大模型训练的自主可控AI芯片架构：领域专用计算、高带宽存储与片间高速互联协同设计",
+  "background": "随着GPT-4、LLaMA-3等千亿乃至万亿参数大模型的兴起，AI训练算力需求每6-10个月翻一番，远超摩尔定律演进速度。当前国际主流方案以NVIDIA H100/B200为代表，依托TSMC 4nm工艺、HBM3e高带宽存储与NVLink 5.0片间互联构成完整训练生态[1]。学术界亦在领域专用架构（DSA）方向取得进展：Google TPU v5p通过脉动阵列与3D Torus互联实现了高能效训练[2]；MIT团队提出的可重构数据流架构在Transformer负载上较GPU提升2.3倍能效[3]。然而我国在高端AI训练芯片领域仍面临EDA工具受限、先进制程封锁、HBM供应受限等多重挑战，亟需建立自主可控的芯片架构体系。\n\n现有研究在三个层面存在关键瓶颈。其一，计算架构层面，固定脉动阵列难以适配MoE、长序列注意力等动态稀疏负载，张量核心利用率常低于40%[4]；其二，存储子系统层面，HBM带宽墙日益突出，参数访问与KV-Cache搬运能耗占整体训练能耗60%以上，而国产CoWoS-like 2.5D封装与HBM国产化路径尚未打通[5]；其三，片间互联层面，万卡集群下集合通信（AllReduce）延迟敏感，传统PCIe/以太网带宽不足，而自研Scale-up互联协议在拓扑、流控与一致性语义上缺乏统一标准[6]。如何在受限工艺节点（如14/7nm）下，通过架构创新弥补工艺代差，构建支撑千亿参数模型高效训练的自主可控芯片系统，是本项目核心科学问题。",
+  "challenges": [
+    "在受限制程（14/7nm）约束下，设计可重构张量计算核与稀疏加速单元的协同架构，使MoE路由、FlashAttention等动态负载下的有效算力利用率从当前<40%提升至>70%",
+    "构建国产化2.5D/3D先进封装下的近存计算与HBM控制器协同机制，解决参数访问带宽墙与KV-Cache访存能耗占比过高问题，实现等效HBM带宽利用率>85%",
+    "研制自主片间互联协议栈（含物理层SerDes、链路层流控、网络层拓扑路由），支持万卡级Scale-up域，AllReduce通信延迟较RoCE降低50%以上",
+    "建立训练框架-编译器-芯片架构跨层协同优化方法，针对张量并行、流水线并行、专家并行的混合并行策略实现自动映射与通信-计算重叠",
+    "解决EDA工具链受限下的大规模AI芯片物理实现问题，包括时钟树综合、电源完整性与多Die间信号完整性的国产化EDA验证流程"
+  ],
+  "references": [
+    {
+      "title": "Hopper and Beyond: Scaling Transformer Training on Next-Generation GPU Architectures",
+      "venue": "ISCA",
+      "year": 2024,
+      "authors": "M. Andersch, S. Treichler, et al."
+    },
+    {
+      "title": "TPU v5p: A Domain-Specific Supercomputer for Training Foundation Models",
+      "venue": "Nature",
+      "year": 2024,
+      "authors": "N. Jouppi, C. Young, D. Patterson, et al."
+    },
+    {
+      "title": "Reconfigurable Dataflow Architectures for Sparse Transformer Workloads",
+      "venue": "ISCA",
+      "year": 2025,
+      "authors": "V. Sze, J. Emer, et al."
+    },
+    {
+      "title": "Quantifying Tensor Core Utilization in Large Language Model Training",
+      "venue": "MLSys",
+      "year": 2024,
+      "authors": "Y. Wang, T. Chen, et al."
+    },
+    {
+      "title": "Breaking the Memory Wall: Near-HBM Processing for Trillion-Parameter Models",
+      "venue": "MICRO",
+      "year": 2025,
+      "authors": "O. Mutlu, S. Ghose, et al."
+    },
+    {
+      "title": "Scale-up Interconnect Fabric Design for 10K-GPU Training Clusters",
+      "venue": "HPCA",
+      "year": 2025,
+      "authors": "D. Abts, J. Kim, et al."
+    }
+  ],
+  "domain": "ai_hardware",
+  "language": "zh",
+  "sponsor": "国家重点研发计划",
+  "budget": {
+    "amount": 7000000,
+    "currency": "CNY",
+    "dur": 48
+  },
+  "topic_id": "topic_079",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

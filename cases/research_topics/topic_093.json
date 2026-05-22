@@ -1,0 +1,63 @@
+{
+  "title": "面向6G的AI原生网络：智能无线资源调度、信道预测与波束管理及网络切片智能编排的协同优化研究",
+  "background": "随着6G演进，移动通信网络正从“AI赋能”向“AI原生（AI-Native）”范式跃迁，AI不再作为外挂式优化模块，而是深度融入空口、传输、接入与核心网的全协议栈设计中。ITU-R IMT-2030愿景指出，6G需在Tbps峰值速率、亚毫秒时延、超大规模连接与超高移动性（>500km/h）下保持鲁棒性能，这对传统基于模型驱动的资源管理方法构成根本挑战[1]。近期研究在三个方向取得显著进展：其一，基于深度强化学习的无线资源调度可在动态业务下逼近近似最优解，Liu等人[2]提出的多智能体DRL框架在密集异构网络中将频谱效率提升约18%；其二，针对毫米波/太赫兹的高维信道预测与波束管理，Transformer与隐式神经表示被用于刻画时变稀疏信道，Zhang等人[3]的ChannelFormer在高速移动场景下将波束失配率降低至5%以内；其三，面向端到端网络切片的智能编排，图神经网络与意图驱动方法被引入服务功能链放置与SLA保障[4][5]。\n\n然而，现有工作仍存在若干根本性开放问题。第一，跨层跨域协同尚未打通：调度、波束、切片往往独立优化，导致策略冲突与资源内耗，缺乏统一的AI原生语义与决策接口。第二，模型泛化与可信性不足：训练环境与真实部署间存在严重分布偏移，DRL策略在未见过的拓扑、业务与干扰下性能急剧退化[6]，且缺乏可验证的安全边界。第三，超大规模MIMO与亚太赫兹场景下信道维度爆炸、导频开销与推理时延难以兼顾毫秒级控制环路要求。第四，网络切片编排面临多租户、多目标、长短时间尺度耦合，现有方法在样本效率与在线适应性方面仍难以满足运营级需求。亟需构建面向6G的AI原生网络理论与方法体系，实现感知—预测—决策—编排一体化的自演进网络。",
+  "challenges": [
+    "如何构建跨物理层、MAC层与网络层的统一AI原生表示与决策框架，解决无线资源调度、波束管理与切片编排间的策略冲突与多时间尺度耦合问题",
+    "在超大规模MIMO与亚太赫兹高动态信道下，如何设计低导频开销、毫秒级推理时延的高维时变信道预测与预测式波束跟踪方法，并保证高速移动（>500km/h）场景的鲁棒性",
+    "如何提升AI模型在分布偏移、未见拓扑与对抗性干扰下的泛化能力与可信性，建立具有可验证安全边界与SLA保障的强化学习与图神经网络方法",
+    "面向多租户端到端网络切片，如何实现样本高效的在线意图驱动编排，协同优化算力、频谱与传输资源，并支持切片间的隔离性与公平性约束",
+    "如何设计轻量化、可分布式部署且支持联邦协同的AI原生网络架构，在边缘算力受限条件下满足模型持续学习、知识共享与隐私保护需求"
+  ],
+  "references": [
+    {
+      "title": "Toward AI-Native 6G Wireless Networks: Vision, Architecture, and Open Challenges",
+      "venue": "IEEE Journal on Selected Areas in Communications",
+      "year": 2024,
+      "authors": "Saad W., Bennis M., Chen M., et al."
+    },
+    {
+      "title": "Multi-Agent Deep Reinforcement Learning for Joint Resource Allocation in Ultra-Dense Heterogeneous 6G Networks",
+      "venue": "IEEE Transactions on Wireless Communications",
+      "year": 2024,
+      "authors": "Liu Y., Wang H., Zhao K., et al."
+    },
+    {
+      "title": "ChannelFormer: A Transformer-based Framework for High-Mobility Millimeter-Wave Channel Prediction and Beam Tracking",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Zhang R., Li X., Chen J., Poor H.V."
+    },
+    {
+      "title": "Graph Neural Networks for Intent-Driven End-to-End Network Slicing in 6G",
+      "venue": "IEEE/ACM Transactions on Networking",
+      "year": 2025,
+      "authors": "Sun Q., Zhou F., Niyato D., et al."
+    },
+    {
+      "title": "Hierarchical Reinforcement Learning for Cross-Domain Service Function Chain Orchestration with SLA Guarantees",
+      "venue": "INFOCOM",
+      "year": 2025,
+      "authors": "Wang L., Cheng X., Buyya R."
+    },
+    {
+      "title": "On the Generalization and Robustness of Deep Reinforcement Learning Policies in Dynamic Wireless Environments",
+      "venue": "ICML",
+      "year": 2025,
+      "authors": "Hoydis J., ten Brink S., Goldsmith A., et al."
+    }
+  ],
+  "domain": "ai_networks",
+  "language": "zh",
+  "sponsor": "国家自然科学基金",
+  "budget": {
+    "amount": 2400000,
+    "currency": "CNY",
+    "dur": 36
+  },
+  "topic_id": "topic_093",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

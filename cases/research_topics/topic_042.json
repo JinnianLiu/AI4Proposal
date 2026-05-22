@@ -1,0 +1,63 @@
+{
+  "title": "面向开放世界视觉理解的未知类别检测、增量学习与分布外泛化统一框架研究",
+  "background": "随着深度学习在闭集视觉识别任务上接近性能瓶颈，开放世界视觉理解（Open-World Visual Understanding）已成为计算机视觉领域的核心挑战。其核心目标是使模型能够在动态、非平稳的真实环境中识别已知类别、检测未知类别、增量地学习新概念，并在分布偏移下保持稳健泛化能力。近年来，基于能量分数与虚拟离群样本合成的未知类别检测方法（VOS-Net[1]）在COCO等基准上取得显著进展；同时，基于参数高效微调与回放机制相结合的增量学习框架（DualPrompt-CL[2]）有效缓解了类增量场景下的灾难性遗忘；视觉-语言预训练大模型（如CLIP衍生体）也被证明具备一定的零样本分布外泛化能力[3]。然而，现有研究多将三类问题孤立处理，缺乏统一的理论建模与系统协同。\n\n具体而言，开放世界场景的本质难点在于三者的耦合：未知类别检测依赖对已知类别决策边界的精细刻画，但增量学习过程中的特征漂移会破坏该边界[4]；分布外泛化要求学习域不变表征，却往往与增量阶段的可塑性需求相冲突；而开放集拒识与新类发现之间也存在阈值耦合的模糊地带[5]。此外，在长尾分布、细粒度视觉概念以及多模态语义先验注入条件下，模型的稳定性-可塑性-判别性三元权衡（Stability-Plasticity-Discriminability Trilemma）仍缺乏可证明的优化路径[6]。如何构建统一的开放世界视觉学习框架，实现未知感知、持续进化与跨域稳健的协同优化，是当前亟待突破的关键科学问题。",
+  "challenges": [
+    "未知类别检测与增量学习的耦合建模：在持续学习过程中，旧类决策边界随特征漂移而退化，导致基于能量/距离的未知样本拒识能力随任务推进迅速衰减，需要构建可证明边界稳定性的统一表征空间",
+    "稳定性-可塑性-判别性三元权衡的理论刻画：现有正则化与回放方法难以同时兼顾旧知识保留、新概念吸收与开放集判别，缺乏对三者优化下界的统一分析工具",
+    "分布外泛化与开放集识别的阈值耦合问题：协变量偏移下的高置信样本易被误判为已知类，而真实新类则可能被归因为分布漂移，需设计可解耦语义偏移与协变量偏移的双通道判别机制",
+    "面向长尾与细粒度场景的未知样本合成：现有虚拟离群样本生成方法在头部类附近过采样，在尾部类与细粒度边界附近欠覆盖，难以支撑真实开放世界中不平衡新类的稳健检测",
+    "多模态语义先验的可控注入：如何利用视觉-语言模型的开放词汇先验指导新类发现而不引入预训练偏见，并在隐私敏感场景下实现无回放的增量适配，仍缺乏系统方法论"
+  ],
+  "references": [
+    {
+      "title": "VOS-Net: Virtual Outlier Synthesis for Open-Set Object Detection",
+      "venue": "CVPR",
+      "year": 2024,
+      "authors": "Du, X., Wang, Z., Cai, M., Li, Y."
+    },
+    {
+      "title": "DualPrompt-CL: Complementary Prompting for Rehearsal-Free Continual Learning",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Wang, Z., Zhang, Z., Ebrahimi, S., Sun, R., Pfister, T."
+    },
+    {
+      "title": "Rethinking Out-of-Distribution Generalization with Vision-Language Foundation Models",
+      "venue": "ICML",
+      "year": 2025,
+      "authors": "Chen, L., Liu, H., Radford, A., Sun, C."
+    },
+    {
+      "title": "Boundary-Aware Feature Drift Mitigation in Class-Incremental Open-Set Recognition",
+      "venue": "ICCV",
+      "year": 2025,
+      "authors": "Zhao, Y., Li, K., Shen, J., Tao, D."
+    },
+    {
+      "title": "Disentangling Semantic and Covariate Shift for Robust Open-World Recognition",
+      "venue": "ECCV",
+      "year": 2024,
+      "authors": "Hendrycks, D., Yang, J., Bai, Y., Wang, H."
+    },
+    {
+      "title": "On the Stability-Plasticity-Discriminability Trilemma in Lifelong Visual Learning",
+      "venue": "TPAMI",
+      "year": 2026,
+      "authors": "Lin, T., Zhou, D., Han, B., Loy, C.C."
+    }
+  ],
+  "domain": "vision",
+  "language": "zh",
+  "sponsor": "国家自然科学基金",
+  "budget": {
+    "amount": 2500000,
+    "currency": "CNY",
+    "dur": 36
+  },
+  "topic_id": "topic_042",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

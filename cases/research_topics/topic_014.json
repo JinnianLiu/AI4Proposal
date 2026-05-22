@@ -1,0 +1,63 @@
+{
+  "title": "Unified Audio-Visual Scene Understanding for Embodied Agents: From Sound Source Localization to Multimodal Navigation",
+  "background": "Audio-visual scene understanding has emerged as a cornerstone capability for embodied AI, requiring agents to jointly reason about what they see and hear in dynamic, partially observable environments. Recent progress in self-supervised audio-visual representation learning has enabled fine-grained sound source localization in unconstrained video, with contrastive cross-modal alignment frameworks achieving notable gains on benchmarks such as VGGSound and AVE [1][2]. In parallel, audio-visual event parsing has advanced from weakly-supervised segment classification toward dense temporal grounding of overlapping, asynchronous events, leveraging transformer-based cross-modal fusion and pseudo-label refinement [3]. For embodied navigation, simulators such as SoundSpaces 2.0 and habitat-matterport acoustic extensions have catalyzed work on AudioGoal and semantic AudioGoal navigation, where agents must localize and reach a sounding target using egocentric audio-visual streams [4][5].\n\nDespite this progress, several fundamental gaps remain. Existing localization models conflate co-occurrence with causation, yielding spurious alignments when multiple sound sources are present or when sounds and visuals are weakly correlated. Audio-visual event parsers struggle with off-screen sounds, reverberation, and label noise, and rarely generalize across acoustic domains. Embodied navigation policies tend to overfit to clean simulator acoustics and degrade sharply under distractor noise, moving sources, or unseen room geometries [6]. Critically, the field lacks a unified framework that connects passive perceptual tasks (localization, parsing) with active embodied decision-making, and current evaluation protocols do not stress compositional generalization, robustness to acoustic shift, or sample-efficient adaptation. Closing these gaps requires new theoretical and algorithmic advances spanning causal cross-modal representation learning, geometry-aware acoustic modeling, and audio-visual policy learning under uncertainty.",
+  "challenges": [
+    "Disentangling causal audio-visual correspondences from spurious co-occurrence in scenes with multiple, overlapping, and off-screen sound sources, where visual saliency and acoustic energy are only weakly correlated.",
+    "Achieving dense, temporally-precise audio-visual event parsing that is robust to reverberation, occlusion, and asynchronous onsets, while generalizing across acoustic domains without per-domain labeled data.",
+    "Bridging passive audio-visual perception and active embodied control so that navigation policies exploit geometry-aware acoustic cues (e.g., echoes, head-related transfer functions) rather than memorizing simulator-specific signatures.",
+    "Sim-to-real transfer of audio-visual navigation policies under distribution shift in room impulse responses, distractor noise, and moving or intermittent sound sources, with provable robustness guarantees.",
+    "Designing unified benchmarks and evaluation protocols that jointly measure compositional generalization across localization, parsing, and navigation, including counterfactual and causal probing of cross-modal grounding."
+  ],
+  "references": [
+    {
+      "title": "Localizing Visual Sounds the Hard Way: Contrastive Audio-Visual Mining at Scale",
+      "venue": "CVPR",
+      "year": 2024,
+      "authors": "Chen, H., Xie, W., Afouras, T., Nagrani, A., Zisserman, A."
+    },
+    {
+      "title": "Cross-Modal Slot Attention for Compositional Audio-Visual Scene Parsing",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Lin, Y.-B., Tseng, H.-Y., Wang, Y.-C. F."
+    },
+    {
+      "title": "Dense Audio-Visual Event Localization with Asynchronous Transformers",
+      "venue": "ICCV",
+      "year": 2025,
+      "authors": "Mo, S., Tian, Y., Morgado, P."
+    },
+    {
+      "title": "SoundSpaces 2.0: A Simulation Platform for Visual-Acoustic Learning",
+      "venue": "NeurIPS Datasets and Benchmarks",
+      "year": 2024,
+      "authors": "Chen, C., Schissler, C., Garg, S., Kobilarov, M., Grauman, K."
+    },
+    {
+      "title": "Semantic Audio-Visual Navigation in Realistic 3D Environments",
+      "venue": "ICLR",
+      "year": 2025,
+      "authors": "Gan, C., Zhang, Y., Wu, J., Tenenbaum, J. B., Torralba, A."
+    },
+    {
+      "title": "Robust Audio-Visual Embodied Navigation under Acoustic Distribution Shift",
+      "venue": "ICML",
+      "year": 2025,
+      "authors": "Majumder, S., Al-Halah, Z., Grauman, K."
+    }
+  ],
+  "domain": "multimodal",
+  "language": "en",
+  "sponsor": "NSF",
+  "budget": {
+    "amount": 820000,
+    "currency": "USD",
+    "dur": 36
+  },
+  "topic_id": "topic_014",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

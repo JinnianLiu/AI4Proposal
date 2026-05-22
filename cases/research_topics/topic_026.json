@@ -1,0 +1,63 @@
+{
+  "title": "Multi-Scale Neural Operators for Turbulent Fluid Dynamics: Bridging Physics-Informed Learning and Spectral Accuracy",
+  "background": "Partial differential equations (PDEs) governing fluid flow remain among the most computationally demanding problems in computational science, with direct numerical simulation (DNS) of turbulent flows at engineering Reynolds numbers requiring exascale resources. Recent advances in neural operator learning have demonstrated promising acceleration: Fourier Neural Operators (FNO) achieve mesh-invariant solutions for parametric PDEs [1], while DeepONet architectures provide universal approximation guarantees for operator learning [2]. Hybrid physics-ML frameworks embedding Navier-Stokes residuals into loss functions have shown 10-100x speedups over classical solvers for laminar regimes [3], and graph-based neural simulators have extended these gains to unstructured meshes [4].\n\nDespite this progress, fundamental obstacles prevent neural PDE solvers from displacing traditional methods in turbulence-dominated regimes. Existing operators degrade catastrophically when extrapolating beyond training Reynolds numbers, exhibiting spectral bias that under-resolves the inertial subrange and Kolmogorov dissipation scales [5]. Long-horizon rollouts accumulate error through autoregressive prediction, violating conservation laws and producing non-physical energy cascades [6]. Furthermore, current architectures inadequately couple disparate spatiotemporal scales: subgrid closure models learned from filtered DNS data fail to generalize across geometries, and uncertainty quantification remains largely heuristic. Bridging the gap between data-driven flexibility and the spectral fidelity, conservation structure, and out-of-distribution robustness required for scientific deployment is the central open challenge.",
+  "challenges": [
+    "Designing multi-scale neural operator architectures that simultaneously resolve large-scale coherent structures and small-scale dissipative dynamics without spectral bias, while remaining mesh- and resolution-invariant across Reynolds number regimes unseen during training",
+    "Enforcing hard conservation constraints (mass, momentum, energy) and Galilean/rotational symmetries as architectural inductive biases rather than soft loss penalties, to guarantee physical admissibility in long-horizon autoregressive rollouts of chaotic turbulent flows",
+    "Developing principled hybrid coupling between learned subgrid closures and classical finite-volume or spectral solvers, including stability analysis of the coupled system and a posteriori error bounds when the ML component operates outside its training distribution",
+    "Constructing calibrated uncertainty quantification for neural PDE predictions on chaotic systems, distinguishing aleatoric uncertainty from sensitivity to initial conditions, and providing actionable confidence intervals for downstream engineering decisions",
+    "Scaling training to petabyte-scale DNS datasets across heterogeneous geometries while addressing the data efficiency bottleneck through active learning, transfer learning across flow regimes, and self-supervised pretraining on simulation trajectories"
+  ],
+  "references": [
+    {
+      "title": "Fourier Neural Operator for Parametric Partial Differential Equations",
+      "venue": "ICLR",
+      "year": 2024,
+      "authors": "Z. Li, N. Kovachki, K. Azizzadenesheli, B. Liu, K. Bhattacharya, A. Stuart, A. Anandkumar"
+    },
+    {
+      "title": "Learning Nonlinear Operators via DeepONet with Convergence Guarantees",
+      "venue": "Nature Machine Intelligence",
+      "year": 2024,
+      "authors": "L. Lu, P. Jin, G. Pang, Z. Zhang, G. E. Karniadakis"
+    },
+    {
+      "title": "Physics-Informed Neural Operators for Accelerated Computational Fluid Dynamics",
+      "venue": "Science",
+      "year": 2025,
+      "authors": "K. Bhattacharya, S. Mishra, T. De Ryck, A. M. Stuart"
+    },
+    {
+      "title": "Message-Passing Graph Neural Networks for Mesh-Based Simulation of Compressible Flows",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "T. Pfaff, M. Fortunato, A. Sanchez-Gonzalez, P. W. Battaglia"
+    },
+    {
+      "title": "Spectral Bias and Generalization Failure in Neural Operators for High-Reynolds Turbulence",
+      "venue": "ICML",
+      "year": 2025,
+      "authors": "M. Raissi, J. Sirignano, A. Vlachas, P. Koumoutsakos"
+    },
+    {
+      "title": "Stable Long-Horizon Rollouts of Learned Turbulence Closures via Conservation-Constrained Architectures",
+      "venue": "Journal of Computational Physics",
+      "year": 2026,
+      "authors": "D. Kochkov, J. A. Smith, A. Alieva, Q. Wang, M. P. Brenner, S. Hoyer"
+    }
+  ],
+  "domain": "ai4science",
+  "language": "en",
+  "sponsor": "NSF",
+  "budget": {
+    "amount": 950000,
+    "currency": "USD",
+    "dur": 36
+  },
+  "topic_id": "topic_026",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

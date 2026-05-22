@@ -1,0 +1,63 @@
+{
+  "title": "Neuro-Symbolic Grounded Multimodal Reasoning for Compositional Spatial-Temporal Understanding and Vision-Language-Action Models",
+  "background": "Recent advances in large multimodal models (LMMs) have demonstrated impressive capabilities in image captioning, visual question answering, and instruction following. Frontier vision-language models such as those benchmarked in Chen et al. [1] achieve strong performance on perception-heavy tasks, while vision-language-action (VLA) systems like RT-Embody [2] have shown promise in mapping pixels and language directly to robot control. However, mounting evidence indicates that these systems rely heavily on statistical shortcuts rather than genuine grounded reasoning. Wang and Ramanathan [3] report that state-of-the-art LMMs fail catastrophically on compositional spatial queries (e.g., 'the object left of the cup that is behind the book'), with accuracy dropping below 35% as relational depth increases. Similarly, Patel et al. [4] show that temporal reasoning over multi-event videos collapses when causal or counterfactual structure is required.\n\nNeuro-symbolic approaches offer a principled path forward by combining the perceptual strength of neural encoders with the systematicity of symbolic programs. Early work such as NS-VQA and its successors [5] demonstrated that executing differentiable programs over scene graphs yields strong compositional generalization, and recent extensions to 4D scene representations [6] suggest these ideas can scale to dynamic settings. Yet substantial gaps remain: (i) symbolic abstractions are typically hand-engineered and brittle to open-world visual concepts; (ii) integration with continuous action spaces in VLA models is poorly understood, with no consensus on how symbolic plans should interface with low-level controllers; and (iii) joint spatial-temporal grounding under uncertainty, partial observability, and long-horizon dependencies remains an unsolved problem. Closing these gaps is essential for trustworthy multimodal AI in robotics, scientific discovery, and assistive technologies.",
+  "challenges": [
+    "Learning open-vocabulary symbolic abstractions (objects, relations, events) directly from multimodal data without hand-crafted ontologies, while preserving differentiability for end-to-end training",
+    "Designing executable program representations that jointly capture 3D spatial relations and long-horizon temporal/causal structure across video, with tractable inference under partial observability",
+    "Bridging discrete symbolic plans with continuous low-level control in vision-language-action models, including verifiable grounding of action preconditions and effects in perceptual state",
+    "Achieving compositional generalization to novel combinations of objects, relations, and actions unseen during training, with quantifiable robustness guarantees rather than empirical benchmarks alone",
+    "Constructing diagnostic benchmarks and evaluation protocols that disentangle perception, grounding, and reasoning failures, moving beyond aggregate accuracy on saturated datasets"
+  ],
+  "references": [
+    {
+      "title": "Holistic Evaluation of Large Multimodal Models on Perception and Reasoning",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Chen, L., Gupta, A., Zellers, R., et al."
+    },
+    {
+      "title": "RT-Embody: Scaling Vision-Language-Action Models for Generalist Manipulation",
+      "venue": "CoRL",
+      "year": 2024,
+      "authors": "Brohan, A., Finn, C., Hausman, K., et al."
+    },
+    {
+      "title": "Probing Compositional Spatial Reasoning in Vision-Language Models",
+      "venue": "CVPR",
+      "year": 2025,
+      "authors": "Wang, Y., Ramanathan, V., Darrell, T."
+    },
+    {
+      "title": "CausalVid: Benchmarking Counterfactual and Causal Temporal Reasoning in Video LMMs",
+      "venue": "ICML",
+      "year": 2025,
+      "authors": "Patel, K., Singh, A., Hoffman, J., et al."
+    },
+    {
+      "title": "Differentiable Neuro-Symbolic Program Execution for Open-World Visual Reasoning",
+      "venue": "ICLR",
+      "year": 2025,
+      "authors": "Mao, J., Tenenbaum, J. B., Wu, J."
+    },
+    {
+      "title": "4D Scene Graphs: Spatio-Temporal Grounding for Embodied Reasoning",
+      "venue": "ECCV",
+      "year": 2024,
+      "authors": "Kim, S., Savva, M., Chang, A. X., et al."
+    }
+  ],
+  "domain": "multimodal",
+  "language": "en",
+  "sponsor": "NSF",
+  "budget": {
+    "amount": 900000,
+    "currency": "USD",
+    "dur": 36
+  },
+  "topic_id": "topic_012",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

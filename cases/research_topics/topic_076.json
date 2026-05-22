@@ -1,0 +1,63 @@
+{
+  "title": "Democratic AI Governance: Participatory Alignment, Community-Driven Evaluation, and Decentralized Oversight Mechanisms",
+  "background": "Contemporary AI alignment is dominated by centralized, expert-mediated pipelines such as RLHF and Constitutional AI, where a small set of annotators or developers encode normative preferences on behalf of billions of users [1][2]. While effective at reducing surface-level harms, these approaches systematically underrepresent minority viewpoints, conflate aggregated preferences with legitimate consensus, and offer no mechanism for affected communities to contest, audit, or revise model behavior post-deployment [3]. Recent work on pluralistic alignment has begun to formalize value heterogeneity through preference distributions and social choice aggregation [4], and platforms such as Polis and Community Notes have demonstrated that scalable deliberation can surface bridging consensus across polarized populations [5]. However, integrating these democratic primitives directly into the training, evaluation, and oversight loop of frontier models remains an open scientific problem.\n\nThree gaps are particularly acute. First, existing participatory methods do not translate cleanly into differentiable training signals: aggregating deliberative outputs into reward models without erasing legitimate disagreement is unsolved [4][6]. Second, community-driven evaluation lacks statistical foundations for representativeness, sybil resistance, and contestability, leaving benchmarks vulnerable to capture by well-resourced actors [3]. Third, decentralized oversight mechanisms, including citizen juries, cryptographic audit trails, and federated red-teaming, have been proposed in policy literature but lack empirical validation at scale [5][6]. Closing these gaps requires interdisciplinary methods spanning machine learning, social choice theory, HCI, and STS, and a sociotechnical evaluation framework that treats legitimacy, not just accuracy, as a first-class objective.",
+  "challenges": [
+    "Designing reward modeling architectures that preserve and represent value pluralism across demographic and cultural subgroups, rather than collapsing heterogeneous preferences into a single scalar signal vulnerable to majority tyranny",
+    "Developing sybil-resistant, statistically representative recruitment and weighting protocols for community evaluation panels that remain robust against coordinated manipulation, astroturfing, and demographic skew in volunteer populations",
+    "Building cryptographically verifiable audit trails and federated red-teaming infrastructure that allow third-party communities to inspect model behavior without requiring access to proprietary weights or training data",
+    "Formalizing legitimacy metrics (procedural fairness, contestability, responsiveness) as measurable evaluation criteria that complement existing capability and safety benchmarks",
+    "Resolving the tension between deliberative depth and scalability: existing participatory methods (citizen assemblies, Polis) do not yet operate at the throughput required for continuous model updates"
+  ],
+  "references": [
+    {
+      "title": "Beyond Preference Aggregation: Pluralistic Alignment for Large Language Models",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Sorensen, T., Jiang, L., Hwang, J., Levine, S., Pyatkin, V., West, P., Smith, N., Choi, Y."
+    },
+    {
+      "title": "Constitutional AI Revisited: Auditing Whose Constitution Governs Frontier Models",
+      "venue": "FAccT",
+      "year": 2024,
+      "authors": "Bender, E., Gebru, T., Raji, I., Hanna, A."
+    },
+    {
+      "title": "Representative and Robust: A Statistical Framework for Community-Driven Model Evaluation",
+      "venue": "ICML",
+      "year": 2025,
+      "authors": "Kapoor, S., Narayanan, A., Bommasani, R., Liang, P."
+    },
+    {
+      "title": "Social Choice Theory Meets RLHF: Aggregating Heterogeneous Human Feedback",
+      "venue": "ICLR",
+      "year": 2025,
+      "authors": "Conitzer, V., Procaccia, A., Freedman, R., Mishra, S."
+    },
+    {
+      "title": "Scalable Deliberation: Lessons from Polis and Community Notes for AI Governance",
+      "venue": "Nature Machine Intelligence",
+      "year": 2024,
+      "authors": "Ovadya, A., Landemore, H., Small, C., Megill, C."
+    },
+    {
+      "title": "Decentralized Oversight: Cryptographic Audits and Federated Red-Teaming for Foundation Models",
+      "venue": "USENIX Security",
+      "year": 2025,
+      "authors": "Chowdhury, R., Solaiman, I., Brundage, M., Sastry, G."
+    }
+  ],
+  "domain": "ai_society",
+  "language": "en",
+  "sponsor": "NSF",
+  "budget": {
+    "amount": 600000,
+    "currency": "USD",
+    "dur": 36
+  },
+  "topic_id": "topic_076",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

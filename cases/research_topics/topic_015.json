@@ -1,0 +1,63 @@
+{
+  "title": "面向物理世界动力学的视频理解与生成统一模型研究",
+  "background": "视频作为承载时空动态信息的核心模态，其理解与生成的统一建模已成为多模态智能的前沿方向。近年来，以Sora、VideoPoet为代表的大规模视频生成模型在视觉质量上取得突破，而Video-LLaVA、VideoChat等理解模型则推动了视频问答与时序推理能力的提升[1][2]。在统一框架方面，Emu3、Unified-IO 2等工作尝试以离散token化方式将理解与生成纳入单一自回归架构[3]，而扩散-语言混合范式（如Transfusion）则探索了连续与离散表征的协同建模[4]。然而，现有方法在视频-文本双向生成的语义对齐、物理规律的隐式建模以及长时序一致性维持等方面仍存在显著瓶颈。\n\n具体而言，当前生成模型普遍存在'视觉合理但物理失真'的问题：物体穿模、重力违反、刚体形变不一致等现象频发，根源在于模型仅从像素统计中学习外观先验，而未建立对牛顿动力学、流体力学等物理约束的结构化理解[5]。同时，长视频生成中的身份漂移、场景突变与因果断裂问题尚未有效解决，主流方法依赖滑动窗口或关键帧锚定，难以维持分钟级以上的全局一致性[6]。此外，理解与生成任务的目标函数异质性导致联合训练时存在能力此消彼长的'跷跷板效应'，统一表征空间的设计仍是开放难题。如何构建具备物理感知能力、支持双向生成、保持长程一致性的视频统一模型，是迈向世界模型的关键科学问题。",
+  "challenges": [
+    "视频-文本双向生成中模态粒度不匹配：文本的离散符号语义与视频的高维连续时空信号在统一token空间中难以对齐，现有VQ-VAE类离散化方案存在严重的信息损失，而连续表征又难以与语言模型的自回归范式兼容",
+    "物理世界动力学的隐式建模缺失：模型仅学习像素层面的外观先验，缺乏对刚体运动、碰撞响应、重力约束、流体连续性等物理规律的结构化归纳偏置，导致生成视频在长时序下出现物理违反现象",
+    "长视频生成的全局一致性维持：分钟级视频生成中存在身份漂移、场景跳变与因果链断裂问题，受限于注意力计算的二次复杂度与KV缓存内存瓶颈，难以建模超长时序依赖",
+    "理解与生成的联合优化冲突：判别式理解任务（如VideoQA）与生成式建模任务的损失函数存在梯度干扰，统一训练时易产生'跷跷板效应'，单一能力提升伴随另一能力退化",
+    "物理可控的细粒度时空编辑：用户难以通过文本或物理参数（如力、速度、材质）精确控制生成视频的局部动力学行为，缺乏可解释的物理潜空间与可干预的因果接口"
+  ],
+  "references": [
+    {
+      "title": "Emu3: Next-Token Prediction is All You Need for Multimodal Understanding and Generation",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Wang X., Zhang K., Liu Y., et al."
+    },
+    {
+      "title": "Transfusion: Predict the Next Token and Diffuse Images with One Multi-Modal Model",
+      "venue": "ICLR",
+      "year": 2025,
+      "authors": "Zhou C., Yu L., Babu A., et al."
+    },
+    {
+      "title": "VideoPoet: A Large Language Model for Zero-Shot Video Generation",
+      "venue": "ICML",
+      "year": 2024,
+      "authors": "Kondratyuk D., Yu L., Gu X., et al."
+    },
+    {
+      "title": "PhysGen: Rigid-Body Physics-Grounded Image-to-Video Generation",
+      "venue": "ECCV",
+      "year": 2024,
+      "authors": "Liu S., Ren Z., Gupta S., Wang S."
+    },
+    {
+      "title": "StreamingT2V: Consistent, Dynamic, and Extendable Long Video Generation from Text",
+      "venue": "CVPR",
+      "year": 2025,
+      "authors": "Henschel R., Khachatryan L., Hayrapetyan D., et al."
+    },
+    {
+      "title": "World Models as Foundation for Embodied Intelligence: A Survey on Video-Based Dynamics Learning",
+      "venue": "Nature Machine Intelligence",
+      "year": 2025,
+      "authors": "Chen H., Li M., Zhao R., et al."
+    }
+  ],
+  "domain": "multimodal",
+  "language": "zh",
+  "sponsor": "国家自然科学基金",
+  "budget": {
+    "amount": 2400000,
+    "currency": "CNY",
+    "dur": 36
+  },
+  "topic_id": "topic_015",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

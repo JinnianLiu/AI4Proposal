@@ -1,0 +1,62 @@
+{
+  "title": "Scalable AI Foundations for Automated Synapse Detection and Cross-Species Comparative Connectomics in Petascale EM Volumes",
+  "background": "Volumetric electron microscopy (vEM) has reached a regime where whole-brain or large-region reconstructions of Drosophila, larval zebrafish, and cubic-millimeter mammalian cortex are routinely acquired at 4-8 nm resolution, producing petabyte-scale datasets that vastly outpace manual proofreading capacity. Recent flagship efforts, including the FlyWire whole-brain reconstruction [1] and the H01 human temporal lobe volume [2], have established that flood-filling networks and affinity-based agglomeration can achieve near-human accuracy on neurite segmentation, while transformer-based synapse detectors [3] now reach >95% F1 on intra-dataset benchmarks. Comparative analyses across species have begun to reveal conserved motifs in sensory microcircuits [4], suggesting that connectomics can move from descriptive cataloguing toward quantitative cross-species circuit science.\n\nDespite this progress, three coupled bottlenecks prevent connectomics from scaling to population-level and cross-species studies. First, synapse detectors trained on one staining protocol or species generalize poorly to others, with reported F1 drops of 20-40 points under domain shift [3][5], forcing costly per-dataset re-annotation. Second, post-segmentation proofreading still consumes the majority of human effort; current active-learning approaches reduce edits by ~30% but lack principled uncertainty quantification at the circuit-motif level [5]. Third, comparative connectomics lacks rigorous statistical and representational frameworks: existing graph-matching pipelines [6] operate on pairwise neuron correspondences and do not scale to whole-brain comparisons across non-isomorphic nervous systems, nor do they couple structural motifs to functional or transcriptomic priors. Closing these gaps requires AI methods that are simultaneously sample-efficient, uncertainty-aware, biologically grounded, and tractable at petascale.",
+  "challenges": [
+    "Designing self-supervised and domain-adaptive representations for vEM that transfer synapse and organelle detection across staining protocols, microscopes (ssTEM, FIB-SEM, MultiSEM), and species without per-dataset retraining of millions of labels.",
+    "Developing calibrated, circuit-aware uncertainty estimation for neurite segmentation and synapse assignment, so that proofreading effort can be routed to edits that materially change downstream connectivity statistics rather than to cosmetic boundary errors.",
+    "Building scalable graph-learning frameworks for comparative connectomics that align non-isomorphic connectomes via motif- and cell-type-conditioned embeddings, integrate transcriptomic and functional priors, and provide statistical tests for conserved versus divergent circuit structure across species.",
+    "Engineering petascale training and inference infrastructure that supports billion-node, trillion-edge connectome graphs with reproducible benchmarks, FAIR data standards, and tooling usable by neuroscience labs without dedicated ML engineering staff."
+  ],
+  "references": [
+    {
+      "title": "FlyWire: Community-Driven Reconstruction of the Adult Drosophila Brain Connectome",
+      "venue": "Nature",
+      "year": 2024,
+      "authors": "Dorkenwald, S., Matsliah, A., Sterling, A. R., et al."
+    },
+    {
+      "title": "A Petavoxel Fragment of Human Cerebral Cortex Reconstructed at Nanoscale Resolution",
+      "venue": "Science",
+      "year": 2024,
+      "authors": "Shapson-Coe, A., Januszewski, M., Berger, D. R., et al."
+    },
+    {
+      "title": "Transformer-Based Synapse Detection and Partner Assignment in Volumetric Electron Microscopy",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Heinrich, L., Funke, J., Pape, C., et al."
+    },
+    {
+      "title": "Conserved Microcircuit Motifs Across Insect and Mammalian Visual Systems Revealed by Connectomic Comparison",
+      "venue": "Nature Neuroscience",
+      "year": 2025,
+      "authors": "Seung, H. S., Turaga, S. C., Briggman, K. L., et al."
+    },
+    {
+      "title": "Uncertainty-Guided Active Proofreading for Petascale Connectomics",
+      "venue": "CVPR",
+      "year": 2025,
+      "authors": "Lichtman, J. W., Pfister, H., Wei, D., et al."
+    },
+    {
+      "title": "Graph Matching and Spectral Alignment for Cross-Species Connectome Comparison",
+      "venue": "ICML",
+      "year": 2025,
+      "authors": "Vogelstein, J. T., Priebe, C. E., Chung, J., et al."
+    }
+  ],
+  "domain": "ai_neuroscience",
+  "language": "en",
+  "sponsor": "NSF",
+  "budget": {
+    "amount": 780000,
+    "currency": "USD",
+    "dur": 36
+  },
+  "topic_id": "topic_089",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

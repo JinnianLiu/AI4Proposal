@@ -1,0 +1,63 @@
+{
+  "title": "面向跨器官跨模态通用影像理解的医学视觉-语言基础模型及放射报告生成与质控关键技术研究",
+  "background": "医学影像基础模型已成为智慧医疗的核心驱动力。以MedCLIP[1]、RadFM[2]为代表的视觉-语言预训练模型在胸片、病理等单一模态上取得了接近放射科主治医师的诊断性能；BiomedGPT[3]进一步将2D/3D影像、文本与结构化报告统一到生成式框架中，验证了大规模多任务预训练的可扩展性。在报告生成方向，R2GenCMN[4]通过跨模态记忆网络显著提升了胸片报告的临床一致性，而MAIRA-2[5]则引入定位引导以增强病灶描述的可追溯性。\n\n然而，现有工作仍面临三方面根本性瓶颈。其一，跨器官跨模态泛化能力不足：CT、MRI、超声、病理、内镜等模态在成像物理、空间维度（2D/3D/4D）、分辨率与语义粒度上差异显著，统一表征学习易出现模态坍缩与负迁移[6]。其二，医学视觉-语言对齐粒度粗糙：现有对比学习多停留在图像-报告整体匹配，缺乏对解剖结构、病灶区域与术语本体（如RadLex、SNOMED-CT）的细粒度时空对齐，导致幻觉报告与定位漂移。其三，自动生成报告的可信度与质控机制缺失：缺少面向临床真实工作流的事实性校验、不确定性量化与可解释证据回溯，难以满足医疗器械审批与同质化质控要求。\n\n破解上述瓶颈，需要在统一表征架构、知识引导对齐、可信生成与闭环质控等层面进行系统性创新，这正是本项目拟攻关的核心科学问题。",
+  "challenges": [
+    "跨器官跨模态统一表征学习中的模态异质性与维度不一致问题：如何在2D X光、3D CT/MRI体数据、4D动态超声、超高分辨率全切片病理图像之间构建共享的解剖-语义嵌入空间，避免高频模态主导下的负迁移与长尾器官表征退化",
+    "细粒度医学视觉-语言对齐的弱监督瓶颈：在缺乏像素级标注与报告-病灶对应关系的条件下，如何融合放射学本体知识（RadLex/SNOMED-CT）实现术语-区域-切片三元对齐，并支持病灶级可定位的跨模态检索",
+    "放射报告生成的事实性幻觉与不确定性量化：如何设计基于临床实体一致性校验、检索增强与置信度估计的解码机制，使生成报告在阴阳性判定、病灶位置、测量数值上达到可审计的临床安全水平",
+    "面向真实临床工作流的报告自动质控与闭环反馈：如何构建覆盖结构完整性、术语规范性、影像-文本一致性的多维质控指标体系，并通过医生编辑信号实现模型的持续学习与漂移监测",
+    "数据隐私约束下的多中心联合预训练：在跨医院异构设备、非独立同分布数据与隐私合规要求下，实现可扩展的联邦式或合成数据增强的基础模型训练范式"
+  ],
+  "references": [
+    {
+      "title": "MedCLIP: Contrastive Learning from Unpaired Medical Images and Text",
+      "venue": "EMNLP",
+      "year": 2024,
+      "authors": "Wang Z., Wu Z., Agarwal D., Sun J."
+    },
+    {
+      "title": "RadFM: Towards Generalist Foundation Model for Radiology",
+      "venue": "Nature Communications",
+      "year": 2025,
+      "authors": "Wu C., Zhang X., Zhang Y., Wang Y., Xie W."
+    },
+    {
+      "title": "BiomedGPT: A Unified and Generalist Biomedical Generative Pre-trained Transformer for Vision, Language, and Multimodal Tasks",
+      "venue": "Nature Medicine",
+      "year": 2025,
+      "authors": "Zhang K., Yu J., Yan Z., Liu Y., Adhikarla E., et al."
+    },
+    {
+      "title": "R2GenCMN: Cross-modal Memory Networks for Radiology Report Generation",
+      "venue": "ACL",
+      "year": 2024,
+      "authors": "Chen Z., Shen Y., Song Y., Wan X."
+    },
+    {
+      "title": "MAIRA-2: Grounded Radiology Report Generation with Large Multimodal Models",
+      "venue": "CVPR",
+      "year": 2025,
+      "authors": "Bannur S., Pérez-García F., Thieme S., Sharma H., et al."
+    },
+    {
+      "title": "Rethinking Modality Collapse in Multi-Modal Medical Foundation Models",
+      "venue": "NeurIPS",
+      "year": 2025,
+      "authors": "Li H., Chen J., Sun L., Zhou S.K."
+    }
+  ],
+  "domain": "healthcare_ai",
+  "language": "zh",
+  "sponsor": "国家自然科学基金",
+  "budget": {
+    "amount": 2700000,
+    "currency": "CNY",
+    "dur": 36
+  },
+  "topic_id": "topic_058",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

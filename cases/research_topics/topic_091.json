@@ -1,0 +1,63 @@
+{
+  "title": "面向数学发现的形式化自动推理与神经符号融合方法研究",
+  "background": "近年来，大语言模型（LLM）与形式化证明助手（Lean、Coq、Isabelle）的结合显著推动了AI辅助数学研究的发展。DeepMind提出的AlphaProof系统在国际数学奥林匹克中取得银牌水平表现，标志着神经引导的形式化搜索范式的成熟[1]；Polu等人提出的GPT-f及其后续工作展示了语言模型在Metamath与Lean中进行策略预测的潜力[2]；Yang等人构建的LeanDojo数据集与检索增强证明器ReProver为可复现的形式化推理研究奠定了基础[3]。在数学结构发现方面，Davies等人在Nature上首次系统展示了机器学习如何辅助纯数学家提出新猜想并发现拓扑与表示论之间的新联系[4]，FunSearch则利用LLM进行程序搜索，在帽集问题和装箱问题上发现了优于已知最优解的构造[5]。\n\n尽管如此，当前方法仍面临深层瓶颈：其一，自然语言数学陈述到Lean/Coq形式化语句的自动翻译（autoformalization）准确率在研究级数学上仍低于40%，缺乏对隐含约定与跨领域记号的稳健处理[6]；其二，证明搜索严重依赖战术级（tactic-level）短视决策，缺少长程引理规划与中间猜想生成机制；其三，神经模型与符号引擎在反馈回路中的耦合粒度过粗，导致计算资源浪费且难以扩展到需要数千步推理的现代数学定理；其四，AI驱动的数学结构发现尚停留在猜想生成阶段，缺乏可验证、可解释的端到端发现-形式化-证明闭环。如何在形式化严格性、神经直觉性与数学创造性之间建立统一的方法论框架，是本领域亟待突破的核心科学问题。",
+  "challenges": [
+    "研究级数学陈述的高精度自动形式化：处理隐式量词、跨子领域记号歧义与非平凡类型推断，构建从arXiv论文到Mathlib可编译语句的鲁棒翻译机制",
+    "面向长程证明的分层规划与引理猜想生成：突破战术级贪心搜索局限，设计支持中间引理自动提出、子目标分解与失败回溯的神经符号规划架构",
+    "神经模型与形式化内核的细粒度协同：构建低延迟的证明状态编码与反馈机制，使LLM能够利用类型检查器与SMT求解器的部分结果指导搜索",
+    "可验证的数学结构自动发现：建立从大规模数学对象数据中归纳猜想、自动构造反例并形式化证明的闭环系统，确保发现结果具备数学严格性",
+    "训练数据稀缺与分布偏移：在现有形式化语料规模下解决高阶数学（代数几何、同伦理论等）的数据匮乏问题，发展自博弈与合成证明数据生成方法"
+  ],
+  "references": [
+    {
+      "title": "AlphaProof: Neural-Guided Formal Reasoning at Olympiad Level",
+      "venue": "Nature",
+      "year": 2025,
+      "authors": "Hubert, T., Schrittwieser, J., et al."
+    },
+    {
+      "title": "Generative Language Modeling for Automated Theorem Proving",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Polu, S., Han, J., Sutskever, I."
+    },
+    {
+      "title": "LeanDojo: Theorem Proving with Retrieval-Augmented Language Models",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Yang, K., Swope, A., Gu, A., et al."
+    },
+    {
+      "title": "Advancing Mathematics by Guiding Human Intuition with AI",
+      "venue": "Nature",
+      "year": 2024,
+      "authors": "Davies, A., Veličković, P., Buesing, L., et al."
+    },
+    {
+      "title": "Mathematical Discoveries from Program Search with Large Language Models",
+      "venue": "Nature",
+      "year": 2024,
+      "authors": "Romera-Paredes, B., Barekatain, M., Novikov, A., et al."
+    },
+    {
+      "title": "Autoformalization with Large Language Models for Research-Level Mathematics",
+      "venue": "ICML",
+      "year": 2025,
+      "authors": "Wu, Y., Jiang, A. Q., Li, W., et al."
+    }
+  ],
+  "domain": "ai4math",
+  "language": "zh",
+  "sponsor": "国家自然科学基金",
+  "budget": {
+    "amount": 2000000,
+    "currency": "CNY",
+    "dur": 36
+  },
+  "topic_id": "topic_091",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

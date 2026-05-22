@@ -1,0 +1,63 @@
+{
+  "title": "面向大语言模型的隐私保护理论与关键技术：训练数据记忆消除、成员推理防御与联邦逆向攻击防护",
+  "background": "随着GPT、LLaMA等大语言模型(LLM)参数规模突破千亿级，其在预训练阶段对海量语料的深度记忆引发了严峻的隐私泄露风险。Carlini等[1]在USENIX Security 2024的研究证实，攻击者可通过精心构造的前缀提示从GPT系列模型中无差别地提取个人身份信息、医疗记录乃至完整的版权文本，提取成功率随模型规模呈对数增长。与此同时，成员推理攻击(MIA)的精度也在不断攀升，Mattern等[2]在ACL 2025提出的基于参考模型校准的邻域攻击将LLM上的MIA AUC提升至0.89以上，传统差分隐私训练在效用-隐私权衡上代价高昂。\n\n机器遗忘(Machine Unlearning)被视为应对GDPR\"被遗忘权\"的关键技术。Eldan与Russinovich[3]在NeurIPS 2024提出的梯度上升类遗忘方法虽能在小规模任务上抹除特定知识，但近期Shi等[4]在ICML 2025的系统评测显示，现有遗忘算法普遍存在\"伪遗忘\"现象——模型在表层输出上回避目标内容，但内部表征仍保留可被探测的痕迹，且容易诱发灾难性遗忘与能力退化。在联邦学习场景下，Zhang等[5]在CVPR 2025揭示，即使采用安全聚合协议，攻击者仍可借助梯度反演与扩散先验从客户端更新中重建分辨率达256×256的训练样本，对医疗、金融领域的横向联邦构成实质威胁。\n\n综上，当前研究在以下方面存在显著空白：缺乏对LLM记忆机制的可解释性刻画与可证明的遗忘保证；隐私防御与模型效用的权衡缺乏紧致的理论下界；联邦场景下的逆向攻击防护尚未形成兼顾通信效率与隐私强度的统一框架。亟需从机理建模、算法设计与系统实现三个层面构建面向大模型的端到端隐私保护体系。",
+  "challenges": [
+    "如何刻画大语言模型中训练数据记忆的神经机制，建立从参数空间到样本可提取性的可解释映射，并为记忆消除提供信息论意义下的可证明界",
+    "如何设计具有认证保证(certified guarantee)的高效机器遗忘算法，在百亿参数规模下避免\"伪遗忘\"与灾难性遗忘，同时将再训练成本降低到原成本的5%以内",
+    "如何针对自适应、基于参考模型校准的新型成员推理攻击构建紧致防御，突破现有差分隐私在LLM微调上效用损失大于15%的瓶颈",
+    "如何在联邦学习中抵御基于扩散先验与梯度反演的高保真模型逆向重建攻击，在低通信开销下实现客户端样本不可重建性的密码学级保证",
+    "如何统一差分隐私、机器遗忘与安全聚合的形式化语义，建立面向大模型全生命周期(预训练-微调-部署-下线)的复合隐私度量与审计框架"
+  ],
+  "references": [
+    {
+      "title": "Scalable Extraction of Training Data from Production Language Models",
+      "venue": "USENIX Security Symposium",
+      "year": 2024,
+      "authors": "N. Carlini, J. Hayes, M. Nasr, A. Jagielski, et al."
+    },
+    {
+      "title": "Membership Inference Attacks against Language Models via Neighbourhood Comparison",
+      "venue": "ACL",
+      "year": 2025,
+      "authors": "J. Mattern, F. Mireshghallah, Z. Jin, B. Schölkopf, et al."
+    },
+    {
+      "title": "Who's Harry Potter? Approximate Unlearning in Large Language Models",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "R. Eldan, M. Russinovich"
+    },
+    {
+      "title": "MUSE: Machine Unlearning Six-Way Evaluation for Language Models",
+      "venue": "ICML",
+      "year": 2025,
+      "authors": "W. Shi, J. Lee, Y. Huang, S. Malladi, et al."
+    },
+    {
+      "title": "Diffusion-Guided Gradient Inversion: Reconstructing High-Resolution Images from Federated Updates",
+      "venue": "CVPR",
+      "year": 2025,
+      "authors": "H. Zhang, L. Wang, K. Chen, T. Goldstein"
+    },
+    {
+      "title": "Differentially Private Fine-tuning of Foundation Models with Tight Utility Bounds",
+      "venue": "Nature Machine Intelligence",
+      "year": 2024,
+      "authors": "X. Liu, F. Tramèr, A. Thakurta, et al."
+    }
+  ],
+  "domain": "privacy_security",
+  "language": "zh",
+  "sponsor": "国家自然科学基金",
+  "budget": {
+    "amount": 2400000,
+    "currency": "CNY",
+    "dur": 36
+  },
+  "topic_id": "topic_032",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

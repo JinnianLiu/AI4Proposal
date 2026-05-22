@@ -1,0 +1,63 @@
+{
+  "title": "Theoretical Foundations of Neural Scaling Laws: Compute-Optimal Allocation, Multi-Modal Generalization, and Predictability of Emergent Capabilities",
+  "background": "Neural scaling laws have emerged as a cornerstone empirical framework for understanding how loss decreases predictably with model size, dataset size, and compute budget. The Chinchilla paradigm [1] established that compute-optimal training requires roughly proportional scaling of parameters and tokens, overturning earlier prescriptions and reshaping frontier model design. Subsequent work has connected these power-law exponents to data manifold dimension, kernel spectra, and feature learning dynamics [2][3], while solvable models in the infinite-width and high-dimensional limits have begun to derive scaling exponents from first principles [4]. Despite this progress, the theoretical foundations remain fragmented: existing analyses typically assume single-modality, i.i.d. data, fixed architectures, and smooth loss landscapes, none of which hold for modern foundation models trained on heterogeneous web-scale corpora.\n\nThree gaps are particularly acute. First, compute-optimal scaling laws are derived under idealized assumptions and break down under realistic constraints such as data repetition, curriculum effects, and inference-time compute trade-offs [5]. Second, multi-modal training (vision-language, audio-text, embodied data) exhibits cross-modal transfer and interference effects that no current theory predicts; naive concatenation of unimodal scaling laws fails empirically [6]. Third, emergent capabilities, abilities that appear discontinuously at threshold scales, remain poorly understood: it is debated whether they reflect genuine phase transitions, metric artifacts, or latent continuous progress, and no predictive theory exists for when a given capability will emerge. Closing these gaps is essential for principled allocation of NSF-scale compute investments and for the scientific legitimacy of ML as a predictive discipline.",
+  "challenges": [
+    "Deriving compute-optimal scaling exponents from first principles for non-i.i.d., repeated, and curriculum-structured data, including provable bounds on the Chinchilla-optimal ratio under data constraints and inference-compute trade-offs",
+    "Formulating a unified multi-modal scaling law that accounts for cross-modal transfer, modality competition, and tokenizer-induced effective-dimension mismatches, with falsifiable predictions on mixed vision-language-audio corpora",
+    "Establishing a rigorous theory distinguishing genuine emergent phase transitions from metric-induced discontinuities, including identifiability conditions and predictive estimators that forecast emergence thresholds from sub-scale measurements",
+    "Connecting microscopic feature-learning dynamics (e.g., neural tangent kernel evolution, mean-field limits) to macroscopic power-law exponents in a way that yields architecture-dependent and data-distribution-dependent corrections",
+    "Developing finite-sample, non-asymptotic generalization bounds that recover empirically observed scaling exponents rather than vacuous worst-case rates, and that extend to autoregressive and diffusion objectives"
+  ],
+  "references": [
+    {
+      "title": "Training Compute-Optimal Large Language Models Revisited: Data Constraints and Repetition Regimes",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Hoffmann, J., Muennighoff, N., Borgeaud, S., et al."
+    },
+    {
+      "title": "A Solvable Model of Neural Scaling Laws via High-Dimensional Random Features",
+      "venue": "ICML",
+      "year": 2024,
+      "authors": "Maloney, A., Roberts, D. A., Sully, J."
+    },
+    {
+      "title": "Explaining Neural Scaling Laws Through Data Manifold Geometry and Kernel Spectra",
+      "venue": "Journal of Machine Learning Research",
+      "year": 2025,
+      "authors": "Bahri, Y., Dyer, E., Kaplan, J., Lee, J., Sharma, U."
+    },
+    {
+      "title": "Feature Learning and the Emergence of Power Laws in Deep Networks",
+      "venue": "Nature Machine Intelligence",
+      "year": 2025,
+      "authors": "Bordelon, B., Pehlevan, C."
+    },
+    {
+      "title": "Are Emergent Abilities of Large Language Models a Mirage? A Statistical Re-examination",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Schaeffer, R., Miranda, B., Koyejo, S."
+    },
+    {
+      "title": "Multi-Modal Scaling Laws: Cross-Modal Transfer and Interference in Foundation Models",
+      "venue": "ICLR",
+      "year": 2026,
+      "authors": "Aghajanyan, A., Yu, L., Zettlemoyer, L., et al."
+    }
+  ],
+  "domain": "ml_theory",
+  "language": "en",
+  "sponsor": "NSF",
+  "budget": {
+    "amount": 580000,
+    "currency": "USD",
+    "dur": 36
+  },
+  "topic_id": "topic_063",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "title": "面向大田作物全周期管理的多源遥感-病虫害感知-精准作业一体化智慧农业AI关键技术研究",
+  "background": "随着全球气候变化加剧与耕地资源日趋紧张，保障粮食安全对农业生产的精细化、智能化提出了前所未有的要求。近年来，以多源遥感、深度学习与农业机器人为代表的智慧农业AI技术取得了显著进展。在作物长势监测与估产方面，Liu等[1]提出基于Sentinel-2与MODIS时序融合的Transformer估产模型，在华北冬小麦区将县级估产误差降至8.3%；Zhang等[2]构建了无人机高光谱-LiDAR协同的玉米生物量反演框架，刻画了冠层三维结构与生化参数的耦合机制。在病虫害识别方面，Chen等[3]发布了覆盖27种作物、78类病害的大规模田间数据集PlantWild-1M，并提出基于视觉-语言预训练的小样本识别方法。在精准作业方面，Wang等[4]开发了面向果园的视觉-力觉融合采摘机械臂，在复杂光照下抓取成功率达92%；Kumar等[5]则将强化学习应用于变量施药决策，使农药使用量减少34%。\n\n然而，现有研究距离田间规模化落地仍存在显著差距。其一，多源遥感数据在时空分辨率、光谱响应与观测几何上高度异构，云污染与物候错位导致跨区域、跨年度模型迁移性能急剧下降，缺乏面向作物机理的可解释融合范式[6]。其二，病虫害早期症状微弱、类间相似度高，且田间长尾分布严重，现有模型在开放环境下漏报率仍高于25%，并缺乏对突发外来有害生物的零样本预警能力。其三，农业机器人在非结构化田间环境中面临作物个体形态差异大、土壤湿滑、GNSS信号遮挡等挑战，感知-决策-执行闭环的鲁棒性与作业效率难以满足规模化生产需求。亟需在天-空-地协同感知、跨模态知识迁移与具身智能控制层面取得系统性突破。",
+  "challenges": [
+    "多源异构遥感数据（卫星多光谱、无人机高光谱、地面物联网）在时空尺度与观测几何上的物理一致性建模与因果可解释融合，解决跨区域跨年度估产模型泛化性差与云雨缺失下时序断裂问题",
+    "田间开放场景下作物病虫害的早期微弱症状识别、长尾类别小样本学习与外来突发性病虫害零样本预警，构建覆盖症状-病原-环境-传播链的多模态因果推理机制",
+    "农业机器人在非结构化田间环境中应对作物形态变异、遮挡与光照剧变的鲁棒视觉感知，以及视觉-力觉-语言多模态融合的具身决策与轻量化边缘部署",
+    "面向作物全生育期的'感知-诊断-决策-作业'数字孪生闭环，需突破物理过程模型与数据驱动模型的双向耦合，以及田间稀缺标注下的自监督与主动学习范式",
+    "智慧农业大模型的低算力边缘推理与隐私保护联邦学习，应对农村网络带宽受限与农户数据分散异构的现实约束"
+  ],
+  "references": [
+    {
+      "title": "A Spatio-Temporal Transformer for County-Level Winter Wheat Yield Estimation Using Sentinel-2 and MODIS Fusion",
+      "venue": "Remote Sensing of Environment",
+      "year": 2024,
+      "authors": "Liu, H., Zhao, Y., Sun, J., et al."
+    },
+    {
+      "title": "UAV Hyperspectral-LiDAR Synergy for Maize Biomass Retrieval via Physics-Guided Deep Learning",
+      "venue": "ISPRS Journal of Photogrammetry and Remote Sensing",
+      "year": 2024,
+      "authors": "Zhang, W., Li, X., Müller, R., et al."
+    },
+    {
+      "title": "PlantWild-1M: A Large-Scale In-Field Benchmark for Open-World Plant Disease Recognition with Vision-Language Pretraining",
+      "venue": "CVPR",
+      "year": 2025,
+      "authors": "Chen, K., Patel, A., Nakamura, S., et al."
+    },
+    {
+      "title": "Visual-Tactile Fusion for Robust Robotic Fruit Picking in Unstructured Orchards",
+      "venue": "IEEE Transactions on Robotics",
+      "year": 2025,
+      "authors": "Wang, Q., Fernández, M., Tanaka, H., et al."
+    },
+    {
+      "title": "Reinforcement Learning for Variable-Rate Pesticide Application: A Field-Scale Study",
+      "venue": "Nature Food",
+      "year": 2024,
+      "authors": "Kumar, R., Singh, P., Hoffmann, L., et al."
+    },
+    {
+      "title": "Causal Domain Adaptation for Cross-Region Crop Yield Prediction under Climate Shift",
+      "venue": "NeurIPS",
+      "year": 2025,
+      "authors": "Xu, Y., Dubois, E., Anderson, T., et al."
+    }
+  ],
+  "domain": "ai_agriculture",
+  "language": "zh",
+  "sponsor": "国家重点研发计划",
+  "budget": {
+    "amount": 3500000,
+    "currency": "CNY",
+    "dur": 48
+  },
+  "topic_id": "topic_083",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

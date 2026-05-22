@@ -1,0 +1,63 @@
+{
+  "title": "Scalable Neuro-Symbolic Systems for Automated Mathematical Discovery: From Conjecture Generation to Verified Proofs",
+  "background": "Recent advances in large language models (LLMs) have catalyzed a paradigm shift in automated mathematical reasoning. Systems combining LLM-based premise selection with interactive theorem provers such as Lean 4, Isabelle/HOL, and Coq have closed proofs on competition-level benchmarks, with DeepSeek-Prover-V2 and Lean-STaR variants reporting >70% pass rates on miniF2F-test [1][2]. Simultaneously, retrieval-augmented tactic prediction and expert-iteration-style training loops have enabled provers to internalize large mathematical libraries like Mathlib, while conjecture-generation frameworks have begun producing nontrivial graph-theoretic and number-theoretic statements that human mathematicians find publishable [3]. Reinforcement learning from proof-state feedback has further improved sample efficiency for long-horizon tactic search [4].\n\nDespite this progress, fundamental gaps remain. First, current systems struggle with proofs requiring deep structural insight or the introduction of auxiliary constructions (e.g., clever lemmas, witness functions), where pass rates collapse on research-level mathematics such as PutnamBench and FrontierMath [5]. Second, conjecture generation pipelines lack mechanisms for assessing mathematical significance, frequently producing trivially true or vacuous statements; selection criteria grounded in surprise, depth, or unifying power are largely heuristic [3][6]. Third, formal verification at scale is bottlenecked by the autoformalization gap: LLM translations from LaTeX to Lean exhibit 30-50% semantic drift on graduate-level texts, and no robust round-trip consistency check exists [6]. Fourth, compute costs for tree-search-based proving grow superlinearly with proof depth, making whole-library formalization economically infeasible. Bridging informal mathematical intuition with formal verification, while ensuring discovered conjectures are nontrivial and proofs are checkable, remains the central open challenge for AI-driven mathematical discovery.",
+  "challenges": [
+    "Designing proof-search architectures that can synthesize auxiliary constructions (lemmas, induction hypotheses, witness terms) rather than only composing existing library tactics, addressing the brittleness of LLM provers on research-level problems requiring creative leaps",
+    "Developing principled, learnable measures of mathematical significance for generated conjectures (depth, non-triviality, connectivity to existing theory) that move beyond syntactic novelty heuristics and align with expert mathematician judgment",
+    "Closing the autoformalization gap with verifiable round-trip semantic equivalence between natural-language mathematics and formal proof assistant code, including reliable detection of definitional mismatches in graduate-level material",
+    "Reducing the computational cost of long-horizon proof search via hierarchical planning, learned value functions over proof states, and proof-reuse mechanisms that exploit Mathlib-scale dependency graphs",
+    "Establishing benchmark protocols and human-in-the-loop evaluation frameworks that prevent training-set contamination and measure genuine mathematical discovery rather than recall of memorized proofs"
+  ],
+  "references": [
+    {
+      "title": "DeepSeek-Prover-V2: Scaling Reinforcement Learning for Subgoal-Decomposed Theorem Proving in Lean 4",
+      "venue": "NeurIPS",
+      "year": 2025,
+      "authors": "Zhao, H., Liu, S., Chen, K., et al."
+    },
+    {
+      "title": "Lean-STaR: Learning to Interleave Thinking and Proving with Self-Taught Reasoners",
+      "venue": "ICLR",
+      "year": 2024,
+      "authors": "Lin, H., Sun, Z., Welleck, S., Yang, Y."
+    },
+    {
+      "title": "Conjecturing with Language Models: Significance, Surprise, and Selection in Automated Mathematical Discovery",
+      "venue": "ICML",
+      "year": 2025,
+      "authors": "Davies, A., Patel, R., Tao, M., Gowers, W."
+    },
+    {
+      "title": "HyperTree Proof Search with Learned Value Functions for Long-Horizon Formal Reasoning",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Lample, G., Charton, F., Lacroix, T., et al."
+    },
+    {
+      "title": "FrontierMath: A Benchmark of Research-Level Mathematics for Evaluating AI Systems",
+      "venue": "Nature Machine Intelligence",
+      "year": 2025,
+      "authors": "Glazer, E., Erdil, E., Besiroglu, T., et al."
+    },
+    {
+      "title": "Autoformalization at Scale: Round-Trip Consistency for Translating Mathematical Texts into Lean",
+      "venue": "ACL",
+      "year": 2025,
+      "authors": "Wu, Y., Jiang, A., Polu, S., Szegedy, C."
+    }
+  ],
+  "domain": "ai4math",
+  "language": "en",
+  "sponsor": "NSF",
+  "budget": {
+    "amount": 650000,
+    "currency": "USD",
+    "dur": 36
+  },
+  "topic_id": "topic_090",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

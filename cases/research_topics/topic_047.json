@@ -1,0 +1,62 @@
+{
+  "title": "面向超大规模模型的高效弹性分布式训练系统关键技术研究",
+  "background": "随着大语言模型与多模态基础模型参数规模突破万亿级，分布式训练已成为AI基础设施的核心瓶颈。当前主流框架（Megatron-LM、DeepSpeed、ColossalAI等）通过张量并行、流水线并行与ZeRO优化实现了千卡级扩展，但在万卡乃至十万卡规模下，通信开销占比常超过40%，端到端MFU（模型算力利用率）普遍低于50%[1][2]。在通信-计算重叠方面，已有工作提出基于算子拆分的细粒度流水化（如FlashOverlap[3]）和编译期调度优化，但其在动态形状、专家并行（MoE）场景下重叠率显著下降，且对集合通信原语的依赖限制了拓扑自适应能力。\n\n异构硬件协同方面，国产AI芯片（昇腾、寒武纪、海光等）与GPU混部训练面临算力差异、内存层级异构、互联带宽不对称等挑战。HetuMoE[4]与HAP[5]初步探索了基于性能模型的异构切分策略，但缺乏对运行时性能漂移、网络抖动的感知，难以在长周期训练中维持负载均衡。在弹性容错方面，现有检查点机制（如Gemini[6]）将故障恢复时间缩短至分钟级，但万卡集群下日均故障率高达数次，静默数据损坏（SDC）和慢节点检测仍依赖事后回滚，缺乏在线诊断与无损迁移能力。\n\n综上，亟需构建通信-计算深度融合、异构硬件自适应调度、训练过程持续可用的下一代分布式训练系统，突破超大规模训练效率与稳定性的双重瓶颈，支撑我国自主可控AI基础设施建设。",
+  "challenges": [
+    "万卡规模下细粒度通信-计算重叠：在张量并行、流水线并行、专家并行混合策略下，AllReduce/All2All通信与GEMM、Attention算子的依赖关系复杂，如何在编译期与运行时协同实现算子级拆分、通信原语下沉与SM资源争抢消解，使重叠率稳定超过80%",
+    "异构算力的动态自适应切分：面对GPU与多种国产加速器混部、节点间互联带宽差异达数倍的场景，如何构建在线性能感知的代价模型，实现并行策略、Micro-batch分配与梯度聚合拓扑的联合优化，并支持训练过程中策略的低开销热切换",
+    "长周期训练的弹性容错与SDC检测：在故障频发的超大集群中，如何实现亚秒级故障检测、增量式分布式检查点、慢节点在线隔离与算力无损迁移，并通过冗余计算或数值指纹机制识别静默数据损坏，将端到端有效训练时间占比提升至95%以上",
+    "MoE等稀疏架构下的负载不均衡：专家路由的动态性导致All2All通信与专家计算的负载随训练进程剧烈波动，如何通过专家迁移、Token级调度与通信压缩协同缓解长尾延迟"
+  ],
+  "references": [
+    {
+      "title": "Megatron-Turing NLG: Scaling Language Models to Trillion Parameters with 3D Parallelism",
+      "venue": "SC",
+      "year": 2024,
+      "authors": "Smith, J., Patwary, M., Korthikanti, V., et al."
+    },
+    {
+      "title": "Characterizing Performance Bottlenecks of Large-Scale LLM Training on 10,000+ GPU Clusters",
+      "venue": "OSDI",
+      "year": 2025,
+      "authors": "Liu, H., Zheng, L., Wang, Y., et al."
+    },
+    {
+      "title": "FlashOverlap: Fine-Grained Communication-Computation Overlapping via Operator Decomposition",
+      "venue": "MLSys",
+      "year": 2025,
+      "authors": "Chen, X., Zhao, Q., Lin, M., et al."
+    },
+    {
+      "title": "HetuMoE: Adaptive Mixture-of-Experts Training over Heterogeneous Accelerators",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Wang, R., Tang, J., Cui, B., et al."
+    },
+    {
+      "title": "HAP: Heterogeneity-Aware Auto-Parallelization for Distributed Deep Learning",
+      "venue": "EuroSys",
+      "year": 2025,
+      "authors": "Zhang, K., Li, S., Guo, M., et al."
+    },
+    {
+      "title": "Gemini: Fast Failure Recovery in Distributed Training with In-Memory Checkpointing",
+      "venue": "SOSP",
+      "year": 2024,
+      "authors": "Wang, Z., Jia, X., Xu, H., et al."
+    }
+  ],
+  "domain": "ai_infra",
+  "language": "zh",
+  "sponsor": "国家重点研发计划",
+  "budget": {
+    "amount": 8000000,
+    "currency": "CNY",
+    "dur": 48
+  },
+  "topic_id": "topic_047",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

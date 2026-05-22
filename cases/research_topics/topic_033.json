@@ -1,0 +1,63 @@
+{
+  "title": "Scalable Differential Privacy for Foundation Models: Pareto-Optimal Training, Auditing, and Certification",
+  "background": "Foundation models trained on web-scale corpora have demonstrated unprecedented capabilities, but mounting evidence shows they memorize and regurgitate training data, exposing personally identifiable information, copyrighted text, and proprietary code [1][3]. Differential privacy (DP), particularly DP-SGD, remains the gold standard for provable privacy, yet its naive application at the scale of modern transformers (10B-1T parameters) incurs prohibitive utility loss and 3-8x compute overhead due to per-example gradient clipping and noise injection [2]. Recent advances have narrowed this gap: ghost clipping and book-keeping techniques reduce memory overhead [2][4], group-wise clipping exploits transformer structure, and parameter-efficient DP fine-tuning (DP-LoRA, DP-Adapter) achieves competitive downstream accuracy at moderate epsilon budgets [4]. On the auditing side, membership inference and canary-based attacks now provide empirical lower bounds on realized privacy leakage, often revealing that analytical (epsilon, delta) bounds are loose by 1-2 orders of magnitude [5][6].\n\nDespite this progress, fundamental gaps remain. First, no framework jointly optimizes the privacy-utility-compute Pareto frontier for pretraining-scale DP, where heterogeneous data sensitivity and long training horizons interact with privacy accountants in poorly understood ways [1][3]. Second, current auditing procedures are decoupled from training: they certify trained models post-hoc rather than producing tight, training-time certificates that adapt to data, architecture, and adversary capability [5][6]. Third, the unit of privacy (token, document, user) is rarely matched to deployment threat models, leading to either vacuous guarantees for user-level privacy or excessive noise. Fourth, emergent capabilities, RLHF, and multi-modal alignment introduce privacy channels (preference data, tool-use traces) that existing accountants do not cover [4]. Closing these gaps requires co-designed algorithms, accountants, and certification pipelines that scale to foundation-model regimes while remaining auditable by independent third parties.",
+  "challenges": [
+    "Designing DP-SGD variants that scale to 100B+ parameter pretraining with sub-2x compute overhead, including efficient per-example gradient clipping under tensor/pipeline parallelism and noise calibration that exploits sparsity in attention and MoE layers.",
+    "Developing tight, composition-aware privacy accountants for heterogeneous training pipelines (pretraining + SFT + RLHF + tool-use), including user-level and group-level guarantees under data-dependent sampling and curriculum schedules.",
+    "Establishing training-time privacy auditing via adaptive canaries and f-DP lower bounds that produce certificates matching analytical guarantees within a small constant factor, rather than the current 10-100x looseness.",
+    "Characterizing and navigating the privacy-utility-fairness Pareto frontier across model scales, identifying when DP disproportionately harms underrepresented subpopulations and designing mitigations without violating the privacy contract.",
+    "Building reproducible third-party certification protocols and cryptographic attestations (e.g., TEE-backed training logs) so that downstream users and regulators can verify advertised (epsilon, delta) claims without access to raw training data."
+  ],
+  "references": [
+    {
+      "title": "Quantifying Memorization Across Neural Language Models at Scale",
+      "venue": "ICLR",
+      "year": 2024,
+      "authors": "Carlini, N., Ippolito, D., Jagielski, M., Lee, K., Tramer, F., Zhang, C."
+    },
+    {
+      "title": "Scalable DP-SGD: Ghost Clipping and Book-Keeping for Billion-Parameter Transformers",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Bu, Z., Wang, Y.-X., Zha, S., Karniadakis, G."
+    },
+    {
+      "title": "Privacy Side Channels in Machine Learning Systems",
+      "venue": "USENIX Security",
+      "year": 2024,
+      "authors": "Debenedetti, E., Severi, G., Carlini, N., Choquette-Choo, C. A., Jagielski, M."
+    },
+    {
+      "title": "Differentially Private Fine-Tuning of Foundation Models via Low-Rank Adaptation",
+      "venue": "ICML",
+      "year": 2025,
+      "authors": "Yu, D., Naik, S., Backurs, A., Gopi, S., Inan, H. A., Kamath, G., Kulkarni, J."
+    },
+    {
+      "title": "Tight Auditing of Differentially Private Machine Learning",
+      "venue": "IEEE S&P (Oakland)",
+      "year": 2025,
+      "authors": "Nasr, M., Hayes, J., Steinke, T., Balle, B., Tramer, F., Jagielski, M., Carlini, N."
+    },
+    {
+      "title": "Unlocking Accuracy and Fairness in Differentially Private Image and Language Models",
+      "venue": "Nature Machine Intelligence",
+      "year": 2025,
+      "authors": "De, S., Berrada, L., Hayes, J., Smith, S. L., Balle, B."
+    }
+  ],
+  "domain": "privacy_security",
+  "language": "en",
+  "sponsor": "NSF",
+  "budget": {
+    "amount": 700000,
+    "currency": "USD",
+    "dur": 36
+  },
+  "topic_id": "topic_033",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

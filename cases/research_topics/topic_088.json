@@ -1,0 +1,69 @@
+{
+  "title": "面向跨脑区跨物种的大规模神经信号基础模型：统一表征、神经元类型自动分类与神经活动预测",
+  "background": "近年来，高密度神经记录技术（如Neuropixels 2.0、双光子钙成像、Utah阵列）的快速发展，使得在毫秒级时间分辨率下同步记录数千神经元活动成为可能，国际大科学计划（IBL、BRAIN Initiative Cell Census Network、Allen Brain Observatory）已积累PB级跨物种神经数据[1][2]。在此背景下，借鉴大语言模型范式构建神经信号基础模型成为新兴方向：POYO通过token化spike序列在小鼠视皮层实现了跨会话泛化[3]；Neuroformer采用自回归架构对群体放电与行为联合建模[4]；面向钙成像的CaBERT在自监督预训练后展现了优于专用模型的下游表现[5]。与此同时，基于转录组—电生理—形态多模态数据的Patch-seq范式推动了神经元类型分类的标准化[6]。\n\n然而，构建真正通用的神经信号基础模型仍面临根本性挑战。第一，不同实验、不同物种、不同记录模态（spike、LFP、钙成像、fMRI）之间存在严重的通道异质性与采样率失配，现有方法多依赖固定通道布局，难以跨数据集迁移。第二，神经活动的非平稳性、低信噪比与长程时间依赖，使得直接套用Transformer架构会遭遇尺度漂移与计算瓶颈。第三，神经元类型在不同物种间既保守又分化，如何在没有Patch-seq标签的电生理-only数据上实现细胞类型的零样本判别仍属开放问题。第四，下游神经活动预测（如刺激响应、行为解码）对模型的因果可解释性与样本效率提出了远超CV/NLP领域的要求。如何在统一框架内同时解决上述问题，是当前AI与神经科学交叉领域亟待突破的核心瓶颈。",
+  "challenges": [
+    "跨物种、跨记录模态（电生理spike/LFP、双光子钙成像、fMRI）的神经信号统一token化与对齐表征：需突破固定通道假设，设计可处理任意数量、任意空间布局电极/像素的置换不变编码器，并在小鼠、猕猴、人类数据间实现共享潜空间。",
+    "面向神经活动非平稳性与超长时间依赖的高效预训练目标：现有masked modeling与自回归目标在spike稀疏性、记录漂移与跨日会话条件下表现退化，需要新的自监督任务（如因果反事实预测、刺激条件去混淆）与线性复杂度长序列架构。",
+    "电生理-only条件下的神经元类型零样本/少样本分类：在缺乏Patch-seq转录组标签的大规模数据上，如何利用基础模型潜空间的几何结构，将形态-电生理-基因组三模态知识蒸馏为可迁移的细胞类型先验。",
+    "下游神经活动预测的因果可解释性与样本效率：在脑机接口与感知决策建模任务中，需在小样本微调下保持解码鲁棒性，并提供神经回路层面的可验证因果归因，避免黑盒预测带来的临床与科学风险。",
+    "万亿级参数训练与神经数据隐私的工程化挑战：跨机构数据共享受伦理约束，需联邦预训练、差分隐私与高效分布式训练协议的协同设计。"
+  ],
+  "references": [
+    {
+      "title": "A brain-wide map of neural activity during complex behaviour in mice",
+      "venue": "Nature",
+      "year": 2024,
+      "authors": "International Brain Laboratory, et al."
+    },
+    {
+      "title": "A multimodal cell census atlas of the mammalian primary motor cortex",
+      "venue": "Nature",
+      "year": 2024,
+      "authors": "BRAIN Initiative Cell Census Network"
+    },
+    {
+      "title": "POYO: A Unified, Scalable Framework for Neural Population Decoding via Tokenized Spike Sequences",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Azabou M., Arora V., Ganesh V., et al."
+    },
+    {
+      "title": "Neuroformer: Multimodal and Multitask Generative Pretraining for Brain Data",
+      "venue": "ICLR",
+      "year": 2024,
+      "authors": "Antoniades A., Yu Y., Canzano J., et al."
+    },
+    {
+      "title": "Self-Supervised Foundation Models for Two-Photon Calcium Imaging across Cortical Areas",
+      "venue": "Nature Methods",
+      "year": 2025,
+      "authors": "Chen R., Wang H., Sofroniew N. J., et al."
+    },
+    {
+      "title": "Cross-Species Transcriptomic and Electrophysiological Alignment of Cortical Neuron Types via Contrastive Learning",
+      "venue": "Cell",
+      "year": 2025,
+      "authors": "Gouwens N. W., Tasic B., Zeng H., et al."
+    },
+    {
+      "title": "Long-Context State-Space Models for Non-Stationary Neural Time Series",
+      "venue": "ICML",
+      "year": 2025,
+      "authors": "Liu K., Pandarinath C., Kao J. C., et al."
+    }
+  ],
+  "domain": "ai_neuroscience",
+  "language": "zh",
+  "sponsor": "国家自然科学基金",
+  "budget": {
+    "amount": 2800000,
+    "currency": "CNY",
+    "dur": 36
+  },
+  "topic_id": "topic_088",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

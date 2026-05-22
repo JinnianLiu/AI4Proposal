@@ -1,0 +1,63 @@
+{
+  "title": "Decentralized Multi-Agent Coordination via Emergent Communication and Robust Task Decomposition under Partial Observability",
+  "background": "Recent advances in large language model (LLM) agents have demonstrated remarkable capabilities in single-agent reasoning and tool use, but extending these capabilities to coordinated multi-agent systems remains an open frontier. State-of-the-art frameworks such as AutoGen-style orchestrators and hierarchical planner-executor architectures [1][2] rely on centralized controllers or fixed role hierarchies, which scale poorly and create single points of failure. Decentralized approaches based on multi-agent reinforcement learning (MARL) have shown promise for emergent coordination [3], yet they typically assume shared observation spaces or hand-engineered communication channels, limiting their applicability to open-ended tasks where agents must negotiate goals, share partial knowledge, and recover from peer failures.\n\nA second line of work has explored emergent communication protocols, showing that grounded symbolic languages can arise from task pressure [4], and that LLM-based agents can develop ad hoc protocols through in-context negotiation [5]. However, these protocols are brittle under distribution shift, often collapse to degenerate codes, and lack formal guarantees of compositionality or interpretability. Robust task decomposition under partial observability compounds these issues: when no agent has the full state, planners must reason about what others know, what to ask, and when to re-plan. Existing belief-space planners [6] do not scale to the combinatorial action spaces of LLM agents, and current benchmarks rarely stress-test coordination under adversarial perturbations, communication noise, or heterogeneous agent capabilities. Closing these gaps requires new theory and systems that unify decentralized planning, learned communication, and verifiable decomposition.",
+  "challenges": [
+    "Designing decentralized planning algorithms that scale to heterogeneous LLM-agent teams without a central orchestrator, while maintaining bounded regret guarantees under partial observability and asynchronous execution",
+    "Inducing emergent communication protocols that are compositional, sample-efficient, and robust to channel noise and adversarial agents, with interpretability properties that allow human auditing",
+    "Developing task decomposition methods that dynamically allocate subtasks based on agents' inferred capabilities and beliefs, and that can detect, isolate, and recover from peer failures or hallucinated subgoals",
+    "Constructing rigorous benchmarks and evaluation protocols that measure coordination quality under partial observability, communication budget constraints, and Byzantine agent behavior, going beyond current cooperative-only testbeds",
+    "Establishing theoretical foundations linking decentralized POMDP solution concepts to LLM-agent decision-making, including convergence and equilibrium analyses for protocol learning"
+  ],
+  "references": [
+    {
+      "title": "AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation",
+      "venue": "ICLR",
+      "year": 2024,
+      "authors": "Wu, Q., Bansal, G., Zhang, J., et al."
+    },
+    {
+      "title": "Hierarchical Planner-Executor Agents for Long-Horizon Reasoning",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Park, S., Chen, L., Iyer, R., Goodman, N."
+    },
+    {
+      "title": "Emergent Cooperation in Decentralized Multi-Agent Reinforcement Learning at Scale",
+      "venue": "ICML",
+      "year": 2025,
+      "authors": "Foerster, J., Ramirez, D., Mordatch, I."
+    },
+    {
+      "title": "Compositional Generalization in Emergent Communication: A Benchmark Study",
+      "venue": "ACL",
+      "year": 2024,
+      "authors": "Lazaridou, A., Kim, Y., Baroni, M."
+    },
+    {
+      "title": "Negotiation Protocols Emerge in In-Context Multi-LLM Dialogue",
+      "venue": "NeurIPS",
+      "year": 2025,
+      "authors": "Hadfield-Menell, D., Singh, A., Tessler, M. H."
+    },
+    {
+      "title": "Scalable Belief-Space Planning for Decentralized POMDPs",
+      "venue": "AAAI",
+      "year": 2026,
+      "authors": "Amato, C., Oliehoek, F., Spaan, M."
+    }
+  ],
+  "domain": "agentic_ai",
+  "language": "en",
+  "sponsor": "NSF",
+  "budget": {
+    "amount": 850000,
+    "currency": "USD",
+    "dur": 36
+  },
+  "topic_id": "topic_007",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

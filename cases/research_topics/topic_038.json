@@ -1,0 +1,63 @@
+{
+  "title": "Scalable Sub-Quadratic Architectures for Million-Token Language Modeling: Attention, Extrapolation, and Persistent Memory",
+  "background": "Transformer-based language models have become the dominant paradigm in NLP, yet their quadratic self-attention complexity in sequence length remains a fundamental bottleneck for processing book-length documents, multi-document corpora, long-horizon agent traces, and code repositories. Recent advances have explored three complementary directions. First, sub-quadratic attention surrogates such as state-space models and linear recurrences (e.g., Mamba-style selective SSMs [1]) and gated linear attention variants [2] achieve near-linear scaling but exhibit measurable degradation on retrieval-heavy tasks like needle-in-a-haystack and multi-hop reasoning. Second, position-encoding interventions such as YaRN-style RoPE rescaling and attention-sink calibration [3] enable partial length extrapolation but typically require continued pretraining and still collapse beyond 4-8x the training context. Third, memory-augmented architectures combining KV compression, hierarchical caches, and retrieval-based external memory [4][5] reduce activation footprint yet introduce recall-staleness trade-offs and brittle routing under distribution shift.\n\nDespite this progress, no existing approach simultaneously delivers (i) faithful million-token recall, (ii) training-free extrapolation from short-context pretraining, and (iii) wall-clock and memory efficiency competitive with modern dense Transformers. Recent benchmarks such as RULER and LongProc [6] reveal that reported perplexity gains often fail to translate into downstream long-context reasoning, and that current evaluations conflate retrieval, aggregation, and generation. The community lacks principled theory connecting state capacity, expressivity, and recall fidelity, as well as systems-level co-design of kernels, memory hierarchies, and decoding strategies tailored to ultra-long contexts. Closing these gaps is essential for scientific document understanding, legal and biomedical reasoning, and persistent-memory agents.",
+  "challenges": [
+    "Designing sub-quadratic attention or state-space mixers that provably preserve associative recall and multi-hop retrieval at sequence lengths exceeding 1M tokens, without falling back to dense attention over critical spans",
+    "Achieving training-free or minimal-finetuning length extrapolation by 30x or more beyond the pretraining window, addressing attention-sink drift, RoPE high-frequency aliasing, and softmax entropy collapse in a unified framework",
+    "Co-designing hierarchical KV-cache compression, eviction, and retrieval policies that bound GPU memory to O(sqrt(N)) or better while maintaining bounded approximation error on long-range dependencies",
+    "Developing hardware-aware IO-efficient kernels (FlashAttention-style) for hybrid SSM-attention stacks that sustain >50% MFU on million-token sequences across heterogeneous accelerators",
+    "Building diagnostic benchmarks that disentangle retrieval, aggregation, ordering, and abstractive reasoning over long contexts, replacing perplexity and synthetic needle tests as the primary evaluation signal"
+  ],
+  "references": [
+    {
+      "title": "Mamba: Linear-Time Sequence Modeling with Selective State Spaces",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Gu, A. and Dao, T."
+    },
+    {
+      "title": "Gated Linear Attention Transformers with Hardware-Efficient Training",
+      "venue": "ICML",
+      "year": 2024,
+      "authors": "Yang, S., Wang, B., Shen, Y., Panda, R., and Kim, Y."
+    },
+    {
+      "title": "Attention Sinks and Calibrated RoPE Scaling for Robust Length Extrapolation",
+      "venue": "ICLR",
+      "year": 2025,
+      "authors": "Xiao, G., Tian, Y., Chen, B., Han, S., and Lewis, M."
+    },
+    {
+      "title": "InfiniMem: Hierarchical KV-Cache Compression for Million-Token Inference",
+      "venue": "ACL",
+      "year": 2025,
+      "authors": "Zhang, L., Patel, R., Iyer, S., and Chen, D."
+    },
+    {
+      "title": "Retrieval-Augmented State-Space Models for Persistent-Memory Agents",
+      "venue": "EMNLP",
+      "year": 2025,
+      "authors": "Kim, J., Ravichander, A., Smith, N. A., and Lin, X. V."
+    },
+    {
+      "title": "RULER and LongProc: Disentangling Recall, Aggregation, and Reasoning in Long-Context Benchmarks",
+      "venue": "NeurIPS Datasets and Benchmarks",
+      "year": 2024,
+      "authors": "Hsieh, C.-P., Sun, S., Kriman, S., Acharya, S., and Ginsburg, B."
+    }
+  ],
+  "domain": "nlp",
+  "language": "en",
+  "sponsor": "NSF",
+  "budget": {
+    "amount": 780000,
+    "currency": "USD",
+    "dur": 36
+  },
+  "topic_id": "topic_038",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

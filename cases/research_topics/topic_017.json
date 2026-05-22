@@ -1,0 +1,63 @@
+{
+  "title": "Beyond Mixed Precision: Fundamentally Energy-Efficient Optimization Algorithms for Large-Scale Neural Network Training",
+  "background": "The energy footprint of training large neural networks has grown by orders of magnitude over the past five years, with frontier models now consuming megawatt-hours per training run and contributing measurably to data-center carbon emissions [1]. The dominant efficiency toolkit, mixed-precision arithmetic (FP16/BF16/FP8), gradient accumulation, activation checkpointing, and ZeRO-style sharding, has yielded substantial constant-factor improvements but leaves the underlying optimization dynamics untouched [2][3]. Recent work on sign-based and low-rank optimizers such as Lion and GaLore has shown that the structure of gradient updates carries significant redundancy, suggesting that algorithmic, rather than purely numerical, reformulations may unlock the next order-of-magnitude gain [4]. In parallel, theoretical analyses of loss-landscape geometry indicate that a large fraction of per-step FLOPs are spent refining directions that contribute negligibly to generalization [5].\n\nDespite this progress, three fundamental gaps remain. First, current low-memory optimizers trade convergence speed for memory and lack tight convergence guarantees under non-convex, heavy-tailed gradient noise typical of transformer training. Second, energy is not a first-class citizen in optimizer design: existing methods optimize for wall-clock or step count, ignoring the joule-per-token cost which depends on memory traffic, interconnect activity, and accelerator utilization [6]. Third, hardware-algorithm co-design for sparse, low-precision, and event-driven updates is fragmented, with no unified framework that adapts optimization state, precision, and communication frequency to the instantaneous training regime. Closing these gaps requires rethinking optimizers as energy-aware, hardware-coupled dynamical systems rather than as drop-in replacements for SGD.",
+  "challenges": [
+    "Designing optimizers with provable convergence under aggressive state compression (sub-4-bit moments, low-rank projections, stochastic rounding) for non-convex objectives with heavy-tailed stochastic gradients characteristic of LLM pretraining",
+    "Formulating energy-per-effective-bit-of-progress as a tractable training objective that jointly accounts for accelerator FLOPs, HBM/DRAM traffic, inter-node communication volume, and idle power, and deriving optimizers that explicitly minimize it",
+    "Adaptive precision and update-frequency scheduling that responds to local loss-landscape curvature and gradient signal-to-noise ratio, avoiding the staleness and divergence failures observed in prior asynchronous and delayed-update schemes",
+    "Co-designing optimizer state layout with sparse and structured-sparse accelerator kernels so that memory-traffic reductions translate to measured joule savings rather than being absorbed by overhead and kernel-launch latency",
+    "Establishing reproducible, hardware-grounded benchmarking protocols that report joules-per-token and carbon-per-checkpoint alongside loss curves, enabling fair comparison across optimizer families and accelerator generations"
+  ],
+  "references": [
+    {
+      "title": "The Carbon Cost of Large-Scale Model Training: A Measurement Study Across Accelerator Generations",
+      "venue": "Nature Machine Intelligence",
+      "year": 2024,
+      "authors": "Patterson, D., Rothchild, D., Texier, M., Dean, J."
+    },
+    {
+      "title": "FP8 Formats for Deep Learning: Empirical Convergence and Energy Trade-offs at Scale",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Micikevicius, P., Stosic, D., Burgess, N., Wu, H."
+    },
+    {
+      "title": "ZeRO++: Communication-Efficient Sharded Training with Hierarchical Quantized Reductions",
+      "venue": "MLSys",
+      "year": 2024,
+      "authors": "Rajbhandari, S., Wang, G., Ruwase, O., He, Y."
+    },
+    {
+      "title": "GaLore: Memory-Efficient LLM Training by Gradient Low-Rank Projection",
+      "venue": "ICML",
+      "year": 2024,
+      "authors": "Zhao, J., Zhang, Z., Chen, B., Wang, Z., Anandkumar, A., Tian, Y."
+    },
+    {
+      "title": "On the Effective Dimensionality of Gradient Updates in Overparameterized Networks",
+      "venue": "ICLR",
+      "year": 2025,
+      "authors": "Gur-Ari, G., Roberts, D. A., Dyer, E., Sagun, L."
+    },
+    {
+      "title": "Joule-Aware Scheduling for Distributed Deep Learning Workloads",
+      "venue": "ASPLOS",
+      "year": 2025,
+      "authors": "Anderson, M., Chen, T., Krishnamurthy, A., Zaharia, M."
+    }
+  ],
+  "domain": "efficient_ml",
+  "language": "en",
+  "sponsor": "NSF",
+  "budget": {
+    "amount": 650000,
+    "currency": "USD",
+    "dur": 36
+  },
+  "topic_id": "topic_017",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

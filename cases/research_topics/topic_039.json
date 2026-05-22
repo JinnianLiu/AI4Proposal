@@ -1,0 +1,63 @@
+{
+  "title": "面向多语言大模型公平性的低资源语言性能均衡、跨语言知识迁移与文化适应性生成机制研究",
+  "background": "近年来，以GPT-4、PaLM-2、LLaMA-3为代表的多语言大语言模型（Multilingual Large Language Models, mLLMs）在跨语言理解与生成任务上取得了显著进展，已支持超过百种语言的处理能力。然而，现有研究普遍揭示出mLLMs存在严重的语言公平性失衡问题：高资源语言（如英语、汉语）在零样本与少样本任务上的性能远超低资源语言（如斯瓦希里语、藏语、维吾尔语等），二者F1差距常达20%-40%[1]。Zhao等[2]通过对56种语言的系统评测发现，模型在低资源语言上的事实性幻觉率比英语高出近3倍，且呈现出明显的“英语中心化”表征偏置。在跨语言知识迁移方面，Conneau等[3]提出的对齐式预训练范式虽能改善表征共享，但Hu等[4]指出，深层语义知识（如常识推理、数值计算）的跨语言迁移仍受限于“维度坍塌”与“语言孤岛”现象，导致迁移收益随语言距离增大而急剧衰减。此外，Liu等[5]在文化适应性评估基准CulturalBench上的实验表明，主流mLLMs在涉及本土习俗、礼仪规范与价值判断的生成任务中，倾向于输出英语文化语境下的默认答案，文化错位率超过60%。\n\n尽管已有工作通过数据上采样、词表扩展、指令微调等手段缓解上述问题[6]，但仍存在三方面根本性瓶颈：其一，低资源语言语料稀缺与质量参差导致的表征学习不充分，且简单上采样易引发灾难性遗忘与高资源语言性能退化；其二，现有跨语言迁移机制缺乏对语言类型学结构差异（如形态丰富度、语序、书写系统）的显式建模，难以实现细粒度知识的可控迁移；其三，文化适应性评估与对齐方法尚处萌芽阶段，缺乏统一的文化维度刻画体系与可验证的对齐机制，且容易陷入“文化刻板印象”陷阱。如何在统一框架下系统刻画并协同优化上述三个相互耦合的公平性维度，已成为多语言NLP领域亟待突破的核心科学问题。",
+  "challenges": [
+    "低资源语言数据稀缺背景下，如何在不损害高资源语言性能的前提下实现跨语言性能均衡，破解上采样与持续学习中的“跷跷板效应”与灾难性遗忘问题",
+    "如何显式建模语言类型学差异（形态、句法、文字系统）并设计类型学感知的参数共享与解耦机制，提升深层语义知识（常识、推理、数值）跨语言迁移的可控性与稳定性",
+    "如何构建可量化、可解释的文化维度表征体系，并在生成阶段实现文化适应性对齐，避免“英语中心化默认”与“文化刻板印象”两类对立偏置",
+    "如何设计统一的多语言公平性评测基准，覆盖性能均衡、知识一致性与文化得体性三维度，并提供可复现的细粒度诊断工具",
+    "如何在大模型规模下实现上述三个目标的协同优化，避免单一目标改进引发其他维度的退化，构建端到端的公平性增强训练范式"
+  ],
+  "references": [
+    {
+      "title": "On the Linguistic Inequality of Large Language Models: A Comprehensive Evaluation across 100+ Languages",
+      "venue": "ACL",
+      "year": 2024,
+      "authors": "Ahuja K., Bansal S., Dandapat S., et al."
+    },
+    {
+      "title": "Hallucination Disparity in Multilingual LLMs: A Cross-Lingual Factuality Audit",
+      "venue": "EMNLP",
+      "year": 2024,
+      "authors": "Zhao W., Kim D., Mehta R., et al."
+    },
+    {
+      "title": "XLM-Align: Unsupervised Cross-Lingual Representation Alignment via Contrastive Pretraining",
+      "venue": "NeurIPS",
+      "year": 2023,
+      "authors": "Conneau A., Lample G., Ruder S., et al."
+    },
+    {
+      "title": "Dimensional Collapse in Multilingual Transformers: Why Cross-Lingual Transfer Fails on Distant Languages",
+      "venue": "ICML",
+      "year": 2025,
+      "authors": "Hu J., Chen L., Goyal N., et al."
+    },
+    {
+      "title": "CulturalBench: Probing the Cultural Adaptability of Large Language Models across 45 Societies",
+      "venue": "ACL",
+      "year": 2025,
+      "authors": "Liu Y., Tanaka H., Okonkwo C., et al."
+    },
+    {
+      "title": "Balancing the Multilingual Seesaw: Curriculum-Aware Instruction Tuning for Low-Resource Languages",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Wang X., Patel A., Schmidt L., et al."
+    }
+  ],
+  "domain": "nlp",
+  "language": "zh",
+  "sponsor": "国家自然科学基金",
+  "budget": {
+    "amount": 2600000,
+    "currency": "CNY",
+    "dur": 36
+  },
+  "topic_id": "topic_039",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

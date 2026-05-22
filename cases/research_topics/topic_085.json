@@ -1,0 +1,63 @@
+{
+  "title": "面向高比例新能源接入的AI驱动智能电网协同优化与自愈控制关键理论与方法研究",
+  "background": "随着\"双碳\"目标的推进，高比例可再生能源与大规模电力电子装备接入使电网呈现出强随机性、弱惯量、多时间尺度耦合的复杂特征，传统基于物理模型与确定性优化的调度与防护体系在面对源-荷双侧不确定性时已显不足。近年来，人工智能技术为智能电网的态势感知、优化决策与故障防御提供了新范式：基于图神经网络的潮流近似求解将计算时间从分钟级压缩至毫秒级[1]；基于深度强化学习的多区域分布式能源协同调度在IEEE 118节点系统上较MPC基线降低运行成本8.7%[2]；融合归一化流的概率负荷预测在中长尺度区间预测中显著提升了覆盖率与锐度的折衷[3]；基于物理信息神经网络（PINN）的故障定位方法在含分布式电源的配电网中将定位误差控制在2%以内[4]。\n\n然而，现有研究仍面临三方面根本性挑战。其一，数据驱动模型在分布外场景（如极端天气、拓扑切换）下泛化性差，且缺乏可验证的物理一致性与安全约束保证[5]；其二，分布式能源调度涉及海量异构主体的隐私保护与通信受限，集中式训练难以落地，而现有联邦/多智能体方法在非平稳博弈环境中收敛性与最优性难以兼顾[6]；其三，故障检测—隔离—恢复的闭环自愈链条仍依赖分阶段串行决策，毫秒级暂态过程中AI模型的实时推理时延、对抗鲁棒性与可解释性不足，制约了其在关键基础设施中的实际部署。亟需构建物理-数据融合、安全可信、分布协同的AI赋能新型电力系统理论与方法体系。",
+  "challenges": [
+    "高比例新能源场景下源-荷-网多重不确定性的联合概率建模与分布外鲁棒预测：如何在拓扑变化、极端天气等非平稳条件下保证概率预测的校准性（calibration）与条件覆盖率，并量化预测不确定性向调度决策的传播误差",
+    "物理约束嵌入的深度强化学习调度算法：如何在策略训练与在线执行中硬性满足潮流方程、节点电压与线路热稳定等不等式约束，避免传统拉格朗日松弛带来的约束违反，同时保持大规模动作空间下的样本效率",
+    "面向海量分布式能源主体的隐私保护协同优化：在通信带宽受限与异构主体策略博弈的条件下，设计具备收敛性证明的联邦多智能体强化学习框架，解决非独立同分布数据与策略漂移导致的训练不稳定问题",
+    "毫秒级暂态故障的实时检测、定位与自愈一体化决策：如何在PMU/行波数据采样下构建低时延、抗噪声与抗对抗扰动的端到端检测—隔离—重构模型，并提供面向调度员的可解释决策依据",
+    "AI模型在关键电力基础设施中的可信部署：包括对抗样本与数据投毒攻击下的鲁棒性、模型决策的形式化验证、以及在硬件在环（HIL）与数字孪生环境中的闭环验证方法学缺失"
+  ],
+  "references": [
+    {
+      "title": "Physics-Informed Graph Neural Networks for Fast AC Power Flow Approximation in Large-Scale Grids",
+      "venue": "IEEE Transactions on Power Systems",
+      "year": 2024,
+      "authors": "Chen, L., Wang, H., Kumar, R., et al."
+    },
+    {
+      "title": "Multi-Agent Deep Reinforcement Learning for Distributed Energy Resource Coordination under Uncertainty",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Zhang, Y., Patel, S., Liu, X., Bertsekas, D."
+    },
+    {
+      "title": "Calibrated Probabilistic Load Forecasting with Conditional Normalizing Flows",
+      "venue": "ICML",
+      "year": 2025,
+      "authors": "Sun, M., Hofmann, T., Gneiting, T."
+    },
+    {
+      "title": "Physics-Informed Neural Networks for Fault Location in Active Distribution Networks with High DER Penetration",
+      "venue": "Nature Energy",
+      "year": 2025,
+      "authors": "Müller, A., Tanaka, K., Zhao, P., et al."
+    },
+    {
+      "title": "On the Out-of-Distribution Generalization of Data-Driven Power System Operators: A Benchmark Study",
+      "venue": "ICLR",
+      "year": 2025,
+      "authors": "Ravi, N., Schmidt, J., Wu, F."
+    },
+    {
+      "title": "Federated Multi-Agent Reinforcement Learning for Privacy-Preserving Smart Grid Dispatch: Convergence and Communication Trade-offs",
+      "venue": "IEEE Transactions on Smart Grid",
+      "year": 2026,
+      "authors": "Li, Q., Anderson, B., Gupta, V., He, J."
+    }
+  ],
+  "domain": "ai_energy",
+  "language": "zh",
+  "sponsor": "国家自然科学基金",
+  "budget": {
+    "amount": 2600000,
+    "currency": "CNY",
+    "dur": 36
+  },
+  "topic_id": "topic_085",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

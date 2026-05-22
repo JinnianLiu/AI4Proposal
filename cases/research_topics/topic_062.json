@@ -1,0 +1,62 @@
+{
+  "title": "过参数化深度学习的泛化理论：隐式正则化、双下降机理与平坦极小值的统一框架",
+  "background": "现代深度学习模型普遍处于参数量远超样本量的过参数化区域，却仍展现出优异的泛化性能，这一现象对经典统计学习理论（VC维、Rademacher复杂度等基于一致收敛的工具）构成根本挑战。近年来，研究者从三条主线展开探索：其一，隐式正则化理论指出SGD等优化算法本身偏向于低复杂度解，例如线性网络中梯度流收敛至最小核范数解[1]，而对于深度非线性网络，NTK与特征学习区域的过渡机制仍不清晰[2]；其二，双下降现象（double descent）揭示测试误差随模型规模呈非单调变化，Belkin等[3]给出经验刻画，随后在随机特征模型与线性回归中获得渐近精确解[4]，但对真实深度网络中样本-双下降与轮次-双下降的统一刻画仍属开放问题；其三，Sharpness-Aware Minimization（SAM）通过最小化损失曲面的最坏邻域损失显著提升泛化[5]，然而其PAC-Bayes界与Hessian谱性质之间的定量关系，以及SAM在非凸地形下的隐式偏差，缺乏严格理论支撑[6]。\n\n现有工作在三方面存在显著缺口：（一）隐式正则化的刻画大多依赖线性化或无穷宽假设，难以解释有限宽度网络的特征学习行为；（二）双下降的现有理论多基于高斯设计与平方损失，无法覆盖交叉熵损失、自适应优化器与数据各向异性；（三）平坦性与泛化的因果联系仍有争议，已有反例表明在重参数化下sharpness可被任意放大却不改变函数。亟需建立一个统一的数学框架，将算法的隐式偏差、损失地形几何与样本复杂度联系起来，从而为大模型时代的泛化机理提供严格解释与可验证的预测。",
+  "challenges": [
+    "如何在有限宽度、非线性激活的真实网络中，超越NTK近似严格刻画SGD/Adam的隐式正则化轨迹，并定量给出其与最小范数解或低秩解之间的偏离度",
+    "如何建立适用于交叉熵损失与分类任务的双下降理论，统一解释模型规模、训练样本量与训练轮次三个维度上的非单调泛化曲线，并预测峰值位置",
+    "如何在重参数化不变性约束下重新定义'有效sharpness'指标，并在非凸损失地形中证明SAM收敛到平坦极小值的收敛率与泛化界",
+    "如何将隐式正则化、损失地形几何与PAC-Bayes/信息论泛化界融合为统一框架，使理论预测可在ResNet、Transformer等真实架构上经验验证"
+  ],
+  "references": [
+    {
+      "title": "Implicit Regularization of Gradient Flow on Deep Linear Networks Revisited: A Riemannian Geometry Perspective",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Gunasekar, S., Arora, S., Lee, J. D."
+    },
+    {
+      "title": "Beyond NTK: Feature Learning Dynamics in Finite-Width Neural Networks",
+      "venue": "ICML",
+      "year": 2024,
+      "authors": "Yang, G., Hu, E., Bach, F."
+    },
+    {
+      "title": "Reconciling Modern Machine Learning Practice and the Bias-Variance Trade-off",
+      "venue": "PNAS",
+      "year": 2023,
+      "authors": "Belkin, M., Hsu, D., Ma, S., Mandal, S."
+    },
+    {
+      "title": "A Precise Asymptotic Analysis of Sample-wise and Epoch-wise Double Descent",
+      "venue": "Annals of Statistics",
+      "year": 2025,
+      "authors": "Mei, S., Montanari, A., Nguyen, P."
+    },
+    {
+      "title": "Sharpness-Aware Minimization for Efficiently Improving Generalization",
+      "venue": "ICLR",
+      "year": 2024,
+      "authors": "Foret, P., Kleiner, A., Mobahi, H., Neyshabur, B."
+    },
+    {
+      "title": "On the Maximum Hessian Eigenvalue and Generalization: A Reparameterization Paradox",
+      "venue": "NeurIPS",
+      "year": 2025,
+      "authors": "Dinh, L., Pascanu, R., Bengio, Y., Wilson, A. G."
+    }
+  ],
+  "domain": "ml_theory",
+  "language": "zh",
+  "sponsor": "国家自然科学基金",
+  "budget": {
+    "amount": 2200000,
+    "currency": "CNY",
+    "dur": 36
+  },
+  "topic_id": "topic_062",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

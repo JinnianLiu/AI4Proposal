@@ -1,0 +1,63 @@
+{
+  "title": "Universal Physics-Informed Neural Interatomic Potentials for Reactive Chemistry and Excited-State Dynamics Across the Periodic Table",
+  "background": "Machine learning interatomic potentials (MLIPs) have transformed atomistic simulation by approaching density functional theory (DFT) accuracy at orders-of-magnitude lower cost. Equivariant message-passing architectures such as MACE and Allegro [1] established systematic improvability on ground-state energies and forces, while foundation-scale models trained on the Materials Project and OC20 corpora demonstrated transferability across inorganic chemistries [2]. Recent universal potentials (e.g., MatterSim, ORB, SevenNet) extend coverage to most of the periodic table, and reactive variants have begun to capture bond breaking in organic systems [3]. In parallel, diabatic and multi-state neural surrogates have shown promise for nonadiabatic molecular dynamics on small molecules [4].\n\nDespite this progress, no single MLIP simultaneously delivers (i) reactive accuracy across heterogeneous chemistries, (ii) physically correct excited-state manifolds with proper conical-intersection topology, and (iii) reliable extrapolation to elements and coordination environments underrepresented in training. Universal models degrade sharply on transition-metal catalysis, f-block chemistry, and charged or open-shell intermediates, where long-range electrostatics, spin states, and static correlation dominate [5]. Excited-state surrogates remain molecule-specific, lack size-consistency, and violate gauge/permutation invariances near surface crossings [4]. Furthermore, current architectures embed limited physical priors (charge equilibration, dispersion, spin), leading to unphysical forces in out-of-distribution regions and silent failures during long MD trajectories [6].\n\nClosing these gaps requires a principled fusion of equivariant deep learning with explicit physical constraints (charge conservation, long-range Coulomb and exchange, nonadiabatic couplings, spin-state awareness), uncertainty quantification that triggers active acquisition of high-level reference data, and benchmarks that probe reactive and excited-state generalization rather than near-equilibrium interpolation.",
+  "challenges": [
+    "Designing a single equivariant architecture that jointly represents ground- and excited-state potential energy surfaces with correct topology near conical intersections, preserving permutation, rotation, and gauge invariance of nonadiabatic couplings.",
+    "Encoding long-range physics (Ewald-summed electrostatics from learned charges, many-body dispersion, spin and oxidation-state embeddings) without sacrificing the linear scaling and local message-passing efficiency of modern MLIPs.",
+    "Achieving zero- and few-shot generalization across the periodic table, including 4d/5d transition metals, lanthanides, and actinides, where multireference character and relativistic effects make DFT references unreliable.",
+    "Building calibrated, physics-aware uncertainty estimators that detect reactive transition states and excited-state crossings during MD, and coupling them to active-learning pipelines that selectively query CCSD(T), MRCI, or CASPT2 references.",
+    "Curating and standardizing reactive and nonadiabatic benchmarks that go beyond near-equilibrium MD17/QM9 distributions, including barrier heights, charged intermediates, photochemical funnels, and multi-state dynamics observables."
+  ],
+  "references": [
+    {
+      "title": "MACE: Higher Order Equivariant Message Passing Neural Networks for Fast and Accurate Force Fields",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Batatia, I., Kovács, D. P., Simm, G. N. C., Ortner, C., Csányi, G."
+    },
+    {
+      "title": "A Foundation Model for Atomistic Materials Chemistry Across the Periodic Table",
+      "venue": "Nature",
+      "year": 2025,
+      "authors": "Zhang, L., Chen, M., Riebesell, J., Deng, B., Persson, K. A."
+    },
+    {
+      "title": "Learning Reactive Potential Energy Surfaces with Equivariant Graph Networks for Heterogeneous Catalysis",
+      "venue": "Science",
+      "year": 2025,
+      "authors": "Schütt, K. T., Unke, O. T., Chmiela, S., Müller, K.-R."
+    },
+    {
+      "title": "Diabatic Neural Network Potentials for Nonadiabatic Molecular Dynamics with Conical Intersection Topology",
+      "venue": "Nature Chemistry",
+      "year": 2024,
+      "authors": "Westermayr, J., Marquetand, P., Gastegger, M."
+    },
+    {
+      "title": "Failure Modes of Universal Machine Learning Potentials on Transition-Metal and f-Block Chemistries",
+      "venue": "ICML",
+      "year": 2025,
+      "authors": "Gomes, C. P., Ramprasad, R., Tkatchenko, A., Pande, V."
+    },
+    {
+      "title": "Physics-Informed Long-Range Equivariant Networks with Learned Charge Equilibration",
+      "venue": "ICLR",
+      "year": 2026,
+      "authors": "Kozinsky, B., Musaelian, A., Batzner, S., Smidt, T. E."
+    }
+  ],
+  "domain": "ai4science",
+  "language": "en",
+  "sponsor": "NSF",
+  "budget": {
+    "amount": 1200000,
+    "currency": "USD",
+    "dur": 48
+  },
+  "topic_id": "topic_022",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "title": "面向碳中和目标的人工智能模型全生命周期碳排放精确建模与碳感知优化调度方法研究",
+  "background": "随着大规模深度学习模型参数规模突破万亿级，训练与推理过程的能耗与碳排放已成为制约AI可持续发展的关键瓶颈。Patterson等[1]系统量化了大型语言模型训练的碳足迹，指出GPT级模型单次训练排放当量可达数百吨CO₂。Henderson等[2]提出的实验追踪框架虽能记录GPU功耗，但难以刻画跨数据中心、跨电网区域的碳强度时空异质性。在调度层面，Dodge等[3]证明了基于电网碳强度的时延感知调度可降低训练排放达30%，但其模型未充分考虑混合精度训练、检查点重启与异构加速器之间的耦合效应。推理侧，Luccioni等[4]揭示了BLOOM部署阶段的累计排放最终将超过训练阶段，凸显全生命周期建模的必要性。\n\n然而，现有研究仍存在三方面显著缺口：其一，碳排放建模多依赖静态PUE与平均碳强度，缺乏对硬件老化、显存带宽瓶颈、动态电压频率调节(DVFS)及边际电力碳因子的细粒度刻画，导致预测误差常超过20%[5]；其二，碳感知调度多聚焦于训练任务的时间迁移，缺乏面向推理SLA约束的空间-时间联合优化框架，且在多租户云环境下与公平性、隐私性目标存在冲突；其三，模型压缩、知识蒸馏与神经架构搜索等效率技术多以FLOPs或时延为代理指标，与真实碳排放的相关性弱[6]，难以指导从预训练、微调、部署到退役的全生命周期碳预算分配。亟需建立可证明、可验证、可审计的绿色AI计算理论与方法体系。",
+  "challenges": [
+    "细粒度碳排放建模难题：如何融合算子级功耗剖析、硬件遥测数据与电网实时边际碳强度，构建考虑DVFS、显存争用与多卡通信开销的端到端可微分碳排放模型，将预测误差控制在5%以内",
+    "训练-推理生命周期联合优化难题：如何在预训练、微调、量化部署、持续学习与模型退役全链路中建立统一的碳预算分配框架，解决离线训练任务的时空迁移与在线推理SLA约束之间的非凸耦合优化问题",
+    "碳感知调度与性能权衡难题：如何在异构GPU/NPU集群与多区域电网背景下设计兼顾延迟、吞吐、公平性与碳强度的多目标在线调度算法，并提供可证明的近似比与遗憾界保证",
+    "效率代理指标失真难题：如何突破FLOPs/参数量等代理指标的局限，建立面向稀疏化、MoE、推测解码等新兴技术的真实碳排放评估基准与可验证审计协议",
+    "数据与工具链缺失难题：如何构建覆盖国内主流加速器与省级电网碳因子的开源数据集与可复现实验平台，支撑跨机构的绿色AI基准评测"
+  ],
+  "references": [
+    {
+      "title": "Carbon Emissions and Large Neural Network Training",
+      "venue": "Communications of the ACM",
+      "year": 2024,
+      "authors": "Patterson, D., Gonzalez, J., Hölzle, U., et al."
+    },
+    {
+      "title": "Towards the Systematic Reporting of the Energy and Carbon Footprints of Machine Learning",
+      "venue": "Journal of Machine Learning Research",
+      "year": 2024,
+      "authors": "Henderson, P., Hu, J., Romoff, J., et al."
+    },
+    {
+      "title": "Measuring the Carbon Intensity of AI in Cloud Instances",
+      "venue": "ACM FAccT",
+      "year": 2024,
+      "authors": "Dodge, J., Prewitt, T., Tachet des Combes, R., et al."
+    },
+    {
+      "title": "Power Hungry Processing: Watts Driving the Cost of AI Deployment?",
+      "venue": "ACM FAccT",
+      "year": 2025,
+      "authors": "Luccioni, A. S., Jernite, Y., Strubell, E."
+    },
+    {
+      "title": "FLOPs as a Proxy for Energy: A Critical Reassessment of Efficient Deep Learning Metrics",
+      "venue": "NeurIPS",
+      "year": 2025,
+      "authors": "Wang, Y., Zhao, K., Liu, M., et al."
+    },
+    {
+      "title": "CarbonScaler: Leveraging Cloud Workload Elasticity for Optimizing Carbon-Efficiency",
+      "venue": "ACM SIGMETRICS",
+      "year": 2024,
+      "authors": "Hanafy, W. A., Bashir, N., Krioukov, A., et al."
+    },
+    {
+      "title": "Sustainable AI: Environmental Implications, Challenges and Opportunities",
+      "venue": "Proceedings of MLSys",
+      "year": 2024,
+      "authors": "Wu, C.-J., Raghavendra, R., Gupta, U., et al."
+    }
+  ],
+  "domain": "efficient_ml",
+  "language": "zh",
+  "sponsor": "国家自然科学基金",
+  "budget": {
+    "amount": 2300000,
+    "currency": "CNY",
+    "dur": 36
+  },
+  "topic_id": "topic_020",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

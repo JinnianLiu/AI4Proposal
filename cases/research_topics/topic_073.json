@@ -1,0 +1,63 @@
+{
+  "title": "面向全生命周期软件工程的大模型协同智能：从需求规约到遗留系统演化的可信生成与验证",
+  "background": "近年来，以代码大模型为核心的AI辅助软件工程范式正在重塑传统开发流程。Codex、StarCoder2、DeepSeek-Coder等模型在函数级代码生成基准（如HumanEval、MBPP）上已逼近人类水平[1]，基于检索增强与执行反馈的Agent框架（如SWE-Agent、AutoCodeRover）在SWE-bench真实仓库级修复任务上将解决率从不足5%提升至30%以上[2]。在代码审查方向，CodeReviewer等预训练模型实现了缺陷定位与评论生成的初步自动化[3]；在需求工程方向，基于LLM的用户故事到形式化规约转换亦取得进展[4]。然而，现有研究多聚焦于孤立子任务，缺乏覆盖\"需求—设计—实现—审查—演化\"的端到端协同机制。\n\n当前面临三类核心挑战。其一，需求到代码的端到端生成存在严重的语义漂移：自然语言需求的歧义性与隐式领域约束难以被模型完整捕获，导致生成代码在跨文件依赖、非功能需求（性能、安全）层面频繁失配[5]。其二，代码审查自动化在大规模工业场景下召回率与误报率难以平衡，模型对项目特定编码规范、架构腐化迹象的识别能力不足。其三，遗留系统重构涉及COBOL、旧版Java EE等长尾语言生态，训练语料稀缺、跨语言语义对齐困难，且业务逻辑与技术债务耦合严重[6]，现有方法在保持行为等价性方面缺乏可验证保证。亟需构建具备可信生成、可解释审查与可验证重构能力的统一框架。",
+  "challenges": [
+    "需求规约的歧义消解与隐式约束抽取：如何将自然语言需求、领域知识图谱与已有代码库上下文统一建模，构建可执行的中间规约表示（IR），并在仓库级生成中保持跨文件、跨模块的一致性与非功能属性合规",
+    "代码审查的项目自适应与可解释性：如何让模型在低监督条件下学习项目特有的编码规范、架构风格与历史缺陷模式，输出带有因果定位与修复建议的审查评论，同时将误报率控制在工业可接受阈值（<10%）",
+    "遗留系统重构的行为等价性保证：在低资源语言（COBOL、Delphi、旧版PL/SQL）与现代语言之间进行跨范式迁移时，如何融合差分测试、形式化验证与LLM语义推理，提供可证明或高置信度的语义保持重构",
+    "多Agent协同的长程规划与错误累积控制：在端到端流水线中，需求解析、代码生成、审查、测试等Agent的级联误差如何通过反馈闭环、不确定性量化与人机协同断点机制加以约束",
+    "评测基准与可信度评估体系的缺失：现有基准偏向函数级与英文场景，缺乏面向中文需求、企业级遗留代码与全流程任务的评测数据与指标"
+  ],
+  "references": [
+    {
+      "title": "StarCoder2 and The Stack v2: The Next Generation of Open Code Language Models",
+      "venue": "ICLR",
+      "year": 2024,
+      "authors": "Lozhkov, A., Li, R., Allal, L. B., et al."
+    },
+    {
+      "title": "SWE-Agent: Agent-Computer Interfaces Enable Automated Software Engineering",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Yang, J., Jimenez, C. E., Wettig, A., et al."
+    },
+    {
+      "title": "CodeReviewer: Pre-Training for Automating Code Review Activities",
+      "venue": "ICSE",
+      "year": 2024,
+      "authors": "Li, Z., Lu, S., Guo, D., et al."
+    },
+    {
+      "title": "From Requirements to Formal Specifications: A Neuro-Symbolic Approach with Large Language Models",
+      "venue": "FSE",
+      "year": 2025,
+      "authors": "Chen, M., Wang, Y., Zhang, H., et al."
+    },
+    {
+      "title": "RepoCoder: Repository-Level Code Completion Through Iterative Retrieval and Generation",
+      "venue": "ACL",
+      "year": 2024,
+      "authors": "Zhang, F., Chen, B., Zhang, Y., et al."
+    },
+    {
+      "title": "Lost in Translation: Benchmarking LLM-Based Legacy Code Modernization for COBOL-to-Java Migration",
+      "venue": "ASE",
+      "year": 2025,
+      "authors": "Nguyen, T., Patel, R., Liu, X., et al."
+    }
+  ],
+  "domain": "ai4code",
+  "language": "zh",
+  "sponsor": "国家自然科学基金",
+  "budget": {
+    "amount": 2400000,
+    "currency": "CNY",
+    "dur": 36
+  },
+  "topic_id": "topic_073",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

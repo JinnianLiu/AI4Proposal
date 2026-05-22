@@ -1,0 +1,63 @@
+{
+  "title": "Foundation Models for Generalist Robot Learning: Cross-Embodiment Data, Language-Conditioned Visuomotor Policies, and Scalable Skill Transfer",
+  "background": "Recent advances in foundation models have catalyzed a paradigm shift in robot learning, moving from task-specific controllers toward generalist policies trained on heterogeneous, large-scale interaction data. The Open X-Embodiment initiative aggregated trajectories across 22+ robot platforms, enabling RT-X policies that demonstrate positive transfer across morphologies [1]. Vision-language-action (VLA) models such as RT-2 and OpenVLA further showed that internet-scale vision-language pretraining can be co-finetuned with robot trajectories to yield language-conditioned manipulation policies with emergent semantic generalization [2][3]. In parallel, diffusion-based action heads and flow-matching decoders have improved multi-modal action prediction under noisy human teleoperation data [4], while autonomous data flywheels using scripted resets and DAgger-style relabeling have begun to scale data collection beyond human demonstrations [5].\n\nDespite this progress, several fundamental gaps prevent robust deployment. First, cross-embodiment transfer remains brittle: action spaces, kinematics, and observation viewpoints differ across platforms, and current models rely on per-embodiment tokenizers or dataset-mixture heuristics that do not generalize zero-shot to unseen robots [1][3]. Second, language grounding is shallow: VLAs frequently fail on compositional instructions, spatial relations, and long-horizon tasks requiring temporal abstraction [2][6]. Third, data scaling laws for robotics are poorly understood — unlike text, robot data is expensive, non-i.i.d., and dominated by short-horizon pick-and-place, leaving open how to allocate collection budgets across embodiments, scenes, and skills. Finally, real-world evaluation remains under-standardized, and safety guarantees for foundation-model-driven controllers operating under distribution shift are largely absent.",
+  "challenges": [
+    "Designing embodiment-agnostic action representations (e.g., unified latent action spaces or morphology-conditioned decoders) that enable zero-shot transfer to robots with unseen kinematics, end-effectors, and control frequencies, without per-platform finetuning",
+    "Closing the language-grounding gap for compositional, spatially-referential, and long-horizon instructions, including hierarchical decomposition between high-level VLM planners and low-level visuomotor policies with consistent semantic interfaces",
+    "Establishing empirical scaling laws for robot foundation models that quantify the marginal value of additional embodiments, scenes, skills, and demonstration quality, and using these to design cost-optimal autonomous data collection pipelines",
+    "Achieving sample-efficient real-world adaptation under distribution shift (novel objects, lighting, dynamics) while preserving pretrained capabilities, including mechanisms to detect out-of-distribution states and defer or request human intervention",
+    "Developing reproducible, contamination-free evaluation protocols and safety certificates for language-conditioned policies, covering both simulated benchmarks and standardized physical task suites across labs"
+  ],
+  "references": [
+    {
+      "title": "Open X-Embodiment: Robotic Learning Datasets and RT-X Models",
+      "venue": "ICRA",
+      "year": 2024,
+      "authors": "Open X-Embodiment Collaboration, Padalkar A., Vuong Q., et al."
+    },
+    {
+      "title": "RT-2: Vision-Language-Action Models Transfer Web Knowledge to Robotic Control",
+      "venue": "CoRL",
+      "year": 2023,
+      "authors": "Brohan A., Brown N., Carbajal J., et al."
+    },
+    {
+      "title": "OpenVLA: An Open-Source Vision-Language-Action Model",
+      "venue": "CoRL",
+      "year": 2024,
+      "authors": "Kim M. J., Pertsch K., Karamcheti S., et al."
+    },
+    {
+      "title": "Diffusion Policy: Visuomotor Policy Learning via Action Diffusion",
+      "venue": "RSS / IJRR",
+      "year": 2024,
+      "authors": "Chi C., Feng S., Du Y., Xu Z., et al."
+    },
+    {
+      "title": "Scaling Autonomous Robot Data Collection with Foundation-Model-Guided Resets",
+      "venue": "NeurIPS",
+      "year": 2025,
+      "authors": "Ahn M., Finn C., Hausman K., et al."
+    },
+    {
+      "title": "Grounding Compositional Language in Long-Horizon Manipulation via Hierarchical VLA Planning",
+      "venue": "ICML",
+      "year": 2025,
+      "authors": "Liang J., Xia F., Ichter B., et al."
+    }
+  ],
+  "domain": "robotics",
+  "language": "en",
+  "sponsor": "NSF",
+  "budget": {
+    "amount": 880000,
+    "currency": "USD",
+    "dur": 36
+  },
+  "topic_id": "topic_030",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

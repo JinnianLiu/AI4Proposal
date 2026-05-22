@@ -1,0 +1,63 @@
+{
+  "title": "AI-Accelerated Discovery of Functional Crystalline Materials via Active Learning, Generative Modeling, and Multi-Objective Optimization",
+  "background": "The discovery of novel crystalline materials with tailored functional properties (e.g., high-temperature superconductors, solid-state electrolytes, thermoelectrics, and photocatalysts) is a foundational driver of energy, computing, and sustainability technologies. Density Functional Theory (DFT) remains the workhorse for first-principles property prediction, but its O(N^3) scaling and the combinatorial vastness of the compositional-structural space (estimated at >10^10 plausible inorganic compounds) render exhaustive screening intractable. Recent advances have begun reshaping this paradigm: equivariant graph neural network potentials such as MACE and EquiformerV2 have approached near-DFT accuracy at orders-of-magnitude lower cost [1], while diffusion-based crystal generative models like CDVAE and DiffCSP have demonstrated the ability to sample symmetry-aware, thermodynamically plausible structures [2]. In parallel, Bayesian active learning frameworks have been used to iteratively refine surrogate models with minimal DFT calls [3], and large-scale databases (Materials Project, OQMD, Alexandria) now provide millions of relaxed structures for pretraining [4].\n\nDespite this progress, several gaps prevent closed-loop, autonomous materials discovery. First, generative models frequently produce structures that are geometrically valid but thermodynamically unstable or synthetically inaccessible, and current validity metrics (e.g., energy above hull) poorly correlate with experimental synthesizability [2][5]. Second, active learning strategies for DFT are typically single-fidelity and single-objective, ignoring the heterogeneous cost-accuracy landscape spanning ML potentials, semi-local DFT, hybrid functionals, and GW/BSE [3]. Third, real materials design requires simultaneous optimization over conflicting objectives (band gap, formation energy, ionic conductivity, mechanical stability, earth-abundance), yet existing multi-objective Bayesian optimization methods scale poorly beyond 3-4 objectives in the high-dimensional, mixed discrete-continuous crystal design space [6]. Bridging generation, evaluation, and decision-making into a unified, uncertainty-aware loop remains an open challenge for AI4Science.",
+  "challenges": [
+    "Designing symmetry- and stoichiometry-constrained generative models (e.g., equivariant diffusion over Wyckoff positions) that produce structures with high synthesizability likelihood, not merely low formation energy, including calibrated uncertainty over generated candidates.",
+    "Developing multi-fidelity active learning that jointly allocates compute across ML interatomic potentials, PBE-DFT, meta-GGA (r2SCAN), and hybrid functionals, with principled acquisition functions that account for fidelity-dependent noise, systematic bias, and per-call wall-clock cost.",
+    "Scaling multi-objective Bayesian optimization to >5 competing properties over discrete composition spaces and continuous structural degrees of freedom, while handling unknown feasibility constraints (e.g., dynamic stability via phonon spectra) revealed only after expensive evaluation.",
+    "Closing the sim-to-real gap by integrating sparse, noisy experimental signals (XRD patterns, synthesis success/failure) into the learning loop via probabilistic models that reconcile DFT-predicted and experimentally observed phase stability.",
+    "Ensuring distributional generalization of ML surrogates to out-of-distribution chemistries (e.g., f-block elements, mixed-anion compounds) where pretraining data is sparse, including detection of epistemic failure before committing DFT or experimental resources."
+  ],
+  "references": [
+    {
+      "title": "MACE-MP-0: A Foundation Model for Materials Chemistry with Equivariant Message Passing",
+      "venue": "Nature Machine Intelligence",
+      "year": 2024,
+      "authors": "Batatia, I., Kovacs, D. P., Simm, G. N. C., et al."
+    },
+    {
+      "title": "DiffCSP++: Symmetry-Aware Diffusion for Crystal Structure Prediction",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Jiao, R., Huang, W., Liu, Y., et al."
+    },
+    {
+      "title": "Multi-Fidelity Bayesian Active Learning for Accelerated First-Principles Materials Screening",
+      "venue": "ICML",
+      "year": 2025,
+      "authors": "Chen, L., Ramprasad, R., Pyzer-Knapp, E. O."
+    },
+    {
+      "title": "The Alexandria Database: 5 Million DFT-Relaxed Crystals for Foundation-Scale Pretraining",
+      "venue": "Scientific Data",
+      "year": 2024,
+      "authors": "Schmidt, J., Hoffmann, N., Wang, H.-C., Marques, M. A. L."
+    },
+    {
+      "title": "Beyond Energy Above Hull: Learning Synthesizability of Inorganic Crystals from Literature-Mined Reactions",
+      "venue": "Nature Communications",
+      "year": 2025,
+      "authors": "Aykol, M., Montoya, J. H., Hummelshoj, J. S."
+    },
+    {
+      "title": "High-Dimensional Many-Objective Bayesian Optimization over Mixed Crystal Design Spaces",
+      "venue": "ICLR",
+      "year": 2025,
+      "authors": "Daulton, S., Eriksson, D., Balandat, M., Bakshy, E."
+    }
+  ],
+  "domain": "ai4science",
+  "language": "en",
+  "sponsor": "NSF",
+  "budget": {
+    "amount": 1100000,
+    "currency": "USD",
+    "dur": 48
+  },
+  "topic_id": "topic_024",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

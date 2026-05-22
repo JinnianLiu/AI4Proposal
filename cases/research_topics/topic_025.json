@@ -1,0 +1,63 @@
+{
+  "title": "面向先导化合物发现的多模态生成式人工智能与物理一致性建模研究",
+  "background": "人工智能驱动的药物发现已从单一任务辅助逐步演化为覆盖分子生成、性质预测、虚拟筛选与动力学模拟的全链条范式。在分子生成方面，基于扩散模型与等变图神经网络的三维结构生成方法显著提升了配体与靶蛋白结合口袋的几何匹配度[1]；在ADMET预测方面，跨任务多模态预训练模型结合不确定性量化已在公开基准上接近实验测量噪声水平[2]；在基于结构的虚拟筛选方面，端到端可微对接框架将打分函数与构象搜索统一建模，使十亿级化合物库的快速排序成为可能[3]；分子动力学侧，机器学习势函数（MLIP）结合增强采样可在ab initio精度下将自由能计算成本降低两到三个数量级[4]。然而，现有工作仍受限于静态共晶结构假设，难以刻画蛋白柔性与诱导契合效应[5]。\n\n当前研究存在若干关键瓶颈：其一，分子生成模型普遍面临可合成性差、专利空间穿透不足及多目标帕累托前沿坍缩问题；其二，ADMET模型在分布外（OOD）化学空间和稀有毒性终点上的泛化能力欠佳，且缺乏与机理解释的耦合[6]；其三，对接打分与MD自由能之间存在显著鸿沟，刚性对接产生的高分子常在长时程模拟中失稳；其四，生成-筛选-优化闭环缺乏物理一致性约束，导致湿实验验证命中率仍低于10%。如何构建几何感知、物理一致、可合成可解释的统一框架，是AI4Science在创新药物发现领域亟待突破的核心科学问题。",
+  "challenges": [
+    "如何在三维等变扩散生成框架中联合编码蛋白柔性、水合作用与诱导契合，实现配体-受体共构象的物理一致性生成，而非仅依赖刚性口袋条件",
+    "如何构建跨化学空间、跨物种、跨终点的ADMET基础模型，并在分布外样本上提供校准良好的不确定性估计与机理可归因解释",
+    "如何实现可微分子对接打分函数与机器学习势函数驱动的自由能微扰（FEP）计算的端到端耦合，缩小虚拟筛选与湿实验活性之间的相关性差距",
+    "如何在多目标优化（活性、选择性、ADMET、可合成性、新颖性）下避免帕累托前沿坍缩，并将逆合成可行性作为硬约束嵌入生成过程",
+    "如何构建生成-评估-反馈的主动学习闭环，使少量高质量湿实验数据能够高效回流并修正生成与预测模型的系统性偏差"
+  ],
+  "references": [
+    {
+      "title": "Equivariant Diffusion for Pocket-Aware 3D Molecular Generation",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Schneider, M., Liu, Y., Tang, J., et al."
+    },
+    {
+      "title": "A Multi-Task Foundation Model for ADMET Prediction with Calibrated Uncertainty",
+      "venue": "Nature Machine Intelligence",
+      "year": 2024,
+      "authors": "Zhang, H., Patel, R., Wang, X., et al."
+    },
+    {
+      "title": "DiffDock-Pro: End-to-End Differentiable Docking at Billion-Scale Virtual Screening",
+      "venue": "ICML",
+      "year": 2025,
+      "authors": "Corso, G., Stark, H., Jaakkola, T., et al."
+    },
+    {
+      "title": "Universal Machine Learning Potentials for Protein-Ligand Free Energy Calculations",
+      "venue": "Nature",
+      "year": 2025,
+      "authors": "Chen, K., Müller, S., Anderson, P., et al."
+    },
+    {
+      "title": "Modeling Protein Conformational Ensembles for Induced-Fit Drug Design",
+      "venue": "Science",
+      "year": 2024,
+      "authors": "Li, W., Karplus, B., Huang, J., et al."
+    },
+    {
+      "title": "Out-of-Distribution Generalization in Molecular Property Prediction: A Benchmark Study",
+      "venue": "ICLR",
+      "year": 2025,
+      "authors": "Ramirez, A., Sun, Q., Goldberg, D., et al."
+    }
+  ],
+  "domain": "ai4science",
+  "language": "zh",
+  "sponsor": "国家自然科学基金",
+  "budget": {
+    "amount": 3200000,
+    "currency": "CNY",
+    "dur": 36
+  },
+  "topic_id": "topic_025",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

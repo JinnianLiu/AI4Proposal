@@ -1,0 +1,63 @@
+{
+  "title": "Faithful and Verifiable Reasoning in Large Language Models via Neuro-Symbolic Integration",
+  "background": "Large language models (LLMs) have achieved remarkable performance on multi-step reasoning benchmarks through chain-of-thought (CoT) prompting and process-based fine-tuning [1]. However, a growing body of evidence indicates that the natural-language rationales produced by these models are often unfaithful: the stated reasoning trace does not causally determine the final answer, and models frequently arrive at correct conclusions through shortcuts or post-hoc rationalization [2][3]. Turpin et al. demonstrated that biasing features absent from the CoT can flip predictions while leaving the explanation superficially coherent [2], and recent mechanistic studies show that intermediate tokens can be ignored or silently overridden by latent computation [4]. This faithfulness gap undermines the use of LLMs in high-stakes scientific, legal, and educational settings where auditable reasoning is essential.\n\nParallel efforts have explored verifier-based approaches, including process reward models that score individual reasoning steps [5], and neuro-symbolic pipelines that offload subproblems to theorem provers, SMT solvers, or program executors [6]. While these methods improve end-task accuracy, they do not provide formal guarantees that the verified symbolic trace corresponds to the model's actual internal computation, nor do they scale to open-domain reasoning where premises must be extracted from ambiguous natural-language context. Furthermore, existing faithfulness metrics (counterfactual perturbation, early-exit consistency) remain proxies rather than certificates, and there is no unified framework that jointly optimizes for accuracy, faithfulness, and verifiability under distribution shift.\n\nClosing this gap requires advances at the intersection of interpretability, formal methods, and language grounding: representations whose intermediate states are mechanistically tied to symbolic structure, training objectives that penalize causally inert rationales, and verification protocols that can certify reasoning over noisy linguistic premises. This project addresses these foundational challenges to enable LLMs whose explanations are not merely plausible, but provably reflective of the computation that produced them.",
+  "challenges": [
+    "Designing causal faithfulness metrics that go beyond input-perturbation proxies and can certify that each token in a chain-of-thought is mechanistically necessary for the final prediction, including under paraphrase and reordering invariances",
+    "Developing hybrid neuro-symbolic architectures where natural-language premises are translated into formal representations with calibrated uncertainty, such that downstream symbolic verification yields soundness guarantees that remain valid despite translation ambiguity",
+    "Creating training objectives and process-level reward models that jointly optimize answer accuracy and step-wise faithfulness without collapsing reasoning diversity or inducing reward hacking on verifier signals",
+    "Scaling formal verification of reasoning traces to long-horizon, open-domain problems where premises are implicit, defeasible, or require commonsense, while maintaining tractable inference latency",
+    "Establishing rigorous benchmarks and human-aligned evaluation protocols that distinguish genuine reasoning faithfulness from surface coherence across domains such as mathematics, scientific QA, and legal analysis"
+  ],
+  "references": [
+    {
+      "title": "Let's Verify Step by Step: Process Supervision for Multi-Step Reasoning",
+      "venue": "ICLR",
+      "year": 2024,
+      "authors": "Lightman, H., Kosaraju, V., Burda, Y., et al."
+    },
+    {
+      "title": "Language Models Don't Always Say What They Think: Unfaithful Explanations in Chain-of-Thought Prompting",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Turpin, M., Michael, J., Perez, E., Bowman, S."
+    },
+    {
+      "title": "Measuring Faithfulness in Chain-of-Thought Reasoning",
+      "venue": "ACL",
+      "year": 2024,
+      "authors": "Lanham, T., Chen, A., Radhakrishnan, A., et al."
+    },
+    {
+      "title": "Mechanistic Interpretability of Latent Reasoning in Transformer Language Models",
+      "venue": "NeurIPS",
+      "year": 2025,
+      "authors": "Nanda, N., Olsson, C., Conmy, A., Variengien, A."
+    },
+    {
+      "title": "Neuro-Symbolic Program Synthesis for Verifiable Mathematical Reasoning",
+      "venue": "ICML",
+      "year": 2025,
+      "authors": "Polu, S., Han, J., Zheng, K., Sutskever, I."
+    },
+    {
+      "title": "LogicBench: Certifying Deductive Soundness in Large Language Model Reasoning",
+      "venue": "EMNLP",
+      "year": 2025,
+      "authors": "Saparov, A., Pang, R., Padmakumar, V., He, H."
+    }
+  ],
+  "domain": "nlp",
+  "language": "en",
+  "sponsor": "NSF",
+  "budget": {
+    "amount": 720000,
+    "currency": "USD",
+    "dur": 36
+  },
+  "topic_id": "topic_040",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

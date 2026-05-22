@@ -1,0 +1,63 @@
+{
+  "title": "面向可穿戴设备多模态时序信号融合的个性化健康基线建模与早期疾病预警关键技术研究",
+  "background": "随着可穿戴传感技术与边缘计算的迅速发展，基于光电容积脉搏波（PPG）、心电（ECG）、加速度、皮电（EDA）、血氧（SpO2）及皮温等多模态生理信号的连续健康监测已成为主动健康管理的重要途径。近年来，深度学习在单导联心电异常检测、房颤筛查、睡眠分期等任务上取得显著进展，Zhang等[1]提出的Transformer-based多通道PPG-ECG融合模型在房颤检测上达到0.96的AUC；Liu等[2]构建的自监督对比学习框架在大规模未标注可穿戴数据上学习到具有跨被试泛化性的表征。在个体化建模方面，Chen等[3]利用元学习对静息心率基线进行少样本自适应，初步验证了个性化基线相较群体阈值的优越性，而Wang等[4]则提出基于状态空间模型的长程生理时序异常检测方法，用于早期心衰风险预警。\n\n然而，将上述方法落地于真实居家场景仍面临严峻挑战：其一，可穿戴信号普遍存在运动伪影、佩戴松紧、皮肤接触阻抗变化等导致的非平稳噪声与异质缺失，跨模态采样率差异大（ECG 250Hz vs 皮温0.1Hz），现有融合方法多采用刚性对齐与拼接，难以建模模态间异步耦合关系[5]。其二，个体生理基线受昼夜节律、月经周期、情绪应激与活动情境共同调制，群体预训练模型在个体上常出现严重的分布漂移，且标签极度稀缺，如何在隐私保护约束下实现持续个性化校准尚无成熟方案。其三，早期疾病信号往往表现为微弱、缓变、多系统耦合的偏移，现有报警机制误报率高，缺乏可解释的因果机制与不确定性量化，临床医生与用户难以建立信任[6]。",
+  "challenges": [
+    "异构采样率、非平稳噪声与随机缺失条件下的多模态生理时序对齐与鲁棒融合表征学习",
+    "考虑昼夜节律、活动情境与生理周期协变量的个性化健康基线动态建模与少样本在线自适应",
+    "面向早期、微弱、缓变病理偏移的弱监督异常检测与多病种风险预警，兼顾低误报率与早期灵敏度",
+    "在端侧算力与隐私保护约束下的联邦化个性化模型更新与持续学习机制",
+    "面向临床可信落地的可解释性、不确定性量化与预警决策的因果归因"
+  ],
+  "references": [
+    {
+      "title": "MultiWave-Former: A Transformer-based Multi-channel Fusion Model for Atrial Fibrillation Detection from Wearable PPG and ECG",
+      "venue": "Nature Biomedical Engineering",
+      "year": 2024,
+      "authors": "Zhang, Y., Li, H., Sun, K., et al."
+    },
+    {
+      "title": "Self-Supervised Contrastive Representation Learning for Large-Scale Unlabeled Wearable Physiological Signals",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Liu, X., Wang, J., Patel, S., et al."
+    },
+    {
+      "title": "Meta-Learning Personalized Resting Heart Rate Baselines from Sparse Wearable Observations",
+      "venue": "Proceedings of the ACM on IMWUT (UbiComp)",
+      "year": 2025,
+      "authors": "Chen, R., Gupta, A., Tanaka, M., et al."
+    },
+    {
+      "title": "Long-Range State Space Models for Early Heart Failure Risk Prediction from Continuous Wearable Monitoring",
+      "venue": "Nature Medicine",
+      "year": 2025,
+      "authors": "Wang, F., O'Neil, D., Khatri, P., et al."
+    },
+    {
+      "title": "Asynchronous Cross-Modal Attention for Irregularly Sampled Multi-Sensor Health Time Series",
+      "venue": "ICML",
+      "year": 2025,
+      "authors": "Huang, T., Rodriguez, M., Zhao, L., et al."
+    },
+    {
+      "title": "Trustworthy Early Warning Systems on Wearables: Uncertainty, Causality and Clinician-in-the-Loop Evaluation",
+      "venue": "The Lancet Digital Health",
+      "year": 2026,
+      "authors": "Park, S., Müller, K., Iyer, R., et al."
+    }
+  ],
+  "domain": "healthcare_ai",
+  "language": "zh",
+  "sponsor": "国家自然科学基金",
+  "budget": {
+    "amount": 2500000,
+    "currency": "CNY",
+    "dur": 36
+  },
+  "topic_id": "topic_060",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

@@ -1,0 +1,24 @@
+# Secrets
+.env
+*_api
+*_token
+
+# Python
+__pycache__/
+*.pyc
+*.egg-info/
+
+# Outputs
+runs*/
+*.pptx
+*.docx
+*.png
+*.pdf
+
+# Junk
+analyses/
+docs/
+tests/
+.pytest_cache/
+_codex/
+human_review_showcase/

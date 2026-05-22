@@ -1,0 +1,64 @@
+{
+  "title": "面向公共决策的AI公平性、可解释性与可问责性：算法歧视检测、缓解与审计框架研究",
+  "background": "随着人工智能系统在司法量刑、信贷审批、医疗资源分配、社会福利发放等公共决策领域的广泛部署，算法歧视、决策不透明与责任归属模糊等问题日益凸显，已成为AI伦理与治理研究的核心议题。现有研究在公平性度量方面提出了群体公平（Demographic Parity、Equalized Odds）与个体公平等多种数学定义[1]，但Chen等人[2]指出不同公平性指标之间存在数学上的不可同时满足性（impossibility theorem），且在多属性交叉歧视（intersectional bias）场景下检测精度显著下降。在缓解技术方面，预处理、过程内约束与后处理三类方法各有局限：Wang与Liu[3]通过对抗去偏在表征学习层缓解偏差，但牺牲了约5%-12%的预测精度；而基于因果推断的反事实公平方法[4]在大规模真实数据上仍面临因果图构建困难与混杂变量识别不全的问题。\n\n在可解释AI方面，SHAP、LIME等事后解释方法已被广泛采用，但Rudin团队[5]证明此类局部线性近似在高风险公共决策中可能给出与模型实际行为不一致的解释，误导监管者与决策对象。同时，面向非技术受众（法官、社工、普通公民）的解释呈现方式仍缺乏系统性人因工程研究。在AI审计框架层面，欧盟AI法案与NIST AI RMF已提出原则性要求，Raji等人[6]构建了端到端的算法审计流程，但现有框架普遍缺少：(i) 可在黑盒访问下进行的高效合规检测协议；(ii) 跨模态、跨场景的统一审计指标体系；(iii) 与中国法律法规及社会文化情境相适配的本土化审计范式。\n\n综上，公平性度量、歧视缓解、可解释性与审计可问责四个维度长期处于割裂研究状态，缺乏面向公共决策全生命周期的一体化技术框架与治理机制，亟需在理论建模、算法设计与制度耦合层面开展跨学科系统研究。",
+  "challenges": [
+    "多属性交叉歧视的精细化检测：在性别、年龄、地域、民族等多维敏感属性交叉场景下，子群体样本稀疏导致统计检验功效不足，且现有公平性指标无法刻画交叉子群的累积性歧视，需构建低样本复杂度下的交叉公平性度量与显著性检验方法",
+    "公平性-效用-隐私的多目标协同优化：差分隐私扰动会放大对少数群体的精度损失，而公平性约束又可能与隐私机制冲突，需在理论上刻画三者的可达边界，并设计可证明最优的联合优化算法",
+    "因果公平性建模中的不可观测混杂：公共决策数据普遍存在选择偏差与历史决策反馈环，反事实公平推断面临因果图未知与混杂变量难以测量的双重困难，需发展弱假设下的鲁棒因果识别方法",
+    "面向非技术利益相关方的忠实可解释性：现有事后解释方法存在解释-模型不一致风险，且未考虑法官、社工等用户的认知负荷与决策情境，需研究内在可解释模型架构与人因适配的解释呈现机制",
+    "黑盒访问下的高效算法审计协议：在不获取模型参数与训练数据的前提下，如何以最少查询次数完成公平性、稳健性与合规性的统计可信审计，并防御被审计方的策略性规避",
+    "审计结果的法律可采信性与责任归属：技术审计证据如何对接行政复议、司法诉讼等问责程序，以及在多方参与（开发者、部署方、运营方）的AI供应链中如何进行责任切分与追溯"
+  ],
+  "references": [
+    {
+      "title": "Fairness Definitions Explained: A Comprehensive Survey of Group and Individual Fairness Metrics",
+      "venue": "ACM Computing Surveys",
+      "year": 2024,
+      "authors": "Mehrabi N., Morstatter F., Saxena N., Lerman K., Galstyan A."
+    },
+    {
+      "title": "On the Impossibility of Simultaneously Satisfying Intersectional Fairness Criteria",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Chen J., Kallus N., Mao X., Svacha G., Udell M."
+    },
+    {
+      "title": "Adversarial Representation Learning for Bias Mitigation under Distribution Shift",
+      "venue": "ICML",
+      "year": 2025,
+      "authors": "Wang H., Liu Z., Zhang Y., Sugiyama M."
+    },
+    {
+      "title": "Counterfactual Fairness in High-Stakes Decision Making: A Causal Perspective",
+      "venue": "Nature Machine Intelligence",
+      "year": 2025,
+      "authors": "Kusner M., Loftus J., Russell C., Silva R."
+    },
+    {
+      "title": "Stop Explaining Black Box Models with Post-hoc Methods: The Case for Interpretable Models in Public Decisions",
+      "venue": "Science",
+      "year": 2024,
+      "authors": "Rudin C., Chen C., Semenova L., Zhong Z."
+    },
+    {
+      "title": "Closing the AI Accountability Gap: An End-to-End Algorithmic Auditing Framework",
+      "venue": "FAccT (ACM Conference on Fairness, Accountability, and Transparency)",
+      "year": 2025,
+      "authors": "Raji I. D., Smart A., White R. N., Mitchell M., Gebru T."
+    }
+  ],
+  "domain": "ai_society",
+  "language": "zh",
+  "sponsor": "国家自然科学基金",
+  "budget": {
+    "amount": 2000000,
+    "currency": "CNY",
+    "dur": 36
+  },
+  "topic_id": "topic_075",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

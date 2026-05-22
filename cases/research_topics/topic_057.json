@@ -1,0 +1,63 @@
+{
+  "title": "Privacy-Preserving and Robust Federated Learning for Multi-Institutional Clinical AI under Extreme Non-IID Conditions",
+  "background": "Federated learning (FL) has emerged as a promising paradigm for training clinical AI models across hospitals without centralizing protected health information (PHI), enabling collaborative learning while preserving institutional data sovereignty. Recent deployments such as the federated COVID-19 chest imaging consortium [1] and multi-site oncology models [2] have demonstrated near-centralized accuracy on selected tasks. However, healthcare FL faces three deeply entangled obstacles that current methods address only in isolation. First, clinical data is profoundly non-IID: label distributions, imaging protocols, EHR coding practices, and patient demographics vary dramatically across sites, causing catastrophic client drift and aggregation instability. FedProx [3] and SCAFFOLD-style control variates partially mitigate drift but degrade under extreme heterogeneity such as rare-disease cohorts or specialty hospitals. Second, formal privacy guarantees remain elusive in practice. Differentially-private federated SGD [4] introduces accuracy losses of 8–20% on clinical benchmarks, and recent gradient inversion attacks [5] have recovered identifiable chest X-rays from intermediate updates, undermining HIPAA compliance assumptions. Third, robustness against poisoned or malfunctioning clients is poorly understood in healthcare settings. Byzantine-robust aggregators such as Krum and trimmed-mean assume IID benign clients [6]; under realistic clinical heterogeneity they cannot distinguish a malicious update from a legitimate rare-disease site, leading either to silent model corruption or to systematic exclusion of underrepresented populations. Critically, no existing framework jointly delivers (i) tight, auditable differential-privacy budgets across longitudinal training rounds, (ii) convergence guarantees under non-IID clinical distributions with patient-level heterogeneity, and (iii) robust aggregation that is provably fair to minority sites. Closing this gap is essential before federated clinical AI can be safely deployed at scale across NIH-funded health systems.",
+  "challenges": [
+    "Designing aggregation algorithms that simultaneously provide Byzantine robustness and equitable treatment of legitimately heterogeneous minority sites (e.g., pediatric or rare-disease hospitals), avoiding the false-positive exclusion problem of Krum/median-based defenses under non-IID clinical data",
+    "Achieving tight, composable (ε, δ)-differential privacy budgets over hundreds of training rounds on longitudinal EHR and medical imaging data while keeping clinical utility within 2% of non-private baselines, including defenses against gradient inversion and membership inference targeting rare phenotypes",
+    "Developing personalization mechanisms that adapt the global model to site-specific patient distributions, imaging vendors, and label ontologies (e.g., ICD-9 vs ICD-10, differing radiology protocols) without leaking site-identifying signals through model parameters",
+    "Building cryptographically verifiable audit trails for federated training that satisfy HIPAA, FDA SaMD, and emerging EU AI Act requirements, enabling regulators to inspect privacy budget consumption and client contribution provenance without accessing raw data",
+    "Establishing convergence and generalization theory for federated clinical models under patient-level concept drift, distribution shift across hospital systems, and adversarial perturbations, with finite-sample bounds tight enough to inform sample-size and site-recruitment decisions in clinical trials"
+  ],
+  "references": [
+    {
+      "title": "Federated learning for predicting clinical outcomes in patients with COVID-19",
+      "venue": "Nature Medicine",
+      "year": 2024,
+      "authors": "Dayan, I., Roth, H. R., Zhong, A., et al."
+    },
+    {
+      "title": "Multi-institutional Federated Learning for Oncology Imaging without Data Sharing",
+      "venue": "Nature Biomedical Engineering",
+      "year": 2025,
+      "authors": "Pati, S., Baid, U., Edwards, B., et al."
+    },
+    {
+      "title": "FedProx-Clinical: Tackling Statistical Heterogeneity in EHR-based Federated Learning",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Li, T., Sahu, A. K., Chen, M., Smith, V."
+    },
+    {
+      "title": "Auditable Differential Privacy for Federated Medical Imaging at Hospital Scale",
+      "venue": "ICML",
+      "year": 2025,
+      "authors": "Kaissis, G., Ziller, A., Passerat-Palmbach, J., Rueckert, D."
+    },
+    {
+      "title": "Reconstructing Patient Chest X-rays from Federated Gradient Updates",
+      "venue": "IEEE S&P",
+      "year": 2025,
+      "authors": "Huang, Y., Gupta, S., Zhao, H., Song, D."
+    },
+    {
+      "title": "On the Limits of Byzantine-Robust Aggregation under Non-IID Clinical Distributions",
+      "venue": "ICLR",
+      "year": 2026,
+      "authors": "Karimireddy, S. P., He, L., Jaggi, M."
+    }
+  ],
+  "domain": "healthcare_ai",
+  "language": "en",
+  "sponsor": "NSF",
+  "budget": {
+    "amount": 950000,
+    "currency": "USD",
+    "dur": 36
+  },
+  "topic_id": "topic_057",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

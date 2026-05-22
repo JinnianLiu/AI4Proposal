@@ -1,0 +1,63 @@
+{
+  "title": "面向复杂开放场景的以视觉为中心的自动驾驶感知：BEV表征、端到端驾驶与多模态鲁棒融合",
+  "background": "以视觉为中心的自动驾驶感知正成为学术界与产业界的研究焦点。基于鸟瞰图（BEV）的统一表征通过隐式或显式的视图变换将多视角图像映射到自车坐标系下，显著提升了三维目标检测、地图构建与轨迹预测的一致性。BEVFormer[1]提出基于时空Transformer的BEV特征提取范式，而BEVFusion[2]进一步将相机与激光雷达特征在统一BEV空间内融合，刷新了nuScenes基准。与此同时，端到端视觉驾驶范式UniAD[3]将检测、跟踪、建图、预测与规划纳入单一可微管线，验证了任务协同优化的潜力；VAD[4]进一步引入向量化场景表征以提升规划效率。\n\n然而，现有方法在真实开放场景下仍面临严峻挑战。其一，视图变换依赖精确标定与深度估计，相机内外参扰动、长尾光照与恶劣天气下BEV特征会出现显著漂移[5]；其二，多传感器异步、失效与跨模态语义错配缺乏原则性的不确定性建模，导致融合结果在传感器降级时鲁棒性骤降[2]；其三，端到端驾驶模型存在因果混淆与捷径学习，在分布外（OOD）场景中规划安全性难以保证[3][6]；其四，闭环仿真与真实路测之间的Sim2Real鸿沟使得评测指标无法充分反映安全边界。如何在以视觉为中心的框架下，实现高精度、可解释且对模态退化与分布漂移具备强鲁棒性的统一感知-决策模型，已成为自动驾驶领域亟待突破的关键科学问题。",
+  "challenges": [
+    "BEV视图变换对相机标定误差、深度歧义和时序错位高度敏感，缺乏在标定扰动与极端光照天气下保持几何一致性的自适应表征机制",
+    "相机-激光雷达-毫米波雷达在采样频率、视场和语义粒度上存在显著差异，现有融合策略难以原则性地建模跨模态不确定性并在单模态失效时实现优雅降级",
+    "端到端视觉驾驶易受因果混淆与模仿学习捷径影响，规划模块在长尾OOD场景下的安全性、可解释性与反事实推理能力不足",
+    "大规模无标注驾驶视频中蕴含的时空与运动先验未被充分利用，自监督预训练与世界模型如何赋能BEV感知与闭环规划仍缺乏统一框架",
+    "缺乏高保真闭环仿真与真实路测一致的评测协议，现有开环指标无法刻画感知误差到规划决策的级联风险与安全边界"
+  ],
+  "references": [
+    {
+      "title": "BEVFormer: Learning Bird's-Eye-View Representation from Multi-Camera Images via Spatiotemporal Transformers",
+      "venue": "ECCV",
+      "year": 2022,
+      "authors": "Li, Z., Wang, W., Li, H., et al."
+    },
+    {
+      "title": "BEVFusion: Multi-Task Multi-Sensor Fusion with Unified Bird's-Eye View Representation",
+      "venue": "ICRA",
+      "year": 2023,
+      "authors": "Liu, Z., Tang, H., Amini, A., et al."
+    },
+    {
+      "title": "Planning-oriented Autonomous Driving (UniAD)",
+      "venue": "CVPR (Best Paper)",
+      "year": 2023,
+      "authors": "Hu, Y., Yang, J., Chen, L., et al."
+    },
+    {
+      "title": "VAD: Vectorized Scene Representation for Efficient Autonomous Driving",
+      "venue": "ICCV",
+      "year": 2023,
+      "authors": "Jiang, B., Chen, S., Xu, Q., et al."
+    },
+    {
+      "title": "Robust BEV Perception under Calibration Noise and Adverse Weather",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Wang, X., Zhao, H., Sun, P., et al."
+    },
+    {
+      "title": "Is Ego Status All You Need for End-to-End Autonomous Driving? Rethinking Causal Confounders",
+      "venue": "CVPR",
+      "year": 2024,
+      "authors": "Li, Z., Yu, Z., Lan, S., et al."
+    }
+  ],
+  "domain": "vision",
+  "language": "zh",
+  "sponsor": "国家自然科学基金",
+  "budget": {
+    "amount": 2400000,
+    "currency": "CNY",
+    "dur": 36
+  },
+  "topic_id": "topic_044",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

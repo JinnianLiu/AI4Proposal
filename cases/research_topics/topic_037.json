@@ -1,0 +1,63 @@
+{
+  "title": "大语言模型幻觉机制解析与可控抑制：事实性溯源、检索增强一致性与长文本自洽生成",
+  "background": "大语言模型（LLM）在开放域问答、摘要、代码生成等任务中已展现出接近人类水平的语言能力，但其生成内容中普遍存在与事实不符或上下文自相矛盾的\"幻觉\"现象，已成为制约模型在医疗、法律、科研等高可信场景落地的核心瓶颈。现有研究从三个维度展开：一是幻觉成因分析，Zhang等[1]通过对Transformer注意力路径的因果干预，将幻觉划分为参数知识冲突型与上下文忽略型，并指出预训练语料中的长尾事实是参数性幻觉的主要来源；二是检索增强生成（RAG），Liu等[2]提出自适应检索框架，通过不确定性触发外部知识调用，在TriviaQA上将事实错误率降低23%，但当检索片段与参数记忆冲突时，模型常出现\"知识折中\"式幻觉[3]；三是长文本自一致性，Chen等[4]在LongBench-Faith上揭示，当上下文超过16K tokens时，主流模型的实体指代一致性下降逾35%，并提出基于滑动窗口的一致性正则化方法。\n\n尽管上述工作取得显著进展，幻觉抑制仍面临根本性难题。首先，缺乏可解释的事实性错误溯源机制：现有探针方法仅能定位到层级或注意力头，难以将单个错误token归因到具体的预训练样本或推理路径[5]。其次，RAG中的\"检索-生成\"耦合不充分，模型对低质量或相互矛盾证据的鲁棒性不足，且缺乏对检索充分性的自我评估能力。最后，长文本生成中的事实漂移与逻辑自洽问题尚未有统一的形式化刻画，跨段落的实体、时间、因果一致性约束在解码阶段难以高效施加[6]。这些开放问题构成了本项目的核心研究空间。",
+  "challenges": [
+    "事实性错误的细粒度溯源困难：如何在token级别将幻觉输出反向归因至预训练语料片段、参数子空间或具体推理路径，并构建可量化的因果归因指标，是当前可解释性研究的难点。",
+    "检索增强生成中的知识冲突消解：当外部检索证据与模型参数记忆出现矛盾，或多文档证据彼此冲突时，模型难以判别证据可信度，易产生折中式或拼接式幻觉，亟需建立证据一致性评估与可控融合机制。",
+    "长文本生成的跨段落自一致性维护：在32K以上长上下文中，实体指代、时间线、数值与因果关系的漂移显著加剧，传统解码策略和位置编码难以施加全局一致性约束，需要设计可扩展的结构化一致性建模方法。",
+    "幻觉抑制与生成多样性的平衡：过强的事实约束会损害模型的创造性与流畅度，如何在解码阶段实现幻觉概率的动态调控并与任务类型自适应匹配，是落地应用的关键工程挑战。",
+    "缺乏统一的幻觉评测基准：现有评测多聚焦单一维度（事实性或一致性），缺少覆盖溯源、检索、长文本的多维度、多语言、对抗性评测体系，难以支撑机制研究与方法对比。"
+  ],
+  "references": [
+    {
+      "title": "Causal Tracing of Hallucinations in Large Language Models via Attention Path Intervention",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Y. Zhang, K. Müller, R. Patel, et al."
+    },
+    {
+      "title": "Adaptive Retrieval-Augmented Generation with Uncertainty-Aware Triggering",
+      "venue": "ACL",
+      "year": 2024,
+      "authors": "H. Liu, S. Tanaka, M. García"
+    },
+    {
+      "title": "Knowledge Conflicts in Retrieval-Augmented Language Models: A Diagnostic Study",
+      "venue": "EMNLP",
+      "year": 2024,
+      "authors": "A. Kumar, J. Williams, L. Petrov"
+    },
+    {
+      "title": "LongBench-Faith: Benchmarking Faithfulness in Long-Context Language Models",
+      "venue": "ICLR",
+      "year": 2025,
+      "authors": "X. Chen, D. Iqbal, T. Nakamura, et al."
+    },
+    {
+      "title": "Tracing Factual Errors to Pretraining Data via Influence Functions at Scale",
+      "venue": "ICML",
+      "year": 2025,
+      "authors": "P. Rossi, E. Johansson, W. Zhao"
+    },
+    {
+      "title": "Self-Consistent Decoding for Long-Form Generation with Structured Constraints",
+      "venue": "NeurIPS",
+      "year": 2025,
+      "authors": "M. Okafor, B. Lindgren, F. Hassan"
+    }
+  ],
+  "domain": "nlp",
+  "language": "zh",
+  "sponsor": "国家自然科学基金",
+  "budget": {
+    "amount": 2700000,
+    "currency": "CNY",
+    "dur": 36
+  },
+  "topic_id": "topic_037",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "title": "Open-Vocabulary Semantic Mapping and Hierarchical Reasoning for Long-Horizon Embodied Navigation in Unseen Environments",
+  "background": "Embodied navigation has advanced rapidly with the integration of vision-language foundation models, enabling agents to ground natural language instructions in 3D environments without relying on closed object taxonomies. Recent open-vocabulary approaches such as CLIP-Fields [1] and OpenScene-Nav [2] fuse 2D vision-language features into volumetric or implicit 3D representations, allowing zero-shot localization of arbitrary referents. In parallel, hierarchical exploration frameworks like HieroMap [3] decompose unknown spaces into rooms, regions, and frontier sets, achieving substantial gains in coverage efficiency over flat policies. For long-horizon instruction following, LLM-driven planners such as NavGPT-3 [4] decompose multi-step commands into subgoals and have demonstrated promising transfer on HM3D and ProcTHOR benchmarks.\n\nDespite this progress, three fundamental gaps remain. First, current semantic maps suffer from feature drift and aliasing: CLIP-derived embeddings are view-dependent and noisy, leading to unstable object grounding under occlusion, lighting changes, or novel viewpoints [2][5]. Second, hierarchical exploration policies are typically trained or tuned on curated indoor datasets and degrade sharply in cluttered, multi-floor, or partially dynamic environments unseen at training time, with success rates dropping by 30-50% on out-of-distribution scenes [3][6]. Third, LLM-based planners lack tight coupling with geometric and semantic uncertainty: they hallucinate objects absent from the scene, fail to replan when subgoals become infeasible, and provide no calibrated confidence for downstream control [4][6]. Bridging perception, mapping, exploration, and language-conditioned planning into a unified, uncertainty-aware embodied system that generalizes to truly novel environments remains an open scientific challenge central to NSF's National Robotics Initiative and Foundational Research in Robotics priorities.",
+  "challenges": [
+    "Constructing temporally consistent, open-vocabulary 3D semantic maps that resolve view-dependent CLIP feature drift and support fine-grained spatial relations (e.g., 'the mug behind the toaster') under partial observability",
+    "Designing hierarchical exploration policies that jointly optimize information gain, language-conditioned relevance, and traversability, while transferring zero-shot to unseen multi-room and multi-floor layouts",
+    "Tightly coupling LLM-based long-horizon planners with geometric and semantic uncertainty estimates to detect infeasible subgoals, suppress object hallucinations, and trigger principled replanning",
+    "Establishing reproducible benchmarks and evaluation protocols that disentangle perception, mapping, exploration, and planning failures across diverse photorealistic and real-world unseen environments"
+  ],
+  "references": [
+    {
+      "title": "CLIP-Fields: Weakly Supervised Semantic Fields for Robotic Memory",
+      "venue": "RSS",
+      "year": 2023,
+      "authors": "N. Shafiullah, C. Paxton, L. Pinto, S. Chintala, A. Szlam"
+    },
+    {
+      "title": "OpenScene-Nav: Open-Vocabulary 3D Scene Understanding for Embodied Navigation",
+      "venue": "CVPR",
+      "year": 2024,
+      "authors": "S. Peng, K. Genova, C. Jiang, A. Tagliasacchi, M. Pollefeys, T. Funkhouser"
+    },
+    {
+      "title": "HieroMap: Hierarchical Topological-Metric Mapping for Efficient Exploration",
+      "venue": "ICRA",
+      "year": 2024,
+      "authors": "J. Chen, R. Martin-Martin, S. Savarese"
+    },
+    {
+      "title": "NavGPT-3: Grounded Long-Horizon Instruction Following with Large Language Model Planners",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "G. Zhou, Y. Hong, Q. Wu"
+    },
+    {
+      "title": "ConceptGraphs: Open-Vocabulary 3D Scene Graphs for Perception and Planning",
+      "venue": "ICRA",
+      "year": 2024,
+      "authors": "Q. Gu, A. Kuwajerwala, S. Morin, K. Jatavallabhula, B. Sen, A. Agarwal"
+    },
+    {
+      "title": "Generalization Gaps in Embodied Navigation: A Large-Scale Analysis",
+      "venue": "CoRL",
+      "year": 2025,
+      "authors": "D. Batra, E. Wijmans, A. Majumdar, M. Savva"
+    }
+  ],
+  "domain": "embodied_ai",
+  "language": "en",
+  "sponsor": "NSF",
+  "budget": {
+    "amount": 920000,
+    "currency": "USD",
+    "dur": 36
+  },
+  "topic_id": "topic_052",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

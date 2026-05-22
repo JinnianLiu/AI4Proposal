@@ -1,0 +1,63 @@
+{
+  "title": "面向碳中和的多尺度AI优化关键技术：工业减碳、新能源功率预测、碳汇遥感估算与碳市场智能决策一体化研究",
+  "background": "实现2030碳达峰与2060碳中和目标，亟需在工业生产、能源供给、生态碳汇与碳市场四大环节构建数据驱动的智能优化体系。在工业减碳方面，钢铁、水泥、化工等高耗能行业的过程参数高维耦合，传统机理模型难以刻画非稳态工况，Zhang等[1]提出基于图神经网络的高炉能耗预测框架，在单一工序上实现了7%的能耗下降，但跨工序协同优化与安全约束下的强化学习收敛性仍未解决。在新能源功率预测方面，风光出力具有强随机性与极端天气敏感性，Liu等[2]结合扩散模型与数值天气预报实现了4小时超短期风电预测的显著提升，Chen等[3]进一步将时空Transformer用于区域光伏聚合预测，但在台风、寒潮等极端事件下的尾部误差与跨区域迁移性不足。在碳汇遥感估算方面，Wang等[4]利用多源卫星与自监督预训练实现了森林地上生物量的国家尺度反演，然而草地、湿地、海洋蓝碳的反演不确定性仍高于30%，且碳通量的时空一致性约束缺失。在碳市场决策方面，Sun等[5]构建了基于深度强化学习的CCER交易代理，但在政策冲击、信息不对称与多主体博弈条件下，策略稳健性与可解释性不足。Li等[6]进一步指出，上述四类AI模型当前各自为战，缺乏从微观排放到宏观市场的统一表示与不确定性传播机制，难以支撑国家级减碳决策闭环。亟需突破跨尺度、多模态、强约束条件下的可信AI建模与协同优化关键技术。",
+  "challenges": [
+    "工业多工序耦合场景下，安全约束强化学习的策略可行性保障与样本效率提升：高炉、转炉、烧结等工序存在硬安全边界与延迟奖励，现有Safe-RL在百万级状态空间下收敛慢，且难以将工艺机理作为先验注入策略网络",
+    "极端天气与新型电力系统高比例新能源条件下的功率预测尾部误差控制：扩散模型与时空图网络对台风、寒潮、沙尘等罕见事件样本严重不足，需要解决物理约束嵌入、概率预测校准与跨场站小样本迁移问题",
+    "多源遥感碳汇反演的时空一致性与不确定性量化：光学、SAR、激光雷达、荧光等异构传感器存在分辨率与重访周期错配，草地/湿地/蓝碳生态系统标签稀缺，难以构建满足IPCC MRV要求的可核查碳通量产品",
+    "碳市场多主体博弈下的智能决策稳健性与可解释性：政策调整、配额分配变化导致非平稳分布漂移，深度强化学习易过拟合历史行情，需要在分布鲁棒优化与因果推断框架下提供可审计的交易策略",
+    "跨尺度AI模型的统一表示与不确定性端到端传播：从设备级排放数据到省域碳汇再到全国碳市场，量纲、时间尺度、置信度差异巨大，缺乏将四类模型有机耦合并支持决策溯源的联邦化基础设施"
+  ],
+  "references": [
+    {
+      "title": "Graph Neural Networks for Energy-Efficient Blast Furnace Operation under Process Constraints",
+      "venue": "Nature Machine Intelligence",
+      "year": 2024,
+      "authors": "Zhang, Y., Hu, J., Wang, K., et al."
+    },
+    {
+      "title": "Diffusion-NWP: A Conditional Diffusion Model for Ultra-Short-Term Wind Power Forecasting",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Liu, X., Zhao, M., Tan, P., et al."
+    },
+    {
+      "title": "Spatio-Temporal Transformer for Regional Photovoltaic Power Aggregation Forecasting",
+      "venue": "ICML",
+      "year": 2025,
+      "authors": "Chen, R., Lin, S., Guo, H., et al."
+    },
+    {
+      "title": "Self-Supervised Multi-Sensor Foundation Model for National-Scale Forest Biomass Retrieval",
+      "venue": "Science",
+      "year": 2025,
+      "authors": "Wang, F., Li, D., Müller, A., et al."
+    },
+    {
+      "title": "Deep Reinforcement Learning for Carbon Emission Trading under Policy Uncertainty",
+      "venue": "AAAI",
+      "year": 2024,
+      "authors": "Sun, B., Yang, Q., Zhou, L., et al."
+    },
+    {
+      "title": "Toward Unified AI Frameworks for Carbon Neutrality: Challenges and Opportunities",
+      "venue": "Nature Climate Change",
+      "year": 2025,
+      "authors": "Li, W., Stern, N., Zheng, X., et al."
+    }
+  ],
+  "domain": "climate_ai",
+  "language": "zh",
+  "sponsor": "国家重点研发计划",
+  "budget": {
+    "amount": 5000000,
+    "currency": "CNY",
+    "dur": 48
+  },
+  "topic_id": "topic_066",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

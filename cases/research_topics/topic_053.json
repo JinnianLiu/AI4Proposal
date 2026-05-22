@@ -1,0 +1,63 @@
+{
+  "title": "面向接触式操作的具身智能物理交互学习：力-视融合感知与物理推理驱动的操作策略",
+  "background": "具身智能（Embodied AI）正从被动感知向主动物理交互演进，接触式操作（contact-rich manipulation）作为机器人在非结构化环境中执行复杂任务的核心能力，已成为国际前沿研究热点。当前主流方法可分为三类：基于大规模视觉-语言-动作模型（VLA）的端到端策略学习[1]、基于扩散模型的多模态轨迹生成[2]，以及融合可微分物理仿真的策略优化[3]。在感知层面，视觉-触觉跨模态表征学习取得显著进展，Tactile-Vision Transformer等工作通过对比学习实现了模态对齐[4]；在策略学习层面，RT-2、OpenVLA等模型展现了跨任务泛化潜力，但在涉及精细力控的装配、插拔、剥离等接触富集任务上成功率仍不足40%[1][5]。\n\n然而，现有研究存在三方面关键瓶颈。其一，视觉与力/触觉信号在时空尺度、采样频率（视觉30Hz vs 力觉1kHz）与噪声特性上差异巨大，现有融合方法多采用简单拼接或晚期融合，难以刻画接触瞬态的物理因果关系[4]。其二，纯数据驱动的策略学习对接触动力学的隐式建模能力有限，在刚度、摩擦、质量等物理参数发生变化时泛化性能急剧下降，sim-to-real鸿沟在富接触场景下尤为突出[3][6]。其三，现有规划方法缺乏对接触模式切换（contact mode switching）与混合动力学的显式物理推理，难以处理需要长程规划的可变形物体操作与多步装配任务[6]。\n\n如何构建融合物理先验、跨模态感知与符号化推理的统一具身操作框架，是突破上述瓶颈的关键科学问题，对智能制造、服务机器人与人机协作具有重大战略意义。",
+  "challenges": [
+    "异构时空尺度下的视觉-力觉-触觉多模态紧耦合融合：如何在30Hz视觉与1kHz力觉信号之间建立物理一致的时序对齐与跨模态注意力机制，捕捉接触瞬态（<10ms）的微观动力学特征",
+    "接触模式切换的可微分物理推理：如何将刚体接触、摩擦锥、形变接触等非光滑动力学嵌入可微分策略学习框架，实现接触模式自动发现与混合动力学下的梯度稳定优化",
+    "面向富接触任务的sim-to-real泛化：如何通过物理参数自适应与残差动力学学习，缩小仿真与真实环境在摩擦、刚度、间隙等参数上的分布偏移，使策略在未见物体几何与材质上保持鲁棒性",
+    "长程接触式操作的分层物理规划：如何将大模型的语义推理能力与底层接触动力学约束相结合，实现可变形物体与多步装配任务的物理可行性验证与失败恢复",
+    "数据高效的接触策略学习：在真实机器人接触数据稀缺（单次交互成本高、易损伤硬件）条件下，如何利用少样本示教、人类先验与物理仿真协同实现策略快速收敛"
+  ],
+  "references": [
+    {
+      "title": "OpenVLA: An Open-Source Vision-Language-Action Model for Generalist Robot Manipulation",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Kim, M.J., Pertsch, K., Karamcheti, S., et al."
+    },
+    {
+      "title": "Diffusion Policy: Visuomotor Policy Learning via Action Diffusion",
+      "venue": "IJRR (扩展版)",
+      "year": 2024,
+      "authors": "Chi, C., Feng, S., Du, Y., et al."
+    },
+    {
+      "title": "Differentiable Simulation of Contact-Rich Manipulation with Implicit Time-Stepping",
+      "venue": "ICML",
+      "year": 2025,
+      "authors": "Howell, T., Pan, Z., Suh, H.J., Tedrake, R."
+    },
+    {
+      "title": "TVL: Tactile-Vision-Language Pretraining for Contact-Rich Manipulation",
+      "venue": "CVPR",
+      "year": 2025,
+      "authors": "Yang, J., Liu, H., Fu, L., Goldberg, K., Abbeel, P."
+    },
+    {
+      "title": "Force-Aware Imitation Learning for Precise Assembly Tasks",
+      "venue": "CoRL",
+      "year": 2024,
+      "authors": "张伟, Hou, Y., Liu, X., 王晓东, Zhao, F."
+    },
+    {
+      "title": "Physics-Informed Hierarchical Planning for Long-Horizon Deformable Object Manipulation",
+      "venue": "Science Robotics",
+      "year": 2025,
+      "authors": "Lin, X., Huang, Z., Li, Y., Tenenbaum, J.B., Held, D."
+    }
+  ],
+  "domain": "embodied_ai",
+  "language": "zh",
+  "sponsor": "国家自然科学基金",
+  "budget": {
+    "amount": 3100000,
+    "currency": "CNY",
+    "dur": 36
+  },
+  "topic_id": "topic_053",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

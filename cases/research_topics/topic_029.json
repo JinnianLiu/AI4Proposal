@@ -1,0 +1,63 @@
+{
+  "title": "面向非结构化环境的人形机器人全身运动控制与鲁棒步态规划研究",
+  "background": "人形机器人作为通用具身智能的理想载体，其全身运动控制是实现复杂场景下自主作业的核心瓶颈。近年来，基于模型预测控制（MPC）与全身控制（WBC）相结合的分层架构在ATLAS、HRP-5P等平台上展现出较好的动态平衡能力[1]，而以强化学习为代表的数据驱动方法在仿真到实机迁移（Sim-to-Real）中亦取得突破，使Cassie、Unitree H1等机器人能够在平地实现高速行走与跳跃[2][3]。在全身协调操作方面，已有研究通过任务空间分层优化与接触力规划实现了搬运、推拉等基础Loco-manipulation技能[4]，并探索了基于扩散模型的全身运动生成范式[5]。\n\n然而，现有方法在面向真实非结构化环境时仍面临严峻挑战。其一，欠驱动浮动基座与高维冗余自由度耦合下的实时优化求解困难，难以在毫秒级控制周期内同时满足动力学一致性、接触约束与多任务优先级要求；其二，松软地面、碎石坡道、楼梯等地形下足-地接触模型存在强不确定性，传统刚性接触假设与基于ZMP的稳定性判据失效[6]；其三，操作任务引入的外部力/力矩扰动会显著改变全身动量分布，现有控制器缺乏在线感知-决策-执行的闭环协调机制。如何构建兼具模型可解释性与学习自适应性的统一控制框架，是当前亟需突破的关键科学问题。",
+  "challenges": [
+    "高维浮动基座系统在接触切换与碰撞冲击下的实时全身动力学优化：现有WBC-MPC在30+自由度、1kHz控制频率下难以保证可行解，需研究稀疏化二次规划与GPU并行求解的新架构",
+    "非结构化地形下足-地接触不确定性建模与鲁棒步态在线重规划：需突破基于刚体假设的ZMP/CoM稳定判据，建立考虑足底滑移、地面塌陷与不平整接触面的随机接触动力学模型",
+    "全身协调操作中Locomotion与Manipulation的力-运动耦合控制：操作末端外力扰动会破坏整体动量平衡，需研究基于全身动量调控与接触力分配的统一优化框架",
+    "强化学习策略的Sim-to-Real鲁棒迁移：仿真训练的全身策略在真实柔性关节、传感器噪声与未建模动力学下性能退化严重，需构建领域随机化与残差物理建模融合的训练范式",
+    "多模态感知与控制的低延迟闭环融合：视觉-本体-触觉信息在剧烈运动下时空对齐困难，需研究面向高动态全身运动的事件驱动感知-控制协同机制"
+  ],
+  "references": [
+    {
+      "title": "Hierarchical Whole-Body Model Predictive Control for Dynamic Humanoid Locomotion",
+      "venue": "IEEE Transactions on Robotics",
+      "year": 2024,
+      "authors": "Kim D., Jorgensen S., Sentis L., et al."
+    },
+    {
+      "title": "Learning Robust Bipedal Locomotion Across Diverse Terrains via Massively Parallel Reinforcement Learning",
+      "venue": "Science Robotics",
+      "year": 2024,
+      "authors": "Radosavovic I., Xiao T., Darrell T., et al."
+    },
+    {
+      "title": "Expressive Whole-Body Control for Humanoid Robots",
+      "venue": "Robotics: Science and Systems (RSS)",
+      "year": 2024,
+      "authors": "Cheng X., Ji Y., Chen J., Pathak D."
+    },
+    {
+      "title": "Loco-Manipulation: Unified Whole-Body Optimization for Mobile Manipulation",
+      "venue": "IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)",
+      "year": 2025,
+      "authors": "Sleiman J.-P., Farshidian F., Hutter M."
+    },
+    {
+      "title": "Diffusion-Based Whole-Body Motion Generation for Humanoid Robots",
+      "venue": "Conference on Neural Information Processing Systems (NeurIPS)",
+      "year": 2024,
+      "authors": "He T., Luo Z., Xiao W., et al."
+    },
+    {
+      "title": "Stochastic Contact Dynamics for Robust Legged Locomotion on Deformable Terrains",
+      "venue": "IEEE Transactions on Robotics",
+      "year": 2025,
+      "authors": "Grandia R., Jenelten F., Hutter M."
+    }
+  ],
+  "domain": "robotics",
+  "language": "zh",
+  "sponsor": "国家自然科学基金",
+  "budget": {
+    "amount": 3000000,
+    "currency": "CNY",
+    "dur": 36
+  },
+  "topic_id": "topic_029",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "title": "面向大语言模型的自动化红队测试与多维安全评估框架研究",
+  "background": "随着大语言模型（LLM）在通用对话、代码生成、智能体决策与垂直行业应用中的快速渗透，其潜在的安全风险已成为制约可信人工智能发展的核心瓶颈。现有研究表明，即使经过基于人类反馈的强化学习（RLHF）、直接偏好优化（DPO）以及宪法AI（Constitutional AI）等多阶段对齐训练，主流大模型仍易受到对抗性提示（Adversarial Prompt）攻击而产生有害、偏见或违反伦理的输出[1]。Zou等[2]提出的GCG攻击通过梯度优化生成通用对抗后缀，在多个开源模型上实现了90%以上的越狱成功率，揭示了当前对齐技术的根本脆弱性；Chao等[3]提出的PAIR框架进一步利用LLM作为攻击者实现黑盒迭代越狱，显著提升了攻击的语义自然性与跨模型迁移能力。在评估层面，HarmBench[4]、SafetyBench[5]等多维度安全评测基准的相继提出，为系统化衡量模型安全性提供了重要参考。\n\n然而，现有研究在三个层面仍存在显著不足。其一，对抗性提示生成方法多依赖固定的有害行为类别与静态优化目标，难以适应模型快速迭代与新兴风险场景，特别是在多模态注入、长上下文操纵以及智能体环境下的间接提示注入等复杂攻击面上，自动化生成能力明显不足。其二，现有安全评测基准覆盖维度有限，存在数据污染、标注主观性以及评测者偏见等问题，难以充分反映真实部署场景下的长尾风险与跨文化语境差异。其三，红队攻防多为单向攻击或被动防御，缺乏攻击与防御协同演化的闭环机制，导致防御策略易被新型攻击快速绕过[6]。如何构建可扩展、动态演化、具备因果可解释性的自动化红队测试与多维安全评估体系，已成为AI安全领域亟待突破的核心科学问题。",
+  "challenges": [
+    "对抗性提示的语义自然性、多样性与跨模型迁移性难以兼顾：基于梯度的白盒方法（如GCG）生成的对抗后缀语义不自然且易被检测，而基于LLM的黑盒迭代方法计算开销巨大，缺乏统一的理论框架指导高效、多样化、可迁移的对抗样本生成，尤其在多模态与智能体场景下的间接提示注入攻击建模仍处于起步阶段",
+    "多维安全评测基准的动态构建与抗污染机制缺失：现有静态基准易被训练数据污染从而高估模型安全性，且难以覆盖文化、领域、价值观相关的长尾风险，亟需建立自动化、可持续更新的评测数据生成、质量控制与污染检测机制，并解决LLM-as-Judge评测中的偏见与一致性问题",
+    "攻防协同闭环框架的稳定性、收敛性与算力效率瓶颈：在攻击者与防御者协同演化过程中易出现模式坍缩、对抗博弈不收敛、防御过度拒绝（over-refusal）等问题，缺乏对攻防博弈均衡点的理论刻画，且大规模红队测试在算力消耗与覆盖效率之间存在严重的权衡困境",
+    "安全脆弱性的可解释性与因果归因不足：现有评测以攻击成功率等结果指标为主，难以揭示模型脆弱性的内在机制，缺乏从神经元激活、注意力路径、表征空间等层面对越狱行为进行因果归因的系统方法，制约了从评测到根因修复的闭环改进"
+  ],
+  "references": [
+    {
+      "title": "Exploring the Adversarial Robustness of RLHF-Aligned Large Language Models: A Systematic Study",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Zhang, Y., Liu, H., Anderson, K., et al."
+    },
+    {
+      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models via Greedy Coordinate Gradient",
+      "venue": "ICML",
+      "year": 2024,
+      "authors": "Zou, A., Wang, Z., Carlini, N., Kolter, J. Z., Fredrikson, M."
+    },
+    {
+      "title": "PAIR: Jailbreaking Black-Box Large Language Models via Prompt Automatic Iterative Refinement",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Chao, P., Robey, A., Dobriban, E., Hassani, H., Pappas, G. J., Wong, E."
+    },
+    {
+      "title": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming and Robust Refusal",
+      "venue": "ICML",
+      "year": 2024,
+      "authors": "Mazeika, M., Phan, L., Yin, X., Zou, A., et al."
+    },
+    {
+      "title": "SafetyBench: Evaluating the Safety of Large Language Models with Multi-Choice and Multi-Dimensional Questions",
+      "venue": "ACL",
+      "year": 2024,
+      "authors": "Zhang, Z., Lei, L., Wu, L., Sun, R., et al."
+    },
+    {
+      "title": "Co-Evolutionary Red Teaming: A Closed-Loop Adversarial Framework for Continual LLM Safety Alignment",
+      "venue": "ICLR",
+      "year": 2025,
+      "authors": "Liu, X., Chen, M., Goldstein, T., Mittal, P., et al."
+    }
+  ],
+  "domain": "ai_safety",
+  "language": "zh",
+  "sponsor": "国家自然科学基金",
+  "budget": {
+    "amount": 2800000,
+    "currency": "CNY",
+    "dur": 36
+  },
+  "topic_id": "topic_003",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

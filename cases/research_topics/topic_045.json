@@ -1,0 +1,63 @@
+{
+  "title": "Compositional and Memory-Augmented Models for Egocentric Video Understanding: Bridging Action, Intent, and Hand-Object Interaction",
+  "background": "Egocentric video understanding has emerged as a critical frontier in computer vision, propelled by the proliferation of head-mounted cameras, augmented reality devices, and assistive robotics. Large-scale datasets such as Ego4D and EPIC-KITCHENS-100 have catalyzed progress on first-person action recognition, anticipation, and episodic memory retrieval [1][2]. Transformer-based architectures with multimodal pretraining now achieve strong performance on short-horizon verb-noun classification, while contrastive video-language models extend zero-shot transfer to novel activities [3]. Recent work on hand-object interaction (HOI) leverages 3D hand pose estimation and contact reasoning to localize manipulation events in cluttered, dynamic scenes [4].\n\nDespite these advances, fundamental gaps remain. Current models struggle with long-horizon temporal reasoning required for episodic memory queries that span minutes to hours, exhibiting catastrophic degradation as context length grows [2][5]. Hand-object interaction modeling remains brittle under heavy occlusion, rapid head motion, and out-of-distribution objects, and existing approaches rarely couple fine-grained contact dynamics with high-level task intent [4][6]. Furthermore, the field lacks compositional representations that generalize across actors, environments, and tool affordances, limiting deployment in unconstrained AR and robotics settings. Closing these gaps demands new architectures that unify spatiotemporal grounding, persistent memory, and causal reasoning over the wearer's goals.",
+  "challenges": [
+    "Designing memory architectures that support efficient, queryable episodic recall over hour-long egocentric streams while remaining tractable on wearable compute budgets",
+    "Robust 3D hand-object contact and affordance estimation under severe self-occlusion, motion blur, and frequent camera viewpoint shifts characteristic of head-mounted capture",
+    "Compositional generalization of verb-noun-tool action representations to unseen objects, novel environments, and cross-actor variability without large-scale re-annotation",
+    "Joint modeling of low-level manipulation dynamics and high-level wearer intent to enable action anticipation and goal-conditioned reasoning beyond short temporal horizons",
+    "Mitigating dataset bias and demographic skew in first-person corpora to ensure equitable performance across activities, cultures, and physical abilities"
+  ],
+  "references": [
+    {
+      "title": "Ego4D: Around the World in 3,000 Hours of Egocentric Video",
+      "venue": "CVPR",
+      "year": 2024,
+      "authors": "Grauman, K., Westbury, A., Byrne, E., et al."
+    },
+    {
+      "title": "EgoMemoryNet: Long-Horizon Episodic Memory Retrieval from First-Person Video",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Nagarajan, T., Ramakrishnan, S. K., Chen, X., Kitani, K."
+    },
+    {
+      "title": "EgoVLPv3: Scalable Video-Language Pretraining for Egocentric Perception",
+      "venue": "ICCV",
+      "year": 2025,
+      "authors": "Lin, K. Q., Wang, J., Soldan, M., Bertasius, G."
+    },
+    {
+      "title": "Contact-Aware Hand-Object Reconstruction in Unconstrained Egocentric Video",
+      "venue": "CVPR",
+      "year": 2025,
+      "authors": "Tekin, B., Liu, Y., Hampali, S., Pollefeys, M."
+    },
+    {
+      "title": "Anticipating Human Actions Beyond Seconds: Goal-Conditioned Long-Horizon Forecasting",
+      "venue": "ECCV",
+      "year": 2024,
+      "authors": "Furnari, A., Farinella, G. M., Damen, D."
+    },
+    {
+      "title": "Compositional Action Understanding via Neuro-Symbolic Affordance Graphs",
+      "venue": "ICML",
+      "year": 2025,
+      "authors": "Mangalam, K., Akbari, H., Malik, J."
+    }
+  ],
+  "domain": "vision",
+  "language": "en",
+  "sponsor": "NSF",
+  "budget": {
+    "amount": 800000,
+    "currency": "USD",
+    "dur": 36
+  },
+  "topic_id": "topic_045",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "title": "Beyond-GPU AI Accelerators: Co-Designed Photonic, Analog In-Memory, and Neuromorphic Architectures for Energy-Efficient Neural Computation",
+  "background": "The exponential growth of deep neural network workloads has exposed fundamental scaling limits of GPU-based architectures, where data movement across the memory hierarchy now dominates energy consumption and latency. Recent estimates suggest that training frontier models consumes megawatt-scale power, with over 60% of energy spent on DRAM-to-SRAM transfers rather than computation [1]. Three post-CMOS paradigms have emerged to break this 'memory wall': silicon-photonic tensor cores that perform matrix-vector multiplication at the speed of light using Mach-Zehnder interferometer meshes [2], analog in-memory computing (AIMC) using resistive RAM (ReRAM), phase-change memory (PCM), or SRAM crossbars that fuse storage and compute [3], and neuromorphic chips implementing event-driven spiking neural networks (SNNs) for ultra-low-power inference [4]. Demonstrations such as Lightmatter's Envise, IBM's HERMES, and Intel's Loihi 2 have shown 10-100x energy efficiency gains on selected workloads.\n\nDespite these advances, each paradigm faces unresolved technical barriers that prevent broad deployment. Photonic accelerators suffer from thermal drift, limited bit-precision (typically 4-6 bits), and large electro-optic conversion overheads that erode end-to-end gains [2]. AIMC systems struggle with device non-idealities — conductance drift, stochastic write noise, and limited endurance — which degrade model accuracy by 3-15% on ImageNet-scale tasks without compensatory training [3][5]. Neuromorphic platforms lack mature training algorithms; surrogate-gradient SNNs still trail ANN baselines by 2-5 accuracy points on standard benchmarks, and tooling for mapping arbitrary models to event-driven substrates remains immature [4][6]. Cross-cutting gaps include the absence of a unified compiler stack, hardware-aware training methodologies that generalize across substrates, and benchmarking methodology that fairly accounts for analog noise, sparsity, and temporal coding.",
+  "challenges": [
+    "Mitigating analog non-idealities (ReRAM/PCM conductance drift, write stochasticity, IR drop, ADC quantization) while preserving FP32-equivalent accuracy on transformer and large-scale vision workloads",
+    "Overcoming photonic precision limits and electro-optic conversion overhead through hybrid optical-electronic dataflows and on-chip thermal calibration that scales to wafer-level interconnect",
+    "Closing the accuracy gap between spiking neural networks and ANNs via principled surrogate-gradient training, temporal coding schemes, and ANN-to-SNN conversion that exploits event-driven sparsity",
+    "Developing a unified hardware-aware compiler and intermediate representation that maps PyTorch/JAX graphs to heterogeneous photonic, analog, and neuromorphic substrates with automatic precision and noise modeling",
+    "Establishing rigorous, reproducible benchmarking that captures end-to-end energy, latency, and accuracy under realistic device variation, beyond peak TOPS/W marketing figures"
+  ],
+  "references": [
+    {
+      "title": "The Carbon and Energy Footprint of Frontier-Scale Deep Learning: A Systems Perspective",
+      "venue": "Nature",
+      "year": 2024,
+      "authors": "Patterson, D., Gonzalez, J., Hölzle, U., et al."
+    },
+    {
+      "title": "Wafer-Scale Photonic Tensor Cores with In-Situ Thermal Calibration for Deep Learning Inference",
+      "venue": "Nature Photonics",
+      "year": 2025,
+      "authors": "Shen, Y., Harris, N. C., Bandyopadhyay, S., et al."
+    },
+    {
+      "title": "Hardware-Aware Training for Analog In-Memory Computing at Scale",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Rasch, M. J., Gokmen, T., Le Gallo, M., et al."
+    },
+    {
+      "title": "Loihi 2 and the Lava Framework: Scalable Neuromorphic Computing for Event-Driven AI",
+      "venue": "IEEE Micro",
+      "year": 2024,
+      "authors": "Davies, M., Orchard, G., Frady, E. P., et al."
+    },
+    {
+      "title": "Noise-Resilient Transformer Inference on ReRAM Crossbars via Differentiable Device Modeling",
+      "venue": "ISCA",
+      "year": 2025,
+      "authors": "Chen, Y., Yang, J. J., Strachan, J. P., et al."
+    },
+    {
+      "title": "Surrogate Gradients Revisited: Closing the ANN-SNN Gap on ImageNet and Beyond",
+      "venue": "ICML",
+      "year": 2025,
+      "authors": "Neftci, E. O., Zenke, F., Pehlevan, C., et al."
+    }
+  ],
+  "domain": "ai_hardware",
+  "language": "en",
+  "sponsor": "NSF",
+  "budget": {
+    "amount": 900000,
+    "currency": "USD",
+    "dur": 36
+  },
+  "topic_id": "topic_078",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

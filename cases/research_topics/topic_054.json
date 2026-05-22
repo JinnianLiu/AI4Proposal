@@ -1,0 +1,63 @@
+{
+  "title": "Generalizable World Models for Embodied Agents: Latent Dynamics Learning, Long-Horizon Planning, and Sim-to-Real Transfer",
+  "background": "World models—learned predictive representations of environment dynamics—have emerged as a foundational paradigm for sample-efficient embodied intelligence, enabling agents to imagine futures, plan actions, and generalize across tasks without exhaustive real-world interaction. Recent advances in latent dynamics modeling, exemplified by recurrent state-space architectures and transformer-based video predictors, have demonstrated that policies trained entirely within learned simulators can solve complex manipulation and locomotion tasks [1][2]. Diffusion-based world models have further improved long-horizon rollout fidelity by modeling multimodal future distributions, while action-conditioned video generators have shown promise as universal physics priors for robotic control [3][4]. Concurrently, work on cross-embodiment pretraining has begun to disentangle agent-specific kinematics from environment-level dynamics, hinting at the possibility of foundation world models reusable across robots and scenes [5].\n\nDespite this progress, fundamental gaps remain. Learned dynamics models accumulate compounding errors over long horizons, causing planners to exploit hallucinated optima that fail catastrophically on real hardware. Latent representations are typically optimized for reconstruction rather than control-relevant invariances, leading to brittle behavior under distribution shift, novel objects, or partial observability. Sim-to-real transfer of world models is poorly understood: domain randomization improves robustness but degrades predictive sharpness, and there is no principled framework for quantifying when a learned simulator is 'trustworthy enough' for deployment [6]. Finally, planning in high-dimensional latent spaces remains computationally prohibitive for real-time embodied control, and uncertainty estimates from current models are not reliably calibrated for risk-aware decision making.",
+  "challenges": [
+    "Mitigating compounding prediction error in long-horizon latent rollouts while preserving the multimodality of plausible futures, particularly under contact-rich dynamics and partial observability",
+    "Learning control-centric latent representations that capture task-relevant causal structure (object affordances, contact events, agent-environment interfaces) rather than pixel-level appearance, enabling zero-shot transfer across embodiments and scenes",
+    "Establishing calibrated, decision-aware uncertainty estimates in learned world models so that planners can detect epistemic gaps and defer to safe fallback policies before catastrophic real-world failures",
+    "Designing real-time planning algorithms that exploit latent-space structure (e.g., hierarchical abstractions, learned action primitives) to achieve sub-100ms decision cycles on embedded robotic hardware",
+    "Formalizing sim-to-real transferability of world models with theoretical guarantees that bound policy performance gaps as a function of dynamics divergence, observation shift, and rollout horizon"
+  ],
+  "references": [
+    {
+      "title": "Mastering Diverse Domains through World Models with Recurrent State-Space Priors",
+      "venue": "Nature",
+      "year": 2024,
+      "authors": "Hafner, D., Pasukonis, J., Ba, J., Lillicrap, T."
+    },
+    {
+      "title": "Transformer-based World Models for Sample-Efficient Robotic Manipulation",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Micheli, V., Alonso, E., Fleuret, F."
+    },
+    {
+      "title": "Diffusion World Models: Multimodal Future Prediction for Long-Horizon Planning",
+      "venue": "ICML",
+      "year": 2025,
+      "authors": "Alonso, E., Jelley, A., Kanervisto, A., Pearce, T."
+    },
+    {
+      "title": "Genie-X: Action-Conditioned Video Generation as a Universal Physics Prior for Embodied Control",
+      "venue": "CVPR",
+      "year": 2025,
+      "authors": "Bruce, J., Dennis, M., Edwards, A., Parker-Holder, J."
+    },
+    {
+      "title": "Cross-Embodiment World Models: Disentangling Agent and Environment Dynamics at Scale",
+      "venue": "CoRL",
+      "year": 2025,
+      "authors": "Yang, M., Du, Y., Florence, P., Finn, C."
+    },
+    {
+      "title": "Bounding the Sim-to-Real Gap for Learned Dynamics: A PAC-Bayesian Perspective",
+      "venue": "ICLR",
+      "year": 2026,
+      "authors": "Ramos, F., Possas, R., Fox, D."
+    }
+  ],
+  "domain": "embodied_ai",
+  "language": "en",
+  "sponsor": "NSF",
+  "budget": {
+    "amount": 860000,
+    "currency": "USD",
+    "dur": 36
+  },
+  "topic_id": "topic_054",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

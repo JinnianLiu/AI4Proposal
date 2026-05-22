@@ -1,0 +1,63 @@
+{
+  "title": "面向长程编程任务的代码Agent可靠性与安全可信执行关键技术研究",
+  "background": "随着大语言模型驱动的代码Agent（如AutoDev、SWE-Agent等）在软件工程自动化中展现出显著潜力，其在仓库级缺陷修复、多文件重构与端到端功能开发等复杂任务上的表现已逼近初级工程师水平[1][2]。然而，当前代码Agent在真实生产环境中部署仍面临严峻的可靠性与安全性挑战。一方面，自主代码生成过程中存在大量的幻觉API调用、隐式语义错误及难以静态检测的运行时缺陷，已有研究表明在SWE-bench Verified等基准上Top模型的一次通过率仍不足60%[3]；另一方面，Agent需通过Shell、文件系统及网络接口与外部环境交互，恶意提示注入、供应链投毒以及越权文件操作等攻击面不断扩大[4]。\n\n在自主验证方面，现有方法多依赖单元测试反馈或静态分析进行自我修复，但缺乏对程序语义不变量与跨模块副作用的形式化保证；在沙盒执行方面，主流容器化方案（Docker、Firejail等）难以兼顾细粒度能力控制与高并发任务调度的性能开销[5]；在长程上下文管理方面，编程任务往往跨越数百轮交互、涉及百万级Token的代码库，简单的检索增强或滑动窗口策略会导致关键依赖信息丢失与决策漂移，Chen等[6]指出超过50轮交互后Agent的目标一致性显著退化。\n\n综上，如何构建生成-验证闭环可信、执行环境可证安全、长程上下文可控演化的代码Agent体系，已成为Agentic AI走向工业级落地的核心瓶颈。亟需在神经符号融合验证、能力最小化沙盒以及结构化记忆压缩等方向取得理论与方法层面的系统性突破。",
+  "challenges": [
+    "自主代码生成中的语义正确性验证难题：如何在缺乏完整规约的开放式编程任务中，融合形式化方法、属性测试与LLM自反思机制，构建可对运行时不变量与跨函数副作用提供概率性保障的生成-验证闭环",
+    "沙盒环境的可证安全与性能权衡：如何设计基于能力（capability-based）的细粒度系统调用拦截与文件系统访问控制机制，抵御提示注入诱导的越权操作与供应链攻击，同时将沙盒切换与状态快照开销控制在可接受范围内",
+    "长程编程任务的上下文漂移与记忆退化：如何针对仓库级代码库构建分层结构化记忆（AST级、模块级、任务级），在百万Token规模下实现关键依赖的无损压缩、目标一致性维持与多轮决策的可回溯性",
+    "多Agent协作中的可靠性传递与故障定位：在规划-编码-审查-测试的多角色协同中，如何量化各阶段的不确定性传播，建立可解释的失败归因与回滚机制",
+    "面向真实开源生态的可信评测体系缺失：现有基准多聚焦短程修复任务，缺乏对长程开发、安全攻击面与人机协同效率的综合度量"
+  ],
+  "references": [
+    {
+      "title": "SWE-Agent: Agent-Computer Interfaces Enable Automated Software Engineering",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Yang, J., Jimenez, C. E., Wettig, A., et al."
+    },
+    {
+      "title": "Repository-Level Code Generation with Hierarchical Context Retrieval",
+      "venue": "ICML",
+      "year": 2025,
+      "authors": "Liu, H., Zhang, K., Wang, R., et al."
+    },
+    {
+      "title": "Beyond Pass@1: Evaluating Semantic Correctness of LLM-Generated Code via Differential Property Testing",
+      "venue": "ICSE",
+      "year": 2025,
+      "authors": "Müller, S., Tanaka, Y., Park, J."
+    },
+    {
+      "title": "Prompt Injection Attacks against Tool-Augmented Code Agents in the Wild",
+      "venue": "USENIX Security",
+      "year": 2025,
+      "authors": "Chen, Y., Sharma, A., Kumar, V., et al."
+    },
+    {
+      "title": "Capsule: Capability-Based Lightweight Sandboxing for Autonomous LLM Agents",
+      "venue": "SOSP",
+      "year": 2025,
+      "authors": "Reyes, M., Okafor, C., Lin, B."
+    },
+    {
+      "title": "Memory Drift in Long-Horizon Coding Agents: An Empirical Study",
+      "venue": "ACL",
+      "year": 2026,
+      "authors": "Chen, X., Dubois, P., Iwasaki, T., et al."
+    }
+  ],
+  "domain": "agentic_ai",
+  "language": "zh",
+  "sponsor": "国家自然科学基金",
+  "budget": {
+    "amount": 2600000,
+    "currency": "CNY",
+    "dur": 36
+  },
+  "topic_id": "topic_008",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

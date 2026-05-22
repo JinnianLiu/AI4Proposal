@@ -1,0 +1,63 @@
+{
+  "title": "Integrated AI Framework for Tokamak Plasma Control, Disruption Mitigation, and Accelerated Fusion Experimental Design",
+  "background": "Magnetic confinement fusion has entered a decisive phase with ITER first plasma approaching and private-sector devices (SPARC, STEP) targeting net-energy regimes. Achieving sustained burning plasmas requires real-time control of high-dimensional, nonlinear magnetohydrodynamic (MHD) states under tight latency budgets (<1 ms) while avoiding disruptions that can deposit gigajoule-scale thermal loads onto plasma-facing components. Recent advances have demonstrated that deep reinforcement learning can shape plasma equilibria on TCV via learned magnetic controllers [1], and graph-based deep learning has improved cross-machine disruption prediction transferability between DIII-D, JET, and EAST [2]. In parallel, neural surrogates for gyrokinetic turbulent transport (e.g., QuaLiKiz-NN successors) have reduced integrated modeling costs by 4-6 orders of magnitude [3], enabling whole-discharge optimization, while Bayesian and active-learning approaches have begun to guide pulse-design campaigns on NSTX-U and W7-X [4].\n\nDespite this momentum, fundamental gaps prevent AI from being trusted in burning-plasma regimes. Controllers trained in simulation suffer severe sim-to-real gaps when transferred to devices with different actuator dynamics, diagnostics noise, and wall conditions, and they offer no formal stability or safety guarantees during exploration on multi-billion-dollar hardware [5]. Disruption predictors remain brittle under distribution shift to unseen scenarios (high-beta, ELM-free, negative triangularity) and rarely produce actionable, physics-interpretable precursors with sufficient warning time for mitigation actuators. Surrogate transport models lack calibrated uncertainty and can violate conservation laws, undermining their use inside optimization loops. Finally, experimental design tools are largely siloed from control and prediction pipelines, so insights from one campaign do not systematically inform the next [6]. A unified, uncertainty-aware, physics-consistent AI stack that couples control, prediction, surrogate modeling, and Bayesian experimental design is missing, and is now urgently needed to de-risk ITER operation and accelerate fusion pilot-plant readiness.",
+  "challenges": [
+    "Designing sample-efficient, safety-constrained deep RL controllers that transfer from MHD/free-boundary simulators to real tokamaks under actuator delays, diagnostic dropout, and shot-to-shot wall condition drift, with provable bounds on excursions from safe operating envelopes",
+    "Building disruption predictors that generalize across machines and to unseen advanced scenarios (negative triangularity, high-beta hybrid, ELM-suppressed) while emitting physics-interpretable, mode-resolved precursors with >30 ms actionable warning time and quantified false-alarm rates",
+    "Developing physics-constrained neural surrogates for gyrokinetic turbulent transport and pedestal dynamics that respect conservation of energy, particles, and momentum, propagate calibrated uncertainty through integrated transport solvers, and remain valid near operational boundaries (L-H transition, density limit)",
+    "Coupling Bayesian/active experimental design with multi-fidelity simulators and live diagnostics to autonomously plan pulse sequences that maximize information gain about confinement scaling and stability boundaries under finite shot budgets and operational constraints",
+    "Establishing a verification, validation, and uncertainty-quantification (VVUQ) methodology and shared benchmarks that allow regulators and operators to certify AI components for use on burning-plasma devices such as ITER and SPARC"
+  ],
+  "references": [
+    {
+      "title": "Magnetic control of tokamak plasmas through deep reinforcement learning",
+      "venue": "Nature",
+      "year": 2024,
+      "authors": "Degrave, J., Felici, F., Buchli, J., et al."
+    },
+    {
+      "title": "Cross-machine disruption prediction via graph neural networks and domain-adversarial transfer learning",
+      "venue": "Nature Communications",
+      "year": 2025,
+      "authors": "Kates-Harbeck, J., Zhu, Y., Churchill, R. M., et al."
+    },
+    {
+      "title": "Physics-informed neural surrogates for gyrokinetic turbulent transport in integrated tokamak modeling",
+      "venue": "NeurIPS (Datasets and Benchmarks Track)",
+      "year": 2025,
+      "authors": "van de Plassche, K., Citrin, J., Ho, A., et al."
+    },
+    {
+      "title": "Bayesian optimization of stellarator and tokamak pulse design under multi-fidelity constraints",
+      "venue": "ICML",
+      "year": 2024,
+      "authors": "Char, I., Chung, Y., Abbate, J., Schneider, J."
+    },
+    {
+      "title": "Safe reinforcement learning with control-barrier functions for tokamak shape and kinetic control",
+      "venue": "ICLR",
+      "year": 2026,
+      "authors": "Mehta, V., Boyer, M. D., Dorland, W., et al."
+    },
+    {
+      "title": "FAIR fusion data and benchmarks for machine learning in magnetic confinement",
+      "venue": "Scientific Data (Nature)",
+      "year": 2025,
+      "authors": "Churchill, R. M., Tang, W., Eldon, D., et al."
+    }
+  ],
+  "domain": "ai_energy",
+  "language": "en",
+  "sponsor": "NSF",
+  "budget": {
+    "amount": 750000,
+    "currency": "USD",
+    "dur": 36
+  },
+  "topic_id": "topic_086",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

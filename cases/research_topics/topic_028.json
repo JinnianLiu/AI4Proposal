@@ -1,0 +1,63 @@
+{
+  "title": "Visuo-Tactile Dexterous Manipulation of Deformable Objects via Multi-Fingered Hands and Human Demonstration",
+  "background": "Dexterous manipulation of deformable and geometrically complex objects remains an unsolved frontier in robotics, despite rapid progress in vision-based policy learning and the commercial availability of anthropomorphic hands such as the Allegro, LEAP, and Shadow platforms. State-of-the-art systems combine large-scale imitation learning with diffusion or transformer policies to achieve impressive results on rigid pick-and-place tasks [1][2], yet they degrade sharply when contact-rich interactions involve cloth, food items, cables, or soft tissues, where occlusion and partial observability render vision alone insufficient. Recent work on high-resolution optical tactile sensors (GelSight, DIGIT, 9DTact) has enabled sub-millimeter contact geometry estimation [3], and tactile-conditioned policies have demonstrated promising in-hand reorientation of rigid primitives [4]. Concurrently, retargeting from human hand demonstrations captured via MoCap gloves or monocular video has emerged as a scalable data source for multi-fingered control [5].\n\nDespite these advances, three fundamental gaps persist. First, tactile and visual modalities remain weakly fused: most pipelines either concatenate raw signals or rely on hand-engineered features, failing to exploit the complementary nature of distal vision and proximal contact. Second, in-hand pose estimation under deformation is largely unsolved because the object's shape itself becomes a latent variable co-evolving with grasp state [6]. Third, the human-to-robot embodiment gap (kinematic mismatch, missing tactile signals in human demos, contact dynamics differences) prevents direct policy transfer, and existing retargeting methods optimize kinematics while ignoring force closure and slip. Closing these gaps is essential for deploying dexterous robots in unstructured domains such as household assistance, surgical support, and agile manufacturing.",
+  "challenges": [
+    "Designing cross-modal representations that temporally and spatially align high-bandwidth tactile streams (1 kHz, distributed across 16+ fingertip and palm sensors) with lower-rate egocentric/wrist-mounted RGB-D observations under heavy visual occlusion during contact",
+    "Performing simultaneous in-hand pose and shape estimation for deformable objects where rigid-body assumptions fail, requiring differentiable physics or neural deformation priors that remain tractable at policy-inference rates (>30 Hz)",
+    "Bridging the human-to-robot embodiment gap when learning from demonstration: humans provide rich kinematic trajectories but no calibrated contact forces, while robot hands have different DoF counts, fingertip geometries, and compliance profiles, making naive retargeting unsafe for fragile objects",
+    "Achieving sample-efficient sim-to-real transfer for tactile signals, since contact simulation of deformables (FEM, MPM) is orders of magnitude slower than rigid-body simulation and existing tactile sensor models exhibit large sim-to-real gaps in shear and slip regimes",
+    "Ensuring robust slip detection and reactive regrasping under partial observability, where a policy must reason about contact events that are only momentarily observable in the tactile stream"
+  ],
+  "references": [
+    {
+      "title": "Diffusion Policy: Visuomotor Policy Learning via Action Diffusion for Dexterous Manipulation",
+      "venue": "RSS",
+      "year": 2024,
+      "authors": "Chi, C., Feng, S., Du, Y., Xu, Z., Cousineau, E., Burchfiel, B., Song, S."
+    },
+    {
+      "title": "Open-TeleVision: Teleoperation with Immersive Active Visual Feedback for Bimanual Dexterous Manipulation",
+      "venue": "CoRL",
+      "year": 2024,
+      "authors": "Cheng, X., Li, J., Yang, S., Yang, G., Wang, X."
+    },
+    {
+      "title": "9DTact: A Compact Vision-Based Tactile Sensor for Accurate 3D Shape and 6D Force Reconstruction",
+      "venue": "IEEE Transactions on Robotics",
+      "year": 2024,
+      "authors": "Lin, C., Zhang, H., Xu, J., Wu, L., Xu, H."
+    },
+    {
+      "title": "Rotating Without Seeing: Towards In-Hand Dexterity Through Touch",
+      "venue": "RSS",
+      "year": 2023,
+      "authors": "Yin, Z., Huang, B., Qin, Y., Chen, Q., Wang, X."
+    },
+    {
+      "title": "AnyTeleop: A General Vision-Based Dexterous Robot Arm-Hand Teleoperation System",
+      "venue": "RSS",
+      "year": 2023,
+      "authors": "Qin, Y., Yang, W., Huang, B., Van Wyk, K., Su, H., Wang, X., Chao, Y., Fox, D."
+    },
+    {
+      "title": "NeuralFeels: Visuo-Tactile Perception for In-Hand Manipulation of Unknown Objects",
+      "venue": "Science Robotics",
+      "year": 2025,
+      "authors": "Suresh, S., Qi, H., Wu, T., Fan, T., Pineda, L., Lambeta, M., Malik, J., Kalakrishnan, M., Calandra, R., Kaess, M."
+    }
+  ],
+  "domain": "robotics",
+  "language": "en",
+  "sponsor": "NSF",
+  "budget": {
+    "amount": 900000,
+    "currency": "USD",
+    "dur": 36
+  },
+  "topic_id": "topic_028",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

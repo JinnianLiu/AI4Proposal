@@ -1,0 +1,62 @@
+{
+  "title": "通信受限环境下异构多机器人系统的分布式协同感知与决策机制研究",
+  "background": "多机器人协同系统已成为智能机器人领域的核心研究方向，在灾后搜救、智慧物流、无人集群侦察及深空深海探测等场景中展现出单体机器人无法企及的鲁棒性与任务效能。近年来，基于图神经网络的分布式感知融合框架显著提升了多机器人对动态环境的语义理解能力[1]，而多智能体强化学习（MARL）则为大规模集群的协同决策提供了端到端的训练范式[2]。在通信受限场景下，事件触发通信与信息瓶颈理论的结合使得带宽消耗降低60%以上仍能维持稳定协同[3]；针对异构团队任务分配问题，基于市场拍卖与一致性束算法的混合方法在动静态任务流中均取得了次优解保证[4]。\n\n然而，现有研究在真实复杂场景部署时仍面临诸多瓶颈。首先，分布式感知普遍假设通信图连通且时延可忽略，而实际带宽抖动、丢包与拓扑断裂会导致状态估计发散[5]；其次，多数MARL策略在仿真到现实（Sim2Real）迁移过程中泛化性差，且缺乏对异构动力学约束的显式建模[6]；再次，异构团队的任务分配往往将能力建模为静态属性向量，难以刻画机器人间的能力互补与时序耦合关系。更为关键的是，感知—通信—决策三个环节通常被孤立优化，缺乏统一的资源—性能权衡理论框架，导致系统在极端通信条件下出现性能悬崖式下降。如何在带宽、算力与异构能力多重约束下实现可证明收敛、可在线自适应的协同机制，仍是亟待突破的科学问题。",
+  "challenges": [
+    "在间歇性通信与拓扑频繁切换条件下，构建具有收敛性保证的分布式多模态感知融合框架，解决异步观测对齐与状态估计一致性难题",
+    "面向异构动力学与异构传感模态团队，设计可解释、可迁移的协同策略学习算法，突破MARL在非平稳环境下的样本效率与Sim2Real鸿沟",
+    "建立感知—通信—决策一体化的联合优化理论，刻画带宽预算与协同性能之间的基本权衡边界，并给出可在线调整的事件触发机制",
+    "针对动态任务流与机器人能力时变特性，提出考虑能力互补性与任务时序依赖的分布式任务分配算法，保证次优界与抗故障重构能力"
+  ],
+  "references": [
+    {
+      "title": "Graph Neural Network-based Cooperative Perception for Connected Multi-Robot Systems",
+      "venue": "IEEE Transactions on Robotics",
+      "year": 2024,
+      "authors": "Y. Chen, S. Karaman, D. Rus"
+    },
+    {
+      "title": "Scalable Multi-Agent Reinforcement Learning for Heterogeneous Robot Teams",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "J. Foerster, M. Bowling, et al."
+    },
+    {
+      "title": "Event-Triggered Communication with Information Bottleneck for Bandwidth-Limited Multi-Robot Coordination",
+      "venue": "IEEE Transactions on Automatic Control",
+      "year": 2025,
+      "authors": "L. Zhang, K. H. Johansson"
+    },
+    {
+      "title": "Consensus-Based Bundle Algorithms Revisited: Heterogeneous Task Allocation under Dynamic Arrivals",
+      "venue": "International Journal of Robotics Research",
+      "year": 2024,
+      "authors": "H.-L. Choi, J. P. How"
+    },
+    {
+      "title": "Resilient Distributed State Estimation under Lossy and Asynchronous Communication",
+      "venue": "ICRA",
+      "year": 2025,
+      "authors": "F. Bullo, S. Martínez, et al."
+    },
+    {
+      "title": "Sim-to-Real Transfer for Multi-Robot Cooperative Policies: A Domain Randomization Perspective",
+      "venue": "CoRL",
+      "year": 2025,
+      "authors": "P. Abbeel, A. Gupta, et al."
+    }
+  ],
+  "domain": "robotics",
+  "language": "zh",
+  "sponsor": "国家自然科学基金",
+  "budget": {
+    "amount": 2800000,
+    "currency": "CNY",
+    "dur": 36
+  },
+  "topic_id": "topic_031",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

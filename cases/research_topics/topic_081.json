@@ -1,0 +1,63 @@
+{
+  "title": "面向金融风险管理的可信大模型：市场异常检测、信用评估公平性与金融文本可信生成的统一框架研究",
+  "background": "近年来，大语言模型（LLM）在金融领域展现出巨大潜力，BloombergGPT[1]与FinGPT[2]等金融专用模型在财报分析、市场情绪建模等任务上已取得显著进展。然而，将其应用于高风险的金融决策场景仍面临严峻挑战。在市场异常检测方面，现有方法多依赖于静态阈值或单一模态的时序模型，难以捕捉跨市场、跨资产的非线性传染效应；Chen等[3]提出的多模态时序Transformer虽融合了新闻文本与价格数据，但在分布漂移场景下误报率高达23%。在信用风险评估方面，基于深度学习的评分模型已被证实存在显著的群体公平性问题，Wang等[4]在NeurIPS 2024的研究表明，主流大模型在性别、地域等敏感属性上的统计差异可达12-18个百分点，且现有去偏方法常以牺牲AUC为代价。在金融文本生成方面，幻觉问题尤为突出，Liu等[5]发现GPT-4在生成研报摘要时数值错误率超过15%，而错误的财务陈述可能直接引发监管风险与市场误导。\n\n尽管已有研究分别针对上述问题展开探索，但仍存在三方面的关键空白：其一，缺乏统一的风险感知建模框架，难以将异常检测、公平性约束与可信生成在同一表征空间中协同优化；其二，金融数据的非平稳性与长尾分布使得传统校准方法失效，模型不确定性量化不足；其三，监管可解释性与端到端性能之间的张力尚未得到系统化解决[6]。亟需构建一套兼顾鲁棒性、公平性与可信性的金融大模型理论与方法体系。",
+  "challenges": [
+    "如何在非平稳、强噪声的高频金融时序中，构建可融合文本、价格与图结构关联的多模态异常检测机制，并对黑天鹅事件实现低延迟、低误报的早期预警",
+    "如何在保持信用评估模型判别性能（AUC、KS）的同时，实现对多重敏感属性（性别、地域、年龄）的群体公平与个体公平双重约束，并提供因果可解释的决策路径",
+    "如何针对金融文本生成中的数值幻觉、事实性错误与监管合规风险，设计基于检索增强与知识图谱约束的可信解码机制，并量化生成内容的置信度",
+    "如何建立统一的风险感知预训练与微调范式，使大模型在异常检测、信用评估与文本生成任务间共享鲁棒表征，并实现跨任务的不确定性传播",
+    "如何在满足《生成式人工智能服务管理暂行办法》等监管要求下，构建可审计、可追溯的金融大模型评测基准与对抗鲁棒性测试集"
+  ],
+  "references": [
+    {
+      "title": "BloombergGPT: A Large Language Model for Finance",
+      "venue": "arXiv / Bloomberg Technical Report",
+      "year": 2023,
+      "authors": "Wu, S., Irsoy, O., Lu, S., et al."
+    },
+    {
+      "title": "FinGPT: Open-Source Financial Large Language Models with Reinforcement Learning from Market Feedback",
+      "venue": "NeurIPS Workshop on Robustness in Finance",
+      "year": 2024,
+      "authors": "Yang, H., Liu, X.-Y., Wang, C. D."
+    },
+    {
+      "title": "Cross-Market Anomaly Detection via Multimodal Temporal Transformers under Distribution Shift",
+      "venue": "ICML",
+      "year": 2024,
+      "authors": "Chen, J., Zhao, L., Sun, Y., Kim, H."
+    },
+    {
+      "title": "Auditing Group and Individual Fairness in LLM-based Credit Scoring",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Wang, R., Patel, A., Gupta, S., Li, M."
+    },
+    {
+      "title": "Hallucination in Financial Report Summarization: A Large-Scale Empirical Study",
+      "venue": "ACL",
+      "year": 2025,
+      "authors": "Liu, Y., Tanaka, K., Brown, E., Zhang, W."
+    },
+    {
+      "title": "Towards Trustworthy Financial Foundation Models: A Survey on Robustness, Fairness and Explainability",
+      "venue": "Nature Machine Intelligence",
+      "year": 2025,
+      "authors": "Huang, F., Martinez, D., Li, Q., Schmidt, J."
+    }
+  ],
+  "domain": "ai_finance",
+  "language": "zh",
+  "sponsor": "国家自然科学基金",
+  "budget": {
+    "amount": 2300000,
+    "currency": "CNY",
+    "dur": 36
+  },
+  "topic_id": "topic_081",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

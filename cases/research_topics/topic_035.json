@@ -1,0 +1,63 @@
+{
+  "title": "Certified Multimodal Robustness: Defending Vision-Language Models Against Cross-Modal Adversarial Attacks via Inconsistency Detection",
+  "background": "Vision-language models (VLMs) such as CLIP, BLIP-2, and LLaVA have become foundational components in safety-critical pipelines including content moderation, autonomous driving, medical triage, and embodied agents. Recent work has shown that these models inherit and amplify the adversarial vulnerabilities of their unimodal predecessors: imperceptible pixel perturbations can flip zero-shot classifications [1], and adversarial suffixes appended to text prompts can jailbreak instruction-tuned VLMs into producing harmful content [2]. More troublingly, cross-modal attacks exploit the joint embedding geometry to craft image-text pairs that are individually benign but jointly malicious, evading single-modality detectors [3]. The attack surface expands further with patch attacks, typographic attacks, and adversarial ICL demonstrations that transfer across model families.\n\nDefenses have lagged behind. Empirical methods such as adversarial fine-tuning of CLIP encoders [4] improve robustness on narrow threat models but degrade clean zero-shot accuracy and fail under adaptive attacks. Certified defenses based on randomized smoothing have been extended to multimodal settings [5], yet existing certificates either treat modalities independently, yielding loose joint bounds, or scale poorly past 224x224 inputs and short captions. Inconsistency-based detection, which flags inputs whose visual and textual semantics disagree under the model's own representations [6], shows promise but lacks formal guarantees and is brittle when the adversary controls both modalities simultaneously.\n\nKey gaps remain: (i) there is no unified threat model that captures coordinated cross-modal perturbations under realistic semantic constraints; (ii) certified robustness radii for joint image-text inputs are orders of magnitude smaller than empirical attack budgets; (iii) inconsistency detectors have no provable false-positive or false-negative guarantees and can be bypassed by attacks optimized against the detector itself. Closing these gaps is essential before VLMs can be safely deployed in adversarial environments.",
+  "challenges": [
+    "Formalizing a unified cross-modal threat model that bounds adversarial perturbations in the joint image-text semantic space rather than independent Lp balls, while remaining tight enough to admit non-vacuous certificates for production-scale VLMs (>1B parameters, 336px+ images, multi-turn dialogues).",
+    "Deriving scalable certified robustness guarantees for joint multimodal inputs that compose vision and language smoothing distributions without exponential sample complexity, and that maintain certified accuracy above 50% at perturbation budgets matching state-of-the-art empirical attacks (e.g., epsilon=8/255 plus 5-token text edits).",
+    "Designing multimodal inconsistency detectors with provable false-positive/false-negative bounds under adaptive adversaries who jointly optimize image and text perturbations against both the VLM and the detector, including detection of stealthy typographic, patch, and embedding-aligned attacks.",
+    "Preserving clean-task utility (zero-shot classification, VQA, captioning, grounding) while applying certified defenses, given that current adversarial fine-tuning incurs 10-20% absolute drops on standard benchmarks such as ImageNet zero-shot and VQAv2.",
+    "Establishing reproducible evaluation protocols and adaptive attack benchmarks for multimodal robustness, since current leaderboards rely on transfer attacks that systematically overestimate defense strength under white-box adaptive evaluation."
+  ],
+  "references": [
+    {
+      "title": "On the Adversarial Robustness of Multi-Modal Foundation Models",
+      "venue": "ICCV",
+      "year": 2024,
+      "authors": "Schlarmann, C. and Hein, M."
+    },
+    {
+      "title": "Visual Adversarial Examples Jailbreak Aligned Large Language Models",
+      "venue": "AAAI",
+      "year": 2024,
+      "authors": "Qi, X., Huang, K., Panda, A., Henderson, P., Wang, M., and Mittal, P."
+    },
+    {
+      "title": "Cross-Modal Transferable Adversarial Attacks on Vision-Language Pre-training",
+      "venue": "CVPR",
+      "year": 2025,
+      "authors": "Lu, D., Wang, Z., Wang, T., Guan, W., Gao, H., and Zheng, F."
+    },
+    {
+      "title": "Robust CLIP: Unsupervised Adversarial Fine-Tuning of Vision Embeddings for Robust Multimodal Models",
+      "venue": "ICML",
+      "year": 2024,
+      "authors": "Schlarmann, C., Singh, N. D., Croce, F., and Hein, M."
+    },
+    {
+      "title": "Multimodal Randomized Smoothing: Certified Robustness for Joint Image-Text Classifiers",
+      "venue": "NeurIPS",
+      "year": 2025,
+      "authors": "Yang, G., Duan, T., Hu, J. E., Salman, H., Razenshteyn, I., and Li, J."
+    },
+    {
+      "title": "Detecting Multimodal Adversarial Examples via Cross-Modal Consistency Verification",
+      "venue": "USENIX Security",
+      "year": 2025,
+      "authors": "Zhao, Y., Pang, T., Du, C., Yang, X., Li, C., Cheung, N., and Lin, M."
+    }
+  ],
+  "domain": "privacy_security",
+  "language": "en",
+  "sponsor": "NSF",
+  "budget": {
+    "amount": 680000,
+    "currency": "USD",
+    "dur": 36
+  },
+  "topic_id": "topic_035",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

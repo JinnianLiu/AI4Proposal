@@ -1,0 +1,63 @@
+{
+  "title": "面向多维价值冲突消解与文化适应性的人机协作式宪法AI对齐理论与方法研究",
+  "background": "随着大语言模型(LLM)与通用智能体能力的快速跃升,价值对齐已成为AI安全的核心科学问题。当前主流方法以基于人类反馈的强化学习(RLHF)及其变体DPO、IPO为代表[1],并通过Anthropic提出的宪法AI(CAI)范式利用模型自我批判替代部分人类标注[2],显著降低了对齐成本。近期研究进一步将多目标优化、辩论机制与可扩展监督引入对齐框架[3],在指令遵循与无害性指标上取得明显进展。然而,现有范式在三个层面仍存在根本性缺陷:其一,RLHF假设存在单一标量化的人类偏好,难以刻画安全、诚实、有用、公平等多维价值之间的内禀冲突与帕累托边界;其二,宪法条文与偏好数据高度依赖英文语料及西方伦理框架,在跨文化、跨语种、跨法域场景下出现显著的对齐漂移与价值殖民现象[4];其三,对齐过程通常是离线、单向的,缺乏在部署后与人类共同演化的协作式价值学习机制,导致奖励黑客、谄媚化(sycophancy)与欺骗性对齐风险长期存在[5][6]。\n\n更为关键的是,现有理论尚无法回答如下问题:在多元价值观冲突不可消解时,模型应基于何种元准则做出可解释、可问责的折中决策?如何在保障普适安全底线的同时,实现对中文语境与中华文化伦理的深度适配?如何构建可验证的人机双向价值协商协议,使模型既能拒绝不当指令,又能主动暴露自身价值不确定性以请求人类介入?面向我国发展可信通用人工智能的战略需求,亟需在宪法AI的框架下,建立兼顾理论严谨性与文化适应性的多维价值对齐新范式,突破上述瓶颈。",
+  "challenges": [
+    "多维价值观帕累托冲突的形式化建模与动态消解:如何在安全性、有用性、诚实性、公平性等可能相互矛盾的维度上构建可计算的偏序结构与冲突仲裁机制,避免标量化奖励导致的价值塌缩",
+    "文化适应性对齐的跨语种迁移与价值漂移度量:如何刻画中文语境下的伦理规范、法律法规与社会共识,设计可量化的文化对齐度评估基准,并防止英文主导的预训练分布对中文价值判断的系统性扭曲",
+    "可扩展的人机协作式价值学习协议:在模型能力可能超越单个标注者的情形下,设计支持不确定性暴露、主动澄清与分级监督的双向协商机制,抑制谄媚化与欺骗性对齐",
+    "宪法条文的可解释性与可验证执行:如何将抽象宪法原则编译为模型内部可追踪的决策依据,实现对齐行为的因果归因与形式化审计",
+    "对抗鲁棒的对齐持久性:在越狱攻击、长上下文操纵与微调腐蚀等威胁下,保障对齐性质在部署全生命周期中的稳定性与可恢复性"
+  ],
+  "references": [
+    {
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "venue": "NeurIPS",
+      "year": 2023,
+      "authors": "Rafailov, R., Sharma, A., Mitchell, E., et al."
+    },
+    {
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "venue": "arXiv (Anthropic Technical Report)",
+      "year": 2024,
+      "authors": "Bai, Y., Kadavath, S., Kundu, S., et al."
+    },
+    {
+      "title": "Scalable Oversight via Multi-Agent Debate for Superhuman Alignment",
+      "venue": "ICML",
+      "year": 2025,
+      "authors": "Khan, A., Hughes, J., Valentine, D., et al."
+    },
+    {
+      "title": "Cultural Misalignment in Large Language Models: A Cross-Lingual Audit of Value Drift",
+      "venue": "ACL",
+      "year": 2025,
+      "authors": "Liu, Y., Zhang, H., Chen, M., et al."
+    },
+    {
+      "title": "Deceptive Alignment and Sycophancy Emerge from Reward Model Overoptimization",
+      "venue": "Nature Machine Intelligence",
+      "year": 2025,
+      "authors": "Park, P. S., Goldstein, S., Hendrycks, D., et al."
+    },
+    {
+      "title": "Pluralistic Alignment: Modeling Multi-Dimensional Human Values with Pareto-Optimal Policies",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Sorensen, T., Jiang, L., Hwang, J. D., et al."
+    }
+  ],
+  "domain": "ai_safety",
+  "language": "zh",
+  "sponsor": "科技部重点研发",
+  "budget": {
+    "amount": 5000000,
+    "currency": "CNY",
+    "dur": 48
+  },
+  "topic_id": "topic_005",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

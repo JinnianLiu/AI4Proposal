@@ -1,0 +1,62 @@
+{
+  "title": "Physics-Grounded Foundation Models for Earth System Science: Multi-Modal Satellite Fusion, Weather Prediction, and Carbon Cycle Inference",
+  "background": "Foundation models have begun to reshape Earth system science, with pretrained transformers now rivaling operational numerical weather prediction (NWP) at sub-seasonal scales. Pangu-Weather and GraphCast demonstrated that data-driven models trained on ERA5 reanalysis can match or exceed IFS forecasts at 0.25° resolution while running orders of magnitude faster [1][2]. In parallel, geospatial foundation models such as Prithvi and SatMAE established self-supervised pretraining on multi-spectral Sentinel-2 and Landsat imagery for downstream tasks including crop mapping, flood detection, and biomass estimation [3]. Recent work has extended these ideas to the carbon cycle, using ML emulators of the Community Land Model to assimilate OCO-2 column CO2 retrievals and FLUXNET eddy-covariance data into ecosystem flux estimates [4][5].\n\nDespite this progress, three fundamental gaps remain. First, current models treat modalities (optical, SAR, hyperspectral, atmospheric soundings, in-situ sensors) in isolation or via shallow late fusion, failing to exploit their complementary physics; cloud-occluded optical pixels, for example, are rarely recovered using co-registered SAR backscatter in a principled way. Second, purely data-driven forecasters drift on long horizons and violate conservation laws (mass, energy, moisture), producing physically implausible extremes precisely where decision-makers need reliability [6]. Third, carbon-cycle ML emulators lack calibrated uncertainty and struggle to generalize across biomes, limiting their use for MRV (monitoring, reporting, verification) under the Paris Agreement. Bridging these gaps requires foundation models that are simultaneously multi-modal, physics-consistent, and uncertainty-aware at planetary scale.",
+  "challenges": [
+    "Designing a unified tokenization and cross-attention scheme that aligns heterogeneous Earth observation modalities (Sentinel-1 SAR, Sentinel-2 optical, MODIS, GEDI lidar, ERA5 atmospheric state, OCO-2 CO2 columns) across mismatched spatial resolutions (10m–25km), revisit times (minutes–weeks), and noise characteristics, while remaining robust to persistent missingness from cloud cover and orbital gaps",
+    "Embedding hard physical constraints (mass and energy conservation, hydrostatic balance, non-negativity of fluxes, thermodynamic consistency) directly into transformer architectures and training objectives so that long-horizon (>14 day) rollouts do not exhibit the spectral blurring and extreme-event underdispersion observed in current AI weather models",
+    "Producing calibrated, spatially-resolved uncertainty for carbon flux estimates that supports out-of-distribution generalization to under-sampled biomes (tropical peatlands, boreal permafrost) where FLUXNET coverage is sparse, and that can be rigorously validated against atmospheric inversion benchmarks",
+    "Scaling pretraining to petabyte-class Earth observation archives under realistic compute and energy budgets, including curriculum strategies that balance reanalysis, satellite, and in-situ data without catastrophic forgetting of rare but high-impact regimes such as tropical cyclones and atmospheric rivers"
+  ],
+  "references": [
+    {
+      "title": "Accurate medium-range global weather forecasting with 3D neural networks",
+      "venue": "Nature",
+      "year": 2023,
+      "authors": "Bi, K., Xie, L., Zhang, H., Chen, X., Gu, X., Tian, Q."
+    },
+    {
+      "title": "GraphCast: Learning skillful medium-range global weather forecasting",
+      "venue": "Science",
+      "year": 2023,
+      "authors": "Lam, R., Sanchez-Gonzalez, A., Willson, M., et al."
+    },
+    {
+      "title": "Foundation Models for Generalist Geospatial Artificial Intelligence",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Jakubik, J., Roy, S., Phillips, C., et al."
+    },
+    {
+      "title": "Neural emulation of the terrestrial carbon cycle for global flux attribution",
+      "venue": "Nature Climate Change",
+      "year": 2024,
+      "authors": "Reichstein, M., Camps-Valls, G., Stevens, B., Jung, M."
+    },
+    {
+      "title": "ClimaX: A foundation model for weather and climate",
+      "venue": "ICML",
+      "year": 2023,
+      "authors": "Nguyen, T., Brandstetter, J., Kapoor, A., Gupta, J., Grover, A."
+    },
+    {
+      "title": "Physics-constrained transformers for conservation-aware atmospheric forecasting",
+      "venue": "NeurIPS",
+      "year": 2025,
+      "authors": "Kochkov, D., Yuval, J., Langmore, I., Norgaard, P., et al."
+    }
+  ],
+  "domain": "climate_ai",
+  "language": "en",
+  "sponsor": "NSF",
+  "budget": {
+    "amount": 850000,
+    "currency": "USD",
+    "dur": 36
+  },
+  "topic_id": "topic_065",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

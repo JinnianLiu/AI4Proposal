@@ -1,0 +1,62 @@
+{
+  "title": "面向SLA保障的大模型推理服务系统：动态批处理、预测式KV缓存与资源自适应调度协同优化研究",
+  "background": "随着GPT、LLaMA等千亿参数大模型在搜索、对话、代码生成等场景的规模化部署，推理服务系统已成为AI基础设施的核心瓶颈。当前主流系统如vLLM[1]通过PagedAttention机制将KV缓存碎片率从60%以上降至4%以下，Orca[2]提出的迭代级连续批处理（continuous batching）相比静态批处理将吞吐量提升23倍，DistServe[3]则通过分离Prefill与Decode阶段缓解了相互干扰。在调度层面，AlpaServe[4]验证了模型并行下的统计多路复用收益，Sarathi-Serve[5]通过分块预填充（chunked prefill）实现了吞吐与延迟的平衡。\n\n然而，现有系统仍难以同时满足生产环境下严苛的SLA约束（TTFT<200ms、TBT<50ms）与高资源利用率目标。其核心矛盾在于：第一，请求长度高度异构（输入从数十到数十万token、输出长度未知），导致批处理决策面临显著的不确定性，固定批大小或贪心填充策略易引发尾延迟劣化[6]；第二，KV缓存随并发请求线性膨胀，被动式驱逐（LRU/FIFO）在多轮对话与RAG场景下命中率不足30%，且缺乏对未来访问模式的感知；第三，在线流量呈突发性，静态资源分配在峰谷比超过5:1时GPU利用率长期低于40%，而现有自适应调度多基于启发式规则，缺乏对SLA违约风险的形式化建模与端到端联合优化。如何在输出长度未知、负载非平稳、异构硬件并存的真实条件下，实现批处理-缓存-调度三层决策的协同自适应，仍是开放难题。",
+  "challenges": [
+    "输出长度未知条件下的动态批处理决策：需在请求到达时刻预测其生成长度分布，并联合考虑预填充阶段的算力占用与解码阶段的显存占用，构建可证明逼近最优的在线批组装算法，避免长请求阻塞短请求导致的TTFT尾延迟爆炸",
+    "预测式KV缓存的语义感知管理：现有分页缓存仅做物理层管理，缺乏对前缀复用、多轮对话上下文重访、RAG文档块共享等访问模式的预测能力，需要设计融合请求语义特征与历史轨迹的缓存预取、分层（HBM-DRAM-SSD）放置与主动驱逐策略，并保证在缓存miss时的延迟SLA",
+    "SLA违约风险约束下的资源自适应调度：在突发流量与异构GPU集群（A100/H100/L40S混部）条件下，需建立TTFT/TBT尾延迟的概率性保障模型，将批大小、并行度（TP/PP/EP）、副本数与功耗墙作为联合决策变量，求解大规模随机优化问题，同时支持秒级弹性伸缩",
+    "三层决策的协同优化与在线学习：批处理、缓存、调度三层决策存在强耦合（如缓存命中影响批组装收益、批大小影响显存压力进而触发调度），需要构建可微分或基于强化学习的端到端优化框架，并在分布漂移下保证策略的稳定性与可解释性"
+  ],
+  "references": [
+    {
+      "title": "Efficient Memory Management for Large Language Model Serving with PagedAttention",
+      "venue": "SOSP",
+      "year": 2023,
+      "authors": "Kwon, W., Li, Z., Zhuang, S., et al."
+    },
+    {
+      "title": "Orca: A Distributed Serving System for Transformer-Based Generative Models",
+      "venue": "OSDI",
+      "year": 2022,
+      "authors": "Yu, G.-I., Jeong, J. S., Kim, G.-W., et al."
+    },
+    {
+      "title": "DistServe: Disaggregating Prefill and Decoding for Goodput-optimized Large Language Model Serving",
+      "venue": "OSDI",
+      "year": 2024,
+      "authors": "Zhong, Y., Liu, S., Chen, J., et al."
+    },
+    {
+      "title": "AlpaServe: Statistical Multiplexing with Model Parallelism for Deep Learning Serving",
+      "venue": "OSDI",
+      "year": 2023,
+      "authors": "Li, Z., Zheng, L., Zhong, Y., et al."
+    },
+    {
+      "title": "Taming Throughput-Latency Tradeoff in LLM Inference with Sarathi-Serve",
+      "venue": "OSDI",
+      "year": 2024,
+      "authors": "Agrawal, A., Kedia, N., Panwar, A., et al."
+    },
+    {
+      "title": "Response Length Perception and Sequence Scheduling: An LLM-Empowered LLM Inference Pipeline",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Zheng, Z., Ren, X., Huang, F., et al."
+    }
+  ],
+  "domain": "ai_infra",
+  "language": "zh",
+  "sponsor": "国家自然科学基金",
+  "budget": {
+    "amount": 2800000,
+    "currency": "CNY",
+    "dur": 36
+  },
+  "topic_id": "topic_049",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

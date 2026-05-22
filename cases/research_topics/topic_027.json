@@ -1,0 +1,63 @@
+{
+  "title": "面向非结构化环境的通用机器人操作技能学习：跨任务泛化与Sim-to-Real鸿沟消除",
+  "background": "通用机器人操作（General-Purpose Robotic Manipulation）是具身智能领域的核心难题。近年来，基于大规模视觉-语言-动作模型（VLA）的研究取得显著突破，如RT-2[1]通过互联网规模数据实现了开放词汇任务的零样本迁移，Open X-Embodiment[2]构建了跨本体的统一策略框架，扩散策略（Diffusion Policy）[3]则在多模态动作分布建模上展现出优越性能。在仿真训练方面，基于GPU并行的大规模强化学习平台（如Isaac Lab）配合域随机化技术[4]已能够在抓取、装配等任务上实现一定程度的Sim-to-Real迁移，触觉-视觉融合表征学习[5]也为接触密集型操作提供了新思路。\n\n然而，将这些技术推广至真实非结构化环境仍面临严峻挑战。其一，现有策略在分布外（OOD）物体几何、光照变化与遮挡条件下性能急剧下降，跨任务泛化往往依赖海量遥操作数据，样本效率低下；其二，仿真与现实之间存在显著的视觉外观差距与接触动力学差距，刚体假设、摩擦模型与软体形变的建模误差使得富接触任务（如插拔、柔性物体操作）难以直接迁移[6]；其三，现有方法缺乏对长时序、多阶段任务的语义级技能复用机制，难以在新任务中实现组合式泛化。如何构建统一的表征空间、可微分的物理一致性约束以及高效的真实世界自适应机制，仍是亟待突破的开放问题。",
+  "challenges": [
+    "跨任务、跨本体的操作技能表征统一建模：如何在异构动作空间（不同自由度、夹爪、力控接口）下学习与本体解耦的通用技能基元，并支持语言条件下的组合式泛化",
+    "Sim-to-Real视觉鸿沟消除：如何在保持仿真数据规模优势的同时，通过神经渲染、生成式域适应或真实-仿真混合训练范式，缩小渲染图像与真实相机观测在材质、光照、噪声分布上的差异",
+    "接触动力学建模与可微仿真：针对刚柔耦合、摩擦不确定性与碰撞奇异性，构建可微分、物理一致的接触模型，支持基于真实数据的系统辨识与策略在线微调",
+    "非结构化环境下的小样本自适应：如何利用少量真机交互数据（<30分钟）实现策略的在线快速校准，避免灾难性遗忘并保证安全约束",
+    "长时序操作任务的分层规划与失败恢复：在部分可观测、动态扰动条件下，融合视觉-语言模型的高层推理与底层反应式控制，实现鲁棒的失败检测与重规划"
+  ],
+  "references": [
+    {
+      "title": "RT-2: Vision-Language-Action Models Transfer Web Knowledge to Robotic Control",
+      "venue": "CoRL",
+      "year": 2024,
+      "authors": "Brohan A., Brown N., Carbajal J., et al."
+    },
+    {
+      "title": "Open X-Embodiment: Robotic Learning Datasets and RT-X Models",
+      "venue": "ICRA",
+      "year": 2024,
+      "authors": "Padalkar A., Pooley A., Jain A., et al."
+    },
+    {
+      "title": "Diffusion Policy: Visuomotor Policy Learning via Action Diffusion",
+      "venue": "RSS / IJRR",
+      "year": 2024,
+      "authors": "Chi C., Feng S., Du Y., et al."
+    },
+    {
+      "title": "DexMimicGen: Automated Data Generation for Bimanual Dexterous Manipulation via Sim-to-Real Transfer",
+      "venue": "ICRA",
+      "year": 2025,
+      "authors": "Jiang Z., Xie Y., Lin K., et al."
+    },
+    {
+      "title": "T-DEX: Learning Tactile-Visual Representations for Dexterous Manipulation in the Wild",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Guzey I., Evans B., Chen A., et al."
+    },
+    {
+      "title": "Differentiable Contact Dynamics for Robust Sim-to-Real Policy Adaptation",
+      "venue": "Science Robotics",
+      "year": 2025,
+      "authors": "Howell T., Le Cleac'h S., Brüdigam J., et al."
+    }
+  ],
+  "domain": "robotics",
+  "language": "zh",
+  "sponsor": "国家自然科学基金",
+  "budget": {
+    "amount": 3200000,
+    "currency": "CNY",
+    "dur": 36
+  },
+  "topic_id": "topic_027",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "title": "面向端侧部署的大模型极端压缩：混合精度量化、结构化剪枝与知识蒸馏的协同优化方法研究",
+  "background": "随着GPT、LLaMA等大语言模型(LLM)参数规模突破百亿至万亿级，将其部署至手机、车载终端、IoT等资源受限边缘设备成为产业落地的核心瓶颈。当前主流压缩路径包括混合精度量化、结构化剪枝与知识蒸馏三大方向。在量化领域，GPTQ[1]通过逐层最优脑外科手术实现4-bit后训练量化，AWQ[2]提出激活感知的权重重要性度量，将7B模型压缩至接近FP16精度；SmoothQuant[3]通过激活-权重平滑迁移解决了离群值难题。在剪枝方向，SparseGPT[4]首次实现单次剪枝下50%稀疏度的LLM压缩，LLM-Pruner[5]则基于梯度信息进行结构化通道剪枝。知识蒸馏方面，MiniLLM[6]通过反向KL散度缓解了教师-学生分布失配。\n\n然而，在追求4×~10×以上极端压缩率（如W2A4、70%稀疏度叠加蒸馏）时，现有方法面临系统性精度崩塌：单一压缩手段已逼近理论极限，而朴素串行组合会引发误差累积与优化目标冲突。具体表现为：低比特量化下激活分布的长尾离群值导致剪枝重要性度量失真[3][4]；结构化剪枝改变了模型的注意力秩结构，使蒸馏过程中的特征对齐损失失效[5][6]；三者在反向传播路径上存在梯度冲突，缺乏统一的优化框架。此外，端侧异构硬件（NPU、DSP）对混合精度核函数的支持差异巨大，算法设计与硬件感知的协同建模仍是空白。\n\n因此，亟需建立面向极端压缩率的量化-剪枝-蒸馏协同优化理论与方法，在保证端侧推理延迟与能耗约束的前提下，最大限度保持下游任务精度，这对推动大模型普惠化部署具有重要科学意义与应用价值。",
+  "challenges": [
+    "极端低比特(≤3bit)量化下激活离群值与权重分布的耦合建模问题：现有逐层校准方法在W2A4配置下出现累积误差爆炸，缺乏跨层联合误差传播的理论分析与可微校准框架",
+    "结构化剪枝与混合精度量化的联合搜索空间爆炸：层级稀疏率、通道掩码与每层比特宽度构成超大组合空间，传统NAS与启发式搜索无法在合理时间内找到帕累托最优解",
+    "三种压缩手段在蒸馏过程中的梯度冲突与优化目标解耦：剪枝引入的离散掩码、量化引入的伪梯度(STE)与蒸馏的软标签损失存在显著梯度方向干扰，缺乏统一的可微优化范式",
+    "压缩后模型在长上下文与复杂推理任务上的能力退化机理不明：现有评测多集中于困惑度与短文本任务，对压缩对Chain-of-Thought、in-context learning等涌现能力的影响缺乏系统刻画",
+    "算法压缩配置与端侧异构硬件(NPU/DSP/MCU)算子支持的协同设计：忽略硬件实际可执行的混合精度内核与稀疏模式将导致理论压缩比与实测加速比严重背离"
+  ],
+  "references": [
+    {
+      "title": "GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers",
+      "venue": "ICLR",
+      "year": 2023,
+      "authors": "Frantar, E., Ashkboos, S., Hoefler, T., Alistarh, D."
+    },
+    {
+      "title": "AWQ: Activation-aware Weight Quantization for On-Device LLM Compression and Acceleration",
+      "venue": "MLSys",
+      "year": 2024,
+      "authors": "Lin, J., Tang, J., Tang, H., Yang, S., Han, S."
+    },
+    {
+      "title": "SmoothQuant: Accurate and Efficient Post-Training Quantization for Large Language Models",
+      "venue": "ICML",
+      "year": 2023,
+      "authors": "Xiao, G., Lin, J., Seznec, M., Wu, H., Demouth, J., Han, S."
+    },
+    {
+      "title": "SparseGPT: Massive Language Models Can Be Accurately Pruned in One-Shot",
+      "venue": "ICML",
+      "year": 2023,
+      "authors": "Frantar, E., Alistarh, D."
+    },
+    {
+      "title": "LLM-Pruner: On the Structural Pruning of Large Language Models",
+      "venue": "NeurIPS",
+      "year": 2023,
+      "authors": "Ma, X., Fang, G., Wang, X."
+    },
+    {
+      "title": "MiniLLM: Knowledge Distillation of Large Language Models via Reverse KL Divergence",
+      "venue": "ICLR",
+      "year": 2024,
+      "authors": "Gu, Y., Dong, L., Wei, F., Huang, M."
+    }
+  ],
+  "domain": "efficient_ml",
+  "language": "zh",
+  "sponsor": "国家自然科学基金",
+  "budget": {
+    "amount": 2600000,
+    "currency": "CNY",
+    "dur": 36
+  },
+  "topic_id": "topic_016",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

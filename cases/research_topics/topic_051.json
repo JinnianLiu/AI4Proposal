@@ -1,0 +1,69 @@
+{
+  "title": "面向大模型推理的存算一体异构芯片编程模型与编译优化关键技术研究",
+  "background": "随着大语言模型与多模态基础模型参数规模突破万亿级，传统冯·诺依曼架构下访存带宽与能效瓶颈日益严峻，存算一体（Compute-in-Memory, CIM）架构因其在权重驻留、原位矩阵向量乘上的天然优势，已成为后摩尔时代AI算力基础设施的重要方向。当前研究主要沿三条技术路线推进：基于HBM-PIM与LPDDR-PIM的近存计算路线在三星AxDIMM、SK海力士GDDR6-AiM中实现了商业化验证[1]；基于RRAM/PCM/MRAM的模拟存算路线在能效上展现出100 TOPS/W量级的潜力，但受限于器件非理想特性与ADC开销[2]；基于SRAM的数字存算路线则在精度与工艺兼容性方面取得显著进展[3]。在编译与编程模型层面，TVM、MLIR等框架开始引入面向PIM的方言扩展[4]，SIAM、PUMA等模拟器为模拟CIM映射提供了空间-时间联合搜索框架[5]。\n\n然而，面向数字-模拟-近存混合存算架构的端到端编程与编译体系仍存在重大空白。首先，现有编程抽象多绑定特定器件，缺乏跨数字CIM、模拟CIM与近存PIM的统一中间表示，难以表达权重静态映射、激活流水搬运与累加精度补偿的耦合语义[6]。其次，模拟存算的器件波动、阵列泄漏与ADC量化噪声呈现强工艺相关性，编译器在算子切分、权重复制与重训练插入策略上缺乏可量化的精度-能效协同优化模型。再次，混合架构下张量在DRAM-Cache-CIM-NoC多级存储中的数据流编排涉及非凸调度空间，传统多面体编译与图级搜索难以同时满足时延、能耗与精度约束。亟需在统一编程模型、噪声感知编译优化与软硬件协同验证方法上取得突破。",
+  "challenges": [
+    "面向数字CIM、模拟CIM与近存PIM三类异构计算单元的统一中间表示与编程抽象设计：需要在张量层和指令层同时表达权重原位驻留、阵列分块映射、ADC精度配置与累加补偿语义，并支持向LLVM/MLIR现有方言的可组合下沉",
+    "模拟存算非理想特性感知的编译优化：包括器件电导漂移、阵列IR-drop、ADC量化噪声与温度敏感性的端到端误差建模，以及在算子切分、权重复制冗余、混合精度量化与编译期重校准之间的多目标协同搜索",
+    "混合存算架构下的张量数据流与流水线编排：在DRAM-HBM-CIM-NoC多层存储中求解访存-计算-通信耦合的非凸调度问题，需突破传统多面体模型对原位计算与不可分割宏算子的表达局限",
+    "大模型典型算子（如FlashAttention、MoE路由、KV-Cache管理）在CIM阵列上的高效映射：解决动态稀疏、长序列与不规则访存模式与CIM阵列静态权重布局之间的根本性失配",
+    "软硬件协同的功能正确性与精度可验证性：缺乏面向混合存算的端到端仿真-编译-精度回归基准，难以在流片前对编译策略进行可信评估"
+  ],
+  "references": [
+    {
+      "title": "A 1ynm 1.25V 8Gb 16Gb/s/pin GDDR6-based Accelerator-in-Memory Supporting 1TFLOPS MAC Operation for Large-Scale AI Applications",
+      "venue": "ISSCC",
+      "year": 2024,
+      "authors": "Lee, S., Kim, J., Park, H., et al."
+    },
+    {
+      "title": "A 22nm 832Kb Hybrid-Domain Floating-Point SRAM In-Memory-Compute Macro with 16.2-70.2 TFLOPS/W for High-Accuracy AI Edge Devices",
+      "venue": "ISSCC",
+      "year": 2024,
+      "authors": "Yue, J., Liu, Y., Yuan, Z., et al."
+    },
+    {
+      "title": "Analog In-Memory Computing Attention Mechanism for Fast and Energy-Efficient Large Language Models",
+      "venue": "Nature Computational Science",
+      "year": 2025,
+      "authors": "Leroux, N., Manea, P. P., Sudarshan, C., et al."
+    },
+    {
+      "title": "PIMFlow: Compiler and Runtime Support for CNN Models on Processing-in-Memory DRAM",
+      "venue": "CGO",
+      "year": 2023,
+      "authors": "Park, Y., Kwon, S., Hwang, S., et al."
+    },
+    {
+      "title": "SIAM: Chiplet-based Scalable In-Memory Acceleration with Mesh for Deep Neural Networks",
+      "venue": "ACM TECS",
+      "year": 2023,
+      "authors": "Krishnan, G., Mandal, S. K., Pannala, M., et al."
+    },
+    {
+      "title": "CIM-MLC: A Multi-level Compilation Stack for Computing-In-Memory Accelerators",
+      "venue": "ASPLOS",
+      "year": 2024,
+      "authors": "Qu, S., Li, B., Zhao, S., et al."
+    },
+    {
+      "title": "Noise-Aware Quantization and Compilation Co-design for Reliable Analog In-Memory Deep Learning",
+      "venue": "MICRO",
+      "year": 2024,
+      "authors": "Wang, X., Chen, Y., Zhang, T., et al."
+    }
+  ],
+  "domain": "ai_infra",
+  "language": "zh",
+  "sponsor": "国家自然科学基金",
+  "budget": {
+    "amount": 2600000,
+    "currency": "CNY",
+    "dur": 36
+  },
+  "topic_id": "topic_051",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

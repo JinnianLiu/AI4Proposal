@@ -1,0 +1,63 @@
+{
+  "title": "Sub-Milliwatt Neural Architectures and On-Device Continual Learning for Ubiquitous TinyML Systems",
+  "background": "The proliferation of always-on sensing devices (wearables, environmental monitors, smart agricultural nodes) has created unprecedented demand for neural inference at sub-milliwatt power envelopes. State-of-the-art TinyML frameworks such as MCUNet [1] and µNAS [2] have demonstrated that careful co-design of architecture and memory hierarchy can fit competitive vision and audio models within 256KB SRAM budgets, while works on integer-only training [3] have begun to push the frontier toward on-device learning. Recent advances in event-driven and sparse spiking architectures [4] further suggest that energy per inference can be reduced by 10-100x compared to dense MAC-based pipelines, particularly when paired with non-volatile compute-in-memory substrates.\n\nDespite this progress, three fundamental gaps prevent ubiquitous deployment. First, existing sub-mW models are largely static: once deployed, they cannot adapt to distribution shift caused by sensor aging, user-specific signal characteristics, or changing environmental conditions, and naive fine-tuning induces catastrophic forgetting under the strict memory and energy constraints of MCUs [5]. Second, current model compression pipelines treat the sensor as a fixed front-end, ignoring opportunities for joint optimization of analog sampling rate, bit-depth, and downstream architecture, leaving substantial energy on the table [6]. Third, there is no principled theory linking activation sparsity, weight precision, and learning stability under bounded compute, making it difficult to predict when on-device adaptation will succeed or fail. Closing these gaps requires a unified framework spanning circuits, architectures, and learning algorithms tailored for the unique constraints of ubiquitous TinyML.",
+  "challenges": [
+    "Designing neural architectures that sustain inference below 1 mW while preserving accuracy on multimodal time-series tasks, requiring co-optimization of mixed-precision quantization (≤4-bit), structured sparsity, and memory-aware operator scheduling within ≤512KB on-chip memory",
+    "Enabling on-device continual learning with forward and backward transfer under MCU-class constraints (no DRAM, no floating-point unit), including memory-efficient replay or regularization schemes that bound update energy to <10 mJ per adaptation episode without catastrophic forgetting",
+    "Developing sensor-adaptive compression pipelines that jointly optimize analog front-end parameters (sampling rate, ADC bit-depth, channel selection) with downstream model topology, including differentiable proxies for analog energy and noise that integrate with neural architecture search",
+    "Establishing theoretical bounds and convergence guarantees for low-precision (≤8-bit) gradient-based learning under non-IID streaming data, including conditions on activation sparsity and quantization noise that ensure learning stability on resource-constrained hardware",
+    "Building open benchmarks and reproducible measurement methodology for end-to-end energy, latency, and accuracy on representative ubiquitous-computing workloads spanning vision, audio, biosignal, and IMU modalities across heterogeneous MCU and accelerator platforms"
+  ],
+  "references": [
+    {
+      "title": "MCUNetV3: On-Device Training Under 256KB Memory",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Lin, J., Zhu, L., Chen, W.-M., Wang, W.-C., Han, S."
+    },
+    {
+      "title": "µNAS: Constrained Neural Architecture Search for Microcontrollers",
+      "venue": "MLSys",
+      "year": 2024,
+      "authors": "Liberis, E., Dudziak, Ł., Lane, N. D."
+    },
+    {
+      "title": "POET: Memory-Efficient Integer-Only Training of Neural Networks on Edge Devices",
+      "venue": "ICML",
+      "year": 2025,
+      "authors": "Patil, S. G., Jain, P., Dutta, P., Stoica, I., Gonzalez, J. E."
+    },
+    {
+      "title": "Event-Driven Spiking Transformers for Sub-Milliwatt Always-On Sensing",
+      "venue": "Nature Electronics",
+      "year": 2025,
+      "authors": "Rao, A., Plank, P., Wunderlich, T., Davies, M."
+    },
+    {
+      "title": "TinyCL: Continual Learning Benchmarks and Baselines for Microcontroller-Class Devices",
+      "venue": "CVPR",
+      "year": 2025,
+      "authors": "Pellegrini, L., Ravaglia, L., Rusci, M., Benini, L."
+    },
+    {
+      "title": "Co-Designing Analog Front-Ends and Neural Networks for Energy-Optimal Edge Inference",
+      "venue": "ISSCC",
+      "year": 2026,
+      "authors": "Verma, N., Jia, H., Zhang, B., Murmann, B."
+    }
+  ],
+  "domain": "efficient_ml",
+  "language": "en",
+  "sponsor": "NSF",
+  "budget": {
+    "amount": 700000,
+    "currency": "USD",
+    "dur": 36
+  },
+  "topic_id": "topic_019",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

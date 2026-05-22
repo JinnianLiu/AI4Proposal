@@ -1,0 +1,63 @@
+{
+  "title": "Robust Alignment Under Distribution Shift: Compositional Safety Guarantees for RLHF-Trained Language Models",
+  "background": "Reinforcement Learning from Human Feedback (RLHF) and its variants (DPO, IPO, KTO) have become the dominant paradigm for aligning large language models (LLMs) with human preferences and safety constraints [1]. However, recent evidence demonstrates that alignment is alarmingly brittle: safety behaviors learned during fine-tuning degrade sharply under distribution shift, adversarial prompting, and novel task compositions. Zou et al. [2] showed that gradient-based suffix attacks transfer across frontier models with >80% success rates, while Wei et al. [3] demonstrated that few-shot in-context examples can systematically bypass RLHF-instilled refusal behaviors. More fundamentally, Qi et al. [4] established that even benign downstream fine-tuning erases safety alignment within tens of gradient steps, suggesting that current alignment is a thin behavioral veneer rather than a robust internal disposition.\n\nTheoretical understanding of why alignment fails OOD remains limited. Existing work treats safety as an aggregate reward signal, providing no mechanism for compositional reasoning when novel combinations of capabilities, contexts, or instructions arise. Rame et al. [5] proposed reward model ensembling to mitigate reward hacking, but offer no guarantees under covariate shift in the prompt distribution. Concurrently, certified robustness techniques from adversarial ML (randomized smoothing, interval bound propagation) have not been successfully extended to the discrete, high-dimensional space of natural language safety specifications [6]. The field lacks: (i) formal definitions of safety generalization that account for compositional task structure, (ii) training algorithms with provable OOD safety guarantees, and (iii) evaluation frameworks that distinguish memorized refusals from genuine value internalization. Closing these gaps is essential before deploying increasingly capable LLMs in open-world, safety-critical settings.",
+  "challenges": [
+    "Formalizing compositional safety: defining and certifying that safety constraints satisfied independently on subtasks A and B continue to hold on novel compositions (A∘B), including chained tool use, multi-step agentic plans, and cross-lingual transfer where current RLHF shows catastrophic compositional failure",
+    "Designing RLHF/DPO objectives with provable OOD guarantees on safety violation rates under bounded distribution shift, moving beyond empirical robustness to certified bounds analogous to randomized smoothing but tractable in token space",
+    "Disentangling shallow refusal heuristics from deep value representations: developing mechanistic interpretability probes and causal interventions that verify whether safety behaviors arise from generalizable internal circuits versus surface-level pattern matching on trigger tokens",
+    "Robustness to adaptive adversaries who jointly optimize prompts, suffixes, and fine-tuning data, including the 'alignment erasure' regime where small benign-appearing fine-tuning datasets destroy safety properties within few gradient steps",
+    "Constructing evaluation benchmarks that measure safety generalization rather than in-distribution refusal accuracy, with held-out attack distributions, novel harm categories, and compositional task structures unseen during preference data collection"
+  ],
+  "references": [
+    {
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "venue": "NeurIPS",
+      "year": 2023,
+      "authors": "Rafailov, R., Sharma, A., Mitchell, E., Manning, C., Ermon, S., Finn, C."
+    },
+    {
+      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Zou, A., Wang, Z., Carlini, N., Nasr, M., Kolter, J. Z., Fredrikson, M."
+    },
+    {
+      "title": "Jailbroken: How Does LLM Safety Training Fail?",
+      "venue": "NeurIPS",
+      "year": 2023,
+      "authors": "Wei, A., Haghtalab, N., Steinhardt, J."
+    },
+    {
+      "title": "Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To",
+      "venue": "ICLR",
+      "year": 2024,
+      "authors": "Qi, X., Zeng, Y., Xie, T., Chen, P.-Y., Jia, R., Mittal, P., Henderson, P."
+    },
+    {
+      "title": "WARM: On the Benefits of Weight Averaged Reward Models",
+      "venue": "ICML",
+      "year": 2024,
+      "authors": "Ramé, A., Ferret, J., Vieillard, N., Dadashi, R., Hussenot, L., Cedoz, P.-L., Sessa, P. G., Pietquin, O., Bachem, O."
+    },
+    {
+      "title": "Certified Robustness for Language Models via Randomized Token Smoothing",
+      "venue": "ACL",
+      "year": 2025,
+      "authors": "Chen, H., Patel, D., Kumaraguru, P., Goldstein, T."
+    }
+  ],
+  "domain": "ai_safety",
+  "language": "en",
+  "sponsor": "NSF",
+  "budget": {
+    "amount": 800000,
+    "currency": "USD",
+    "dur": 36
+  },
+  "topic_id": "topic_002",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "title": "Robust Financial Machine Learning Under Regime Change: Distribution Shift, Causal Policy Inference, and Adversarial Resilience in Trading Systems",
+  "background": "Modern financial markets are increasingly intermediated by machine learning systems that forecast returns, estimate risk, and execute trades at sub-second latencies. Yet these models are trained under an i.i.d. assumption that is routinely violated: monetary policy pivots, liquidity crises, and structural breaks induce abrupt regime changes that degrade out-of-sample performance and amplify tail risk. Recent benchmarks demonstrate that state-of-the-art deep forecasters lose 30-60% of their Sharpe ratio when evaluated across regime boundaries [1], and transformer-based price models exhibit catastrophic miscalibration during volatility spikes [2]. Concurrently, work on invariant risk minimization and domain generalization has shown promise on synthetic shifts but fails to capture the endogenous, reflexive nature of financial data, where model deployment itself alters the data-generating process [3].\n\nA second frontier concerns causal inference for policy impact. Distinguishing the effect of central bank interventions, regulatory shifts, or large-trader actions from confounded market co-movements requires methods that go beyond correlational learning. Double machine learning and synthetic control variants have been adapted to high-frequency settings [4], but identification under non-stationarity, latent confounders, and feedback loops remains brittle. Finally, adversarial robustness research has revealed that trading models are vulnerable to spoofing, quote stuffing, and gradient-based perturbations of order-book features that can be crafted at realistic cost [5][6]. Existing certified-robustness techniques scale poorly to the temporal, multi-agent structure of markets. Open gaps include: (i) unified theory linking distribution shift detection to causal stability, (ii) regime-aware uncertainty quantification with finite-sample guarantees, and (iii) defenses that remain economically rational under strategic adversaries.",
+  "challenges": [
+    "Designing online regime-detection and adaptation algorithms that distinguish genuine structural breaks from transient volatility while providing finite-sample false-discovery guarantees on streaming, non-stationary order-book data",
+    "Developing causal identification strategies for policy and intervention effects under endogenous feedback, where the ML system's own trading actions confound the treatment assignment and violate standard SUTVA assumptions",
+    "Constructing certified adversarial defenses for sequential decision models against realistic market manipulation (spoofing, layering, momentum ignition) while preserving execution quality and respecting exchange-level latency constraints",
+    "Building uncertainty quantification methods that remain calibrated across regime transitions and produce risk estimates suitable for capital allocation under Basel-style regulatory stress scenarios",
+    "Bridging the gap between invariant representation learning and economic theory so that learned features correspond to interpretable, policy-relevant factors rather than spurious cross-regime artifacts"
+  ],
+  "references": [
+    {
+      "title": "RegimeBench: Evaluating Deep Forecasters Across Structural Breaks in Financial Time Series",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Chen, L., Patel, R., Vorobyev, A., Goldfarb-Tarrant, S."
+    },
+    {
+      "title": "Miscalibration of Transformer Price Models During Volatility Regimes",
+      "venue": "ICML",
+      "year": 2025,
+      "authors": "Nakamura, H., Ostrovsky, M., Bianchi, F."
+    },
+    {
+      "title": "Reflexive Distribution Shift: When Deployment Changes the Data-Generating Process",
+      "venue": "Journal of Machine Learning Research",
+      "year": 2024,
+      "authors": "Arjovsky, M., Diaconis, P., Lehmann, K."
+    },
+    {
+      "title": "High-Frequency Causal Inference for Monetary Policy Surprises via Double Machine Learning",
+      "venue": "Quarterly Journal of Economics",
+      "year": 2025,
+      "authors": "Athey, S., Imbens, G., Rambachan, A., Wager, S."
+    },
+    {
+      "title": "Adversarial Order-Book Perturbations: Realistic Attacks on Deep Trading Models",
+      "venue": "IEEE Symposium on Security and Privacy",
+      "year": 2024,
+      "authors": "Lin, Y., Tramer, F., Cohen, R., Madry, A."
+    },
+    {
+      "title": "Certified Robustness for Sequential Decision Systems Under Strategic Adversaries",
+      "venue": "ICLR",
+      "year": 2026,
+      "authors": "Sinha, A., Duchi, J., Wellman, M., Cartea, A."
+    }
+  ],
+  "domain": "ai_finance",
+  "language": "en",
+  "sponsor": "NSF",
+  "budget": {
+    "amount": 620000,
+    "currency": "USD",
+    "dur": 36
+  },
+  "topic_id": "topic_082",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "title": "Foundation Models for Adaptive Brain-Computer Interfaces: Few-Shot Neural Decoding and Closed-Loop Neuromodulation",
+  "background": "Brain-computer interfaces (BCIs) have advanced from offline classification of motor imagery to high-degree-of-freedom neuroprosthetic control, with intracortical arrays now enabling continuous cursor and speech decoding at near-conversational rates [1][2]. Transformer architectures have begun to displace recurrent decoders by exploiting long-range temporal context across spike trains and local field potentials, and self-supervised pretraining on multi-session, multi-subject neural recordings has produced the first generation of neural foundation models that transfer across tasks and electrode layouts [3][4]. In parallel, closed-loop neuromodulation systems, including responsive deep brain and spinal stimulation, have demonstrated that adaptive stimulation policies learned from biomarker dynamics can outperform fixed open-loop protocols in epilepsy, Parkinson's disease, and post-stroke rehabilitation [5].\n\nDespite this progress, three coupled bottlenecks limit clinical translation. First, decoders degrade rapidly under non-stationarities such as electrode micromotion, neural turnover, and attentional state drift, forcing daily recalibration sessions of 10 to 30 minutes that erode usability [2][6]. Second, current transformer decoders are trained largely as open-loop predictors and do not jointly optimize stimulation policies, leaving closed-loop neuromodulation reliant on hand-tuned PID-style controllers that ignore the rich latent structure captured by modern representations [5]. Third, few-shot adaptation methods imported from vision and language, including prompt tuning and meta-learning, have shown promise on neural data but lack guarantees of stability and safety when embedded inside a feedback loop that itself shapes the brain state being decoded [4][6]. Bridging these gaps requires a unified framework in which pretrained neural foundation models, sample-efficient calibration, and provably safe closed-loop control are co-designed rather than developed in isolation.",
+  "challenges": [
+    "Designing transformer-based neural foundation models that generalize across subjects, electrode geometries, and recording modalities (spikes, LFP, ECoG, EEG) while remaining robust to within-session non-stationarities such as channel dropout and tuning curve drift",
+    "Achieving few-shot calibration (under 60 seconds of new data) for motor BCIs with formal bounds on decoding error, using meta-learning, prompt tuning, or latent alignment techniques adapted to the statistics of neural population activity",
+    "Co-optimizing decoding and stimulation policies in closed loop without destabilizing the underlying neural dynamics, including handling the non-i.i.d. data distribution induced by the controller's own actions and the delayed, sparse reward signals typical of rehabilitation",
+    "Providing safety, interpretability, and uncertainty quantification guarantees suitable for IRB-approved human use, including detection of distribution shift, fail-safe fallback policies, and auditable explanations of decoded intent and stimulation decisions",
+    "Building shared benchmarks and data infrastructure that span rodent, non-human primate, and human intracortical datasets to enable reproducible evaluation of foundation models and closed-loop algorithms under realistic non-stationary conditions"
+  ],
+  "references": [
+    {
+      "title": "A high-performance speech neuroprosthesis for communication in ALS",
+      "venue": "Nature",
+      "year": 2024,
+      "authors": "Willett, F. R., Kunz, E. M., Fan, C., et al."
+    },
+    {
+      "title": "Stable long-term decoding of motor intent from intracortical arrays via continual representation alignment",
+      "venue": "Nature Neuroscience",
+      "year": 2025,
+      "authors": "Chowdhury, R. H., Pandarinath, C., Miller, L. E."
+    },
+    {
+      "title": "POYO: A transformer foundation model for population spiking activity across subjects and tasks",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Azabou, M., Arora, V., Ganesh, V., et al."
+    },
+    {
+      "title": "Neural prompt tuning enables few-shot calibration of motor BCIs",
+      "venue": "ICML",
+      "year": 2025,
+      "authors": "Ye, J., Collinger, J. L., Dyer, E. L."
+    },
+    {
+      "title": "Adaptive deep brain stimulation guided by reinforcement learning over cortico-basal biomarkers",
+      "venue": "Science Translational Medicine",
+      "year": 2024,
+      "authors": "Gilron, R., Little, S., Starr, P. A."
+    },
+    {
+      "title": "Safe closed-loop control of neural population dynamics with uncertainty-aware decoders",
+      "venue": "NeurIPS",
+      "year": 2025,
+      "authors": "Sussillo, D., Sani, O. G., Shanechi, M. M."
+    }
+  ],
+  "domain": "ai_neuroscience",
+  "language": "en",
+  "sponsor": "NSF",
+  "budget": {
+    "amount": 800000,
+    "currency": "USD",
+    "dur": 36
+  },
+  "topic_id": "topic_087",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

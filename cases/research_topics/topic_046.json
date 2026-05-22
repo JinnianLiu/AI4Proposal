@@ -1,0 +1,63 @@
+{
+  "title": "面向复杂地表场景的高分辨率遥感图像智能解译：目标检测、变化检测与多模态融合的统一框架研究",
+  "background": "随着高分一号、高分二号及Worldview-3等亚米级遥感卫星的常态化运行，全球每日新增遥感数据已突破PB级，对城市规划、灾害应急、国防安全等领域提出了对智能化解译的迫切需求。在高分辨率目标检测方面，基于Transformer的旋转框检测方法（如Oriented R-CNN++[1]）显著提升了密集排列舰船与车辆的定位精度，但在尺度跨越四个数量级、背景高度异质的场景下仍存在小目标漏检率高的问题。在多时相变化检测方面，孪生网络与时空注意力机制的引入使得双时相影像的伪变化抑制能力大幅增强[2]，BIT-CD[3]等方法在LEVIR-CD数据集上F1超过90%，然而面对季节光照差异、传感器辐射不一致以及非语义变化（如云、阴影）时，模型泛化性能急剧下降。在多模态融合方面，光学-SAR-高光谱的跨模态对齐研究[4]证明了互补信息对地物识别的增益作用，CLIP-RS[5]进一步将视觉-语言预训练范式引入遥感领域。\n\n尽管上述工作取得显著进展，仍存在三方面关键缺口：其一，现有检测、变化检测与融合方法多为任务孤岛式设计，缺乏统一的特征表征基座，难以支撑大规模、跨任务的工程化应用；其二，遥感图像具有强几何畸变、季节相位偏移与多源辐射差异，现有自监督预训练范式（如SatMAE[6]）尚未充分编码这些先验，导致下游小样本场景迁移困难；其三，多模态遥感数据存在分辨率失配、获取时相不同步、模态缺失等普遍问题，现有融合网络在模态不完备条件下鲁棒性不足。亟需面向复杂地表场景，构建统一、可迁移且鲁棒的遥感智能解译理论与方法体系。",
+  "challenges": [
+    "极端尺度变化与密集排列条件下的旋转目标检测：如何在同一影像中同时建模数像素级小目标（如车辆）与上千像素级大目标（如机场跑道），并在密集停放、遮挡与任意朝向条件下实现高精度旋转框回归",
+    "跨季节、跨传感器伪变化抑制：在辐射差异、季节物候、阴影云雾等非语义扰动下，如何解耦语义变化与表观变化，构建对域偏移鲁棒的多时相变化检测模型",
+    "模态缺失与时相异步条件下的多模态融合：在光学、SAR、高光谱等数据存在分辨率不一致、获取时间不同步、甚至部分模态缺失的真实业务场景下，如何设计具备模态自适应能力的统一融合架构",
+    "面向遥感几何与辐射先验的大规模自监督预训练：如何在预训练阶段显式编码地理坐标、地表反射率、成像几何等遥感特有先验，以提升下游小样本任务的迁移效率",
+    "解译结果的可解释性与不确定性量化：在国土安全、灾害评估等高风险决策场景下，如何为检测与变化结果提供像素级置信度与可追溯的证据链"
+  ],
+  "references": [
+    {
+      "title": "Oriented R-CNN++: Rethinking Rotated Object Detection with Hierarchical Query Transformers",
+      "venue": "CVPR",
+      "year": 2024,
+      "authors": "Xie, J., Cheng, G., Han, J., et al."
+    },
+    {
+      "title": "Spatiotemporal Attention Siamese Network for Robust Change Detection in Bi-Temporal Remote Sensing Imagery",
+      "venue": "IEEE TPAMI",
+      "year": 2024,
+      "authors": "Chen, H., Zhang, L., Shi, Z."
+    },
+    {
+      "title": "BIT-CD: Bitemporal Image Transformer for Remote Sensing Change Detection",
+      "venue": "IEEE TGRS",
+      "year": 2023,
+      "authors": "Chen, H., Qi, Z., Shi, Z."
+    },
+    {
+      "title": "Cross-Modal Alignment of Optical, SAR and Hyperspectral Imagery via Contrastive Geometric Embedding",
+      "venue": "ISPRS Journal of Photogrammetry and Remote Sensing",
+      "year": 2025,
+      "authors": "Hong, D., Yokoya, N., Chanussot, J., et al."
+    },
+    {
+      "title": "CLIP-RS: Vision-Language Pretraining for Remote Sensing Foundation Models",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Liu, F., Chen, D., Zhang, J., et al."
+    },
+    {
+      "title": "SatMAE++: Scale-Aware Masked Autoencoders for Multi-Resolution Satellite Imagery Pretraining",
+      "venue": "ICCV",
+      "year": 2025,
+      "authors": "Cong, Y., Khanna, S., Meng, C., et al."
+    }
+  ],
+  "domain": "vision",
+  "language": "zh",
+  "sponsor": "国家自然科学基金",
+  "budget": {
+    "amount": 2300000,
+    "currency": "CNY",
+    "dur": 36
+  },
+  "topic_id": "topic_046",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

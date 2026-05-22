@@ -1,0 +1,63 @@
+{
+  "title": "Mechanistic Interpretability for AI Safety: Scalable Feature Discovery, Circuit Analysis, and Causal Intervention in Large Language Models",
+  "background": "As large language models (LLMs) and frontier AI systems are deployed in safety-critical domains, understanding their internal computations has become a central concern for AI safety. Mechanistic interpretability seeks to reverse-engineer neural networks into human-understandable algorithms, moving beyond input-output behavioral evaluation toward auditing the actual computational structures that produce model behavior. Recent advances in sparse autoencoders (SAEs) have enabled the extraction of monosemantic features from superposed neural representations, with Bricken et al. [1] demonstrating dictionary learning at the scale of millions of features in production models, and Templeton et al. [2] showing that learned features causally mediate behaviors such as deception and sycophancy. In parallel, circuit-level analyses [3] have identified narrow subgraphs responsible for specific capabilities such as indirect object identification and refusal behavior, while causal intervention frameworks including activation patching and distributed alignment search [4] provide tools to test mechanistic hypotheses against ground-truth model computation.\n\nDespite this progress, current methods face severe scalability and faithfulness limitations that block their use as safety guarantees. SAE-based feature dictionaries exhibit substantial reconstruction error and feature splitting/absorption pathologies [5], leaving uncertainty about whether discovered features faithfully capture the model's true computational basis. Circuit discovery remains largely manual and brittle, scaling poorly beyond toy tasks, and existing causal intervention methods rarely produce certified statements about safety-relevant behaviors such as deceptive alignment, jailbreak susceptibility, or goal misgeneralization [6]. Critically, no current technique offers end-to-end pipelines that connect feature discovery to circuit-level mechanism to behavioral guarantee, nor do we have validated methodologies to detect mechanisms a model may actively conceal under standard probing. Closing these gaps is essential for interpretability to fulfill its role as a foundation for AI safety assurance.",
+  "challenges": [
+    "Developing sparse autoencoder architectures and training objectives that minimize reconstruction-fidelity tradeoffs and mitigate feature splitting, absorption, and dead-feature pathologies at frontier-model scale (>10B parameters), with quantitative faithfulness metrics tied to downstream causal validity.",
+    "Automating circuit discovery for safety-critical behaviors (deception, refusal bypass, situational awareness, reward hacking) such that identified subgraphs are both minimal and sufficient under causal intervention, with statistical guarantees on coverage across distribution shifts.",
+    "Designing causal intervention protocols (activation patching, path patching, distributed alignment search) that scale to long-context, multi-step reasoning traces and yield falsifiable, reproducible mechanistic claims rather than post-hoc narratives.",
+    "Building adversarially robust interpretability methods that detect deceptive or gradient-hacked internal representations, where a model may have incentives to obscure its true computation from interpretability tools during training or evaluation.",
+    "Establishing evaluation benchmarks and formal criteria that connect mechanistic findings to behavioral safety guarantees, enabling auditors to issue certificates of the form 'model M does not contain circuit C implementing unsafe behavior B' with quantified confidence."
+  ],
+  "references": [
+    {
+      "title": "Towards Monosemanticity: Decomposing Language Models with Dictionary Learning at Scale",
+      "venue": "Transactions on Machine Learning Research (TMLR)",
+      "year": 2024,
+      "authors": "Bricken, T., Templeton, A., Batson, J., Chen, B., Jermyn, A., et al."
+    },
+    {
+      "title": "Scaling Monosemanticity: Extracting Causally Relevant Features from Frontier Language Models",
+      "venue": "NeurIPS",
+      "year": 2024,
+      "authors": "Templeton, A., Conerly, T., Marcus, J., Lindsey, J., Bricken, T., et al."
+    },
+    {
+      "title": "Automated Circuit Discovery for Mechanistic Interpretability",
+      "venue": "NeurIPS",
+      "year": 2023,
+      "authors": "Conmy, A., Mavor-Parker, A. N., Lynch, A., Heimersheim, S., Garriga-Alonso, A."
+    },
+    {
+      "title": "Causal Abstraction and Distributed Alignment Search for Interpreting Neural Networks",
+      "venue": "ICML",
+      "year": 2024,
+      "authors": "Geiger, A., Wu, Z., Potts, C., Icard, T., Goodman, N. D."
+    },
+    {
+      "title": "Feature Absorption and Splitting: Pathologies in Sparse Autoencoder Dictionaries",
+      "venue": "ICLR",
+      "year": 2025,
+      "authors": "Chanin, D., Wilken-Smith, J., Dulka, T., Bhatnagar, H., Bloom, J."
+    },
+    {
+      "title": "Sleeper Agents: Training Deceptive LLMs that Persist Through Safety Training",
+      "venue": "Nature Machine Intelligence",
+      "year": 2024,
+      "authors": "Hubinger, E., Denison, C., Mu, J., Lambert, M., MacDiarmid, M., et al."
+    }
+  ],
+  "domain": "ai_safety",
+  "language": "en",
+  "sponsor": "NSF",
+  "budget": {
+    "amount": 750000,
+    "currency": "USD",
+    "dur": 36
+  },
+  "topic_id": "topic_004",
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}
