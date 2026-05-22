@@ -10,40 +10,40 @@
   ],
   "references": [
     {
-      "title": "Graph-Enhanced Knowledge Tracing with Heterogeneous Skill-Question Interactions",
-      "venue": "NeurIPS",
+      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
+      "authors": "Zou et al.",
+      "year": 2023,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "authors": "Bai et al.",
+      "year": 2022,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "authors": "Rafailov et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "Jailbroken: How Does LLM Safety Training Fail?",
+      "authors": "Wei et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming",
+      "authors": "Mazeika et al.",
       "year": 2024,
-      "authors": "Liu, Y., Chen, H., Wang, S., et al."
+      "venue": "ICML"
     },
     {
-      "title": "CD-LLM: Bridging Cognitive Diagnosis and Large Language Models for Cross-Domain Student Assessment",
-      "venue": "ACL",
-      "year": 2025,
-      "authors": "Zhang, R., Li, M., Sun, J., et al."
-    },
-    {
-      "title": "Controllable Educational Question Generation via Difficulty-Aware Chain-of-Thought Distillation",
-      "venue": "EMNLP",
-      "year": 2024,
-      "authors": "Patel, A., Kim, S., Gonzalez, M., et al."
-    },
-    {
-      "title": "Rubric-Grounded LLM Graders: A Large-Scale Study on Short-Answer Scoring Reliability",
-      "venue": "AAAI",
-      "year": 2025,
-      "authors": "Wang, X., Thompson, D., Müller, F., et al."
-    },
-    {
-      "title": "Reinforcement Learning for Long-Horizon Curriculum Planning in Intelligent Tutoring Systems",
-      "venue": "ICML",
-      "year": 2025,
-      "authors": "Nakamura, T., Singh, P., O'Brien, K., et al."
-    },
-    {
-      "title": "Toward Explainable Process-Level Feedback in AI-Assisted Mathematics Learning",
-      "venue": "Nature Machine Intelligence",
-      "year": 2026,
-      "authors": "Chen, L., Dubois, A., Park, J., et al."
+      "title": "Scalable Oversight via Debate",
+      "authors": "Irving et al.",
+      "year": 2018,
+      "venue": "arXiv"
     }
   ],
   "domain": "ai_education",

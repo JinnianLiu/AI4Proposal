@@ -10,40 +10,40 @@
   ],
   "references": [
     {
-      "title": "MACE-MP-0: A Foundation Model for Materials Chemistry with Equivariant Message Passing",
-      "venue": "Nature Machine Intelligence",
+      "title": "Highly accurate protein structure prediction with AlphaFold",
+      "authors": "Jumper et al.",
+      "year": 2021,
+      "venue": "Nature"
+    },
+    {
+      "title": "Accurate structure prediction of biomolecular interactions with AlphaFold 3",
+      "authors": "Abramson et al.",
       "year": 2024,
-      "authors": "Batatia, I., Kovacs, D. P., Simm, G. N. C., et al."
+      "venue": "Nature"
     },
     {
-      "title": "DiffCSP++: Symmetry-Aware Diffusion for Crystal Structure Prediction",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "Jiao, R., Huang, W., Liu, Y., et al."
+      "title": "E(3)-equivariant graph neural networks for data-efficient protein design",
+      "authors": "Dauparas et al.",
+      "year": 2022,
+      "venue": "Science"
     },
     {
-      "title": "Multi-Fidelity Bayesian Active Learning for Accelerated First-Principles Materials Screening",
-      "venue": "ICML",
-      "year": 2025,
-      "authors": "Chen, L., Ramprasad, R., Pyzer-Knapp, E. O."
+      "title": "De novo design of protein structure with RFdiffusion",
+      "authors": "Watson et al.",
+      "year": 2023,
+      "venue": "Nature"
     },
     {
-      "title": "The Alexandria Database: 5 Million DFT-Relaxed Crystals for Foundation-Scale Pretraining",
-      "venue": "Scientific Data",
-      "year": 2024,
-      "authors": "Schmidt, J., Hoffmann, N., Wang, H.-C., Marques, M. A. L."
+      "title": "Evolutionary-scale prediction of atomic-level protein structure",
+      "authors": "Lin et al.",
+      "year": 2023,
+      "venue": "Science"
     },
     {
-      "title": "Beyond Energy Above Hull: Learning Synthesizability of Inorganic Crystals from Literature-Mined Reactions",
-      "venue": "Nature Communications",
-      "year": 2025,
-      "authors": "Aykol, M., Montoya, J. H., Hummelshoj, J. S."
-    },
-    {
-      "title": "High-Dimensional Many-Objective Bayesian Optimization over Mixed Crystal Design Spaces",
-      "venue": "ICLR",
-      "year": 2025,
-      "authors": "Daulton, S., Eriksson, D., Balandat, M., Bakshy, E."
+      "title": "Learning skillful medium-range global weather forecasting",
+      "authors": "Lam et al.",
+      "year": 2023,
+      "venue": "Science"
     }
   ],
   "domain": "ai4science",

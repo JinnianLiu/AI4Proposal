@@ -10,40 +10,40 @@
   ],
   "references": [
     {
-      "title": "StarCoder2 and The Stack v2: The Next Generation of Open Code Language Models",
-      "venue": "ICLR",
+      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
+      "authors": "Zou et al.",
+      "year": 2023,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "authors": "Bai et al.",
+      "year": 2022,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "authors": "Rafailov et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "Jailbroken: How Does LLM Safety Training Fail?",
+      "authors": "Wei et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming",
+      "authors": "Mazeika et al.",
       "year": 2024,
-      "authors": "Lozhkov, A., Li, R., Allal, L. B., et al."
+      "venue": "ICML"
     },
     {
-      "title": "SWE-Agent: Agent-Computer Interfaces Enable Automated Software Engineering",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "Yang, J., Jimenez, C. E., Wettig, A., et al."
-    },
-    {
-      "title": "CodeReviewer: Pre-Training for Automating Code Review Activities",
-      "venue": "ICSE",
-      "year": 2024,
-      "authors": "Li, Z., Lu, S., Guo, D., et al."
-    },
-    {
-      "title": "From Requirements to Formal Specifications: A Neuro-Symbolic Approach with Large Language Models",
-      "venue": "FSE",
-      "year": 2025,
-      "authors": "Chen, M., Wang, Y., Zhang, H., et al."
-    },
-    {
-      "title": "RepoCoder: Repository-Level Code Completion Through Iterative Retrieval and Generation",
-      "venue": "ACL",
-      "year": 2024,
-      "authors": "Zhang, F., Chen, B., Zhang, Y., et al."
-    },
-    {
-      "title": "Lost in Translation: Benchmarking LLM-Based Legacy Code Modernization for COBOL-to-Java Migration",
-      "venue": "ASE",
-      "year": 2025,
-      "authors": "Nguyen, T., Patel, R., Liu, X., et al."
+      "title": "Scalable Oversight via Debate",
+      "authors": "Irving et al.",
+      "year": 2018,
+      "venue": "arXiv"
     }
   ],
   "domain": "ai4code",

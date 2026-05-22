@@ -10,40 +10,46 @@
   ],
   "references": [
     {
-      "title": "ZeRO++: Extremely Efficient Collective Communication for Giant Model Training",
-      "venue": "NeurIPS",
+      "title": "CFD and Artificial Intelligence-Based Machine Learning Synergy for the Assessment of Syngas-Utilizing Pre-Reformer in r-SOC Technology Advancement",
+      "authors": "M. M. Peksen",
       "year": 2024,
-      "authors": "Wang, H., Rajbhandari, S., Smith, L., He, Y."
+      "venue": "Applied Sciences",
+      "paper_id": "e5f758dedd14208885f43331050ea59095886776"
     },
     {
-      "title": "Reducing Activation Recomputation in Large Transformer Models",
-      "venue": "MLSys",
+      "title": "Research on the Application of Machine Learning Algorithm in Artificial Intelligence Product Recommendation System",
+      "authors": "Yuchen Lai",
       "year": 2024,
-      "authors": "Korthikanti, V., Casper, J., Lym, S., McAfee, L., Andersch, M., Shoeybi, M., Catanzaro, B."
+      "venue": "2024 International Conference on Telecommunications and Power Electronics (TELEPE)",
+      "paper_id": "00f988fbb2e488713ca116729b51e84a5a8520ff"
     },
     {
-      "title": "STRATA: Tiered Memory Offloading for Trillion-Parameter Training on Commodity Clusters",
-      "venue": "SOSP",
+      "title": "The Role of Data Engineering in Enabling Machine Learning and Artificial Intelligence",
+      "authors": "R. Sridhar, I. Kanani, R. Dhenia",
+      "year": 2024,
+      "venue": "International Journal of Artificial Intelligence, Data Science and Machine Learning",
+      "paper_id": "7b223ba6b10dd24cd3f181b633025ba7c1418e98"
+    },
+    {
+      "title": "Deep learning based retinal vessel segmentation and hypertensive retinopathy quantification using heterogeneous features cross-attention neural network",
+      "authors": "Xinghui Liu, H. Tan, Wu-ju Wang",
+      "year": 2024,
+      "venue": "Frontiers in Medicine",
+      "paper_id": "1630235fee67b66260eaa4696ffab626862fcb3e"
+    },
+    {
+      "title": "Transformer attention-based neural network for cognitive score estimation from sMRI data",
+      "authors": "Songheng Li, Yanteng Zhang, Congyu Zou",
       "year": 2025,
-      "authors": "Chen, Y., Patel, R., Kim, J., Stoica, I."
+      "venue": "Comput. Biol. Medicine",
+      "paper_id": "3f4974c33d9f6a8b03cd33e841b7870ce4a818c2"
     },
     {
-      "title": "FP8-LM: Training FP8 Large Language Models at Scale",
-      "venue": "ICML",
-      "year": 2024,
-      "authors": "Peng, H., Wu, K., Wei, Y., Zhao, G., Yang, Y., Liu, Z., Xiong, Y., Yang, Z., Ni, B., Hu, J., Li, R., Zhang, M., Li, C., Ning, J., Wang, R., Zhang, Z., Liu, S., Chau, J., Hu, H., Cheng, P."
-    },
-    {
-      "title": "HetSpeed: Communication-Aware Parallelism Planning for Heterogeneous GPU Clusters",
-      "venue": "OSDI",
-      "year": 2025,
-      "authors": "Liu, X., Narayanan, D., Zaharia, M., Ganger, G."
-    },
-    {
-      "title": "Optimal Rematerialization for Mixture-of-Experts and Long-Context Transformers",
-      "venue": "ICLR",
-      "year": 2026,
-      "authors": "Ahmed, F., Gupta, S., Reddi, S., Dean, J."
+      "title": "A Novel Deep Learning Model for Medical Image Segmentation with Convolutional Neural Network and Transformer",
+      "authors": "Zhuo Zhang, Hongbing Wu, Huan Zhao",
+      "year": 2023,
+      "venue": "Interdisciplinary Sciences Computational Life Sciences",
+      "paper_id": "3768ecd8e146c6e19718c0539ff6c16698d3ca42"
     }
   ],
   "domain": "ai_infra",

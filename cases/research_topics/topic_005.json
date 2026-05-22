@@ -10,40 +10,40 @@
   ],
   "references": [
     {
-      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
-      "venue": "NeurIPS",
+      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
+      "authors": "Zou et al.",
       "year": 2023,
-      "authors": "Rafailov, R., Sharma, A., Mitchell, E., et al."
+      "venue": "arXiv"
     },
     {
       "title": "Constitutional AI: Harmlessness from AI Feedback",
-      "venue": "arXiv (Anthropic Technical Report)",
+      "authors": "Bai et al.",
+      "year": 2022,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "authors": "Rafailov et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "Jailbroken: How Does LLM Safety Training Fail?",
+      "authors": "Wei et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming",
+      "authors": "Mazeika et al.",
       "year": 2024,
-      "authors": "Bai, Y., Kadavath, S., Kundu, S., et al."
+      "venue": "ICML"
     },
     {
-      "title": "Scalable Oversight via Multi-Agent Debate for Superhuman Alignment",
-      "venue": "ICML",
-      "year": 2025,
-      "authors": "Khan, A., Hughes, J., Valentine, D., et al."
-    },
-    {
-      "title": "Cultural Misalignment in Large Language Models: A Cross-Lingual Audit of Value Drift",
-      "venue": "ACL",
-      "year": 2025,
-      "authors": "Liu, Y., Zhang, H., Chen, M., et al."
-    },
-    {
-      "title": "Deceptive Alignment and Sycophancy Emerge from Reward Model Overoptimization",
-      "venue": "Nature Machine Intelligence",
-      "year": 2025,
-      "authors": "Park, P. S., Goldstein, S., Hendrycks, D., et al."
-    },
-    {
-      "title": "Pluralistic Alignment: Modeling Multi-Dimensional Human Values with Pareto-Optimal Policies",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "Sorensen, T., Jiang, L., Hwang, J. D., et al."
+      "title": "Scalable Oversight via Debate",
+      "authors": "Irving et al.",
+      "year": 2018,
+      "venue": "arXiv"
     }
   ],
   "domain": "ai_safety",

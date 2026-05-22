@@ -10,40 +10,25 @@
   ],
   "references": [
     {
-      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
-      "venue": "NeurIPS",
-      "year": 2023,
-      "authors": "Rafailov, R., Sharma, A., Mitchell, E., Manning, C., Ermon, S., Finn, C."
-    },
-    {
-      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "Zou, A., Wang, Z., Carlini, N., Nasr, M., Kolter, J. Z., Fredrikson, M."
-    },
-    {
-      "title": "Jailbroken: How Does LLM Safety Training Fail?",
-      "venue": "NeurIPS",
-      "year": 2023,
-      "authors": "Wei, A., Haghtalab, N., Steinhardt, J."
-    },
-    {
-      "title": "Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To",
-      "venue": "ICLR",
-      "year": 2024,
-      "authors": "Qi, X., Zeng, Y., Xie, T., Chen, P.-Y., Jia, R., Mittal, P., Henderson, P."
-    },
-    {
-      "title": "WARM: On the Benefits of Weight Averaged Reward Models",
-      "venue": "ICML",
-      "year": 2024,
-      "authors": "Ramé, A., Ferret, J., Vieillard, N., Dadashi, R., Hussenot, L., Cedoz, P.-L., Sessa, P. G., Pietquin, O., Bachem, O."
-    },
-    {
-      "title": "Certified Robustness for Language Models via Randomized Token Smoothing",
-      "venue": "ACL",
+      "title": "MSTS: A Multimodal Safety Test Suite for Vision-Language Models",
+      "authors": "Paul Röttger, Giuseppe Attanasio, Felix Friedrich",
       "year": 2025,
-      "authors": "Chen, H., Patel, D., Kumaraguru, P., Goldstein, T."
+      "venue": "arXiv.org",
+      "paper_id": "a0e2385e131925e1531b9dfb7618acdce428f6f6"
+    },
+    {
+      "title": "RedDiffuser: Auditing Multimodal Safety Failures in Vision-Language Models via Reinforced Diffusion",
+      "authors": "Ruofan Wang, Xingjun Ma",
+      "year": 2025,
+      "venue": "",
+      "paper_id": "1649dac3b705e3fe399f2f5a7ea5589eaaeb0a75"
+    },
+    {
+      "title": "MSR-Align: Policy-Grounded Multimodal Alignment for Safety-Aware Reasoning in Vision-Language Models",
+      "authors": "Yinan Xia, Yilei Jiang, Yingshui Tan",
+      "year": 2025,
+      "venue": "arXiv.org",
+      "paper_id": "fd53f44b51906199bdcd05131b9a143039f60026"
     }
   ],
   "domain": "ai_safety",

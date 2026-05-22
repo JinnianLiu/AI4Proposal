@@ -10,40 +10,25 @@
   ],
   "references": [
     {
-      "title": "RT-2: Vision-Language-Action Models Transfer Web Knowledge to Robotic Control",
-      "venue": "CoRL",
-      "year": 2024,
-      "authors": "Brohan A., Brown N., Carbajal J., et al."
+      "title": "Dexterous In-Hand Manipulation of Slender Cylindrical Objects through Deep Reinforcement Learning with Tactile Sensing",
+      "authors": "Wenbin Hu, Bidan Huang, W. Lee",
+      "year": 2023,
+      "venue": "Robotics Auton. Syst.",
+      "paper_id": "a88eb5c1f59d567da3a6aba884cdb6ea5b17035b"
     },
     {
-      "title": "Open X-Embodiment: Robotic Learning Datasets and RT-X Models",
-      "venue": "ICRA",
-      "year": 2024,
-      "authors": "Padalkar A., Pooley A., Jain A., et al."
-    },
-    {
-      "title": "Diffusion Policy: Visuomotor Policy Learning via Action Diffusion",
-      "venue": "RSS / IJRR",
-      "year": 2024,
-      "authors": "Chi C., Feng S., Du Y., et al."
-    },
-    {
-      "title": "DexMimicGen: Automated Data Generation for Bimanual Dexterous Manipulation via Sim-to-Real Transfer",
-      "venue": "ICRA",
+      "title": "Task-Specific Embodied Tactile Sensing for Dexterous Hand",
+      "authors": "Qi Wei, Pengwen Xiong, Aiguo Song",
       "year": 2025,
-      "authors": "Jiang Z., Xie Y., Lin K., et al."
+      "venue": "IEEE International Conference on Robotics and Automation",
+      "paper_id": "7b24def4527c555ccb0649f1e575f12af62f70aa"
     },
     {
-      "title": "T-DEX: Learning Tactile-Visual Representations for Dexterous Manipulation in the Wild",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "Guzey I., Evans B., Chen A., et al."
-    },
-    {
-      "title": "Differentiable Contact Dynamics for Robust Sim-to-Real Policy Adaptation",
-      "venue": "Science Robotics",
-      "year": 2025,
-      "authors": "Howell T., Le Cleac'h S., Brüdigam J., et al."
+      "title": "GelSight Svelte Hand: A Three-finger, Two-DoF, Tactile-rich, Low-cost Robot Hand for Dexterous Manipulation",
+      "authors": "Jialiang Zhao, E. Adelson",
+      "year": 2023,
+      "venue": "arXiv.org",
+      "paper_id": "d88114eabec3d86222d8e016a2edf50d6443becd"
     }
   ],
   "domain": "robotics",

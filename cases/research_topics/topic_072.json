@@ -10,40 +10,40 @@
   ],
   "references": [
     {
-      "title": "RepoCoder: Repository-Level Code Completion Through Iterative Retrieval and Generation",
-      "venue": "EMNLP",
+      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
+      "authors": "Zou et al.",
+      "year": 2023,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "authors": "Bai et al.",
+      "year": 2022,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "authors": "Rafailov et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "Jailbroken: How Does LLM Safety Training Fail?",
+      "authors": "Wei et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming",
+      "authors": "Mazeika et al.",
       "year": 2024,
-      "authors": "Zhang, F., Chen, B., Zhang, Y., et al."
+      "venue": "ICML"
     },
     {
-      "title": "LongCoder: Long-Range Pre-trained Language Models for Source Code",
-      "venue": "ICML",
-      "year": 2024,
-      "authors": "Guo, D., Xu, C., Lu, S., et al."
-    },
-    {
-      "title": "SWE-Agent: Agent-Computer Interfaces Enable Automated Software Engineering",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "Yang, J., Jimenez, C. E., Wettig, A., et al."
-    },
-    {
-      "title": "GraphCodeBERT++: Repository-Aware Graph Encoders for Cross-File Program Understanding",
-      "venue": "ICLR",
-      "year": 2025,
-      "authors": "Liu, S., Wang, Y., Sun, Z., et al."
-    },
-    {
-      "title": "MigrateGPT: Learning Behavior-Preserving API Migrations from Version Histories",
-      "venue": "ICSE",
-      "year": 2025,
-      "authors": "Khatchadourian, R., Mesbah, A., Tarlow, D., et al."
-    },
-    {
-      "title": "TestPilot: Neural Test Generation Meets Coverage-Guided Search",
-      "venue": "FSE",
-      "year": 2024,
-      "authors": "Schäfer, M., Nadi, S., Eghbali, A., Pradel, M."
+      "title": "Scalable Oversight via Debate",
+      "authors": "Irving et al.",
+      "year": 2018,
+      "venue": "arXiv"
     }
   ],
   "domain": "ai4code",

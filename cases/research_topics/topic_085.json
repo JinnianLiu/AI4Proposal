@@ -10,40 +10,40 @@
   ],
   "references": [
     {
-      "title": "Physics-Informed Graph Neural Networks for Fast AC Power Flow Approximation in Large-Scale Grids",
-      "venue": "IEEE Transactions on Power Systems",
+      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
+      "authors": "Zou et al.",
+      "year": 2023,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "authors": "Bai et al.",
+      "year": 2022,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "authors": "Rafailov et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "Jailbroken: How Does LLM Safety Training Fail?",
+      "authors": "Wei et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming",
+      "authors": "Mazeika et al.",
       "year": 2024,
-      "authors": "Chen, L., Wang, H., Kumar, R., et al."
+      "venue": "ICML"
     },
     {
-      "title": "Multi-Agent Deep Reinforcement Learning for Distributed Energy Resource Coordination under Uncertainty",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "Zhang, Y., Patel, S., Liu, X., Bertsekas, D."
-    },
-    {
-      "title": "Calibrated Probabilistic Load Forecasting with Conditional Normalizing Flows",
-      "venue": "ICML",
-      "year": 2025,
-      "authors": "Sun, M., Hofmann, T., Gneiting, T."
-    },
-    {
-      "title": "Physics-Informed Neural Networks for Fault Location in Active Distribution Networks with High DER Penetration",
-      "venue": "Nature Energy",
-      "year": 2025,
-      "authors": "Müller, A., Tanaka, K., Zhao, P., et al."
-    },
-    {
-      "title": "On the Out-of-Distribution Generalization of Data-Driven Power System Operators: A Benchmark Study",
-      "venue": "ICLR",
-      "year": 2025,
-      "authors": "Ravi, N., Schmidt, J., Wu, F."
-    },
-    {
-      "title": "Federated Multi-Agent Reinforcement Learning for Privacy-Preserving Smart Grid Dispatch: Convergence and Communication Trade-offs",
-      "venue": "IEEE Transactions on Smart Grid",
-      "year": 2026,
-      "authors": "Li, Q., Anderson, B., Gupta, V., He, J."
+      "title": "Scalable Oversight via Debate",
+      "authors": "Irving et al.",
+      "year": 2018,
+      "venue": "arXiv"
     }
   ],
   "domain": "ai_energy",

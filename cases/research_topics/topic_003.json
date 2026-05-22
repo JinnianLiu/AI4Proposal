@@ -9,40 +9,40 @@
   ],
   "references": [
     {
-      "title": "Exploring the Adversarial Robustness of RLHF-Aligned Large Language Models: A Systematic Study",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "Zhang, Y., Liu, H., Anderson, K., et al."
+      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
+      "authors": "Zou et al.",
+      "year": 2023,
+      "venue": "arXiv"
     },
     {
-      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models via Greedy Coordinate Gradient",
-      "venue": "ICML",
-      "year": 2024,
-      "authors": "Zou, A., Wang, Z., Carlini, N., Kolter, J. Z., Fredrikson, M."
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "authors": "Bai et al.",
+      "year": 2022,
+      "venue": "arXiv"
     },
     {
-      "title": "PAIR: Jailbreaking Black-Box Large Language Models via Prompt Automatic Iterative Refinement",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "Chao, P., Robey, A., Dobriban, E., Hassani, H., Pappas, G. J., Wong, E."
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "authors": "Rafailov et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
     },
     {
-      "title": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming and Robust Refusal",
-      "venue": "ICML",
-      "year": 2024,
-      "authors": "Mazeika, M., Phan, L., Yin, X., Zou, A., et al."
+      "title": "Jailbroken: How Does LLM Safety Training Fail?",
+      "authors": "Wei et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
     },
     {
-      "title": "SafetyBench: Evaluating the Safety of Large Language Models with Multi-Choice and Multi-Dimensional Questions",
-      "venue": "ACL",
+      "title": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming",
+      "authors": "Mazeika et al.",
       "year": 2024,
-      "authors": "Zhang, Z., Lei, L., Wu, L., Sun, R., et al."
+      "venue": "ICML"
     },
     {
-      "title": "Co-Evolutionary Red Teaming: A Closed-Loop Adversarial Framework for Continual LLM Safety Alignment",
-      "venue": "ICLR",
-      "year": 2025,
-      "authors": "Liu, X., Chen, M., Goldstein, T., Mittal, P., et al."
+      "title": "Scalable Oversight via Debate",
+      "authors": "Irving et al.",
+      "year": 2018,
+      "venue": "arXiv"
     }
   ],
   "domain": "ai_safety",

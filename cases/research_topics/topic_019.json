@@ -10,40 +10,25 @@
   ],
   "references": [
     {
-      "title": "MCUNetV3: On-Device Training Under 256KB Memory",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "Lin, J., Zhu, L., Chen, W.-M., Wang, W.-C., Han, S."
-    },
-    {
-      "title": "µNAS: Constrained Neural Architecture Search for Microcontrollers",
-      "venue": "MLSys",
-      "year": 2024,
-      "authors": "Liberis, E., Dudziak, Ł., Lane, N. D."
-    },
-    {
-      "title": "POET: Memory-Efficient Integer-Only Training of Neural Networks on Edge Devices",
-      "venue": "ICML",
-      "year": 2025,
-      "authors": "Patil, S. G., Jain, P., Dutta, P., Stoica, I., Gonzalez, J. E."
-    },
-    {
-      "title": "Event-Driven Spiking Transformers for Sub-Milliwatt Always-On Sensing",
-      "venue": "Nature Electronics",
-      "year": 2025,
-      "authors": "Rao, A., Plank, P., Wunderlich, T., Davies, M."
-    },
-    {
-      "title": "TinyCL: Continual Learning Benchmarks and Baselines for Microcontroller-Class Devices",
-      "venue": "CVPR",
-      "year": 2025,
-      "authors": "Pellegrini, L., Ravaglia, L., Rusci, M., Benini, L."
-    },
-    {
-      "title": "Co-Designing Analog Front-Ends and Neural Networks for Energy-Optimal Edge Inference",
-      "venue": "ISSCC",
+      "title": "Carbon-Aware Training Schedules for Machine Learning Models: An Energy-Efficient Green AI Approach",
+      "authors": "Shiladitya Munshi, Leo Fernandez",
       "year": 2026,
-      "authors": "Verma, N., Jia, H., Zhang, B., Murmann, B."
+      "venue": "International Journal of Engineering and Information Management",
+      "paper_id": "3c4274e879d84236d1aa57444faccd8b13896126"
+    },
+    {
+      "title": "FedCarbon: Carbon-Efficient Federated Learning with Double Flexible Controls for Green Edge AI",
+      "authors": "Yousheng Li, Ouyang Tao, Xu Chen",
+      "year": 2024,
+      "venue": "International Workshop on Quality of Service",
+      "paper_id": "ac52960cacba06f24c12b7826902e12ea0d519c4"
+    },
+    {
+      "title": "Green AI: Energy-Efficient Deep Learning Models for Sustainable Computing",
+      "authors": "Mr. Waleed Noman Alhajri",
+      "year": 2025,
+      "venue": "International Journal of Multidisciplinary Futuristic Development",
+      "paper_id": "881b79654e4b55851d481479b90fac86484c59f1"
     }
   ],
   "domain": "efficient_ml",

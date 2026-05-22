@@ -10,40 +10,40 @@
   ],
   "references": [
     {
-      "title": "Ego4D: Around the World in 3,000 Hours of Egocentric Video",
-      "venue": "CVPR",
+      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
+      "authors": "Zou et al.",
+      "year": 2023,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "authors": "Bai et al.",
+      "year": 2022,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "authors": "Rafailov et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "Jailbroken: How Does LLM Safety Training Fail?",
+      "authors": "Wei et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming",
+      "authors": "Mazeika et al.",
       "year": 2024,
-      "authors": "Grauman, K., Westbury, A., Byrne, E., et al."
+      "venue": "ICML"
     },
     {
-      "title": "EgoMemoryNet: Long-Horizon Episodic Memory Retrieval from First-Person Video",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "Nagarajan, T., Ramakrishnan, S. K., Chen, X., Kitani, K."
-    },
-    {
-      "title": "EgoVLPv3: Scalable Video-Language Pretraining for Egocentric Perception",
-      "venue": "ICCV",
-      "year": 2025,
-      "authors": "Lin, K. Q., Wang, J., Soldan, M., Bertasius, G."
-    },
-    {
-      "title": "Contact-Aware Hand-Object Reconstruction in Unconstrained Egocentric Video",
-      "venue": "CVPR",
-      "year": 2025,
-      "authors": "Tekin, B., Liu, Y., Hampali, S., Pollefeys, M."
-    },
-    {
-      "title": "Anticipating Human Actions Beyond Seconds: Goal-Conditioned Long-Horizon Forecasting",
-      "venue": "ECCV",
-      "year": 2024,
-      "authors": "Furnari, A., Farinella, G. M., Damen, D."
-    },
-    {
-      "title": "Compositional Action Understanding via Neuro-Symbolic Affordance Graphs",
-      "venue": "ICML",
-      "year": 2025,
-      "authors": "Mangalam, K., Akbari, H., Malik, J."
+      "title": "Scalable Oversight via Debate",
+      "authors": "Irving et al.",
+      "year": 2018,
+      "venue": "arXiv"
     }
   ],
   "domain": "vision",

@@ -10,40 +10,34 @@
   ],
   "references": [
     {
-      "title": "Localizing Visual Sounds the Hard Way: Contrastive Audio-Visual Mining at Scale",
-      "venue": "CVPR",
-      "year": 2024,
-      "authors": "Chen, H., Xie, W., Afouras, T., Nagrani, A., Zisserman, A."
+      "title": "Learning Transferable Visual Models From Natural Language Supervision",
+      "authors": "Radford et al.",
+      "year": 2021,
+      "venue": "ICML"
     },
     {
-      "title": "Cross-Modal Slot Attention for Compositional Audio-Visual Scene Parsing",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "Lin, Y.-B., Tseng, H.-Y., Wang, Y.-C. F."
+      "title": "Flamingo: a Visual Language Model for Few-Shot Learning",
+      "authors": "Alayrac et al.",
+      "year": 2022,
+      "venue": "NeurIPS"
     },
     {
-      "title": "Dense Audio-Visual Event Localization with Asynchronous Transformers",
-      "venue": "ICCV",
-      "year": 2025,
-      "authors": "Mo, S., Tian, Y., Morgado, P."
+      "title": "BLIP-2: Bootstrapping Language-Image Pre-training with Frozen Image Encoders",
+      "authors": "Li et al.",
+      "year": 2023,
+      "venue": "ICML"
     },
     {
-      "title": "SoundSpaces 2.0: A Simulation Platform for Visual-Acoustic Learning",
-      "venue": "NeurIPS Datasets and Benchmarks",
-      "year": 2024,
-      "authors": "Chen, C., Schissler, C., Garg, S., Kobilarov, M., Grauman, K."
+      "title": "Video-LLaMA: An Instruction-tuned Audio-Visual Language Model",
+      "authors": "Zhang et al.",
+      "year": 2023,
+      "venue": "EMNLP"
     },
     {
-      "title": "Semantic Audio-Visual Navigation in Realistic 3D Environments",
-      "venue": "ICLR",
-      "year": 2025,
-      "authors": "Gan, C., Zhang, Y., Wu, J., Tenenbaum, J. B., Torralba, A."
-    },
-    {
-      "title": "Robust Audio-Visual Embodied Navigation under Acoustic Distribution Shift",
-      "venue": "ICML",
-      "year": 2025,
-      "authors": "Majumder, S., Al-Halah, Z., Grauman, K."
+      "title": "LLaVA: Visual Instruction Tuning",
+      "authors": "Liu et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
     }
   ],
   "domain": "multimodal",

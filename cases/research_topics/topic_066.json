@@ -10,40 +10,25 @@
   ],
   "references": [
     {
-      "title": "Graph Neural Networks for Energy-Efficient Blast Furnace Operation under Process Constraints",
-      "venue": "Nature Machine Intelligence",
+      "title": "Deep learning based retinal vessel segmentation and hypertensive retinopathy quantification using heterogeneous features cross-attention neural network",
+      "authors": "Xinghui Liu, H. Tan, Wu-ju Wang",
       "year": 2024,
-      "authors": "Zhang, Y., Hu, J., Wang, K., et al."
+      "venue": "Frontiers in Medicine",
+      "paper_id": "1630235fee67b66260eaa4696ffab626862fcb3e"
     },
     {
-      "title": "Diffusion-NWP: A Conditional Diffusion Model for Ultra-Short-Term Wind Power Forecasting",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "Liu, X., Zhao, M., Tan, P., et al."
-    },
-    {
-      "title": "Spatio-Temporal Transformer for Regional Photovoltaic Power Aggregation Forecasting",
-      "venue": "ICML",
+      "title": "Transformer attention-based neural network for cognitive score estimation from sMRI data",
+      "authors": "Songheng Li, Yanteng Zhang, Congyu Zou",
       "year": 2025,
-      "authors": "Chen, R., Lin, S., Guo, H., et al."
+      "venue": "Comput. Biol. Medicine",
+      "paper_id": "3f4974c33d9f6a8b03cd33e841b7870ce4a818c2"
     },
     {
-      "title": "Self-Supervised Multi-Sensor Foundation Model for National-Scale Forest Biomass Retrieval",
-      "venue": "Science",
-      "year": 2025,
-      "authors": "Wang, F., Li, D., Müller, A., et al."
-    },
-    {
-      "title": "Deep Reinforcement Learning for Carbon Emission Trading under Policy Uncertainty",
-      "venue": "AAAI",
-      "year": 2024,
-      "authors": "Sun, B., Yang, Q., Zhou, L., et al."
-    },
-    {
-      "title": "Toward Unified AI Frameworks for Carbon Neutrality: Challenges and Opportunities",
-      "venue": "Nature Climate Change",
-      "year": 2025,
-      "authors": "Li, W., Stern, N., Zheng, X., et al."
+      "title": "A Novel Deep Learning Model for Medical Image Segmentation with Convolutional Neural Network and Transformer",
+      "authors": "Zhuo Zhang, Hongbing Wu, Huan Zhao",
+      "year": 2023,
+      "venue": "Interdisciplinary Sciences Computational Life Sciences",
+      "paper_id": "3768ecd8e146c6e19718c0539ff6c16698d3ca42"
     }
   ],
   "domain": "climate_ai",

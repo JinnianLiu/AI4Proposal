@@ -10,40 +10,28 @@
   ],
   "references": [
     {
-      "title": "Mamba: Linear-Time Sequence Modeling with Selective State Spaces",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "Gu, A. and Dao, T."
+      "title": "Attention Is All You Need",
+      "authors": "Vaswani et al.",
+      "year": 2017,
+      "venue": "NeurIPS"
     },
     {
-      "title": "Gated Linear Attention Transformers with Hardware-Efficient Training",
-      "venue": "ICML",
-      "year": 2024,
-      "authors": "Yang, S., Wang, B., Shen, Y., Panda, R., and Kim, Y."
+      "title": "Training language models to follow instructions with human feedback",
+      "authors": "Ouyang et al.",
+      "year": 2022,
+      "venue": "NeurIPS"
     },
     {
-      "title": "Attention Sinks and Calibrated RoPE Scaling for Robust Length Extrapolation",
-      "venue": "ICLR",
-      "year": 2025,
-      "authors": "Xiao, G., Tian, Y., Chen, B., Han, S., and Lewis, M."
+      "title": "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models",
+      "authors": "Wei et al.",
+      "year": 2022,
+      "venue": "NeurIPS"
     },
     {
-      "title": "InfiniMem: Hierarchical KV-Cache Compression for Million-Token Inference",
-      "venue": "ACL",
-      "year": 2025,
-      "authors": "Zhang, L., Patel, R., Iyer, S., and Chen, D."
-    },
-    {
-      "title": "Retrieval-Augmented State-Space Models for Persistent-Memory Agents",
-      "venue": "EMNLP",
-      "year": 2025,
-      "authors": "Kim, J., Ravichander, A., Smith, N. A., and Lin, X. V."
-    },
-    {
-      "title": "RULER and LongProc: Disentangling Recall, Aggregation, and Reasoning in Long-Context Benchmarks",
-      "venue": "NeurIPS Datasets and Benchmarks",
-      "year": 2024,
-      "authors": "Hsieh, C.-P., Sun, S., Kriman, S., Acharya, S., and Ginsburg, B."
+      "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+      "authors": "Lewis et al.",
+      "year": 2020,
+      "venue": "NeurIPS"
     }
   ],
   "domain": "nlp",

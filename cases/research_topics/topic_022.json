@@ -10,40 +10,25 @@
   ],
   "references": [
     {
-      "title": "MACE: Higher Order Equivariant Message Passing Neural Networks for Fast and Accurate Force Fields",
-      "venue": "NeurIPS",
+      "title": "Universal-neural-network-potential molecular dynamics for lithium metal and garnet-type solid electrolyte interface",
+      "authors": "Rinon Iwasaki, Naoto Tanibata, Hayami Takeda",
       "year": 2024,
-      "authors": "Batatia, I., Kovács, D. P., Simm, G. N. C., Ortner, C., Csányi, G."
+      "venue": "Communications Materials",
+      "paper_id": "abc96259bb1b27b672a3473aa97061388d2b4dbe"
     },
     {
-      "title": "A Foundation Model for Atomistic Materials Chemistry Across the Periodic Table",
-      "venue": "Nature",
+      "title": "Molecular dynamics simulations of self-diffusion in liquid metals using a universal neural network potential",
+      "authors": "Yoshihiro Kobayashi, Keita Kawashima, Masato Shiinoki",
       "year": 2025,
-      "authors": "Zhang, L., Chen, M., Riebesell, J., Deng, B., Persson, K. A."
+      "venue": "Physica Scripta",
+      "paper_id": "ba292e8065bafcf333e50f944802f615bcef626f"
     },
     {
-      "title": "Learning Reactive Potential Energy Surfaces with Equivariant Graph Networks for Heterogeneous Catalysis",
-      "venue": "Science",
-      "year": 2025,
-      "authors": "Schütt, K. T., Unke, O. T., Chmiela, S., Müller, K.-R."
-    },
-    {
-      "title": "Diabatic Neural Network Potentials for Nonadiabatic Molecular Dynamics with Conical Intersection Topology",
-      "venue": "Nature Chemistry",
+      "title": "Molecular dynamics of liquid–electrode interface by integrating Coulomb interaction into universal neural network potential",
+      "authors": "Kaoru Hisama, G. V. Huerta, Michihisa Koyama",
       "year": 2024,
-      "authors": "Westermayr, J., Marquetand, P., Gastegger, M."
-    },
-    {
-      "title": "Failure Modes of Universal Machine Learning Potentials on Transition-Metal and f-Block Chemistries",
-      "venue": "ICML",
-      "year": 2025,
-      "authors": "Gomes, C. P., Ramprasad, R., Tkatchenko, A., Pande, V."
-    },
-    {
-      "title": "Physics-Informed Long-Range Equivariant Networks with Learned Charge Equilibration",
-      "venue": "ICLR",
-      "year": 2026,
-      "authors": "Kozinsky, B., Musaelian, A., Batzner, S., Smidt, T. E."
+      "venue": "Journal of Computational Chemistry",
+      "paper_id": "51cc83274740e3af6f3792231a8b6ae2e341aa15"
     }
   ],
   "domain": "ai4science",

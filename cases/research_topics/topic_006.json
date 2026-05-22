@@ -10,40 +10,25 @@
   ],
   "references": [
     {
-      "title": "Autonomous chemical research with large language models",
-      "venue": "Nature",
-      "year": 2024,
-      "authors": "Boiko, D. A., MacKnight, R., Kline, B., Gomes, G."
-    },
-    {
-      "title": "ChemCrow: Augmenting large-language models with chemistry tools",
-      "venue": "Nature Machine Intelligence",
-      "year": 2024,
-      "authors": "Bran, A. M., Cox, S., Schilter, O., Baldassari, C., White, A. D., Schwaller, P."
-    },
-    {
-      "title": "Mathematical discoveries from program search with large language models",
-      "venue": "Nature",
-      "year": 2024,
-      "authors": "Romera-Paredes, B., Barekatain, M., Novikov, A., et al."
-    },
-    {
-      "title": "SciAgent: Multi-agent collaborative framework for cross-disciplinary scientific hypothesis generation",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "Wang, H., Liu, Y., Chen, Z., Zhang, M."
-    },
-    {
-      "title": "Quantifying and mitigating error propagation in LLM-based reasoning chains",
-      "venue": "ICML",
+      "title": "Training Task Reasoning LLM Agents for Multi-Turn Task Planning via Single-Turn Reinforcement Learning",
+      "authors": "Hanjiang Hu, Changliu Liu, Na Li",
       "year": 2025,
-      "authors": "Chen, X., Patel, R., Sun, J., Goodman, N. D."
+      "venue": "IEEE Control Systems Letters",
+      "paper_id": "2e302fe69bdc313de04d364c90a570cedb22cc70"
     },
     {
-      "title": "Causal hypothesis discovery with foundation models under physical constraints",
-      "venue": "ICLR",
+      "title": "Understanding the planning of LLM agents: A survey",
+      "authors": "Xu Huang, Weiwen Liu, Xiaolong Chen",
+      "year": 2024,
+      "venue": "arXiv.org",
+      "paper_id": "7e281e8ab380affd3c5724feae038274df378511"
+    },
+    {
+      "title": "MultiAgentBench: Evaluating the Collaboration and Competition of LLM agents",
+      "authors": "Kunlun Zhu, Hongyi Du, Zhaochen Hong",
       "year": 2025,
-      "authors": "Li, Q., Bengio, Y., Schölkopf, B., Tenenbaum, J. B."
+      "venue": "Annual Meeting of the Association for Computational Linguistics",
+      "paper_id": "8998b3895cce8b206098197478d3d9bc3add321c"
     }
   ],
   "domain": "agentic_ai",

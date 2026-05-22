@@ -10,40 +10,40 @@
   ],
   "references": [
     {
-      "title": "MultiWave-Former: A Transformer-based Multi-channel Fusion Model for Atrial Fibrillation Detection from Wearable PPG and ECG",
-      "venue": "Nature Biomedical Engineering",
+      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
+      "authors": "Zou et al.",
+      "year": 2023,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "authors": "Bai et al.",
+      "year": 2022,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "authors": "Rafailov et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "Jailbroken: How Does LLM Safety Training Fail?",
+      "authors": "Wei et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming",
+      "authors": "Mazeika et al.",
       "year": 2024,
-      "authors": "Zhang, Y., Li, H., Sun, K., et al."
+      "venue": "ICML"
     },
     {
-      "title": "Self-Supervised Contrastive Representation Learning for Large-Scale Unlabeled Wearable Physiological Signals",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "Liu, X., Wang, J., Patel, S., et al."
-    },
-    {
-      "title": "Meta-Learning Personalized Resting Heart Rate Baselines from Sparse Wearable Observations",
-      "venue": "Proceedings of the ACM on IMWUT (UbiComp)",
-      "year": 2025,
-      "authors": "Chen, R., Gupta, A., Tanaka, M., et al."
-    },
-    {
-      "title": "Long-Range State Space Models for Early Heart Failure Risk Prediction from Continuous Wearable Monitoring",
-      "venue": "Nature Medicine",
-      "year": 2025,
-      "authors": "Wang, F., O'Neil, D., Khatri, P., et al."
-    },
-    {
-      "title": "Asynchronous Cross-Modal Attention for Irregularly Sampled Multi-Sensor Health Time Series",
-      "venue": "ICML",
-      "year": 2025,
-      "authors": "Huang, T., Rodriguez, M., Zhao, L., et al."
-    },
-    {
-      "title": "Trustworthy Early Warning Systems on Wearables: Uncertainty, Causality and Clinician-in-the-Loop Evaluation",
-      "venue": "The Lancet Digital Health",
-      "year": 2026,
-      "authors": "Park, S., Müller, K., Iyer, R., et al."
+      "title": "Scalable Oversight via Debate",
+      "authors": "Irving et al.",
+      "year": 2018,
+      "venue": "arXiv"
     }
   ],
   "domain": "healthcare_ai",

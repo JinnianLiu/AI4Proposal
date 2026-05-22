@@ -9,40 +9,25 @@
   ],
   "references": [
     {
-      "title": "Graph Neural Network-based Cooperative Perception for Connected Multi-Robot Systems",
-      "venue": "IEEE Transactions on Robotics",
-      "year": 2024,
-      "authors": "Y. Chen, S. Karaman, D. Rus"
-    },
-    {
-      "title": "Scalable Multi-Agent Reinforcement Learning for Heterogeneous Robot Teams",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "J. Foerster, M. Bowling, et al."
-    },
-    {
-      "title": "Event-Triggered Communication with Information Bottleneck for Bandwidth-Limited Multi-Robot Coordination",
-      "venue": "IEEE Transactions on Automatic Control",
+      "title": "LLM-DiSC: LLM-enabled Distributed and Safe Coordination of Multi-Robot Systems using Control Barrier Functions",
+      "authors": "Qingqing Yang, Guoxiang Zhao, Xiaoqiang Ren",
       "year": 2025,
-      "authors": "L. Zhang, K. H. Johansson"
+      "venue": "ACM Cloud and Autonomic Computing Conference",
+      "paper_id": "bb3502b7643552dd0923ff521cb90ff1621ad3f5"
     },
     {
-      "title": "Consensus-Based Bundle Algorithms Revisited: Heterogeneous Task Allocation under Dynamic Arrivals",
-      "venue": "International Journal of Robotics Research",
+      "title": "Distributed multi-robot source term estimation with coverage control and information theoretic based coordination",
+      "authors": "Rohit V. Nanavati, Matthew J. Coombes, Cunjia Liu",
       "year": 2024,
-      "authors": "H.-L. Choi, J. P. How"
+      "venue": "Information Fusion",
+      "paper_id": "e45d3ccf9c6726bc26afc224135dabc03894c0f3"
     },
     {
-      "title": "Resilient Distributed State Estimation under Lossy and Asynchronous Communication",
-      "venue": "ICRA",
+      "title": "A Distributed Framework for Integrated Task Allocation and Safe Coordination in Networked Multi-Robot Systems",
+      "authors": "Andrea Miele, M. Lippi, Andrea Gasparri",
       "year": 2025,
-      "authors": "F. Bullo, S. Martínez, et al."
-    },
-    {
-      "title": "Sim-to-Real Transfer for Multi-Robot Cooperative Policies: A Domain Randomization Perspective",
-      "venue": "CoRL",
-      "year": 2025,
-      "authors": "P. Abbeel, A. Gupta, et al."
+      "venue": "IEEE Transactions on Automation Science and Engineering",
+      "paper_id": "732556d6db7c4baede82709a9eeb0244a2395961"
     }
   ],
   "domain": "robotics",

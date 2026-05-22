@@ -10,40 +10,25 @@
   ],
   "references": [
     {
-      "title": "GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers",
-      "venue": "ICLR",
-      "year": 2023,
-      "authors": "Frantar, E., Ashkboos, S., Hoefler, T., Alistarh, D."
+      "title": "A TinyML Platform for On-Device Continual Learning With Quantized Latent Replays",
+      "authors": "Leonardo Ravaglia, Manuele Rusci, Davide Nadalini",
+      "year": 2021,
+      "venue": "IEEE Journal on Emerging and Selected Topics in Circuits and Systems",
+      "paper_id": "dfd3b8d14713fce16c69aa9d98e0ccbf9d7b0078"
     },
     {
-      "title": "AWQ: Activation-aware Weight Quantization for On-Device LLM Compression and Acceleration",
-      "venue": "MLSys",
-      "year": 2024,
-      "authors": "Lin, J., Tang, J., Tang, H., Yang, S., Han, S."
+      "title": "TinyML‐Driven On‐Device Sports Command Recognition in Mobile and Dynamic Environments",
+      "authors": "Jiali Zang",
+      "year": 2025,
+      "venue": "Internet Technology Letters",
+      "paper_id": "54265551a4cdadd8d9f500822c47716e6376c187"
     },
     {
-      "title": "SmoothQuant: Accurate and Efficient Post-Training Quantization for Large Language Models",
-      "venue": "ICML",
-      "year": 2023,
-      "authors": "Xiao, G., Lin, J., Seznec, M., Wu, H., Demouth, J., Han, S."
-    },
-    {
-      "title": "SparseGPT: Massive Language Models Can Be Accurately Pruned in One-Shot",
-      "venue": "ICML",
-      "year": 2023,
-      "authors": "Frantar, E., Alistarh, D."
-    },
-    {
-      "title": "LLM-Pruner: On the Structural Pruning of Large Language Models",
-      "venue": "NeurIPS",
-      "year": 2023,
-      "authors": "Ma, X., Fang, G., Wang, X."
-    },
-    {
-      "title": "MiniLLM: Knowledge Distillation of Large Language Models via Reverse KL Divergence",
-      "venue": "ICLR",
-      "year": 2024,
-      "authors": "Gu, Y., Dong, L., Wei, F., Huang, M."
+      "title": "Tiny Deep Learning Models With Hybrid Compression Techniques for Gesture-Based Air Handwriting Recognition of English Alphabets on Edge Device",
+      "authors": "Ismail Lamaakal, Chaymae Yahyati, Zakaria Charroud",
+      "year": 2026,
+      "venue": "IEEE Internet of Things Journal",
+      "paper_id": "556948055227d8abe85b0e7c8b45da4859f2b938"
     }
   ],
   "domain": "efficient_ml",

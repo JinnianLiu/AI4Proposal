@@ -10,40 +10,40 @@
   ],
   "references": [
     {
-      "title": "VOS-Net: Virtual Outlier Synthesis for Open-Set Object Detection",
-      "venue": "CVPR",
+      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
+      "authors": "Zou et al.",
+      "year": 2023,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "authors": "Bai et al.",
+      "year": 2022,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "authors": "Rafailov et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "Jailbroken: How Does LLM Safety Training Fail?",
+      "authors": "Wei et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming",
+      "authors": "Mazeika et al.",
       "year": 2024,
-      "authors": "Du, X., Wang, Z., Cai, M., Li, Y."
+      "venue": "ICML"
     },
     {
-      "title": "DualPrompt-CL: Complementary Prompting for Rehearsal-Free Continual Learning",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "Wang, Z., Zhang, Z., Ebrahimi, S., Sun, R., Pfister, T."
-    },
-    {
-      "title": "Rethinking Out-of-Distribution Generalization with Vision-Language Foundation Models",
-      "venue": "ICML",
-      "year": 2025,
-      "authors": "Chen, L., Liu, H., Radford, A., Sun, C."
-    },
-    {
-      "title": "Boundary-Aware Feature Drift Mitigation in Class-Incremental Open-Set Recognition",
-      "venue": "ICCV",
-      "year": 2025,
-      "authors": "Zhao, Y., Li, K., Shen, J., Tao, D."
-    },
-    {
-      "title": "Disentangling Semantic and Covariate Shift for Robust Open-World Recognition",
-      "venue": "ECCV",
-      "year": 2024,
-      "authors": "Hendrycks, D., Yang, J., Bai, Y., Wang, H."
-    },
-    {
-      "title": "On the Stability-Plasticity-Discriminability Trilemma in Lifelong Visual Learning",
-      "venue": "TPAMI",
-      "year": 2026,
-      "authors": "Lin, T., Zhou, D., Han, B., Loy, C.C."
+      "title": "Scalable Oversight via Debate",
+      "authors": "Irving et al.",
+      "year": 2018,
+      "venue": "arXiv"
     }
   ],
   "domain": "vision",

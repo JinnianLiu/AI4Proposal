@@ -10,40 +10,25 @@
   ],
   "references": [
     {
-      "title": "Emu3: Next-Token Prediction is All You Need for Multimodal Understanding and Generation",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "Wang X., Zhang K., Liu Y., et al."
-    },
-    {
-      "title": "Transfusion: Predict the Next Token and Diffuse Images with One Multi-Modal Model",
-      "venue": "ICLR",
+      "title": "ChatVLA: Unified Multimodal Understanding and Robot Control with Vision-Language-Action Model",
+      "authors": "Zhongyi Zhou, Yichen Zhu, Minjie Zhu",
       "year": 2025,
-      "authors": "Zhou C., Yu L., Babu A., et al."
+      "venue": "Conference on Empirical Methods in Natural Language Processing",
+      "paper_id": "5976a31d1b0f3edb4032803168e33cb7fdacb5a4"
     },
     {
-      "title": "VideoPoet: A Large Language Model for Zero-Shot Video Generation",
-      "venue": "ICML",
-      "year": 2024,
-      "authors": "Kondratyuk D., Yu L., Gu X., et al."
+      "title": "Qwen-VL: A Versatile Vision-Language Model for Understanding, Localization, Text Reading, and Beyond",
+      "authors": "Jinze Bai, Shuai Bai, Shusheng Yang",
+      "year": 2023,
+      "venue": "",
+      "paper_id": "fc6a2f7478f68adefd69e2071f27e38aa1647f2f"
     },
     {
-      "title": "PhysGen: Rigid-Body Physics-Grounded Image-to-Video Generation",
-      "venue": "ECCV",
-      "year": 2024,
-      "authors": "Liu S., Ren Z., Gupta S., Wang S."
-    },
-    {
-      "title": "StreamingT2V: Consistent, Dynamic, and Extendable Long Video Generation from Text",
-      "venue": "CVPR",
+      "title": "Evaluating Multimodal Vision-Language Model Prompting Strategies for Visual Question Answering in Road Scene Understanding",
+      "authors": "Aryan Keskar, Srinivasa Perisetla, Ross Greer",
       "year": 2025,
-      "authors": "Henschel R., Khachatryan L., Hayrapetyan D., et al."
-    },
-    {
-      "title": "World Models as Foundation for Embodied Intelligence: A Survey on Video-Based Dynamics Learning",
-      "venue": "Nature Machine Intelligence",
-      "year": 2025,
-      "authors": "Chen H., Li M., Zhao R., et al."
+      "venue": "2025 IEEE/CVF Winter Conference on Applications of Computer Vision Workshops (WACVW)",
+      "paper_id": "709a70e76d9a88a6230589b038b2333922a707c6"
     }
   ],
   "domain": "multimodal",

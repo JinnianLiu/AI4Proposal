@@ -10,46 +10,40 @@
   ],
   "references": [
     {
-      "title": "A 1ynm 1.25V 8Gb 16Gb/s/pin GDDR6-based Accelerator-in-Memory Supporting 1TFLOPS MAC Operation for Large-Scale AI Applications",
-      "venue": "ISSCC",
-      "year": 2024,
-      "authors": "Lee, S., Kim, J., Park, H., et al."
-    },
-    {
-      "title": "A 22nm 832Kb Hybrid-Domain Floating-Point SRAM In-Memory-Compute Macro with 16.2-70.2 TFLOPS/W for High-Accuracy AI Edge Devices",
-      "venue": "ISSCC",
-      "year": 2024,
-      "authors": "Yue, J., Liu, Y., Yuan, Z., et al."
-    },
-    {
-      "title": "Analog In-Memory Computing Attention Mechanism for Fast and Energy-Efficient Large Language Models",
-      "venue": "Nature Computational Science",
-      "year": 2025,
-      "authors": "Leroux, N., Manea, P. P., Sudarshan, C., et al."
-    },
-    {
-      "title": "PIMFlow: Compiler and Runtime Support for CNN Models on Processing-in-Memory DRAM",
-      "venue": "CGO",
+      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
+      "authors": "Zou et al.",
       "year": 2023,
-      "authors": "Park, Y., Kwon, S., Hwang, S., et al."
+      "venue": "arXiv"
     },
     {
-      "title": "SIAM: Chiplet-based Scalable In-Memory Acceleration with Mesh for Deep Neural Networks",
-      "venue": "ACM TECS",
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "authors": "Bai et al.",
+      "year": 2022,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "authors": "Rafailov et al.",
       "year": 2023,
-      "authors": "Krishnan, G., Mandal, S. K., Pannala, M., et al."
+      "venue": "NeurIPS"
     },
     {
-      "title": "CIM-MLC: A Multi-level Compilation Stack for Computing-In-Memory Accelerators",
-      "venue": "ASPLOS",
-      "year": 2024,
-      "authors": "Qu, S., Li, B., Zhao, S., et al."
+      "title": "Jailbroken: How Does LLM Safety Training Fail?",
+      "authors": "Wei et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
     },
     {
-      "title": "Noise-Aware Quantization and Compilation Co-design for Reliable Analog In-Memory Deep Learning",
-      "venue": "MICRO",
+      "title": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming",
+      "authors": "Mazeika et al.",
       "year": 2024,
-      "authors": "Wang, X., Chen, Y., Zhang, T., et al."
+      "venue": "ICML"
+    },
+    {
+      "title": "Scalable Oversight via Debate",
+      "authors": "Irving et al.",
+      "year": 2018,
+      "venue": "arXiv"
     }
   ],
   "domain": "ai_infra",

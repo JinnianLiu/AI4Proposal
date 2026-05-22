@@ -10,40 +10,40 @@
   ],
   "references": [
     {
-      "title": "Self-Supervised Tool Induction from Sparse Documentation in Language Agents",
-      "venue": "NeurIPS",
+      "title": "ReAct: Synergizing Reasoning and Acting in Language Models",
+      "authors": "Yao et al.",
+      "year": 2022,
+      "venue": "ICLR"
+    },
+    {
+      "title": "Toolformer: Language Models Can Teach Themselves to Use Tools",
+      "authors": "Schick et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation",
+      "authors": "Wu et al.",
+      "year": 2023,
+      "venue": "arXiv"
+    },
+    {
+      "title": "SWE-bench: Can Language Models Resolve Real-World GitHub Issues?",
+      "authors": "Jimenez et al.",
       "year": 2024,
-      "authors": "Patel, R., Nakamura, S., Gomez, A., et al."
+      "venue": "ICLR"
     },
     {
-      "title": "ToolBench-R: A Reproducible Benchmark for Retrieval-Augmented API Agents under Documentation Drift",
-      "venue": "ICLR",
-      "year": 2025,
-      "authors": "Chen, L., Vasquez, M., Park, J., Singh, A."
-    },
-    {
-      "title": "AgentBoard-2025: Diagnosing Compositional Tool Use in Frontier Language Models",
-      "venue": "ICML",
-      "year": 2025,
-      "authors": "Okafor, T., Liu, Y., Hernandez, P., Bach, F."
-    },
-    {
-      "title": "MetaTool-X: An Open-World Arena for Evaluating Tool-Augmented Agents",
-      "venue": "ACL",
-      "year": 2025,
-      "authors": "Zhang, W., Müller, K., Adeyemi, O., Rossi, G."
-    },
-    {
-      "title": "Reflective Verifiers for Self-Debugging Language Agents",
-      "venue": "NeurIPS",
+      "title": "WebArena: A Realistic Web Environment for Building Autonomous Agents",
+      "authors": "Zhou et al.",
       "year": 2024,
-      "authors": "Iyer, S., Larsson, E., Cheng, H., Dubois, M."
+      "venue": "NeurIPS"
     },
     {
-      "title": "Calibrated Abstention and Replanning in Long-Horizon LLM Agents",
-      "venue": "CVPR Workshop on Embodied AI",
-      "year": 2026,
-      "authors": "Kowalski, B., Tan, X., Ferreira, D., Anand, P."
+      "title": "OSWorld: Benchmarking Multimodal Agents for Open-Ended Tasks",
+      "authors": "Xie et al.",
+      "year": 2024,
+      "venue": "NeurIPS"
     }
   ],
   "domain": "agentic_ai",

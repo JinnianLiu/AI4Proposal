@@ -10,40 +10,25 @@
   ],
   "references": [
     {
-      "title": "A high-performance speech neuroprosthesis for communication in ALS",
-      "venue": "Nature",
+      "title": "Deep learning based retinal vessel segmentation and hypertensive retinopathy quantification using heterogeneous features cross-attention neural network",
+      "authors": "Xinghui Liu, H. Tan, Wu-ju Wang",
       "year": 2024,
-      "authors": "Willett, F. R., Kunz, E. M., Fan, C., et al."
+      "venue": "Frontiers in Medicine",
+      "paper_id": "1630235fee67b66260eaa4696ffab626862fcb3e"
     },
     {
-      "title": "Stable long-term decoding of motor intent from intracortical arrays via continual representation alignment",
-      "venue": "Nature Neuroscience",
+      "title": "Transformer attention-based neural network for cognitive score estimation from sMRI data",
+      "authors": "Songheng Li, Yanteng Zhang, Congyu Zou",
       "year": 2025,
-      "authors": "Chowdhury, R. H., Pandarinath, C., Miller, L. E."
+      "venue": "Comput. Biol. Medicine",
+      "paper_id": "3f4974c33d9f6a8b03cd33e841b7870ce4a818c2"
     },
     {
-      "title": "POYO: A transformer foundation model for population spiking activity across subjects and tasks",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "Azabou, M., Arora, V., Ganesh, V., et al."
-    },
-    {
-      "title": "Neural prompt tuning enables few-shot calibration of motor BCIs",
-      "venue": "ICML",
-      "year": 2025,
-      "authors": "Ye, J., Collinger, J. L., Dyer, E. L."
-    },
-    {
-      "title": "Adaptive deep brain stimulation guided by reinforcement learning over cortico-basal biomarkers",
-      "venue": "Science Translational Medicine",
-      "year": 2024,
-      "authors": "Gilron, R., Little, S., Starr, P. A."
-    },
-    {
-      "title": "Safe closed-loop control of neural population dynamics with uncertainty-aware decoders",
-      "venue": "NeurIPS",
-      "year": 2025,
-      "authors": "Sussillo, D., Sani, O. G., Shanechi, M. M."
+      "title": "A Novel Deep Learning Model for Medical Image Segmentation with Convolutional Neural Network and Transformer",
+      "authors": "Zhuo Zhang, Hongbing Wu, Huan Zhao",
+      "year": 2023,
+      "venue": "Interdisciplinary Sciences Computational Life Sciences",
+      "paper_id": "3768ecd8e146c6e19718c0539ff6c16698d3ca42"
     }
   ],
   "domain": "ai_neuroscience",

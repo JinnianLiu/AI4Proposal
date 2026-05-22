@@ -10,40 +10,25 @@
   ],
   "references": [
     {
-      "title": "BloombergGPT: A Large Language Model for Finance",
-      "venue": "arXiv / Bloomberg Technical Report",
-      "year": 2023,
-      "authors": "Wu, S., Irsoy, O., Lu, S., et al."
-    },
-    {
-      "title": "FinGPT: Open-Source Financial Large Language Models with Reinforcement Learning from Market Feedback",
-      "venue": "NeurIPS Workshop on Robustness in Finance",
+      "title": "CFD and Artificial Intelligence-Based Machine Learning Synergy for the Assessment of Syngas-Utilizing Pre-Reformer in r-SOC Technology Advancement",
+      "authors": "M. M. Peksen",
       "year": 2024,
-      "authors": "Yang, H., Liu, X.-Y., Wang, C. D."
+      "venue": "Applied Sciences",
+      "paper_id": "e5f758dedd14208885f43331050ea59095886776"
     },
     {
-      "title": "Cross-Market Anomaly Detection via Multimodal Temporal Transformers under Distribution Shift",
-      "venue": "ICML",
+      "title": "Research on the Application of Machine Learning Algorithm in Artificial Intelligence Product Recommendation System",
+      "authors": "Yuchen Lai",
       "year": 2024,
-      "authors": "Chen, J., Zhao, L., Sun, Y., Kim, H."
+      "venue": "2024 International Conference on Telecommunications and Power Electronics (TELEPE)",
+      "paper_id": "00f988fbb2e488713ca116729b51e84a5a8520ff"
     },
     {
-      "title": "Auditing Group and Individual Fairness in LLM-based Credit Scoring",
-      "venue": "NeurIPS",
+      "title": "The Role of Data Engineering in Enabling Machine Learning and Artificial Intelligence",
+      "authors": "R. Sridhar, I. Kanani, R. Dhenia",
       "year": 2024,
-      "authors": "Wang, R., Patel, A., Gupta, S., Li, M."
-    },
-    {
-      "title": "Hallucination in Financial Report Summarization: A Large-Scale Empirical Study",
-      "venue": "ACL",
-      "year": 2025,
-      "authors": "Liu, Y., Tanaka, K., Brown, E., Zhang, W."
-    },
-    {
-      "title": "Towards Trustworthy Financial Foundation Models: A Survey on Robustness, Fairness and Explainability",
-      "venue": "Nature Machine Intelligence",
-      "year": 2025,
-      "authors": "Huang, F., Martinez, D., Li, Q., Schmidt, J."
+      "venue": "International Journal of Artificial Intelligence, Data Science and Machine Learning",
+      "paper_id": "7b223ba6b10dd24cd3f181b633025ba7c1418e98"
     }
   ],
   "domain": "ai_finance",

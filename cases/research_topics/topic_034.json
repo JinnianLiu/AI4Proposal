@@ -9,40 +9,40 @@
   ],
   "references": [
     {
-      "title": "A Watermark for Large Language Models",
-      "venue": "ICML",
+      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
+      "authors": "Zou et al.",
       "year": 2023,
-      "authors": "John Kirchenbauer, Jonas Geiping, Yuxin Wen, et al."
+      "venue": "arXiv"
     },
     {
-      "title": "PARAFINGER: Robust Parameter-Space Fingerprinting for Pretrained Language Models",
-      "venue": "NeurIPS",
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "authors": "Bai et al.",
+      "year": 2022,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "authors": "Rafailov et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "Jailbroken: How Does LLM Safety Training Fail?",
+      "authors": "Wei et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming",
+      "authors": "Mazeika et al.",
       "year": 2024,
-      "authors": "Yuxin Zhang, Hao Chen, Wei Liu, et al."
+      "venue": "ICML"
     },
     {
-      "title": "Poisoning Language Models During Instruction Tuning with Sub-Percent Data",
-      "venue": "ACL",
-      "year": 2024,
-      "authors": "Alexander Wan, Eric Wallace, Sheng Shen, Dan Klein"
-    },
-    {
-      "title": "Sleeper Agents: Training Deceptive LLMs that Persist Through Safety Training",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "Evan Hubinger, Carson Denison, Jesse Mu, et al."
-    },
-    {
-      "title": "Spectral Signatures for Backdoor Detection in Foundation Models at Scale",
-      "venue": "IEEE S&P",
-      "year": 2025,
-      "authors": "Brandon Tran, Jerry Li, Aleksander Madry"
-    },
-    {
-      "title": "Provenance and Lineage Tracking in the Open Model Ecosystem: An Empirical Study",
-      "venue": "USENIX Security",
-      "year": 2025,
-      "authors": "Yifan Zhao, Min Yang, Xiaofeng Wang, et al."
+      "title": "Scalable Oversight via Debate",
+      "authors": "Irving et al.",
+      "year": 2018,
+      "venue": "arXiv"
     }
   ],
   "domain": "privacy_security",

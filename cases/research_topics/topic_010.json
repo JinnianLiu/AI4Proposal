@@ -10,40 +10,40 @@
   ],
   "references": [
     {
-      "title": "SeeClick: Harnessing GUI Grounding for Advanced Visual GUI Agents",
-      "venue": "ACL",
+      "title": "ReAct: Synergizing Reasoning and Acting in Language Models",
+      "authors": "Yao et al.",
+      "year": 2022,
+      "venue": "ICLR"
+    },
+    {
+      "title": "Toolformer: Language Models Can Teach Themselves to Use Tools",
+      "authors": "Schick et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation",
+      "authors": "Wu et al.",
+      "year": 2023,
+      "venue": "arXiv"
+    },
+    {
+      "title": "SWE-bench: Can Language Models Resolve Real-World GitHub Issues?",
+      "authors": "Jimenez et al.",
       "year": 2024,
-      "authors": "Cheng, K., Sun, Q., Chu, Y., et al."
+      "venue": "ICLR"
     },
     {
-      "title": "CogAgent: A Visual Language Model for GUI Agents",
-      "venue": "CVPR",
+      "title": "WebArena: A Realistic Web Environment for Building Autonomous Agents",
+      "authors": "Zhou et al.",
       "year": 2024,
-      "authors": "Hong, W., Wang, W., Lv, Q., et al."
+      "venue": "NeurIPS"
     },
     {
-      "title": "OS-Atlas: A Foundation Action Model for Generalist GUI Agents",
-      "venue": "ICLR",
-      "year": 2025,
-      "authors": "Wu, Z., Wu, Z., Xu, F., et al."
-    },
-    {
-      "title": "AgentTrek: Agent Trajectory Synthesis via Guiding Replay with Web Tutorials",
-      "venue": "NeurIPS",
+      "title": "OSWorld: Benchmarking Multimodal Agents for Open-Ended Tasks",
+      "authors": "Xie et al.",
       "year": 2024,
-      "authors": "Xu, Y., Lu, X., Li, Z., et al."
-    },
-    {
-      "title": "AppAgent-V2: Advanced Agent for Flexible Mobile Interactions with Self-Reflection",
-      "venue": "AAAI",
-      "year": 2025,
-      "authors": "Li, Y., Zhang, C., Yang, W., et al."
-    },
-    {
-      "title": "Aligning Pixels and Actions: Reinforcement Learning for Visual GUI Agents with Process Rewards",
-      "venue": "ICML",
-      "year": 2025,
-      "authors": "Zhao, M., Liu, H., Chen, J., et al."
+      "venue": "NeurIPS"
     }
   ],
   "domain": "agentic_ai",

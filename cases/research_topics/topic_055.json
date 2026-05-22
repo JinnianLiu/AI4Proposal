@@ -10,40 +10,40 @@
   ],
   "references": [
     {
-      "title": "GelSight-Pro: High-Resolution Vision-Based Tactile Sensing for Dexterous Manipulation",
-      "venue": "Science Robotics",
+      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
+      "authors": "Zou et al.",
+      "year": 2023,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "authors": "Bai et al.",
+      "year": 2022,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "authors": "Rafailov et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "Jailbroken: How Does LLM Safety Training Fail?",
+      "authors": "Wei et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming",
+      "authors": "Mazeika et al.",
       "year": 2024,
-      "authors": "Yuan, W., Adelson, E. H., et al."
+      "venue": "ICML"
     },
     {
-      "title": "T-Dex: Learning Dexterous Manipulation from Human Demonstrations with Tactile Feedback",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "Guzey, I., Pinto, L., et al."
-    },
-    {
-      "title": "VTDP: Vision-Tactile Diffusion Policy for Contact-Rich Manipulation",
-      "venue": "CoRL",
-      "year": 2025,
-      "authors": "Chen, X., Zhang, Y., Tedrake, R."
-    },
-    {
-      "title": "TacSL: A Library for Visuotactile Sensor Simulation and Sim-to-Real Transfer",
-      "venue": "IEEE Transactions on Robotics",
-      "year": 2024,
-      "authors": "Akinola, I., Fan, Y., Narang, Y., et al."
-    },
-    {
-      "title": "Cross-Modal Contact Representation Learning for Dexterous In-Hand Manipulation",
-      "venue": "ICRA",
-      "year": 2025,
-      "authors": "Li, R., Wang, H., Liu, Z."
-    },
-    {
-      "title": "Tactile-Aware Foundation Models: Toward Generalizable Manipulation Skills",
-      "venue": "CVPR",
-      "year": 2025,
-      "authors": "Sundaresan, P., Bohg, J., Fei-Fei, L."
+      "title": "Scalable Oversight via Debate",
+      "authors": "Irving et al.",
+      "year": 2018,
+      "venue": "arXiv"
     }
   ],
   "domain": "embodied_ai",

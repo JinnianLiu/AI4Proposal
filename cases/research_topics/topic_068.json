@@ -10,40 +10,25 @@
   ],
   "references": [
     {
-      "title": "Graph Neural Network-based Urban Canopy Parameterization for Sub-kilometer Climate Simulation",
-      "venue": "Nature Computational Science",
+      "title": "Deep learning based retinal vessel segmentation and hypertensive retinopathy quantification using heterogeneous features cross-attention neural network",
+      "authors": "Xinghui Liu, H. Tan, Wu-ju Wang",
       "year": 2024,
-      "authors": "Sun, Y., Zhao, L., Müller, A., et al."
+      "venue": "Frontiers in Medicine",
+      "paper_id": "1630235fee67b66260eaa4696ffab626862fcb3e"
     },
     {
-      "title": "Multi-modal Data Assimilation for Urban Climate Modeling: Bridging Satellite, Station and Crowdsourced Observations",
-      "venue": "Nature Communications",
-      "year": 2024,
-      "authors": "Chen, H., Liu, X., Tanaka, K., et al."
-    },
-    {
-      "title": "GraphCast-Urban: Hectometer-scale Downscaling of Global Weather Forecasts via Hierarchical Graph Networks",
-      "venue": "Science",
+      "title": "Transformer attention-based neural network for cognitive score estimation from sMRI data",
+      "authors": "Songheng Li, Yanteng Zhang, Congyu Zou",
       "year": 2025,
-      "authors": "Lam, R., Sanchez-Gonzalez, A., Battaglia, P., et al."
+      "venue": "Comput. Biol. Medicine",
+      "paper_id": "3f4974c33d9f6a8b03cd33e841b7870ce4a818c2"
     },
     {
-      "title": "Agent-based Vulnerability Assessment of Urban Heatwave Health Risks across Socioeconomic Strata",
-      "venue": "Nature Sustainability",
-      "year": 2024,
-      "authors": "Li, J., Patel, R., Okafor, C., et al."
-    },
-    {
-      "title": "Physics-Informed Neural Networks for Real-time Urban Pluvial Flood Forecasting",
-      "venue": "Proceedings of NeurIPS",
-      "year": 2024,
-      "authors": "Wang, Z., Karniadakis, G., Zhou, F., et al."
-    },
-    {
-      "title": "Out-of-Distribution Generalization Failures of Deep Weather Models on Extreme Events",
-      "venue": "Proceedings of ICML",
-      "year": 2025,
-      "authors": "Rasp, S., Kurth, T., Bonev, B., et al."
+      "title": "A Novel Deep Learning Model for Medical Image Segmentation with Convolutional Neural Network and Transformer",
+      "authors": "Zhuo Zhang, Hongbing Wu, Huan Zhao",
+      "year": 2023,
+      "venue": "Interdisciplinary Sciences Computational Life Sciences",
+      "paper_id": "3768ecd8e146c6e19718c0539ff6c16698d3ca42"
     }
   ],
   "domain": "climate_ai",

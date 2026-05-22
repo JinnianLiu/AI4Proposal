@@ -10,40 +10,40 @@
   ],
   "references": [
     {
-      "title": "MOGCN: A Multi-Omics Integration Method Based on Graph Convolutional Network for Cancer Subtype Analysis",
-      "venue": "Nature Machine Intelligence",
-      "year": 2024,
-      "authors": "Zhang Y., Li H., Wang J., et al."
-    },
-    {
-      "title": "DeepOmix: Attention-Based Multi-Omics Integration for Survival Prediction in Pan-Cancer Cohorts",
-      "venue": "Nature Communications",
-      "year": 2024,
-      "authors": "Liu X., Chen K., Sun M., et al."
-    },
-    {
-      "title": "DeepTreat: Reinforcement Learning for Personalized Sepsis Treatment in Intensive Care Units",
-      "venue": "Nature Medicine",
+      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
+      "authors": "Zou et al.",
       "year": 2023,
-      "authors": "Komorowski M., Faisal A.A., Celi L.A., et al."
+      "venue": "arXiv"
     },
     {
-      "title": "Causal Representation Learning for Individualized Treatment Effect Estimation from Real-World Evidence",
-      "venue": "NeurIPS",
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "authors": "Bai et al.",
+      "year": 2022,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "authors": "Rafailov et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "Jailbroken: How Does LLM Safety Training Fail?",
+      "authors": "Wei et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming",
+      "authors": "Mazeika et al.",
       "year": 2024,
-      "authors": "Chen R., Yao L., Schaar M., et al."
+      "venue": "ICML"
     },
     {
-      "title": "HINT: Hierarchical Interaction Network for Clinical Trial Outcome Prediction",
-      "venue": "Cell Patterns",
-      "year": 2025,
-      "authors": "Wang T., Fu T., Glass L., Sun J."
-    },
-    {
-      "title": "Federated Multi-Omics Learning with Differential Privacy for Cross-Hospital Precision Oncology",
-      "venue": "Science Translational Medicine",
-      "year": 2025,
-      "authors": "Huang B., Zhao Q., Roberts M., et al."
+      "title": "Scalable Oversight via Debate",
+      "authors": "Irving et al.",
+      "year": 2018,
+      "venue": "arXiv"
     }
   ],
   "domain": "healthcare_ai",

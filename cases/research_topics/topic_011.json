@@ -10,40 +10,25 @@
   ],
   "references": [
     {
-      "title": "Visual Instruction Tuning with Region-Aware Alignment for Fine-Grained Multimodal Understanding",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "Haotian Liu, Chunyuan Li, Yong Jae Lee, et al."
+      "title": "Multimodal foundation model for 3D genito-pelvic structure segmentation in image-guided radiotherapy",
+      "authors": "Mingzhe Hu, Yuheng Li, Richard L. J. Qiu",
+      "year": 2026,
+      "venue": "Medical Imaging",
+      "paper_id": "c4e2f29f440beaa21b258eea5a4fbb3c583d3049"
     },
     {
-      "title": "Qwen-VL-Plus: Dynamic Resolution and Position Encoding for High-Fidelity Visual Perception",
-      "venue": "CVPR",
+      "title": "ENSAM: an efficient foundation model for interactive segmentation of 3D medical images",
+      "authors": "E. Stenhede, Agnar Martin Bjornstad, Arian Ranjbar",
       "year": 2025,
-      "authors": "Jinze Bai, Shuai Bai, Shusheng Yang, et al."
+      "venue": "arXiv.org",
+      "paper_id": "3c36a020a929a435d98950f737a9f61f25acd13d"
     },
     {
-      "title": "VideoChat-T: Hierarchical Temporal Memory for Hour-Long Video Understanding",
-      "venue": "ICLR",
-      "year": 2025,
-      "authors": "KunChang Li, Yinan He, Yi Wang, et al."
-    },
-    {
-      "title": "AV-Former: Contrastive Audio-Visual Alignment for Sound Source Localization and Reasoning",
-      "venue": "ICML",
-      "year": 2024,
-      "authors": "Honglie Chen, Weidi Xie, Andrea Vedaldi, et al."
-    },
-    {
-      "title": "TriCLIP: Tri-Modal Contrastive Pretraining for Vision-Language-Audio Retrieval",
-      "venue": "ACL",
-      "year": 2025,
-      "authors": "Yuhao Zhang, Wei Li, Jiaqi Wang, et al."
-    },
-    {
-      "title": "LongVideoBench: A Benchmark for Long-Context Temporal Reasoning in Multimodal LLMs",
-      "venue": "NeurIPS Datasets and Benchmarks Track",
-      "year": 2025,
-      "authors": "Haoning Wu, Dongxu Li, Bei Chen, et al."
+      "title": "F-DiffMorph: a 3D foundation model for unsupervised medical image diffeomorphic registration",
+      "authors": "Shaoyan Pan, M. Safari, Shansong Wang",
+      "year": 2026,
+      "venue": "Medical Imaging",
+      "paper_id": "28325ae978c8f7e5f8e34094817321af01ca13c4"
     }
   ],
   "domain": "multimodal",

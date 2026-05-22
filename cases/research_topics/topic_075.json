@@ -11,40 +11,40 @@
   ],
   "references": [
     {
-      "title": "Fairness Definitions Explained: A Comprehensive Survey of Group and Individual Fairness Metrics",
-      "venue": "ACM Computing Surveys",
+      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
+      "authors": "Zou et al.",
+      "year": 2023,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "authors": "Bai et al.",
+      "year": 2022,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "authors": "Rafailov et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "Jailbroken: How Does LLM Safety Training Fail?",
+      "authors": "Wei et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming",
+      "authors": "Mazeika et al.",
       "year": 2024,
-      "authors": "Mehrabi N., Morstatter F., Saxena N., Lerman K., Galstyan A."
+      "venue": "ICML"
     },
     {
-      "title": "On the Impossibility of Simultaneously Satisfying Intersectional Fairness Criteria",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "Chen J., Kallus N., Mao X., Svacha G., Udell M."
-    },
-    {
-      "title": "Adversarial Representation Learning for Bias Mitigation under Distribution Shift",
-      "venue": "ICML",
-      "year": 2025,
-      "authors": "Wang H., Liu Z., Zhang Y., Sugiyama M."
-    },
-    {
-      "title": "Counterfactual Fairness in High-Stakes Decision Making: A Causal Perspective",
-      "venue": "Nature Machine Intelligence",
-      "year": 2025,
-      "authors": "Kusner M., Loftus J., Russell C., Silva R."
-    },
-    {
-      "title": "Stop Explaining Black Box Models with Post-hoc Methods: The Case for Interpretable Models in Public Decisions",
-      "venue": "Science",
-      "year": 2024,
-      "authors": "Rudin C., Chen C., Semenova L., Zhong Z."
-    },
-    {
-      "title": "Closing the AI Accountability Gap: An End-to-End Algorithmic Auditing Framework",
-      "venue": "FAccT (ACM Conference on Fairness, Accountability, and Transparency)",
-      "year": 2025,
-      "authors": "Raji I. D., Smart A., White R. N., Mitchell M., Gebru T."
+      "title": "Scalable Oversight via Debate",
+      "authors": "Irving et al.",
+      "year": 2018,
+      "venue": "arXiv"
     }
   ],
   "domain": "ai_society",

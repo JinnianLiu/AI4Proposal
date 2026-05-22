@@ -10,40 +10,25 @@
   ],
   "references": [
     {
-      "title": "TxGNN: Zero-Shot Prediction of Therapeutic Use with Geometric Deep Learning and Clinician-Centered Design",
-      "venue": "Nature Medicine",
+      "title": "CFD and Artificial Intelligence-Based Machine Learning Synergy for the Assessment of Syngas-Utilizing Pre-Reformer in r-SOC Technology Advancement",
+      "authors": "M. M. Peksen",
       "year": 2024,
-      "authors": "K. Huang, P. Chandak, Q. Wang, et al."
+      "venue": "Applied Sciences",
+      "paper_id": "e5f758dedd14208885f43331050ea59095886776"
     },
     {
-      "title": "Contrastive Transcriptomic Alignment for Drug-Disease Matching Across Cellular Contexts",
-      "venue": "NeurIPS",
+      "title": "Research on the Application of Machine Learning Algorithm in Artificial Intelligence Product Recommendation System",
+      "authors": "Yuchen Lai",
       "year": 2024,
-      "authors": "M. Alvarez, R. Patel, J. Lin, S. Koyejo"
+      "venue": "2024 International Conference on Telecommunications and Power Electronics (TELEPE)",
+      "paper_id": "00f988fbb2e488713ca116729b51e84a5a8520ff"
     },
     {
-      "title": "BioMedRAG: Retrieval-Augmented Large Language Models for Mechanistic Hypothesis Generation in Drug Repurposing",
-      "venue": "ACL",
-      "year": 2025,
-      "authors": "Y. Tanaka, A. Singh, L. Romero, D. Sontag"
-    },
-    {
-      "title": "Causal Graph Neural Networks for Integrating EHR Evidence and Biomedical Knowledge in Treatment Effect Estimation",
-      "venue": "ICML",
-      "year": 2025,
-      "authors": "H. Nguyen, R. Ghosh, E. Pierson"
-    },
-    {
-      "title": "Single-Cell Perturb-Seq Foundation Models Reveal Context-Dependent Drug Mechanisms",
-      "venue": "Nature Methods",
-      "year": 2025,
-      "authors": "J. Theodoris, F. Lopez, A. Regev"
-    },
-    {
-      "title": "DrugRepBench: A Time-Split Benchmark for Faithful and Calibrated Drug Repurposing Models",
-      "venue": "NeurIPS Datasets and Benchmarks",
-      "year": 2026,
-      "authors": "S. Park, M. Chen, J. Leskovec, M. Zitnik"
+      "title": "The Role of Data Engineering in Enabling Machine Learning and Artificial Intelligence",
+      "authors": "R. Sridhar, I. Kanani, R. Dhenia",
+      "year": 2024,
+      "venue": "International Journal of Artificial Intelligence, Data Science and Machine Learning",
+      "paper_id": "7b223ba6b10dd24cd3f181b633025ba7c1418e98"
     }
   ],
   "domain": "healthcare_ai",

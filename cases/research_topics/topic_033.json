@@ -10,40 +10,40 @@
   ],
   "references": [
     {
-      "title": "Quantifying Memorization Across Neural Language Models at Scale",
-      "venue": "ICLR",
+      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
+      "authors": "Zou et al.",
+      "year": 2023,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "authors": "Bai et al.",
+      "year": 2022,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "authors": "Rafailov et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "Jailbroken: How Does LLM Safety Training Fail?",
+      "authors": "Wei et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming",
+      "authors": "Mazeika et al.",
       "year": 2024,
-      "authors": "Carlini, N., Ippolito, D., Jagielski, M., Lee, K., Tramer, F., Zhang, C."
+      "venue": "ICML"
     },
     {
-      "title": "Scalable DP-SGD: Ghost Clipping and Book-Keeping for Billion-Parameter Transformers",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "Bu, Z., Wang, Y.-X., Zha, S., Karniadakis, G."
-    },
-    {
-      "title": "Privacy Side Channels in Machine Learning Systems",
-      "venue": "USENIX Security",
-      "year": 2024,
-      "authors": "Debenedetti, E., Severi, G., Carlini, N., Choquette-Choo, C. A., Jagielski, M."
-    },
-    {
-      "title": "Differentially Private Fine-Tuning of Foundation Models via Low-Rank Adaptation",
-      "venue": "ICML",
-      "year": 2025,
-      "authors": "Yu, D., Naik, S., Backurs, A., Gopi, S., Inan, H. A., Kamath, G., Kulkarni, J."
-    },
-    {
-      "title": "Tight Auditing of Differentially Private Machine Learning",
-      "venue": "IEEE S&P (Oakland)",
-      "year": 2025,
-      "authors": "Nasr, M., Hayes, J., Steinke, T., Balle, B., Tramer, F., Jagielski, M., Carlini, N."
-    },
-    {
-      "title": "Unlocking Accuracy and Fairness in Differentially Private Image and Language Models",
-      "venue": "Nature Machine Intelligence",
-      "year": 2025,
-      "authors": "De, S., Berrada, L., Hayes, J., Smith, S. L., Balle, B."
+      "title": "Scalable Oversight via Debate",
+      "authors": "Irving et al.",
+      "year": 2018,
+      "venue": "arXiv"
     }
   ],
   "domain": "privacy_security",

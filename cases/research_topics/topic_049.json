@@ -9,40 +9,40 @@
   ],
   "references": [
     {
-      "title": "Efficient Memory Management for Large Language Model Serving with PagedAttention",
-      "venue": "SOSP",
+      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
+      "authors": "Zou et al.",
       "year": 2023,
-      "authors": "Kwon, W., Li, Z., Zhuang, S., et al."
+      "venue": "arXiv"
     },
     {
-      "title": "Orca: A Distributed Serving System for Transformer-Based Generative Models",
-      "venue": "OSDI",
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "authors": "Bai et al.",
       "year": 2022,
-      "authors": "Yu, G.-I., Jeong, J. S., Kim, G.-W., et al."
+      "venue": "arXiv"
     },
     {
-      "title": "DistServe: Disaggregating Prefill and Decoding for Goodput-optimized Large Language Model Serving",
-      "venue": "OSDI",
-      "year": 2024,
-      "authors": "Zhong, Y., Liu, S., Chen, J., et al."
-    },
-    {
-      "title": "AlpaServe: Statistical Multiplexing with Model Parallelism for Deep Learning Serving",
-      "venue": "OSDI",
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "authors": "Rafailov et al.",
       "year": 2023,
-      "authors": "Li, Z., Zheng, L., Zhong, Y., et al."
+      "venue": "NeurIPS"
     },
     {
-      "title": "Taming Throughput-Latency Tradeoff in LLM Inference with Sarathi-Serve",
-      "venue": "OSDI",
-      "year": 2024,
-      "authors": "Agrawal, A., Kedia, N., Panwar, A., et al."
+      "title": "Jailbroken: How Does LLM Safety Training Fail?",
+      "authors": "Wei et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
     },
     {
-      "title": "Response Length Perception and Sequence Scheduling: An LLM-Empowered LLM Inference Pipeline",
-      "venue": "NeurIPS",
+      "title": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming",
+      "authors": "Mazeika et al.",
       "year": 2024,
-      "authors": "Zheng, Z., Ren, X., Huang, F., et al."
+      "venue": "ICML"
+    },
+    {
+      "title": "Scalable Oversight via Debate",
+      "authors": "Irving et al.",
+      "year": 2018,
+      "venue": "arXiv"
     }
   ],
   "domain": "ai_infra",

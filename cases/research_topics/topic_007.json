@@ -10,40 +10,25 @@
   ],
   "references": [
     {
-      "title": "AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation",
-      "venue": "ICLR",
-      "year": 2024,
-      "authors": "Wu, Q., Bansal, G., Zhang, J., et al."
-    },
-    {
-      "title": "Hierarchical Planner-Executor Agents for Long-Horizon Reasoning",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "Park, S., Chen, L., Iyer, R., Goodman, N."
-    },
-    {
-      "title": "Emergent Cooperation in Decentralized Multi-Agent Reinforcement Learning at Scale",
-      "venue": "ICML",
+      "title": "AutoHMA-LLM: Efficient Task Coordination and Execution in Heterogeneous Multi-Agent Systems Using Hybrid Large Language Models",
+      "authors": "Tinging Yang, Ping Feng, Qixin Guo",
       "year": 2025,
-      "authors": "Foerster, J., Ramirez, D., Mordatch, I."
+      "venue": "IEEE Transactions on Cognitive Communications and Networking",
+      "paper_id": "1487ff63c991f8a76029471ab902dc5931d71eb8"
     },
     {
-      "title": "Compositional Generalization in Emergent Communication: A Benchmark Study",
-      "venue": "ACL",
+      "title": "Towards Collaborative Intelligence: Propagating Intentions and Reasoning for Multi-Agent Coordination with Large Language Models",
+      "authors": "Xihe Qiu, Haoyu Wang, Xiaoyu Tan",
       "year": 2024,
-      "authors": "Lazaridou, A., Kim, Y., Baroni, M."
+      "venue": "arXiv.org",
+      "paper_id": "e3dc5680f7de9db8a1aff9b9c936563e9f8aba45"
     },
     {
-      "title": "Negotiation Protocols Emerge in In-Context Multi-LLM Dialogue",
-      "venue": "NeurIPS",
-      "year": 2025,
-      "authors": "Hadfield-Menell, D., Singh, A., Tessler, M. H."
-    },
-    {
-      "title": "Scalable Belief-Space Planning for Decentralized POMDPs",
-      "venue": "AAAI",
-      "year": 2026,
-      "authors": "Amato, C., Oliehoek, F., Spaan, M."
+      "title": "LLM-Coordination: Evaluating and Analyzing Multi-agent Coordination Abilities in Large Language Models",
+      "authors": "Saaket Agashe, Yue Fan, Anthony Reyna",
+      "year": 2023,
+      "venue": "North American Chapter of the Association for Computational Linguistics",
+      "paper_id": "7f0d1740e74ce36424d64d608270077b64dfe7c0"
     }
   ],
   "domain": "agentic_ai",

@@ -10,40 +10,28 @@
   ],
   "references": [
     {
-      "title": "Causal Tracing of Hallucinations in Large Language Models via Attention Path Intervention",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "Y. Zhang, K. Müller, R. Patel, et al."
+      "title": "Attention Is All You Need",
+      "authors": "Vaswani et al.",
+      "year": 2017,
+      "venue": "NeurIPS"
     },
     {
-      "title": "Adaptive Retrieval-Augmented Generation with Uncertainty-Aware Triggering",
-      "venue": "ACL",
-      "year": 2024,
-      "authors": "H. Liu, S. Tanaka, M. García"
+      "title": "Training language models to follow instructions with human feedback",
+      "authors": "Ouyang et al.",
+      "year": 2022,
+      "venue": "NeurIPS"
     },
     {
-      "title": "Knowledge Conflicts in Retrieval-Augmented Language Models: A Diagnostic Study",
-      "venue": "EMNLP",
-      "year": 2024,
-      "authors": "A. Kumar, J. Williams, L. Petrov"
+      "title": "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models",
+      "authors": "Wei et al.",
+      "year": 2022,
+      "venue": "NeurIPS"
     },
     {
-      "title": "LongBench-Faith: Benchmarking Faithfulness in Long-Context Language Models",
-      "venue": "ICLR",
-      "year": 2025,
-      "authors": "X. Chen, D. Iqbal, T. Nakamura, et al."
-    },
-    {
-      "title": "Tracing Factual Errors to Pretraining Data via Influence Functions at Scale",
-      "venue": "ICML",
-      "year": 2025,
-      "authors": "P. Rossi, E. Johansson, W. Zhao"
-    },
-    {
-      "title": "Self-Consistent Decoding for Long-Form Generation with Structured Constraints",
-      "venue": "NeurIPS",
-      "year": 2025,
-      "authors": "M. Okafor, B. Lindgren, F. Hassan"
+      "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+      "authors": "Lewis et al.",
+      "year": 2020,
+      "venue": "NeurIPS"
     }
   ],
   "domain": "nlp",

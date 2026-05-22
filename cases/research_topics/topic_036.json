@@ -10,40 +10,25 @@
   ],
   "references": [
     {
-      "title": "Spectral-Spatial Dual-Stream Network for Generalizable Deepfake Detection",
-      "venue": "CVPR",
-      "year": 2024,
-      "authors": "Chen, H., Zhang, Y., Li, M., et al."
-    },
-    {
-      "title": "Diffusion Fingerprints: Detecting AI-Generated Images via Noise Residual Analysis",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "Kumar, R., Tanaka, S., Müller, A."
-    },
-    {
-      "title": "StableSign: Robust Generative Watermarking for Diffusion Models under Adaptive Attacks",
-      "venue": "USENIX Security",
+      "title": "FusionDP: Foundation Model-Assisted Differentially Private Learning for Partially Sensitive Features",
+      "authors": "Linghui Zeng, Ruixuan Liu, Atiquer Rahman Sarkar",
       "year": 2025,
-      "authors": "Wang, L., Park, J., Esser, P., et al."
+      "venue": "arXiv.org",
+      "paper_id": "201d9e64dd27292ba0d5195a5c42436168360e1a"
     },
     {
-      "title": "Tracing Misinformation Cascades: A Graph Neural Approach to AIGC Propagation on Social Networks",
-      "venue": "WWW",
+      "title": "ViP: A Differentially Private Foundation Model for Computer Vision",
+      "authors": "Yaodong Yu, Maziar Sanjabi, Y. Ma",
+      "year": 2023,
+      "venue": "International Conference on Machine Learning",
+      "paper_id": "d74b100d22638d5f8bfd1ebf1f5bbb2d945de6e1"
+    },
+    {
+      "title": "Differential Privacy with DP-SGD and PATE for Intrusion Detection: A Comparative Study",
+      "authors": "Daniel Machooka, Xiaohong Yuan, Kaushik Roy",
       "year": 2025,
-      "authors": "Zhao, Q., Ferrara, E., Liu, X."
-    },
-    {
-      "title": "Cross-Modal Semantic Verification for Audio-Visual Deepfakes via Large Multimodal Models",
-      "venue": "ACL",
-      "year": 2025,
-      "authors": "Liu, Y., Goodman, N., Sun, K., et al."
-    },
-    {
-      "title": "On the Provable Security of Invisible Watermarks for Generative AI",
-      "venue": "IEEE S&P",
-      "year": 2026,
-      "authors": "Christ, M., Gunn, S., Zhang, T."
+      "venue": "International Conference on Applied Informatics and Communication",
+      "paper_id": "23a063d06e104925dac14a212980eea4626ed665"
     }
   ],
   "domain": "privacy_security",

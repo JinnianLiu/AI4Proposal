@@ -10,40 +10,40 @@
   ],
   "references": [
     {
-      "title": "Scalable Extraction of Training Data from Production Language Models",
-      "venue": "USENIX Security Symposium",
+      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
+      "authors": "Zou et al.",
+      "year": 2023,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "authors": "Bai et al.",
+      "year": 2022,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "authors": "Rafailov et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "Jailbroken: How Does LLM Safety Training Fail?",
+      "authors": "Wei et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming",
+      "authors": "Mazeika et al.",
       "year": 2024,
-      "authors": "N. Carlini, J. Hayes, M. Nasr, A. Jagielski, et al."
+      "venue": "ICML"
     },
     {
-      "title": "Membership Inference Attacks against Language Models via Neighbourhood Comparison",
-      "venue": "ACL",
-      "year": 2025,
-      "authors": "J. Mattern, F. Mireshghallah, Z. Jin, B. Schölkopf, et al."
-    },
-    {
-      "title": "Who's Harry Potter? Approximate Unlearning in Large Language Models",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "R. Eldan, M. Russinovich"
-    },
-    {
-      "title": "MUSE: Machine Unlearning Six-Way Evaluation for Language Models",
-      "venue": "ICML",
-      "year": 2025,
-      "authors": "W. Shi, J. Lee, Y. Huang, S. Malladi, et al."
-    },
-    {
-      "title": "Diffusion-Guided Gradient Inversion: Reconstructing High-Resolution Images from Federated Updates",
-      "venue": "CVPR",
-      "year": 2025,
-      "authors": "H. Zhang, L. Wang, K. Chen, T. Goldstein"
-    },
-    {
-      "title": "Differentially Private Fine-tuning of Foundation Models with Tight Utility Bounds",
-      "venue": "Nature Machine Intelligence",
-      "year": 2024,
-      "authors": "X. Liu, F. Tramèr, A. Thakurta, et al."
+      "title": "Scalable Oversight via Debate",
+      "authors": "Irving et al.",
+      "year": 2018,
+      "venue": "arXiv"
     }
   ],
   "domain": "privacy_security",

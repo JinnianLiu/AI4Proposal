@@ -10,40 +10,40 @@
   ],
   "references": [
     {
-      "title": "Equivariant Diffusion for Pocket-Aware 3D Molecular Generation",
-      "venue": "NeurIPS",
+      "title": "Highly accurate protein structure prediction with AlphaFold",
+      "authors": "Jumper et al.",
+      "year": 2021,
+      "venue": "Nature"
+    },
+    {
+      "title": "Accurate structure prediction of biomolecular interactions with AlphaFold 3",
+      "authors": "Abramson et al.",
       "year": 2024,
-      "authors": "Schneider, M., Liu, Y., Tang, J., et al."
+      "venue": "Nature"
     },
     {
-      "title": "A Multi-Task Foundation Model for ADMET Prediction with Calibrated Uncertainty",
-      "venue": "Nature Machine Intelligence",
-      "year": 2024,
-      "authors": "Zhang, H., Patel, R., Wang, X., et al."
+      "title": "E(3)-equivariant graph neural networks for data-efficient protein design",
+      "authors": "Dauparas et al.",
+      "year": 2022,
+      "venue": "Science"
     },
     {
-      "title": "DiffDock-Pro: End-to-End Differentiable Docking at Billion-Scale Virtual Screening",
-      "venue": "ICML",
-      "year": 2025,
-      "authors": "Corso, G., Stark, H., Jaakkola, T., et al."
+      "title": "De novo design of protein structure with RFdiffusion",
+      "authors": "Watson et al.",
+      "year": 2023,
+      "venue": "Nature"
     },
     {
-      "title": "Universal Machine Learning Potentials for Protein-Ligand Free Energy Calculations",
-      "venue": "Nature",
-      "year": 2025,
-      "authors": "Chen, K., Müller, S., Anderson, P., et al."
+      "title": "Evolutionary-scale prediction of atomic-level protein structure",
+      "authors": "Lin et al.",
+      "year": 2023,
+      "venue": "Science"
     },
     {
-      "title": "Modeling Protein Conformational Ensembles for Induced-Fit Drug Design",
-      "venue": "Science",
-      "year": 2024,
-      "authors": "Li, W., Karplus, B., Huang, J., et al."
-    },
-    {
-      "title": "Out-of-Distribution Generalization in Molecular Property Prediction: A Benchmark Study",
-      "venue": "ICLR",
-      "year": 2025,
-      "authors": "Ramirez, A., Sun, Q., Goldberg, D., et al."
+      "title": "Learning skillful medium-range global weather forecasting",
+      "authors": "Lam et al.",
+      "year": 2023,
+      "venue": "Science"
     }
   ],
   "domain": "ai4science",

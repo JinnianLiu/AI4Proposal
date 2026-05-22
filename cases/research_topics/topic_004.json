@@ -10,40 +10,40 @@
   ],
   "references": [
     {
-      "title": "Towards Monosemanticity: Decomposing Language Models with Dictionary Learning at Scale",
-      "venue": "Transactions on Machine Learning Research (TMLR)",
-      "year": 2024,
-      "authors": "Bricken, T., Templeton, A., Batson, J., Chen, B., Jermyn, A., et al."
-    },
-    {
-      "title": "Scaling Monosemanticity: Extracting Causally Relevant Features from Frontier Language Models",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "Templeton, A., Conerly, T., Marcus, J., Lindsey, J., Bricken, T., et al."
-    },
-    {
-      "title": "Automated Circuit Discovery for Mechanistic Interpretability",
-      "venue": "NeurIPS",
+      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
+      "authors": "Zou et al.",
       "year": 2023,
-      "authors": "Conmy, A., Mavor-Parker, A. N., Lynch, A., Heimersheim, S., Garriga-Alonso, A."
+      "venue": "arXiv"
     },
     {
-      "title": "Causal Abstraction and Distributed Alignment Search for Interpreting Neural Networks",
-      "venue": "ICML",
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "authors": "Bai et al.",
+      "year": 2022,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "authors": "Rafailov et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "Jailbroken: How Does LLM Safety Training Fail?",
+      "authors": "Wei et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming",
+      "authors": "Mazeika et al.",
       "year": 2024,
-      "authors": "Geiger, A., Wu, Z., Potts, C., Icard, T., Goodman, N. D."
+      "venue": "ICML"
     },
     {
-      "title": "Feature Absorption and Splitting: Pathologies in Sparse Autoencoder Dictionaries",
-      "venue": "ICLR",
-      "year": 2025,
-      "authors": "Chanin, D., Wilken-Smith, J., Dulka, T., Bhatnagar, H., Bloom, J."
-    },
-    {
-      "title": "Sleeper Agents: Training Deceptive LLMs that Persist Through Safety Training",
-      "venue": "Nature Machine Intelligence",
-      "year": 2024,
-      "authors": "Hubinger, E., Denison, C., Mu, J., Lambert, M., MacDiarmid, M., et al."
+      "title": "Scalable Oversight via Debate",
+      "authors": "Irving et al.",
+      "year": 2018,
+      "venue": "arXiv"
     }
   ],
   "domain": "ai_safety",

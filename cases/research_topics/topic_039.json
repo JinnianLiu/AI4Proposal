@@ -10,40 +10,25 @@
   ],
   "references": [
     {
-      "title": "On the Linguistic Inequality of Large Language Models: A Comprehensive Evaluation across 100+ Languages",
-      "venue": "ACL",
-      "year": 2024,
-      "authors": "Ahuja K., Bansal S., Dandapat S., et al."
-    },
-    {
-      "title": "Hallucination Disparity in Multilingual LLMs: A Cross-Lingual Factuality Audit",
-      "venue": "EMNLP",
-      "year": 2024,
-      "authors": "Zhao W., Kim D., Mehta R., et al."
-    },
-    {
-      "title": "XLM-Align: Unsupervised Cross-Lingual Representation Alignment via Contrastive Pretraining",
-      "venue": "NeurIPS",
-      "year": 2023,
-      "authors": "Conneau A., Lample G., Ruder S., et al."
-    },
-    {
-      "title": "Dimensional Collapse in Multilingual Transformers: Why Cross-Lingual Transfer Fails on Distant Languages",
-      "venue": "ICML",
+      "title": "Efficient Long-context Language Model Training by Core Attention Disaggregation",
+      "authors": "Yonghao Zhuang, Junda Chen, Bo Pang",
       "year": 2025,
-      "authors": "Hu J., Chen L., Goyal N., et al."
+      "venue": "arXiv.org",
+      "paper_id": "8c5c5ebc629672c46c1ff37448bc8d7cab41299a"
     },
     {
-      "title": "CulturalBench: Probing the Cultural Adaptability of Large Language Models across 45 Societies",
-      "venue": "ACL",
+      "title": "SWAN-GPT: An Efficient and Scalable Approach for Long-Context Language Modeling",
+      "authors": "Krishna C. Puvvada, Faisal Ladhak, Santiago Akle Serrano",
       "year": 2025,
-      "authors": "Liu Y., Tanaka H., Okonkwo C., et al."
+      "venue": "arXiv.org",
+      "paper_id": "628ae4d9274dc1848cb32dd14267abeeee5ef1ae"
     },
     {
-      "title": "Balancing the Multilingual Seesaw: Curriculum-Aware Instruction Tuning for Low-Resource Languages",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "Wang X., Patel A., Schmidt L., et al."
+      "title": "TriangleMix: A Lossless and Efficient Attention Pattern for Long Context Prefilling",
+      "authors": "Zhiyuan He, Yike Zhang, Chengruidong Zhang",
+      "year": 2025,
+      "venue": "arXiv.org",
+      "paper_id": "569f24c9d95f34b4f88f687f0fd70080f6293337"
     }
   ],
   "domain": "nlp",

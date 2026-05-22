@@ -10,40 +10,25 @@
   ],
   "references": [
     {
-      "title": "3D Gaussian Splatting for Real-Time Radiance Field Rendering",
-      "venue": "ACM Transactions on Graphics (SIGGRAPH)",
-      "year": 2023,
-      "authors": "Kerbl, B., Kopanas, G., Leimkuhler, T., Drettakis, G."
-    },
-    {
-      "title": "LRM: Large Reconstruction Model for Single Image to 3D",
-      "venue": "ICLR",
-      "year": 2024,
-      "authors": "Hong, Y., Zhang, K., Gu, J., Bi, S., Zhou, Y., Liu, D., Liu, F., Sunkavalli, K., Bui, T., Tan, H."
-    },
-    {
-      "title": "MVSplat: Efficient 3D Gaussian Splatting from Sparse Multi-View Images",
-      "venue": "ECCV",
-      "year": 2024,
-      "authors": "Chen, Y., Xu, H., Zheng, C., Zhuang, B., Pollefeys, M., Geiger, A., Cham, T.-J., Cai, J."
-    },
-    {
-      "title": "LangSplat: 3D Language Gaussian Splatting for Open-Vocabulary Scene Understanding",
-      "venue": "CVPR",
-      "year": 2024,
-      "authors": "Qin, M., Li, W., Zhou, J., Wang, H., Pfister, H."
-    },
-    {
-      "title": "Zero123++: Consistent Multi-View Diffusion for Single-Image 3D Generation",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "Shi, R., Chen, H., Zhang, Z., Liu, M., Xu, C., Wei, X., Chen, L., Zeng, C., Su, H."
-    },
-    {
-      "title": "SparseGS-Prior: Diffusion-Regularized Gaussian Splatting under Extreme View Sparsity",
-      "venue": "CVPR",
+      "title": "CD4C: Change Detection for Remote Sensing Image Change Captioning",
+      "authors": "Xiliang Li, Bin Sun, Zhenhua Wu",
       "year": 2025,
-      "authors": "Park, J., Nguyen, A., Saito, S., Kanazawa, A."
+      "venue": "IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing",
+      "paper_id": "ecbae72fdf2529d29cb855803349b4603f94a6dd"
+    },
+    {
+      "title": "DSFI-CD: Diffusion-Guided Spatial-Frequency-Domain Information Interaction for Remote Sensing Image Change Detection",
+      "authors": "Xiaolong Li, Yonghui Tan, Kunming Liu",
+      "year": 2025,
+      "venue": "IEEE Transactions on Geoscience and Remote Sensing",
+      "paper_id": "74aa3a04d87cff6cc5c27c5f25c12f87463e522b"
+    },
+    {
+      "title": "RaHFF-Net: Recall-Adjustable Hierarchical Feature Fusion Network for Remote Sensing Image Change Detection",
+      "authors": "Bin Wang, Kang Zhao, Tong Xiao",
+      "year": 2025,
+      "venue": "IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing",
+      "paper_id": "adafd70672eeb806df4156f7654e8b2ead4d9175"
     }
   ],
   "domain": "vision",

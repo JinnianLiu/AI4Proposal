@@ -10,40 +10,40 @@
   ],
   "references": [
     {
-      "title": "Mastering Diverse Domains through World Models with Recurrent State-Space Priors",
-      "venue": "Nature",
+      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
+      "authors": "Zou et al.",
+      "year": 2023,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "authors": "Bai et al.",
+      "year": 2022,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "authors": "Rafailov et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "Jailbroken: How Does LLM Safety Training Fail?",
+      "authors": "Wei et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming",
+      "authors": "Mazeika et al.",
       "year": 2024,
-      "authors": "Hafner, D., Pasukonis, J., Ba, J., Lillicrap, T."
+      "venue": "ICML"
     },
     {
-      "title": "Transformer-based World Models for Sample-Efficient Robotic Manipulation",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "Micheli, V., Alonso, E., Fleuret, F."
-    },
-    {
-      "title": "Diffusion World Models: Multimodal Future Prediction for Long-Horizon Planning",
-      "venue": "ICML",
-      "year": 2025,
-      "authors": "Alonso, E., Jelley, A., Kanervisto, A., Pearce, T."
-    },
-    {
-      "title": "Genie-X: Action-Conditioned Video Generation as a Universal Physics Prior for Embodied Control",
-      "venue": "CVPR",
-      "year": 2025,
-      "authors": "Bruce, J., Dennis, M., Edwards, A., Parker-Holder, J."
-    },
-    {
-      "title": "Cross-Embodiment World Models: Disentangling Agent and Environment Dynamics at Scale",
-      "venue": "CoRL",
-      "year": 2025,
-      "authors": "Yang, M., Du, Y., Florence, P., Finn, C."
-    },
-    {
-      "title": "Bounding the Sim-to-Real Gap for Learned Dynamics: A PAC-Bayesian Perspective",
-      "venue": "ICLR",
-      "year": 2026,
-      "authors": "Ramos, F., Possas, R., Fox, D."
+      "title": "Scalable Oversight via Debate",
+      "authors": "Irving et al.",
+      "year": 2018,
+      "venue": "arXiv"
     }
   ],
   "domain": "embodied_ai",

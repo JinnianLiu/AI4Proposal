@@ -10,40 +10,40 @@
   ],
   "references": [
     {
-      "title": "DeepSeek-Prover-V2: Scaling Reinforcement Learning for Subgoal-Decomposed Theorem Proving in Lean 4",
-      "venue": "NeurIPS",
-      "year": 2025,
-      "authors": "Zhao, H., Liu, S., Chen, K., et al."
+      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
+      "authors": "Zou et al.",
+      "year": 2023,
+      "venue": "arXiv"
     },
     {
-      "title": "Lean-STaR: Learning to Interleave Thinking and Proving with Self-Taught Reasoners",
-      "venue": "ICLR",
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "authors": "Bai et al.",
+      "year": 2022,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "authors": "Rafailov et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "Jailbroken: How Does LLM Safety Training Fail?",
+      "authors": "Wei et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming",
+      "authors": "Mazeika et al.",
       "year": 2024,
-      "authors": "Lin, H., Sun, Z., Welleck, S., Yang, Y."
+      "venue": "ICML"
     },
     {
-      "title": "Conjecturing with Language Models: Significance, Surprise, and Selection in Automated Mathematical Discovery",
-      "venue": "ICML",
-      "year": 2025,
-      "authors": "Davies, A., Patel, R., Tao, M., Gowers, W."
-    },
-    {
-      "title": "HyperTree Proof Search with Learned Value Functions for Long-Horizon Formal Reasoning",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "Lample, G., Charton, F., Lacroix, T., et al."
-    },
-    {
-      "title": "FrontierMath: A Benchmark of Research-Level Mathematics for Evaluating AI Systems",
-      "venue": "Nature Machine Intelligence",
-      "year": 2025,
-      "authors": "Glazer, E., Erdil, E., Besiroglu, T., et al."
-    },
-    {
-      "title": "Autoformalization at Scale: Round-Trip Consistency for Translating Mathematical Texts into Lean",
-      "venue": "ACL",
-      "year": 2025,
-      "authors": "Wu, Y., Jiang, A., Polu, S., Szegedy, C."
+      "title": "Scalable Oversight via Debate",
+      "authors": "Irving et al.",
+      "year": 2018,
+      "venue": "arXiv"
     }
   ],
   "domain": "ai4math",

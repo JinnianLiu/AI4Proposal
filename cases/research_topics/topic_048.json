@@ -10,40 +10,40 @@
   ],
   "references": [
     {
-      "title": "Splitwise: Efficient Generative LLM Inference Using Phase Splitting",
-      "venue": "ISCA",
+      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
+      "authors": "Zou et al.",
+      "year": 2023,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "authors": "Bai et al.",
+      "year": 2022,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "authors": "Rafailov et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "Jailbroken: How Does LLM Safety Training Fail?",
+      "authors": "Wei et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming",
+      "authors": "Mazeika et al.",
       "year": 2024,
-      "authors": "Patel, P., Choukse, E., Zhang, C., Goiri, Í., Shah, A., Maleki, S., Bianchini, R."
+      "venue": "ICML"
     },
     {
-      "title": "DistServe: Disaggregating Prefill and Decoding for Goodput-Optimized Large Language Model Serving",
-      "venue": "OSDI",
-      "year": 2024,
-      "authors": "Zhong, Y., Liu, S., Chen, J., Hu, J., Zhu, Y., Liu, X., Jin, X., Zhang, H."
-    },
-    {
-      "title": "Mooncake: A KVCache-Centric Disaggregated Architecture for LLM Serving",
-      "venue": "FAST",
-      "year": 2025,
-      "authors": "Qin, R., Li, Z., He, W., Zhang, M., Wu, Y., Zheng, W., Xu, X."
-    },
-    {
-      "title": "H2O: Heavy-Hitter Oracle for Efficient Generative Inference of Large Language Models",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "Zhang, Z., Sheng, Y., Zhou, T., Chen, T., Zheng, L., Cai, R., Song, Z., Tian, Y., Ré, C., Barrett, C., Wang, Z., Chen, B."
-    },
-    {
-      "title": "Sarathi-Serve: Taming Throughput-Latency Tradeoffs in LLM Inference with Chunked Prefills",
-      "venue": "OSDI",
-      "year": 2024,
-      "authors": "Agrawal, A., Kedia, N., Panwar, A., Mohan, J., Kwatra, N., Gulavani, B., Tumanov, A., Ramjee, R."
-    },
-    {
-      "title": "HeteroServe: Topology-Aware Scheduling for LLM Inference on Heterogeneous GPU Clusters",
-      "venue": "SOSP",
-      "year": 2025,
-      "authors": "Lin, H., Park, S., Iyer, V., Chowdhury, M., Stoica, I."
+      "title": "Scalable Oversight via Debate",
+      "authors": "Irving et al.",
+      "year": 2018,
+      "venue": "arXiv"
     }
   ],
   "domain": "ai_infra",

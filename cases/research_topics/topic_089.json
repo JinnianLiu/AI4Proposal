@@ -9,40 +9,40 @@
   ],
   "references": [
     {
-      "title": "FlyWire: Community-Driven Reconstruction of the Adult Drosophila Brain Connectome",
-      "venue": "Nature",
+      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
+      "authors": "Zou et al.",
+      "year": 2023,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "authors": "Bai et al.",
+      "year": 2022,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "authors": "Rafailov et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "Jailbroken: How Does LLM Safety Training Fail?",
+      "authors": "Wei et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming",
+      "authors": "Mazeika et al.",
       "year": 2024,
-      "authors": "Dorkenwald, S., Matsliah, A., Sterling, A. R., et al."
+      "venue": "ICML"
     },
     {
-      "title": "A Petavoxel Fragment of Human Cerebral Cortex Reconstructed at Nanoscale Resolution",
-      "venue": "Science",
-      "year": 2024,
-      "authors": "Shapson-Coe, A., Januszewski, M., Berger, D. R., et al."
-    },
-    {
-      "title": "Transformer-Based Synapse Detection and Partner Assignment in Volumetric Electron Microscopy",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "Heinrich, L., Funke, J., Pape, C., et al."
-    },
-    {
-      "title": "Conserved Microcircuit Motifs Across Insect and Mammalian Visual Systems Revealed by Connectomic Comparison",
-      "venue": "Nature Neuroscience",
-      "year": 2025,
-      "authors": "Seung, H. S., Turaga, S. C., Briggman, K. L., et al."
-    },
-    {
-      "title": "Uncertainty-Guided Active Proofreading for Petascale Connectomics",
-      "venue": "CVPR",
-      "year": 2025,
-      "authors": "Lichtman, J. W., Pfister, H., Wei, D., et al."
-    },
-    {
-      "title": "Graph Matching and Spectral Alignment for Cross-Species Connectome Comparison",
-      "venue": "ICML",
-      "year": 2025,
-      "authors": "Vogelstein, J. T., Priebe, C. E., Chung, J., et al."
+      "title": "Scalable Oversight via Debate",
+      "authors": "Irving et al.",
+      "year": 2018,
+      "venue": "arXiv"
     }
   ],
   "domain": "ai_neuroscience",

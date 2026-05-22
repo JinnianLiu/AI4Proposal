@@ -10,40 +10,25 @@
   ],
   "references": [
     {
-      "title": "Hierarchical Whole-Body Model Predictive Control for Dynamic Humanoid Locomotion",
-      "venue": "IEEE Transactions on Robotics",
+      "title": "Being-H0.5: Scaling Human-Centric Robot Learning for Cross-Embodiment Generalization",
+      "authors": "Hao Luo, Ye Wang, Wanpeng Zhang",
+      "year": 2026,
+      "venue": "arXiv.org",
+      "paper_id": "18fb83f0f7b910e53f4da81cf1307b55fda94bd2"
+    },
+    {
+      "title": "JoyAI-RA 0.1: A Foundation Model for Robotic Autonomy",
+      "authors": "Tianle Zhang, Zhihao Yuan, Dafeng Chi",
+      "year": 2026,
+      "venue": "",
+      "paper_id": "f4b6430e443e860d3461906d3c087f2824ed9c86"
+    },
+    {
+      "title": "Instant Policy: In-Context Imitation Learning via Graph Diffusion",
+      "authors": "Vitalis Vosylius, Edward Johns",
       "year": 2024,
-      "authors": "Kim D., Jorgensen S., Sentis L., et al."
-    },
-    {
-      "title": "Learning Robust Bipedal Locomotion Across Diverse Terrains via Massively Parallel Reinforcement Learning",
-      "venue": "Science Robotics",
-      "year": 2024,
-      "authors": "Radosavovic I., Xiao T., Darrell T., et al."
-    },
-    {
-      "title": "Expressive Whole-Body Control for Humanoid Robots",
-      "venue": "Robotics: Science and Systems (RSS)",
-      "year": 2024,
-      "authors": "Cheng X., Ji Y., Chen J., Pathak D."
-    },
-    {
-      "title": "Loco-Manipulation: Unified Whole-Body Optimization for Mobile Manipulation",
-      "venue": "IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)",
-      "year": 2025,
-      "authors": "Sleiman J.-P., Farshidian F., Hutter M."
-    },
-    {
-      "title": "Diffusion-Based Whole-Body Motion Generation for Humanoid Robots",
-      "venue": "Conference on Neural Information Processing Systems (NeurIPS)",
-      "year": 2024,
-      "authors": "He T., Luo Z., Xiao W., et al."
-    },
-    {
-      "title": "Stochastic Contact Dynamics for Robust Legged Locomotion on Deformable Terrains",
-      "venue": "IEEE Transactions on Robotics",
-      "year": 2025,
-      "authors": "Grandia R., Jenelten F., Hutter M."
+      "venue": "International Conference on Learning Representations",
+      "paper_id": "265949dbad33701f01bc629593ec701ec5b862fd"
     }
   ],
   "domain": "robotics",

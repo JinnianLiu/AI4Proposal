@@ -10,40 +10,40 @@
   ],
   "references": [
     {
-      "title": "OpenVLA: An Open-Source Vision-Language-Action Model for Generalist Robot Manipulation",
-      "venue": "NeurIPS",
+      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
+      "authors": "Zou et al.",
+      "year": 2023,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "authors": "Bai et al.",
+      "year": 2022,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "authors": "Rafailov et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "Jailbroken: How Does LLM Safety Training Fail?",
+      "authors": "Wei et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming",
+      "authors": "Mazeika et al.",
       "year": 2024,
-      "authors": "Kim, M.J., Pertsch, K., Karamcheti, S., et al."
+      "venue": "ICML"
     },
     {
-      "title": "Diffusion Policy: Visuomotor Policy Learning via Action Diffusion",
-      "venue": "IJRR (扩展版)",
-      "year": 2024,
-      "authors": "Chi, C., Feng, S., Du, Y., et al."
-    },
-    {
-      "title": "Differentiable Simulation of Contact-Rich Manipulation with Implicit Time-Stepping",
-      "venue": "ICML",
-      "year": 2025,
-      "authors": "Howell, T., Pan, Z., Suh, H.J., Tedrake, R."
-    },
-    {
-      "title": "TVL: Tactile-Vision-Language Pretraining for Contact-Rich Manipulation",
-      "venue": "CVPR",
-      "year": 2025,
-      "authors": "Yang, J., Liu, H., Fu, L., Goldberg, K., Abbeel, P."
-    },
-    {
-      "title": "Force-Aware Imitation Learning for Precise Assembly Tasks",
-      "venue": "CoRL",
-      "year": 2024,
-      "authors": "张伟, Hou, Y., Liu, X., 王晓东, Zhao, F."
-    },
-    {
-      "title": "Physics-Informed Hierarchical Planning for Long-Horizon Deformable Object Manipulation",
-      "venue": "Science Robotics",
-      "year": 2025,
-      "authors": "Lin, X., Huang, Z., Li, Y., Tenenbaum, J.B., Held, D."
+      "title": "Scalable Oversight via Debate",
+      "authors": "Irving et al.",
+      "year": 2018,
+      "venue": "arXiv"
     }
   ],
   "domain": "embodied_ai",

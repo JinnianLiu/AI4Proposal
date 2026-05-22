@@ -10,40 +10,40 @@
   ],
   "references": [
     {
-      "title": "Beyond Answer Generation: Evaluating Pedagogical Behaviors of LLM Tutors in K-12 Mathematics",
-      "venue": "ACL",
+      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
+      "authors": "Zou et al.",
+      "year": 2023,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "authors": "Bai et al.",
+      "year": 2022,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "authors": "Rafailov et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "Jailbroken: How Does LLM Safety Training Fail?",
+      "authors": "Wei et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming",
+      "authors": "Mazeika et al.",
       "year": 2024,
-      "authors": "Macina, J., Daheim, N., Wang, R., Sinha, A., Kasneci, E."
+      "venue": "ICML"
     },
     {
-      "title": "SocraticLM: Eliciting Productive Struggle through Question-Driven Dialogue Policies",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "Chen, L., Patel, S., Nguyen, H., Koedinger, K."
-    },
-    {
-      "title": "Tracking Knowledge States in Open-Ended Tutorial Dialogue with Neural Bayesian Knowledge Tracing",
-      "venue": "EMNLP",
-      "year": 2025,
-      "authors": "Ramirez, D., Liu, Y., Aleven, V., Stamper, J."
-    },
-    {
-      "title": "From Detection to Remediation: A Cognitive-Model-Aware Framework for Addressing Algebraic Misconceptions",
-      "venue": "AIED (Springer)",
-      "year": 2025,
-      "authors": "Okafor, C., Heffernan, N., Botelho, A., Selent, D."
-    },
-    {
-      "title": "Auditing Disparities in Conversational AI Tutors Across Student Demographics",
-      "venue": "FAccT",
-      "year": 2024,
-      "authors": "Williams, T., Park, J., Buolamwini, J., Reich, J."
-    },
-    {
-      "title": "Toward Culturally Responsive Generative Tutors: Principles, Methods, and Open Problems",
-      "venue": "Nature Human Behaviour",
-      "year": 2026,
-      "authors": "Gay, G., Vossoughi, S., Dasgupta, N., Ladson-Billings, G."
+      "title": "Scalable Oversight via Debate",
+      "authors": "Irving et al.",
+      "year": 2018,
+      "venue": "arXiv"
     }
   ],
   "domain": "ai_education",

@@ -10,40 +10,40 @@
   ],
   "references": [
     {
-      "title": "AlphaProof: Neural-Guided Formal Reasoning at Olympiad Level",
-      "venue": "Nature",
-      "year": 2025,
-      "authors": "Hubert, T., Schrittwieser, J., et al."
+      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
+      "authors": "Zou et al.",
+      "year": 2023,
+      "venue": "arXiv"
     },
     {
-      "title": "Generative Language Modeling for Automated Theorem Proving",
-      "venue": "NeurIPS",
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "authors": "Bai et al.",
+      "year": 2022,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "authors": "Rafailov et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "Jailbroken: How Does LLM Safety Training Fail?",
+      "authors": "Wei et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming",
+      "authors": "Mazeika et al.",
       "year": 2024,
-      "authors": "Polu, S., Han, J., Sutskever, I."
+      "venue": "ICML"
     },
     {
-      "title": "LeanDojo: Theorem Proving with Retrieval-Augmented Language Models",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "Yang, K., Swope, A., Gu, A., et al."
-    },
-    {
-      "title": "Advancing Mathematics by Guiding Human Intuition with AI",
-      "venue": "Nature",
-      "year": 2024,
-      "authors": "Davies, A., Veličković, P., Buesing, L., et al."
-    },
-    {
-      "title": "Mathematical Discoveries from Program Search with Large Language Models",
-      "venue": "Nature",
-      "year": 2024,
-      "authors": "Romera-Paredes, B., Barekatain, M., Novikov, A., et al."
-    },
-    {
-      "title": "Autoformalization with Large Language Models for Research-Level Mathematics",
-      "venue": "ICML",
-      "year": 2025,
-      "authors": "Wu, Y., Jiang, A. Q., Li, W., et al."
+      "title": "Scalable Oversight via Debate",
+      "authors": "Irving et al.",
+      "year": 2018,
+      "venue": "arXiv"
     }
   ],
   "domain": "ai4math",

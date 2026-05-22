@@ -10,40 +10,40 @@
   ],
   "references": [
     {
-      "title": "Toward AI-Native 6G Wireless Networks: Vision, Architecture, and Open Challenges",
-      "venue": "IEEE Journal on Selected Areas in Communications",
+      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
+      "authors": "Zou et al.",
+      "year": 2023,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "authors": "Bai et al.",
+      "year": 2022,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "authors": "Rafailov et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "Jailbroken: How Does LLM Safety Training Fail?",
+      "authors": "Wei et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming",
+      "authors": "Mazeika et al.",
       "year": 2024,
-      "authors": "Saad W., Bennis M., Chen M., et al."
+      "venue": "ICML"
     },
     {
-      "title": "Multi-Agent Deep Reinforcement Learning for Joint Resource Allocation in Ultra-Dense Heterogeneous 6G Networks",
-      "venue": "IEEE Transactions on Wireless Communications",
-      "year": 2024,
-      "authors": "Liu Y., Wang H., Zhao K., et al."
-    },
-    {
-      "title": "ChannelFormer: A Transformer-based Framework for High-Mobility Millimeter-Wave Channel Prediction and Beam Tracking",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "Zhang R., Li X., Chen J., Poor H.V."
-    },
-    {
-      "title": "Graph Neural Networks for Intent-Driven End-to-End Network Slicing in 6G",
-      "venue": "IEEE/ACM Transactions on Networking",
-      "year": 2025,
-      "authors": "Sun Q., Zhou F., Niyato D., et al."
-    },
-    {
-      "title": "Hierarchical Reinforcement Learning for Cross-Domain Service Function Chain Orchestration with SLA Guarantees",
-      "venue": "INFOCOM",
-      "year": 2025,
-      "authors": "Wang L., Cheng X., Buyya R."
-    },
-    {
-      "title": "On the Generalization and Robustness of Deep Reinforcement Learning Policies in Dynamic Wireless Environments",
-      "venue": "ICML",
-      "year": 2025,
-      "authors": "Hoydis J., ten Brink S., Goldsmith A., et al."
+      "title": "Scalable Oversight via Debate",
+      "authors": "Irving et al.",
+      "year": 2018,
+      "venue": "arXiv"
     }
   ],
   "domain": "ai_networks",

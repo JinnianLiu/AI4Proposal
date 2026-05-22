@@ -10,40 +10,40 @@
   ],
   "references": [
     {
-      "title": "End-to-End Learning of OFDM Waveforms with Hardware Impairments: A Differentiable Physical Layer",
-      "venue": "IEEE Journal on Selected Areas in Communications",
+      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
+      "authors": "Zou et al.",
+      "year": 2023,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "authors": "Bai et al.",
+      "year": 2022,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "authors": "Rafailov et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "Jailbroken: How Does LLM Safety Training Fail?",
+      "authors": "Wei et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming",
+      "authors": "Mazeika et al.",
       "year": 2024,
-      "authors": "Hoydis, J., Cammerer, S., Aoudia, F. A., et al."
+      "venue": "ICML"
     },
     {
-      "title": "Goal-Oriented Semantic Communication: An Information-Bottleneck Perspective",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "Xie, H., Qin, Z., Li, G. Y., Juang, B.-H."
-    },
-    {
-      "title": "OpenRAN Gym: An Open Experimental Toolbox for Data-Driven O-RAN Research",
-      "venue": "IEEE Communications Magazine",
-      "year": 2024,
-      "authors": "Bonati, L., Polese, M., D'Oro, S., Melodia, T."
-    },
-    {
-      "title": "Federated Multi-Agent Reinforcement Learning for Dynamic Spectrum Access in Heterogeneous Networks",
-      "venue": "ICML",
-      "year": 2025,
-      "authors": "Zhang, Y., Park, J., Bennis, M., Debbah, M."
-    },
-    {
-      "title": "Robustness of Neural Receivers under Distribution Shift: A Benchmark Study",
-      "venue": "IEEE Transactions on Wireless Communications",
-      "year": 2025,
-      "authors": "Cammerer, S., Aoudia, F. A., ten Brink, S."
-    },
-    {
-      "title": "Conflict Mitigation and Safety Verification for xApps in O-RAN Near-RT RIC",
-      "venue": "ACM SIGCOMM",
-      "year": 2025,
-      "authors": "D'Oro, S., Polese, M., Bonati, L., Restuccia, F., Melodia, T."
+      "title": "Scalable Oversight via Debate",
+      "authors": "Irving et al.",
+      "year": 2018,
+      "venue": "arXiv"
     }
   ],
   "domain": "ai_networks",

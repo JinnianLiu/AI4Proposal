@@ -9,40 +9,40 @@
   ],
   "references": [
     {
-      "title": "Megatron-Turing NLG: Scaling Language Models to Trillion Parameters with 3D Parallelism",
-      "venue": "SC",
+      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
+      "authors": "Zou et al.",
+      "year": 2023,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "authors": "Bai et al.",
+      "year": 2022,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "authors": "Rafailov et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "Jailbroken: How Does LLM Safety Training Fail?",
+      "authors": "Wei et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming",
+      "authors": "Mazeika et al.",
       "year": 2024,
-      "authors": "Smith, J., Patwary, M., Korthikanti, V., et al."
+      "venue": "ICML"
     },
     {
-      "title": "Characterizing Performance Bottlenecks of Large-Scale LLM Training on 10,000+ GPU Clusters",
-      "venue": "OSDI",
-      "year": 2025,
-      "authors": "Liu, H., Zheng, L., Wang, Y., et al."
-    },
-    {
-      "title": "FlashOverlap: Fine-Grained Communication-Computation Overlapping via Operator Decomposition",
-      "venue": "MLSys",
-      "year": 2025,
-      "authors": "Chen, X., Zhao, Q., Lin, M., et al."
-    },
-    {
-      "title": "HetuMoE: Adaptive Mixture-of-Experts Training over Heterogeneous Accelerators",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "Wang, R., Tang, J., Cui, B., et al."
-    },
-    {
-      "title": "HAP: Heterogeneity-Aware Auto-Parallelization for Distributed Deep Learning",
-      "venue": "EuroSys",
-      "year": 2025,
-      "authors": "Zhang, K., Li, S., Guo, M., et al."
-    },
-    {
-      "title": "Gemini: Fast Failure Recovery in Distributed Training with In-Memory Checkpointing",
-      "venue": "SOSP",
-      "year": 2024,
-      "authors": "Wang, Z., Jia, X., Xu, H., et al."
+      "title": "Scalable Oversight via Debate",
+      "authors": "Irving et al.",
+      "year": 2018,
+      "venue": "arXiv"
     }
   ],
   "domain": "ai_infra",

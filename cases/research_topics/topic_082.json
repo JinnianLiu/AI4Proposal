@@ -10,40 +10,40 @@
   ],
   "references": [
     {
-      "title": "RegimeBench: Evaluating Deep Forecasters Across Structural Breaks in Financial Time Series",
-      "venue": "NeurIPS",
+      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
+      "authors": "Zou et al.",
+      "year": 2023,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "authors": "Bai et al.",
+      "year": 2022,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "authors": "Rafailov et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "Jailbroken: How Does LLM Safety Training Fail?",
+      "authors": "Wei et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming",
+      "authors": "Mazeika et al.",
       "year": 2024,
-      "authors": "Chen, L., Patel, R., Vorobyev, A., Goldfarb-Tarrant, S."
+      "venue": "ICML"
     },
     {
-      "title": "Miscalibration of Transformer Price Models During Volatility Regimes",
-      "venue": "ICML",
-      "year": 2025,
-      "authors": "Nakamura, H., Ostrovsky, M., Bianchi, F."
-    },
-    {
-      "title": "Reflexive Distribution Shift: When Deployment Changes the Data-Generating Process",
-      "venue": "Journal of Machine Learning Research",
-      "year": 2024,
-      "authors": "Arjovsky, M., Diaconis, P., Lehmann, K."
-    },
-    {
-      "title": "High-Frequency Causal Inference for Monetary Policy Surprises via Double Machine Learning",
-      "venue": "Quarterly Journal of Economics",
-      "year": 2025,
-      "authors": "Athey, S., Imbens, G., Rambachan, A., Wager, S."
-    },
-    {
-      "title": "Adversarial Order-Book Perturbations: Realistic Attacks on Deep Trading Models",
-      "venue": "IEEE Symposium on Security and Privacy",
-      "year": 2024,
-      "authors": "Lin, Y., Tramer, F., Cohen, R., Madry, A."
-    },
-    {
-      "title": "Certified Robustness for Sequential Decision Systems Under Strategic Adversaries",
-      "venue": "ICLR",
-      "year": 2026,
-      "authors": "Sinha, A., Duchi, J., Wellman, M., Cartea, A."
+      "title": "Scalable Oversight via Debate",
+      "authors": "Irving et al.",
+      "year": 2018,
+      "venue": "arXiv"
     }
   ],
   "domain": "ai_finance",

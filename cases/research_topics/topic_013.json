@@ -10,40 +10,25 @@
   ],
   "references": [
     {
-      "title": "MedCLIP: Contrastive Learning from Unpaired Medical Images and Text",
-      "venue": "EMNLP",
-      "year": 2024,
-      "authors": "Wang Z., Wu Z., Agarwal D., Sun J."
-    },
-    {
-      "title": "BiomedGPT: A Generalist Vision-Language Foundation Model for Diverse Biomedical Tasks",
-      "venue": "Nature Medicine",
+      "title": "ChatVLA: Unified Multimodal Understanding and Robot Control with Vision-Language-Action Model",
+      "authors": "Zhongyi Zhou, Yichen Zhu, Minjie Zhu",
       "year": 2025,
-      "authors": "Zhang K., Yang X., Wang J., et al."
+      "venue": "Conference on Empirical Methods in Natural Language Processing",
+      "paper_id": "5976a31d1b0f3edb4032803168e33cb7fdacb5a4"
     },
     {
-      "title": "PathChat: A Multimodal Generative AI Copilot for Human Pathology",
-      "venue": "Nature",
-      "year": 2024,
-      "authors": "Lu M. Y., Chen B., Williamson D. F. K., Mahmood F."
+      "title": "Qwen-VL: A Versatile Vision-Language Model for Understanding, Localization, Text Reading, and Beyond",
+      "authors": "Jinze Bai, Shuai Bai, Shusheng Yang",
+      "year": 2023,
+      "venue": "",
+      "paper_id": "fc6a2f7478f68adefd69e2071f27e38aa1647f2f"
     },
     {
-      "title": "Hierarchical Cross-Modal Transformer for Joint CT-Report Representation Learning",
-      "venue": "CVPR",
+      "title": "Evaluating Multimodal Vision-Language Model Prompting Strategies for Visual Question Answering in Road Scene Understanding",
+      "authors": "Aryan Keskar, Srinivasa Perisetla, Ross Greer",
       "year": 2025,
-      "authors": "Tang Y., Liu H., Chen S., et al."
-    },
-    {
-      "title": "MOSAIC: Multi-Omics and Histopathology Integration via Contrastive Self-Supervised Learning",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "Patel R., Kumar A., Singh V., et al."
-    },
-    {
-      "title": "Mitigating Hallucinations in Medical Vision-Language Models via Knowledge-Grounded Decoding",
-      "venue": "ICML",
-      "year": 2025,
-      "authors": "Li J., Zhao M., Huang Q., et al."
+      "venue": "2025 IEEE/CVF Winter Conference on Applications of Computer Vision Workshops (WACVW)",
+      "paper_id": "709a70e76d9a88a6230589b038b2333922a707c6"
     }
   ],
   "domain": "multimodal",

@@ -10,40 +10,40 @@
   ],
   "references": [
     {
-      "title": "Beyond Preference Aggregation: Pluralistic Alignment for Large Language Models",
-      "venue": "NeurIPS",
+      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
+      "authors": "Zou et al.",
+      "year": 2023,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "authors": "Bai et al.",
+      "year": 2022,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "authors": "Rafailov et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "Jailbroken: How Does LLM Safety Training Fail?",
+      "authors": "Wei et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming",
+      "authors": "Mazeika et al.",
       "year": 2024,
-      "authors": "Sorensen, T., Jiang, L., Hwang, J., Levine, S., Pyatkin, V., West, P., Smith, N., Choi, Y."
+      "venue": "ICML"
     },
     {
-      "title": "Constitutional AI Revisited: Auditing Whose Constitution Governs Frontier Models",
-      "venue": "FAccT",
-      "year": 2024,
-      "authors": "Bender, E., Gebru, T., Raji, I., Hanna, A."
-    },
-    {
-      "title": "Representative and Robust: A Statistical Framework for Community-Driven Model Evaluation",
-      "venue": "ICML",
-      "year": 2025,
-      "authors": "Kapoor, S., Narayanan, A., Bommasani, R., Liang, P."
-    },
-    {
-      "title": "Social Choice Theory Meets RLHF: Aggregating Heterogeneous Human Feedback",
-      "venue": "ICLR",
-      "year": 2025,
-      "authors": "Conitzer, V., Procaccia, A., Freedman, R., Mishra, S."
-    },
-    {
-      "title": "Scalable Deliberation: Lessons from Polis and Community Notes for AI Governance",
-      "venue": "Nature Machine Intelligence",
-      "year": 2024,
-      "authors": "Ovadya, A., Landemore, H., Small, C., Megill, C."
-    },
-    {
-      "title": "Decentralized Oversight: Cryptographic Audits and Federated Red-Teaming for Foundation Models",
-      "venue": "USENIX Security",
-      "year": 2025,
-      "authors": "Chowdhury, R., Solaiman, I., Brundage, M., Sastry, G."
+      "title": "Scalable Oversight via Debate",
+      "authors": "Irving et al.",
+      "year": 2018,
+      "venue": "arXiv"
     }
   ],
   "domain": "ai_society",

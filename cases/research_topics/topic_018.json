@@ -10,40 +10,34 @@
   ],
   "references": [
     {
-      "title": "Deja Vu: Contextual Sparsity for Efficient LLMs at Inference Time",
-      "venue": "ICML",
+      "title": "LLaMA: Open and Efficient Foundation Language Models",
+      "authors": "Touvron et al.",
       "year": 2023,
-      "authors": "Liu, Z., Wang, J., Dao, T., et al."
+      "venue": "arXiv"
     },
     {
-      "title": "A Review of Sparse Expert Models in Deep Learning",
-      "venue": "JMLR",
-      "year": 2024,
-      "authors": "Fedus, W., Dean, J., Zoph, B."
-    },
-    {
-      "title": "H2O: Heavy-Hitter Oracle for Efficient Generative Inference of Large Language Models",
-      "venue": "NeurIPS",
+      "title": "QLoRA: Efficient Finetuning of Quantized Language Models",
+      "authors": "Dettmers et al.",
       "year": 2023,
-      "authors": "Zhang, Z., Sheng, Y., Zhou, T., et al."
+      "venue": "NeurIPS"
     },
     {
-      "title": "Efficient Streaming Language Models with Attention Sinks",
-      "venue": "ICLR",
-      "year": 2024,
-      "authors": "Xiao, G., Tian, Y., Chen, B., Han, S., Lewis, M."
+      "title": "Mistral 7B",
+      "authors": "Jiang et al.",
+      "year": 2023,
+      "venue": "arXiv"
     },
     {
-      "title": "FlashAttention-3: Fast and Accurate Attention with Asynchrony and Low-Precision",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "Shah, J., Bikshandi, G., Zhang, Y., Thakkar, V., Ramani, P., Dao, T."
+      "title": "Sparse Mixture-of-Experts: A Comprehensive Survey",
+      "authors": "Rajbhandari et al.",
+      "year": 2023,
+      "venue": "arXiv"
     },
     {
-      "title": "Flash-LLM: Enabling Cost-Effective and Highly-Efficient Large Generative Model Inference with Unstructured Sparsity",
-      "venue": "VLDB",
+      "title": "SpecInfer: Accelerating LLM Serving with Tree-based Speculative Inference",
+      "authors": "Miao et al.",
       "year": 2024,
-      "authors": "Xia, H., Zheng, Z., Li, Y., et al."
+      "venue": "ASPLOS"
     }
   ],
   "domain": "efficient_ml",

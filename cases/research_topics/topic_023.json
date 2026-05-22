@@ -11,40 +11,25 @@
   ],
   "references": [
     {
-      "title": "Pangu-Weather: Accurate Medium-Range Global Weather Forecasting with 3D Neural Networks",
-      "venue": "Nature",
-      "year": 2023,
-      "authors": "Bi, K., Xie, L., Zhang, H., et al."
-    },
-    {
-      "title": "GraphCast: Learning Skillful Medium-Range Global Weather Forecasting",
-      "venue": "Science",
-      "year": 2023,
-      "authors": "Lam, R., Sanchez-Gonzalez, A., Willson, M., et al."
-    },
-    {
-      "title": "ClimaX: A Foundation Model for Weather and Climate",
-      "venue": "ICML",
-      "year": 2023,
-      "authors": "Nguyen, T., Brandstetter, J., Kapoor, A., et al."
-    },
-    {
-      "title": "Probabilistic Weather Forecasting with Machine Learning via Diffusion Models (GenCast)",
-      "venue": "Nature",
-      "year": 2024,
-      "authors": "Price, I., Sanchez-Gonzalez, A., Alet, F., et al."
-    },
-    {
-      "title": "Physics-Constrained Neural Operators for Multi-Scale Atmospheric Dynamics",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "Kurth, T., Subramanian, S., Harrington, P., et al."
-    },
-    {
-      "title": "Causal Attribution of Extreme Weather Events with Deep Generative Climate Emulators",
-      "venue": "Nature Climate Change",
+      "title": "Accelerated discovery of ultraincompressible, superhard materials via physics-enhanced active learning.",
+      "authors": "Xiaoang Yuan, Bo Zhu, Chunbo Zhang",
       "year": 2025,
-      "authors": "Watson-Parris, D., Rasp, S., Yuan, X., et al."
+      "venue": "Materials Horizons",
+      "paper_id": "9b946d406c8d630e9d539695b071493a8763298b"
+    },
+    {
+      "title": "Accelerating the Discovery of g-C3N4-Supported Single Atom Catalysts for Hydrogen Evolution Reaction: A Combined DFT and Machine Learning Strategy",
+      "authors": "M. V. Jyothirmai, D. Roshini, B. Abraham",
+      "year": 2022,
+      "venue": "ACS Applied Energy Materials",
+      "paper_id": "b084b92d3d5b997478d23341fa5048a8a6a5636b"
+    },
+    {
+      "title": "Quantum Chemistry-Informed Active Learning to Accelerate the Design and Discovery of Sustainable Energy Storage Materials",
+      "authors": "Hieu A. Doan, G. Agarwal, H. Qian",
+      "year": 2020,
+      "venue": "Chemistry of Materials",
+      "paper_id": "971c98722a17f6dfd183e136f45a1ae23a8412d9"
     }
   ],
   "domain": "ai4science",

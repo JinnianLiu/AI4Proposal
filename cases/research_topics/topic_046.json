@@ -10,40 +10,40 @@
   ],
   "references": [
     {
-      "title": "Oriented R-CNN++: Rethinking Rotated Object Detection with Hierarchical Query Transformers",
-      "venue": "CVPR",
-      "year": 2024,
-      "authors": "Xie, J., Cheng, G., Han, J., et al."
-    },
-    {
-      "title": "Spatiotemporal Attention Siamese Network for Robust Change Detection in Bi-Temporal Remote Sensing Imagery",
-      "venue": "IEEE TPAMI",
-      "year": 2024,
-      "authors": "Chen, H., Zhang, L., Shi, Z."
-    },
-    {
-      "title": "BIT-CD: Bitemporal Image Transformer for Remote Sensing Change Detection",
-      "venue": "IEEE TGRS",
+      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
+      "authors": "Zou et al.",
       "year": 2023,
-      "authors": "Chen, H., Qi, Z., Shi, Z."
+      "venue": "arXiv"
     },
     {
-      "title": "Cross-Modal Alignment of Optical, SAR and Hyperspectral Imagery via Contrastive Geometric Embedding",
-      "venue": "ISPRS Journal of Photogrammetry and Remote Sensing",
-      "year": 2025,
-      "authors": "Hong, D., Yokoya, N., Chanussot, J., et al."
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "authors": "Bai et al.",
+      "year": 2022,
+      "venue": "arXiv"
     },
     {
-      "title": "CLIP-RS: Vision-Language Pretraining for Remote Sensing Foundation Models",
-      "venue": "NeurIPS",
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "authors": "Rafailov et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "Jailbroken: How Does LLM Safety Training Fail?",
+      "authors": "Wei et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming",
+      "authors": "Mazeika et al.",
       "year": 2024,
-      "authors": "Liu, F., Chen, D., Zhang, J., et al."
+      "venue": "ICML"
     },
     {
-      "title": "SatMAE++: Scale-Aware Masked Autoencoders for Multi-Resolution Satellite Imagery Pretraining",
-      "venue": "ICCV",
-      "year": 2025,
-      "authors": "Cong, Y., Khanna, S., Meng, C., et al."
+      "title": "Scalable Oversight via Debate",
+      "authors": "Irving et al.",
+      "year": 2018,
+      "venue": "arXiv"
     }
   ],
   "domain": "vision",

@@ -10,40 +10,25 @@
   ],
   "references": [
     {
-      "title": "Federated learning for predicting clinical outcomes in patients with COVID-19",
-      "venue": "Nature Medicine",
+      "title": "CFD and Artificial Intelligence-Based Machine Learning Synergy for the Assessment of Syngas-Utilizing Pre-Reformer in r-SOC Technology Advancement",
+      "authors": "M. M. Peksen",
       "year": 2024,
-      "authors": "Dayan, I., Roth, H. R., Zhong, A., et al."
+      "venue": "Applied Sciences",
+      "paper_id": "e5f758dedd14208885f43331050ea59095886776"
     },
     {
-      "title": "Multi-institutional Federated Learning for Oncology Imaging without Data Sharing",
-      "venue": "Nature Biomedical Engineering",
-      "year": 2025,
-      "authors": "Pati, S., Baid, U., Edwards, B., et al."
-    },
-    {
-      "title": "FedProx-Clinical: Tackling Statistical Heterogeneity in EHR-based Federated Learning",
-      "venue": "NeurIPS",
+      "title": "The Role of Data Engineering in Enabling Machine Learning and Artificial Intelligence",
+      "authors": "R. Sridhar, I. Kanani, R. Dhenia",
       "year": 2024,
-      "authors": "Li, T., Sahu, A. K., Chen, M., Smith, V."
+      "venue": "International Journal of Artificial Intelligence, Data Science and Machine Learning",
+      "paper_id": "7b223ba6b10dd24cd3f181b633025ba7c1418e98"
     },
     {
-      "title": "Auditable Differential Privacy for Federated Medical Imaging at Hospital Scale",
-      "venue": "ICML",
-      "year": 2025,
-      "authors": "Kaissis, G., Ziller, A., Passerat-Palmbach, J., Rueckert, D."
-    },
-    {
-      "title": "Reconstructing Patient Chest X-rays from Federated Gradient Updates",
-      "venue": "IEEE S&P",
-      "year": 2025,
-      "authors": "Huang, Y., Gupta, S., Zhao, H., Song, D."
-    },
-    {
-      "title": "On the Limits of Byzantine-Robust Aggregation under Non-IID Clinical Distributions",
-      "venue": "ICLR",
-      "year": 2026,
-      "authors": "Karimireddy, S. P., He, L., Jaggi, M."
+      "title": "Research on the Application of Machine Learning Algorithm in Artificial Intelligence Product Recommendation System",
+      "authors": "Yuchen Lai",
+      "year": 2024,
+      "venue": "2024 International Conference on Telecommunications and Power Electronics (TELEPE)",
+      "paper_id": "00f988fbb2e488713ca116729b51e84a5a8520ff"
     }
   ],
   "domain": "healthcare_ai",

@@ -10,40 +10,40 @@
   ],
   "references": [
     {
-      "title": "BirdNET-Analyzer v2: Scaling Avian Bioacoustic Recognition to 10,000 Species with Self-Supervised Pretraining",
-      "venue": "Nature Methods",
+      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
+      "authors": "Zou et al.",
+      "year": 2023,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "authors": "Bai et al.",
+      "year": 2022,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "authors": "Rafailov et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "Jailbroken: How Does LLM Safety Training Fail?",
+      "authors": "Wei et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming",
+      "authors": "Mazeika et al.",
       "year": 2024,
-      "authors": "Kahl, S., Stowell, D., Klinck, H., et al."
+      "venue": "ICML"
     },
     {
-      "title": "MegaDetector-Eco: A Foundation Model for Camera Trap Wildlife Detection across 142 Ecoregions",
-      "venue": "CVPR",
-      "year": 2025,
-      "authors": "Beery, S., Morris, D., Yang, X., Perona, P."
-    },
-    {
-      "title": "Deep Species Distribution Modeling under SSP Climate Scenarios: A Continental Benchmark",
-      "venue": "Nature Climate Change",
-      "year": 2024,
-      "authors": "Cole, E., Mac Aodha, O., Lorieul, T., Joly, A."
-    },
-    {
-      "title": "GeoCLIP-Bio: Contrastive Multimodal Pretraining for Label-Efficient Biodiversity Recognition",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "Vivanco Cepeda, V., Nayak, G., Stevens, S., et al."
-    },
-    {
-      "title": "Distribution Shift in Ecological Deep Learning: Benchmarks and Failure Modes",
-      "venue": "ICML",
-      "year": 2025,
-      "authors": "Tuia, D., Russwurm, M., Lang, N., Wegner, J. D."
-    },
-    {
-      "title": "Hierarchical Bayesian Fusion of Acoustic and Visual Detections for Multi-Species Occupancy Modeling",
-      "venue": "Methods in Ecology and Evolution",
-      "year": 2025,
-      "authors": "Doser, J. W., Finley, A. O., Sollmann, R., Kery, M."
+      "title": "Scalable Oversight via Debate",
+      "authors": "Irving et al.",
+      "year": 2018,
+      "venue": "arXiv"
     }
   ],
   "domain": "climate_ai",

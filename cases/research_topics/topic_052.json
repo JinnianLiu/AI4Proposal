@@ -9,40 +9,25 @@
   ],
   "references": [
     {
-      "title": "CLIP-Fields: Weakly Supervised Semantic Fields for Robotic Memory",
-      "venue": "RSS",
-      "year": 2023,
-      "authors": "N. Shafiullah, C. Paxton, L. Pinto, S. Chintala, A. Szlam"
-    },
-    {
-      "title": "OpenScene-Nav: Open-Vocabulary 3D Scene Understanding for Embodied Navigation",
-      "venue": "CVPR",
+      "title": "Deep learning based retinal vessel segmentation and hypertensive retinopathy quantification using heterogeneous features cross-attention neural network",
+      "authors": "Xinghui Liu, H. Tan, Wu-ju Wang",
       "year": 2024,
-      "authors": "S. Peng, K. Genova, C. Jiang, A. Tagliasacchi, M. Pollefeys, T. Funkhouser"
+      "venue": "Frontiers in Medicine",
+      "paper_id": "1630235fee67b66260eaa4696ffab626862fcb3e"
     },
     {
-      "title": "HieroMap: Hierarchical Topological-Metric Mapping for Efficient Exploration",
-      "venue": "ICRA",
-      "year": 2024,
-      "authors": "J. Chen, R. Martin-Martin, S. Savarese"
-    },
-    {
-      "title": "NavGPT-3: Grounded Long-Horizon Instruction Following with Large Language Model Planners",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "G. Zhou, Y. Hong, Q. Wu"
-    },
-    {
-      "title": "ConceptGraphs: Open-Vocabulary 3D Scene Graphs for Perception and Planning",
-      "venue": "ICRA",
-      "year": 2024,
-      "authors": "Q. Gu, A. Kuwajerwala, S. Morin, K. Jatavallabhula, B. Sen, A. Agarwal"
-    },
-    {
-      "title": "Generalization Gaps in Embodied Navigation: A Large-Scale Analysis",
-      "venue": "CoRL",
+      "title": "Transformer attention-based neural network for cognitive score estimation from sMRI data",
+      "authors": "Songheng Li, Yanteng Zhang, Congyu Zou",
       "year": 2025,
-      "authors": "D. Batra, E. Wijmans, A. Majumdar, M. Savva"
+      "venue": "Comput. Biol. Medicine",
+      "paper_id": "3f4974c33d9f6a8b03cd33e841b7870ce4a818c2"
+    },
+    {
+      "title": "A Novel Deep Learning Model for Medical Image Segmentation with Convolutional Neural Network and Transformer",
+      "authors": "Zhuo Zhang, Hongbing Wu, Huan Zhao",
+      "year": 2023,
+      "venue": "Interdisciplinary Sciences Computational Life Sciences",
+      "paper_id": "3768ecd8e146c6e19718c0539ff6c16698d3ca42"
     }
   ],
   "domain": "embodied_ai",

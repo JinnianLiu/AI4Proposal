@@ -9,40 +9,40 @@
   ],
   "references": [
     {
-      "title": "Accurate medium-range global weather forecasting with 3D neural networks",
-      "venue": "Nature",
+      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
+      "authors": "Zou et al.",
       "year": 2023,
-      "authors": "Bi, K., Xie, L., Zhang, H., Chen, X., Gu, X., Tian, Q."
+      "venue": "arXiv"
     },
     {
-      "title": "GraphCast: Learning skillful medium-range global weather forecasting",
-      "venue": "Science",
-      "year": 2023,
-      "authors": "Lam, R., Sanchez-Gonzalez, A., Willson, M., et al."
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "authors": "Bai et al.",
+      "year": 2022,
+      "venue": "arXiv"
     },
     {
-      "title": "Foundation Models for Generalist Geospatial Artificial Intelligence",
-      "venue": "NeurIPS",
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "authors": "Rafailov et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "Jailbroken: How Does LLM Safety Training Fail?",
+      "authors": "Wei et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming",
+      "authors": "Mazeika et al.",
       "year": 2024,
-      "authors": "Jakubik, J., Roy, S., Phillips, C., et al."
+      "venue": "ICML"
     },
     {
-      "title": "Neural emulation of the terrestrial carbon cycle for global flux attribution",
-      "venue": "Nature Climate Change",
-      "year": 2024,
-      "authors": "Reichstein, M., Camps-Valls, G., Stevens, B., Jung, M."
-    },
-    {
-      "title": "ClimaX: A foundation model for weather and climate",
-      "venue": "ICML",
-      "year": 2023,
-      "authors": "Nguyen, T., Brandstetter, J., Kapoor, A., Gupta, J., Grover, A."
-    },
-    {
-      "title": "Physics-constrained transformers for conservation-aware atmospheric forecasting",
-      "venue": "NeurIPS",
-      "year": 2025,
-      "authors": "Kochkov, D., Yuval, J., Langmore, I., Norgaard, P., et al."
+      "title": "Scalable Oversight via Debate",
+      "authors": "Irving et al.",
+      "year": 2018,
+      "venue": "arXiv"
     }
   ],
   "domain": "climate_ai",

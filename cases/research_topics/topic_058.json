@@ -10,40 +10,40 @@
   ],
   "references": [
     {
-      "title": "MedCLIP: Contrastive Learning from Unpaired Medical Images and Text",
-      "venue": "EMNLP",
+      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
+      "authors": "Zou et al.",
+      "year": 2023,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "authors": "Bai et al.",
+      "year": 2022,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "authors": "Rafailov et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "Jailbroken: How Does LLM Safety Training Fail?",
+      "authors": "Wei et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming",
+      "authors": "Mazeika et al.",
       "year": 2024,
-      "authors": "Wang Z., Wu Z., Agarwal D., Sun J."
+      "venue": "ICML"
     },
     {
-      "title": "RadFM: Towards Generalist Foundation Model for Radiology",
-      "venue": "Nature Communications",
-      "year": 2025,
-      "authors": "Wu C., Zhang X., Zhang Y., Wang Y., Xie W."
-    },
-    {
-      "title": "BiomedGPT: A Unified and Generalist Biomedical Generative Pre-trained Transformer for Vision, Language, and Multimodal Tasks",
-      "venue": "Nature Medicine",
-      "year": 2025,
-      "authors": "Zhang K., Yu J., Yan Z., Liu Y., Adhikarla E., et al."
-    },
-    {
-      "title": "R2GenCMN: Cross-modal Memory Networks for Radiology Report Generation",
-      "venue": "ACL",
-      "year": 2024,
-      "authors": "Chen Z., Shen Y., Song Y., Wan X."
-    },
-    {
-      "title": "MAIRA-2: Grounded Radiology Report Generation with Large Multimodal Models",
-      "venue": "CVPR",
-      "year": 2025,
-      "authors": "Bannur S., Pérez-García F., Thieme S., Sharma H., et al."
-    },
-    {
-      "title": "Rethinking Modality Collapse in Multi-Modal Medical Foundation Models",
-      "venue": "NeurIPS",
-      "year": 2025,
-      "authors": "Li H., Chen J., Sun L., Zhou S.K."
+      "title": "Scalable Oversight via Debate",
+      "authors": "Irving et al.",
+      "year": 2018,
+      "venue": "arXiv"
     }
   ],
   "domain": "healthcare_ai",

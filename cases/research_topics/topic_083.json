@@ -10,40 +10,40 @@
   ],
   "references": [
     {
-      "title": "A Spatio-Temporal Transformer for County-Level Winter Wheat Yield Estimation Using Sentinel-2 and MODIS Fusion",
-      "venue": "Remote Sensing of Environment",
+      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
+      "authors": "Zou et al.",
+      "year": 2023,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "authors": "Bai et al.",
+      "year": 2022,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "authors": "Rafailov et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "Jailbroken: How Does LLM Safety Training Fail?",
+      "authors": "Wei et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming",
+      "authors": "Mazeika et al.",
       "year": 2024,
-      "authors": "Liu, H., Zhao, Y., Sun, J., et al."
+      "venue": "ICML"
     },
     {
-      "title": "UAV Hyperspectral-LiDAR Synergy for Maize Biomass Retrieval via Physics-Guided Deep Learning",
-      "venue": "ISPRS Journal of Photogrammetry and Remote Sensing",
-      "year": 2024,
-      "authors": "Zhang, W., Li, X., Müller, R., et al."
-    },
-    {
-      "title": "PlantWild-1M: A Large-Scale In-Field Benchmark for Open-World Plant Disease Recognition with Vision-Language Pretraining",
-      "venue": "CVPR",
-      "year": 2025,
-      "authors": "Chen, K., Patel, A., Nakamura, S., et al."
-    },
-    {
-      "title": "Visual-Tactile Fusion for Robust Robotic Fruit Picking in Unstructured Orchards",
-      "venue": "IEEE Transactions on Robotics",
-      "year": 2025,
-      "authors": "Wang, Q., Fernández, M., Tanaka, H., et al."
-    },
-    {
-      "title": "Reinforcement Learning for Variable-Rate Pesticide Application: A Field-Scale Study",
-      "venue": "Nature Food",
-      "year": 2024,
-      "authors": "Kumar, R., Singh, P., Hoffmann, L., et al."
-    },
-    {
-      "title": "Causal Domain Adaptation for Cross-Region Crop Yield Prediction under Climate Shift",
-      "venue": "NeurIPS",
-      "year": 2025,
-      "authors": "Xu, Y., Dubois, E., Anderson, T., et al."
+      "title": "Scalable Oversight via Debate",
+      "authors": "Irving et al.",
+      "year": 2018,
+      "venue": "arXiv"
     }
   ],
   "domain": "ai_agriculture",

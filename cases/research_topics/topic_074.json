@@ -10,40 +10,40 @@
   ],
   "references": [
     {
-      "title": "Evaluating Large Language Models Trained on Code: A Five-Year Retrospective",
-      "venue": "ICML",
-      "year": 2024,
-      "authors": "Chen, M., Roziere, B., Fried, D., et al."
-    },
-    {
-      "title": "Silent Failures: A Symbolic-Execution Audit of LLM-Generated Code",
-      "venue": "NeurIPS Datasets and Benchmarks Track",
-      "year": 2024,
-      "authors": "Patel, A., Nguyen, T., Hoffmann, J."
-    },
-    {
-      "title": "Baldur: Whole-Proof Generation and Repair with Large Language Models",
-      "venue": "FSE",
+      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
+      "authors": "Zou et al.",
       "year": 2023,
-      "authors": "First, E., Rabe, M. N., Ringer, T., Brun, Y."
+      "venue": "arXiv"
     },
     {
-      "title": "Lemma-Guided Theorem Proving with Retrieval-Augmented Language Models",
-      "venue": "ICLR",
-      "year": 2025,
-      "authors": "Yang, K., Swope, A., Gu, A., et al."
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "authors": "Bai et al.",
+      "year": 2022,
+      "venue": "arXiv"
     },
     {
-      "title": "Clover: Closed-Loop Verifiable Code Generation",
-      "venue": "POPL",
-      "year": 2025,
-      "authors": "Sun, C., Sheng, Y., Padon, O., Barrett, C."
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "authors": "Rafailov et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
     },
     {
-      "title": "Foundational Proof-Carrying Code for Modern Compiler Pipelines",
-      "venue": "PLDI",
+      "title": "Jailbroken: How Does LLM Safety Training Fail?",
+      "authors": "Wei et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming",
+      "authors": "Mazeika et al.",
       "year": 2024,
-      "authors": "Appel, A. W., Beringer, L., Tassarotti, J."
+      "venue": "ICML"
+    },
+    {
+      "title": "Scalable Oversight via Debate",
+      "authors": "Irving et al.",
+      "year": 2018,
+      "venue": "arXiv"
     }
   ],
   "domain": "ai4code",

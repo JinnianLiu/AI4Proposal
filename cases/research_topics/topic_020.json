@@ -10,46 +10,34 @@
   ],
   "references": [
     {
-      "title": "Carbon Emissions and Large Neural Network Training",
-      "venue": "Communications of the ACM",
+      "title": "LLaMA: Open and Efficient Foundation Language Models",
+      "authors": "Touvron et al.",
+      "year": 2023,
+      "venue": "arXiv"
+    },
+    {
+      "title": "QLoRA: Efficient Finetuning of Quantized Language Models",
+      "authors": "Dettmers et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "Mistral 7B",
+      "authors": "Jiang et al.",
+      "year": 2023,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Sparse Mixture-of-Experts: A Comprehensive Survey",
+      "authors": "Rajbhandari et al.",
+      "year": 2023,
+      "venue": "arXiv"
+    },
+    {
+      "title": "SpecInfer: Accelerating LLM Serving with Tree-based Speculative Inference",
+      "authors": "Miao et al.",
       "year": 2024,
-      "authors": "Patterson, D., Gonzalez, J., Hölzle, U., et al."
-    },
-    {
-      "title": "Towards the Systematic Reporting of the Energy and Carbon Footprints of Machine Learning",
-      "venue": "Journal of Machine Learning Research",
-      "year": 2024,
-      "authors": "Henderson, P., Hu, J., Romoff, J., et al."
-    },
-    {
-      "title": "Measuring the Carbon Intensity of AI in Cloud Instances",
-      "venue": "ACM FAccT",
-      "year": 2024,
-      "authors": "Dodge, J., Prewitt, T., Tachet des Combes, R., et al."
-    },
-    {
-      "title": "Power Hungry Processing: Watts Driving the Cost of AI Deployment?",
-      "venue": "ACM FAccT",
-      "year": 2025,
-      "authors": "Luccioni, A. S., Jernite, Y., Strubell, E."
-    },
-    {
-      "title": "FLOPs as a Proxy for Energy: A Critical Reassessment of Efficient Deep Learning Metrics",
-      "venue": "NeurIPS",
-      "year": 2025,
-      "authors": "Wang, Y., Zhao, K., Liu, M., et al."
-    },
-    {
-      "title": "CarbonScaler: Leveraging Cloud Workload Elasticity for Optimizing Carbon-Efficiency",
-      "venue": "ACM SIGMETRICS",
-      "year": 2024,
-      "authors": "Hanafy, W. A., Bashir, N., Krioukov, A., et al."
-    },
-    {
-      "title": "Sustainable AI: Environmental Implications, Challenges and Opportunities",
-      "venue": "Proceedings of MLSys",
-      "year": 2024,
-      "authors": "Wu, C.-J., Raghavendra, R., Gupta, U., et al."
+      "venue": "ASPLOS"
     }
   ],
   "domain": "efficient_ml",

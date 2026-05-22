@@ -10,40 +10,40 @@
   ],
   "references": [
     {
-      "title": "Fourier Neural Operator for Parametric Partial Differential Equations",
-      "venue": "ICLR",
+      "title": "Highly accurate protein structure prediction with AlphaFold",
+      "authors": "Jumper et al.",
+      "year": 2021,
+      "venue": "Nature"
+    },
+    {
+      "title": "Accurate structure prediction of biomolecular interactions with AlphaFold 3",
+      "authors": "Abramson et al.",
       "year": 2024,
-      "authors": "Z. Li, N. Kovachki, K. Azizzadenesheli, B. Liu, K. Bhattacharya, A. Stuart, A. Anandkumar"
+      "venue": "Nature"
     },
     {
-      "title": "Learning Nonlinear Operators via DeepONet with Convergence Guarantees",
-      "venue": "Nature Machine Intelligence",
-      "year": 2024,
-      "authors": "L. Lu, P. Jin, G. Pang, Z. Zhang, G. E. Karniadakis"
+      "title": "E(3)-equivariant graph neural networks for data-efficient protein design",
+      "authors": "Dauparas et al.",
+      "year": 2022,
+      "venue": "Science"
     },
     {
-      "title": "Physics-Informed Neural Operators for Accelerated Computational Fluid Dynamics",
-      "venue": "Science",
-      "year": 2025,
-      "authors": "K. Bhattacharya, S. Mishra, T. De Ryck, A. M. Stuart"
+      "title": "De novo design of protein structure with RFdiffusion",
+      "authors": "Watson et al.",
+      "year": 2023,
+      "venue": "Nature"
     },
     {
-      "title": "Message-Passing Graph Neural Networks for Mesh-Based Simulation of Compressible Flows",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "T. Pfaff, M. Fortunato, A. Sanchez-Gonzalez, P. W. Battaglia"
+      "title": "Evolutionary-scale prediction of atomic-level protein structure",
+      "authors": "Lin et al.",
+      "year": 2023,
+      "venue": "Science"
     },
     {
-      "title": "Spectral Bias and Generalization Failure in Neural Operators for High-Reynolds Turbulence",
-      "venue": "ICML",
-      "year": 2025,
-      "authors": "M. Raissi, J. Sirignano, A. Vlachas, P. Koumoutsakos"
-    },
-    {
-      "title": "Stable Long-Horizon Rollouts of Learned Turbulence Closures via Conservation-Constrained Architectures",
-      "venue": "Journal of Computational Physics",
-      "year": 2026,
-      "authors": "D. Kochkov, J. A. Smith, A. Alieva, Q. Wang, M. P. Brenner, S. Hoyer"
+      "title": "Learning skillful medium-range global weather forecasting",
+      "authors": "Lam et al.",
+      "year": 2023,
+      "venue": "Science"
     }
   ],
   "domain": "ai4science",

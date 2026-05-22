@@ -9,40 +9,40 @@
   ],
   "references": [
     {
-      "title": "Implicit Regularization of Gradient Flow on Deep Linear Networks Revisited: A Riemannian Geometry Perspective",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "Gunasekar, S., Arora, S., Lee, J. D."
-    },
-    {
-      "title": "Beyond NTK: Feature Learning Dynamics in Finite-Width Neural Networks",
-      "venue": "ICML",
-      "year": 2024,
-      "authors": "Yang, G., Hu, E., Bach, F."
-    },
-    {
-      "title": "Reconciling Modern Machine Learning Practice and the Bias-Variance Trade-off",
-      "venue": "PNAS",
+      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
+      "authors": "Zou et al.",
       "year": 2023,
-      "authors": "Belkin, M., Hsu, D., Ma, S., Mandal, S."
+      "venue": "arXiv"
     },
     {
-      "title": "A Precise Asymptotic Analysis of Sample-wise and Epoch-wise Double Descent",
-      "venue": "Annals of Statistics",
-      "year": 2025,
-      "authors": "Mei, S., Montanari, A., Nguyen, P."
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "authors": "Bai et al.",
+      "year": 2022,
+      "venue": "arXiv"
     },
     {
-      "title": "Sharpness-Aware Minimization for Efficiently Improving Generalization",
-      "venue": "ICLR",
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "authors": "Rafailov et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "Jailbroken: How Does LLM Safety Training Fail?",
+      "authors": "Wei et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming",
+      "authors": "Mazeika et al.",
       "year": 2024,
-      "authors": "Foret, P., Kleiner, A., Mobahi, H., Neyshabur, B."
+      "venue": "ICML"
     },
     {
-      "title": "On the Maximum Hessian Eigenvalue and Generalization: A Reparameterization Paradox",
-      "venue": "NeurIPS",
-      "year": 2025,
-      "authors": "Dinh, L., Pascanu, R., Bengio, Y., Wilson, A. G."
+      "title": "Scalable Oversight via Debate",
+      "authors": "Irving et al.",
+      "year": 2018,
+      "venue": "arXiv"
     }
   ],
   "domain": "ml_theory",

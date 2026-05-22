@@ -10,40 +10,40 @@
   ],
   "references": [
     {
-      "title": "On the Adversarial Robustness of Multi-Modal Foundation Models",
-      "venue": "ICCV",
+      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
+      "authors": "Zou et al.",
+      "year": 2023,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "authors": "Bai et al.",
+      "year": 2022,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "authors": "Rafailov et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "Jailbroken: How Does LLM Safety Training Fail?",
+      "authors": "Wei et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming",
+      "authors": "Mazeika et al.",
       "year": 2024,
-      "authors": "Schlarmann, C. and Hein, M."
+      "venue": "ICML"
     },
     {
-      "title": "Visual Adversarial Examples Jailbreak Aligned Large Language Models",
-      "venue": "AAAI",
-      "year": 2024,
-      "authors": "Qi, X., Huang, K., Panda, A., Henderson, P., Wang, M., and Mittal, P."
-    },
-    {
-      "title": "Cross-Modal Transferable Adversarial Attacks on Vision-Language Pre-training",
-      "venue": "CVPR",
-      "year": 2025,
-      "authors": "Lu, D., Wang, Z., Wang, T., Guan, W., Gao, H., and Zheng, F."
-    },
-    {
-      "title": "Robust CLIP: Unsupervised Adversarial Fine-Tuning of Vision Embeddings for Robust Multimodal Models",
-      "venue": "ICML",
-      "year": 2024,
-      "authors": "Schlarmann, C., Singh, N. D., Croce, F., and Hein, M."
-    },
-    {
-      "title": "Multimodal Randomized Smoothing: Certified Robustness for Joint Image-Text Classifiers",
-      "venue": "NeurIPS",
-      "year": 2025,
-      "authors": "Yang, G., Duan, T., Hu, J. E., Salman, H., Razenshteyn, I., and Li, J."
-    },
-    {
-      "title": "Detecting Multimodal Adversarial Examples via Cross-Modal Consistency Verification",
-      "venue": "USENIX Security",
-      "year": 2025,
-      "authors": "Zhao, Y., Pang, T., Du, C., Yang, X., Li, C., Cheung, N., and Lin, M."
+      "title": "Scalable Oversight via Debate",
+      "authors": "Irving et al.",
+      "year": 2018,
+      "venue": "arXiv"
     }
   ],
   "domain": "privacy_security",

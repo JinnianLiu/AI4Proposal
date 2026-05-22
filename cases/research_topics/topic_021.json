@@ -11,40 +11,40 @@
   ],
   "references": [
     {
+      "title": "Highly accurate protein structure prediction with AlphaFold",
+      "authors": "Jumper et al.",
+      "year": 2021,
+      "venue": "Nature"
+    },
+    {
       "title": "Accurate structure prediction of biomolecular interactions with AlphaFold 3",
-      "venue": "Nature",
+      "authors": "Abramson et al.",
       "year": 2024,
-      "authors": "Abramson J., Adler J., Dunger J., et al."
+      "venue": "Nature"
     },
     {
-      "title": "De novo design of protein structure and function with RFdiffusion",
-      "venue": "Nature",
-      "year": 2024,
-      "authors": "Watson J. L., Juergens D., Bennett N. R., et al."
+      "title": "E(3)-equivariant graph neural networks for data-efficient protein design",
+      "authors": "Dauparas et al.",
+      "year": 2022,
+      "venue": "Science"
     },
     {
-      "title": "Evolutionary-scale prediction of atomic-level protein structure with a language model",
-      "venue": "Science",
+      "title": "De novo design of protein structure with RFdiffusion",
+      "authors": "Watson et al.",
       "year": 2023,
-      "authors": "Lin Z., Akin H., Rao R., et al."
+      "venue": "Nature"
     },
     {
-      "title": "Generating conformational ensembles of intrinsically disordered proteins with score-based diffusion models",
-      "venue": "Nature Methods",
-      "year": 2025,
-      "authors": "Zhang Y., Liu H., Chen X., et al."
+      "title": "Evolutionary-scale prediction of atomic-level protein structure",
+      "authors": "Lin et al.",
+      "year": 2023,
+      "venue": "Science"
     },
     {
-      "title": "Str2Str: A score-based framework for sampling protein conformations",
-      "venue": "ICLR",
-      "year": 2024,
-      "authors": "Lu J., Zhong B., Tang J."
-    },
-    {
-      "title": "Multi-domain protein design via hierarchical flow matching with inter-domain geometry priors",
-      "venue": "NeurIPS",
-      "year": 2025,
-      "authors": "Wang R., Li S., Huang Q., et al."
+      "title": "Learning skillful medium-range global weather forecasting",
+      "authors": "Lam et al.",
+      "year": 2023,
+      "venue": "Science"
     }
   ],
   "domain": "ai4science",

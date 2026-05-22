@@ -10,40 +10,40 @@
   ],
   "references": [
     {
-      "title": "BEVFormer: Learning Bird's-Eye-View Representation from Multi-Camera Images via Spatiotemporal Transformers",
-      "venue": "ECCV",
+      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
+      "authors": "Zou et al.",
+      "year": 2023,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "authors": "Bai et al.",
       "year": 2022,
-      "authors": "Li, Z., Wang, W., Li, H., et al."
+      "venue": "arXiv"
     },
     {
-      "title": "BEVFusion: Multi-Task Multi-Sensor Fusion with Unified Bird's-Eye View Representation",
-      "venue": "ICRA",
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "authors": "Rafailov et al.",
       "year": 2023,
-      "authors": "Liu, Z., Tang, H., Amini, A., et al."
+      "venue": "NeurIPS"
     },
     {
-      "title": "Planning-oriented Autonomous Driving (UniAD)",
-      "venue": "CVPR (Best Paper)",
+      "title": "Jailbroken: How Does LLM Safety Training Fail?",
+      "authors": "Wei et al.",
       "year": 2023,
-      "authors": "Hu, Y., Yang, J., Chen, L., et al."
+      "venue": "NeurIPS"
     },
     {
-      "title": "VAD: Vectorized Scene Representation for Efficient Autonomous Driving",
-      "venue": "ICCV",
-      "year": 2023,
-      "authors": "Jiang, B., Chen, S., Xu, Q., et al."
-    },
-    {
-      "title": "Robust BEV Perception under Calibration Noise and Adverse Weather",
-      "venue": "NeurIPS",
+      "title": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming",
+      "authors": "Mazeika et al.",
       "year": 2024,
-      "authors": "Wang, X., Zhao, H., Sun, P., et al."
+      "venue": "ICML"
     },
     {
-      "title": "Is Ego Status All You Need for End-to-End Autonomous Driving? Rethinking Causal Confounders",
-      "venue": "CVPR",
-      "year": 2024,
-      "authors": "Li, Z., Yu, Z., Lan, S., et al."
+      "title": "Scalable Oversight via Debate",
+      "authors": "Irving et al.",
+      "year": 2018,
+      "venue": "arXiv"
     }
   ],
   "domain": "vision",

@@ -10,40 +10,25 @@
   ],
   "references": [
     {
-      "title": "Holistic Evaluation of Large Multimodal Models on Perception and Reasoning",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "Chen, L., Gupta, A., Zellers, R., et al."
-    },
-    {
-      "title": "RT-Embody: Scaling Vision-Language-Action Models for Generalist Manipulation",
-      "venue": "CoRL",
-      "year": 2024,
-      "authors": "Brohan, A., Finn, C., Hausman, K., et al."
-    },
-    {
-      "title": "Probing Compositional Spatial Reasoning in Vision-Language Models",
-      "venue": "CVPR",
+      "title": "Hierarchical Action Understanding : Fine-to-Coarse Reasoning Framework for Video Interpretation",
+      "authors": "Junbeom Moon, Jiye Won, Yeeun Joo",
       "year": 2025,
-      "authors": "Wang, Y., Ramanathan, V., Darrell, T."
+      "venue": "Advanced Video and Signal Based Surveillance",
+      "paper_id": "3bd50b61a8180c342abeb300d81acd185eb763d4"
     },
     {
-      "title": "CausalVid: Benchmarking Counterfactual and Causal Temporal Reasoning in Video LMMs",
-      "venue": "ICML",
-      "year": 2025,
-      "authors": "Patel, K., Singh, A., Hoffman, J., et al."
+      "title": "Spatiotemporal Representation Learning and Graph-Based Event Reasoning for Complex Video Understanding",
+      "authors": "Jonathan Abernathy, Amelia Hartmann",
+      "year": 2026,
+      "venue": "Fundamental Scientific Reports in Multidisciplinary Areas",
+      "paper_id": "a5532cc856148a28485b4909529b14ed70b36d45"
     },
     {
-      "title": "Differentiable Neuro-Symbolic Program Execution for Open-World Visual Reasoning",
-      "venue": "ICLR",
-      "year": 2025,
-      "authors": "Mao, J., Tenenbaum, J. B., Wu, J."
-    },
-    {
-      "title": "4D Scene Graphs: Spatio-Temporal Grounding for Embodied Reasoning",
-      "venue": "ECCV",
-      "year": 2024,
-      "authors": "Kim, S., Savva, M., Chang, A. X., et al."
+      "title": "A Regularized Backbone-Level Cross-Modal Interaction Framework for Stable Temporal Reasoning in Video-Language Models",
+      "authors": "Geonil Kim, Ho-Young Jung",
+      "year": 2026,
+      "venue": "Mathematics",
+      "paper_id": "aa5dbd4eac13fab88fa4663399258c891c614e8e"
     }
   ],
   "domain": "multimodal",

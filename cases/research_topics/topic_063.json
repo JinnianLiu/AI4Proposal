@@ -10,40 +10,40 @@
   ],
   "references": [
     {
-      "title": "Training Compute-Optimal Large Language Models Revisited: Data Constraints and Repetition Regimes",
-      "venue": "NeurIPS",
+      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
+      "authors": "Zou et al.",
+      "year": 2023,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "authors": "Bai et al.",
+      "year": 2022,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "authors": "Rafailov et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "Jailbroken: How Does LLM Safety Training Fail?",
+      "authors": "Wei et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming",
+      "authors": "Mazeika et al.",
       "year": 2024,
-      "authors": "Hoffmann, J., Muennighoff, N., Borgeaud, S., et al."
+      "venue": "ICML"
     },
     {
-      "title": "A Solvable Model of Neural Scaling Laws via High-Dimensional Random Features",
-      "venue": "ICML",
-      "year": 2024,
-      "authors": "Maloney, A., Roberts, D. A., Sully, J."
-    },
-    {
-      "title": "Explaining Neural Scaling Laws Through Data Manifold Geometry and Kernel Spectra",
-      "venue": "Journal of Machine Learning Research",
-      "year": 2025,
-      "authors": "Bahri, Y., Dyer, E., Kaplan, J., Lee, J., Sharma, U."
-    },
-    {
-      "title": "Feature Learning and the Emergence of Power Laws in Deep Networks",
-      "venue": "Nature Machine Intelligence",
-      "year": 2025,
-      "authors": "Bordelon, B., Pehlevan, C."
-    },
-    {
-      "title": "Are Emergent Abilities of Large Language Models a Mirage? A Statistical Re-examination",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "Schaeffer, R., Miranda, B., Koyejo, S."
-    },
-    {
-      "title": "Multi-Modal Scaling Laws: Cross-Modal Transfer and Interference in Foundation Models",
-      "venue": "ICLR",
-      "year": 2026,
-      "authors": "Aghajanyan, A., Yu, L., Zettlemoyer, L., et al."
+      "title": "Scalable Oversight via Debate",
+      "authors": "Irving et al.",
+      "year": 2018,
+      "venue": "arXiv"
     }
   ],
   "domain": "ml_theory",

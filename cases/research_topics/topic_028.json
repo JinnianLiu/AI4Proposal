@@ -10,40 +10,34 @@
   ],
   "references": [
     {
-      "title": "Diffusion Policy: Visuomotor Policy Learning via Action Diffusion for Dexterous Manipulation",
-      "venue": "RSS",
-      "year": 2024,
-      "authors": "Chi, C., Feng, S., Du, Y., Xu, Z., Cousineau, E., Burchfiel, B., Song, S."
-    },
-    {
-      "title": "Open-TeleVision: Teleoperation with Immersive Active Visual Feedback for Bimanual Dexterous Manipulation",
-      "venue": "CoRL",
-      "year": 2024,
-      "authors": "Cheng, X., Li, J., Yang, S., Yang, G., Wang, X."
-    },
-    {
-      "title": "9DTact: A Compact Vision-Based Tactile Sensor for Accurate 3D Shape and 6D Force Reconstruction",
-      "venue": "IEEE Transactions on Robotics",
-      "year": 2024,
-      "authors": "Lin, C., Zhang, H., Xu, J., Wu, L., Xu, H."
-    },
-    {
-      "title": "Rotating Without Seeing: Towards In-Hand Dexterity Through Touch",
-      "venue": "RSS",
+      "title": "RT-2: Vision-Language-Action Models Transfer Web Knowledge to Robotic Control",
+      "authors": "Brohan et al.",
       "year": 2023,
-      "authors": "Yin, Z., Huang, B., Qin, Y., Chen, Q., Wang, X."
+      "venue": "arXiv"
     },
     {
-      "title": "AnyTeleop: A General Vision-Based Dexterous Robot Arm-Hand Teleoperation System",
-      "venue": "RSS",
+      "title": "Open X-Embodiment: Robotic Learning Datasets and RT-X Models",
+      "authors": "Padalkar et al.",
       "year": 2023,
-      "authors": "Qin, Y., Yang, W., Huang, B., Van Wyk, K., Su, H., Wang, X., Chao, Y., Fox, D."
+      "venue": "arXiv"
     },
     {
-      "title": "NeuralFeels: Visuo-Tactile Perception for In-Hand Manipulation of Unknown Objects",
-      "venue": "Science Robotics",
-      "year": 2025,
-      "authors": "Suresh, S., Qi, H., Wu, T., Fan, T., Pineda, L., Lambeta, M., Malik, J., Kalakrishnan, M., Calandra, R., Kaess, M."
+      "title": "ALOHA: A Low-cost Open-source Hardware System for Bimanual Teleoperation",
+      "authors": "Zhao et al.",
+      "year": 2023,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Diffusion Policy: Visuomotor Policy Learning via Action Diffusion",
+      "authors": "Chi et al.",
+      "year": 2023,
+      "venue": "RSS"
+    },
+    {
+      "title": "Learning Fine-Grained Bimanual Manipulation with Low-Cost Hardware",
+      "authors": "Fu et al.",
+      "year": 2024,
+      "venue": "RSS"
     }
   ],
   "domain": "robotics",

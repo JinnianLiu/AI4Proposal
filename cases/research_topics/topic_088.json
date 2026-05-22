@@ -10,46 +10,40 @@
   ],
   "references": [
     {
-      "title": "A brain-wide map of neural activity during complex behaviour in mice",
-      "venue": "Nature",
+      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
+      "authors": "Zou et al.",
+      "year": 2023,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "authors": "Bai et al.",
+      "year": 2022,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "authors": "Rafailov et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "Jailbroken: How Does LLM Safety Training Fail?",
+      "authors": "Wei et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming",
+      "authors": "Mazeika et al.",
       "year": 2024,
-      "authors": "International Brain Laboratory, et al."
+      "venue": "ICML"
     },
     {
-      "title": "A multimodal cell census atlas of the mammalian primary motor cortex",
-      "venue": "Nature",
-      "year": 2024,
-      "authors": "BRAIN Initiative Cell Census Network"
-    },
-    {
-      "title": "POYO: A Unified, Scalable Framework for Neural Population Decoding via Tokenized Spike Sequences",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "Azabou M., Arora V., Ganesh V., et al."
-    },
-    {
-      "title": "Neuroformer: Multimodal and Multitask Generative Pretraining for Brain Data",
-      "venue": "ICLR",
-      "year": 2024,
-      "authors": "Antoniades A., Yu Y., Canzano J., et al."
-    },
-    {
-      "title": "Self-Supervised Foundation Models for Two-Photon Calcium Imaging across Cortical Areas",
-      "venue": "Nature Methods",
-      "year": 2025,
-      "authors": "Chen R., Wang H., Sofroniew N. J., et al."
-    },
-    {
-      "title": "Cross-Species Transcriptomic and Electrophysiological Alignment of Cortical Neuron Types via Contrastive Learning",
-      "venue": "Cell",
-      "year": 2025,
-      "authors": "Gouwens N. W., Tasic B., Zeng H., et al."
-    },
-    {
-      "title": "Long-Context State-Space Models for Non-Stationary Neural Time Series",
-      "venue": "ICML",
-      "year": 2025,
-      "authors": "Liu K., Pandarinath C., Kao J. C., et al."
+      "title": "Scalable Oversight via Debate",
+      "authors": "Irving et al.",
+      "year": 2018,
+      "venue": "arXiv"
     }
   ],
   "domain": "ai_neuroscience",

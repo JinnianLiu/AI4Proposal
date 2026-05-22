@@ -10,40 +10,40 @@
   ],
   "references": [
     {
-      "title": "The Carbon and Energy Footprint of Frontier-Scale Deep Learning: A Systems Perspective",
-      "venue": "Nature",
+      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
+      "authors": "Zou et al.",
+      "year": 2023,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "authors": "Bai et al.",
+      "year": 2022,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "authors": "Rafailov et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "Jailbroken: How Does LLM Safety Training Fail?",
+      "authors": "Wei et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming",
+      "authors": "Mazeika et al.",
       "year": 2024,
-      "authors": "Patterson, D., Gonzalez, J., Hölzle, U., et al."
+      "venue": "ICML"
     },
     {
-      "title": "Wafer-Scale Photonic Tensor Cores with In-Situ Thermal Calibration for Deep Learning Inference",
-      "venue": "Nature Photonics",
-      "year": 2025,
-      "authors": "Shen, Y., Harris, N. C., Bandyopadhyay, S., et al."
-    },
-    {
-      "title": "Hardware-Aware Training for Analog In-Memory Computing at Scale",
-      "venue": "NeurIPS",
-      "year": 2024,
-      "authors": "Rasch, M. J., Gokmen, T., Le Gallo, M., et al."
-    },
-    {
-      "title": "Loihi 2 and the Lava Framework: Scalable Neuromorphic Computing for Event-Driven AI",
-      "venue": "IEEE Micro",
-      "year": 2024,
-      "authors": "Davies, M., Orchard, G., Frady, E. P., et al."
-    },
-    {
-      "title": "Noise-Resilient Transformer Inference on ReRAM Crossbars via Differentiable Device Modeling",
-      "venue": "ISCA",
-      "year": 2025,
-      "authors": "Chen, Y., Yang, J. J., Strachan, J. P., et al."
-    },
-    {
-      "title": "Surrogate Gradients Revisited: Closing the ANN-SNN Gap on ImageNet and Beyond",
-      "venue": "ICML",
-      "year": 2025,
-      "authors": "Neftci, E. O., Zenke, F., Pehlevan, C., et al."
+      "title": "Scalable Oversight via Debate",
+      "authors": "Irving et al.",
+      "year": 2018,
+      "venue": "arXiv"
     }
   ],
   "domain": "ai_hardware",

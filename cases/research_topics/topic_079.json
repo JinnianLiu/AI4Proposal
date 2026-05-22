@@ -10,40 +10,40 @@
   ],
   "references": [
     {
-      "title": "Hopper and Beyond: Scaling Transformer Training on Next-Generation GPU Architectures",
-      "venue": "ISCA",
+      "title": "Universal and Transferable Adversarial Attacks on Aligned Language Models",
+      "authors": "Zou et al.",
+      "year": 2023,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "authors": "Bai et al.",
+      "year": 2022,
+      "venue": "arXiv"
+    },
+    {
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "authors": "Rafailov et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "Jailbroken: How Does LLM Safety Training Fail?",
+      "authors": "Wei et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming",
+      "authors": "Mazeika et al.",
       "year": 2024,
-      "authors": "M. Andersch, S. Treichler, et al."
+      "venue": "ICML"
     },
     {
-      "title": "TPU v5p: A Domain-Specific Supercomputer for Training Foundation Models",
-      "venue": "Nature",
-      "year": 2024,
-      "authors": "N. Jouppi, C. Young, D. Patterson, et al."
-    },
-    {
-      "title": "Reconfigurable Dataflow Architectures for Sparse Transformer Workloads",
-      "venue": "ISCA",
-      "year": 2025,
-      "authors": "V. Sze, J. Emer, et al."
-    },
-    {
-      "title": "Quantifying Tensor Core Utilization in Large Language Model Training",
-      "venue": "MLSys",
-      "year": 2024,
-      "authors": "Y. Wang, T. Chen, et al."
-    },
-    {
-      "title": "Breaking the Memory Wall: Near-HBM Processing for Trillion-Parameter Models",
-      "venue": "MICRO",
-      "year": 2025,
-      "authors": "O. Mutlu, S. Ghose, et al."
-    },
-    {
-      "title": "Scale-up Interconnect Fabric Design for 10K-GPU Training Clusters",
-      "venue": "HPCA",
-      "year": 2025,
-      "authors": "D. Abts, J. Kim, et al."
+      "title": "Scalable Oversight via Debate",
+      "authors": "Irving et al.",
+      "year": 2018,
+      "venue": "arXiv"
     }
   ],
   "domain": "ai_hardware",

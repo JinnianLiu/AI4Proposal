@@ -10,40 +10,25 @@
   ],
   "references": [
     {
-      "title": "Magnetic control of tokamak plasmas through deep reinforcement learning",
-      "venue": "Nature",
+      "title": "Deep learning based retinal vessel segmentation and hypertensive retinopathy quantification using heterogeneous features cross-attention neural network",
+      "authors": "Xinghui Liu, H. Tan, Wu-ju Wang",
       "year": 2024,
-      "authors": "Degrave, J., Felici, F., Buchli, J., et al."
+      "venue": "Frontiers in Medicine",
+      "paper_id": "1630235fee67b66260eaa4696ffab626862fcb3e"
     },
     {
-      "title": "Cross-machine disruption prediction via graph neural networks and domain-adversarial transfer learning",
-      "venue": "Nature Communications",
+      "title": "Transformer attention-based neural network for cognitive score estimation from sMRI data",
+      "authors": "Songheng Li, Yanteng Zhang, Congyu Zou",
       "year": 2025,
-      "authors": "Kates-Harbeck, J., Zhu, Y., Churchill, R. M., et al."
+      "venue": "Comput. Biol. Medicine",
+      "paper_id": "3f4974c33d9f6a8b03cd33e841b7870ce4a818c2"
     },
     {
-      "title": "Physics-informed neural surrogates for gyrokinetic turbulent transport in integrated tokamak modeling",
-      "venue": "NeurIPS (Datasets and Benchmarks Track)",
-      "year": 2025,
-      "authors": "van de Plassche, K., Citrin, J., Ho, A., et al."
-    },
-    {
-      "title": "Bayesian optimization of stellarator and tokamak pulse design under multi-fidelity constraints",
-      "venue": "ICML",
-      "year": 2024,
-      "authors": "Char, I., Chung, Y., Abbate, J., Schneider, J."
-    },
-    {
-      "title": "Safe reinforcement learning with control-barrier functions for tokamak shape and kinetic control",
-      "venue": "ICLR",
-      "year": 2026,
-      "authors": "Mehta, V., Boyer, M. D., Dorland, W., et al."
-    },
-    {
-      "title": "FAIR fusion data and benchmarks for machine learning in magnetic confinement",
-      "venue": "Scientific Data (Nature)",
-      "year": 2025,
-      "authors": "Churchill, R. M., Tang, W., Eldon, D., et al."
+      "title": "A Novel Deep Learning Model for Medical Image Segmentation with Convolutional Neural Network and Transformer",
+      "authors": "Zhuo Zhang, Hongbing Wu, Huan Zhao",
+      "year": 2023,
+      "venue": "Interdisciplinary Sciences Computational Life Sciences",
+      "paper_id": "3768ecd8e146c6e19718c0539ff6c16698d3ca42"
     }
   ],
   "domain": "ai_energy",

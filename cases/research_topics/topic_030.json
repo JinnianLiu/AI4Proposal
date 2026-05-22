@@ -10,40 +10,34 @@
   ],
   "references": [
     {
-      "title": "Open X-Embodiment: Robotic Learning Datasets and RT-X Models",
-      "venue": "ICRA",
-      "year": 2024,
-      "authors": "Open X-Embodiment Collaboration, Padalkar A., Vuong Q., et al."
-    },
-    {
       "title": "RT-2: Vision-Language-Action Models Transfer Web Knowledge to Robotic Control",
-      "venue": "CoRL",
+      "authors": "Brohan et al.",
       "year": 2023,
-      "authors": "Brohan A., Brown N., Carbajal J., et al."
+      "venue": "arXiv"
     },
     {
-      "title": "OpenVLA: An Open-Source Vision-Language-Action Model",
-      "venue": "CoRL",
-      "year": 2024,
-      "authors": "Kim M. J., Pertsch K., Karamcheti S., et al."
+      "title": "Open X-Embodiment: Robotic Learning Datasets and RT-X Models",
+      "authors": "Padalkar et al.",
+      "year": 2023,
+      "venue": "arXiv"
+    },
+    {
+      "title": "ALOHA: A Low-cost Open-source Hardware System for Bimanual Teleoperation",
+      "authors": "Zhao et al.",
+      "year": 2023,
+      "venue": "arXiv"
     },
     {
       "title": "Diffusion Policy: Visuomotor Policy Learning via Action Diffusion",
-      "venue": "RSS / IJRR",
+      "authors": "Chi et al.",
+      "year": 2023,
+      "venue": "RSS"
+    },
+    {
+      "title": "Learning Fine-Grained Bimanual Manipulation with Low-Cost Hardware",
+      "authors": "Fu et al.",
       "year": 2024,
-      "authors": "Chi C., Feng S., Du Y., Xu Z., et al."
-    },
-    {
-      "title": "Scaling Autonomous Robot Data Collection with Foundation-Model-Guided Resets",
-      "venue": "NeurIPS",
-      "year": 2025,
-      "authors": "Ahn M., Finn C., Hausman K., et al."
-    },
-    {
-      "title": "Grounding Compositional Language in Long-Horizon Manipulation via Hierarchical VLA Planning",
-      "venue": "ICML",
-      "year": 2025,
-      "authors": "Liang J., Xia F., Ichter B., et al."
+      "venue": "RSS"
     }
   ],
   "domain": "robotics",

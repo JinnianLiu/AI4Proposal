@@ -10,40 +10,25 @@
   ],
   "references": [
     {
-      "title": "HAT-X: Hardware-Aware Transformer Search with Differentiable Latency Surrogates",
-      "venue": "MLSys",
+      "title": "CFD and Artificial Intelligence-Based Machine Learning Synergy for the Assessment of Syngas-Utilizing Pre-Reformer in r-SOC Technology Advancement",
+      "authors": "M. M. Peksen",
       "year": 2024,
-      "authors": "Wang, H., Chen, L., Krishnamoorthi, R., Han, S."
+      "venue": "Applied Sciences",
+      "paper_id": "e5f758dedd14208885f43331050ea59095886776"
     },
     {
-      "title": "LogQuant: Learned Logarithmic Quantization for Sub-4-Bit Large Language Models",
-      "venue": "NeurIPS",
+      "title": "Research on the Application of Machine Learning Algorithm in Artificial Intelligence Product Recommendation System",
+      "authors": "Yuchen Lai",
       "year": 2024,
-      "authors": "Park, J., Mellempudi, N., Dally, W. J."
+      "venue": "2024 International Conference on Telecommunications and Power Electronics (TELEPE)",
+      "paper_id": "00f988fbb2e488713ca116729b51e84a5a8520ff"
     },
     {
-      "title": "SparseFlow: An Accelerator Architecture for Dynamic N:M Sparsity in Attention Workloads",
-      "venue": "ISCA",
-      "year": 2025,
-      "authors": "Gupta, A., Pellauer, M., Emer, J. S., Sze, V."
-    },
-    {
-      "title": "Joint Search of Networks, Precisions, and Dataflows for Edge Inference",
-      "venue": "ICML",
-      "year": 2025,
-      "authors": "Liu, Y., Reagen, B., Wei, G.-Y., Brooks, D."
-    },
-    {
-      "title": "CoDeX: A Differentiable Cycle-Accurate Simulator for Algorithm-Hardware Co-Design",
-      "venue": "MICRO",
+      "title": "The Role of Data Engineering in Enabling Machine Learning and Artificial Intelligence",
+      "authors": "R. Sridhar, I. Kanani, R. Dhenia",
       "year": 2024,
-      "authors": "Zhang, X., Whatmough, P., Kung, H. T."
-    },
-    {
-      "title": "Beyond Synthetic Sparsity: Characterizing Activation Sparsity in Foundation Models",
-      "venue": "ASPLOS",
-      "year": 2025,
-      "authors": "Nguyen, T., Hooker, S., Patterson, D., Jouppi, N."
+      "venue": "International Journal of Artificial Intelligence, Data Science and Machine Learning",
+      "paper_id": "7b223ba6b10dd24cd3f181b633025ba7c1418e98"
     }
   ],
   "domain": "ai_hardware",

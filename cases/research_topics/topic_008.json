@@ -10,40 +10,40 @@
   ],
   "references": [
     {
-      "title": "SWE-Agent: Agent-Computer Interfaces Enable Automated Software Engineering",
-      "venue": "NeurIPS",
+      "title": "ReAct: Synergizing Reasoning and Acting in Language Models",
+      "authors": "Yao et al.",
+      "year": 2022,
+      "venue": "ICLR"
+    },
+    {
+      "title": "Toolformer: Language Models Can Teach Themselves to Use Tools",
+      "authors": "Schick et al.",
+      "year": 2023,
+      "venue": "NeurIPS"
+    },
+    {
+      "title": "AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation",
+      "authors": "Wu et al.",
+      "year": 2023,
+      "venue": "arXiv"
+    },
+    {
+      "title": "SWE-bench: Can Language Models Resolve Real-World GitHub Issues?",
+      "authors": "Jimenez et al.",
       "year": 2024,
-      "authors": "Yang, J., Jimenez, C. E., Wettig, A., et al."
+      "venue": "ICLR"
     },
     {
-      "title": "Repository-Level Code Generation with Hierarchical Context Retrieval",
-      "venue": "ICML",
-      "year": 2025,
-      "authors": "Liu, H., Zhang, K., Wang, R., et al."
+      "title": "WebArena: A Realistic Web Environment for Building Autonomous Agents",
+      "authors": "Zhou et al.",
+      "year": 2024,
+      "venue": "NeurIPS"
     },
     {
-      "title": "Beyond Pass@1: Evaluating Semantic Correctness of LLM-Generated Code via Differential Property Testing",
-      "venue": "ICSE",
-      "year": 2025,
-      "authors": "Müller, S., Tanaka, Y., Park, J."
-    },
-    {
-      "title": "Prompt Injection Attacks against Tool-Augmented Code Agents in the Wild",
-      "venue": "USENIX Security",
-      "year": 2025,
-      "authors": "Chen, Y., Sharma, A., Kumar, V., et al."
-    },
-    {
-      "title": "Capsule: Capability-Based Lightweight Sandboxing for Autonomous LLM Agents",
-      "venue": "SOSP",
-      "year": 2025,
-      "authors": "Reyes, M., Okafor, C., Lin, B."
-    },
-    {
-      "title": "Memory Drift in Long-Horizon Coding Agents: An Empirical Study",
-      "venue": "ACL",
-      "year": 2026,
-      "authors": "Chen, X., Dubois, P., Iwasaki, T., et al."
+      "title": "OSWorld: Benchmarking Multimodal Agents for Open-Ended Tasks",
+      "authors": "Xie et al.",
+      "year": 2024,
+      "venue": "NeurIPS"
     }
   ],
   "domain": "agentic_ai",
