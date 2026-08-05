@@ -33,6 +33,42 @@
     "在发表的文章中须明确提及Triton-TLE语言",
     "课题周期1年"
   ],
+  "structure": {
+    "template": "北京市科技计划项目（课题）实施方案",
+    "core_sections": [
+      {
+        "id": "objectives",
+        "name": "课题目标",
+        "required": ["面向的问题与需求", "总体研究框架", "3-4个具体目标"]
+      },
+      {
+        "id": "kpi",
+        "name": "考核指标",
+        "required": ["按成果逐条列出", "每条量化(数量/技术/应用指标,带数值)", "标注立项时值与完成时值", "给出考核方式(方法)及评估手段"]
+      },
+      {
+        "id": "content",
+        "name": "主要研发内容、关键技术及创新点",
+        "word_limit": 800,
+        "required": ["主要研发内容", "关键技术", "创新点"]
+      },
+      {
+        "id": "approach",
+        "name": "技术方案、技术路线及计划进度",
+        "required": ["技术方案(分方案详述)", "技术路线", "分阶段计划进度(含每阶段量化指标)"]
+      },
+      {
+        "id": "outcomes",
+        "name": "项目（课题）成果及推广措施",
+        "required": ["预期成果形式", "成果推广方案"]
+      }
+    ],
+    "rules": [
+      "考核指标须为可量化、可第三方验证的数量/技术/应用指标",
+      "第一次出现外文名词须写明全称与缩写",
+      "各栏目须贴合本program的requirements/constraints，不得跑题"
+    ]
+  },
   "provenance": {
     "origin_type": "public_guideline_plus_expert_reconstruction",
     "basis_urls": [],

@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+import json
 import os
+import time
 from dataclasses import dataclass
-from typing import Any, Optional
+from typing import Any, Dict, Optional
 
 
 def _extract_response_text(response: Any) -> str:
@@ -102,3 +104,30 @@ class LLMBackend:
                     parts.append(block.get("text", ""))
             return "\n".join(part.strip() for part in parts if part and part.strip()).strip()
         return str(message).strip()
+
+
+def generate_with_retry(llm: Optional[LLMBackend], system: str, prompt: str,
+                        fallback: str = "", attempts: int = 4) -> str:
+    """Call the backend with linear backoff; return `fallback` if every try fails."""
+    if llm is None:
+        return fallback
+    for attempt in range(attempts):
+        try:
+            return llm.generate_text(system_prompt=system, user_prompt=prompt)
+        except Exception as e:
+            print(f"    [retry {attempt + 1}: {str(e)[:100]}]")
+            if attempt < attempts - 1:
+                time.sleep((attempt + 1) * 10)
+    return fallback
+
+
+def parse_json(text: str) -> Dict[str, Any]:
+    """Best-effort JSON extraction from an LLM reply (tolerates prose/fences)."""
+    try:
+        start = text.find("{")
+        end = text.rfind("}") + 1
+        if start >= 0 and end > start:
+            return json.loads(text[start:end])
+    except Exception:
+        pass
+    return {}

@@ -86,7 +86,7 @@ def _parse_judge_response(response: str) -> JudgeResult:
             scores = {}
             for key in [
                 "scientific_quality", "feasibility", "innovation",
-                "clarity", "compliance", "impact", "team_fit",
+                "clarity", "compliance", "impact", "alignment",
             ]:
                 scores[key] = float(scores_raw.get(key, 5))
 

@@ -8,7 +8,8 @@ version = "0.2.0"
 description = "Multi-Agent Grant Proposal Generation System"
 readme = "README.md"
 requires-python = ">=3.9"
-dependencies = ["openai>=1.0.0"]
-
-[project.scripts]
-ai4proposal = "ai4proposal.pipeline:main"
+dependencies = [
+    "openai>=1.0.0",
+    "pypandoc-binary>=1.17",
+    "python-docx>=1.2.0",
+]

@@ -1,24 +1,37 @@
-# Secrets
+# ── Secrets ──
 .env
 *_api
 *_token
 
-# Python
+# ── Python ──
 __pycache__/
 *.pyc
 *.egg-info/
-
-# Outputs
-runs*/
-*.pptx
-*.docx
-*.png
-*.pdf
-
-# Junk
-analyses/
-docs/
-tests/
+.venv/
+venv/
 .pytest_cache/
+
+# ── Generated runs ──
+outputs/
+runs*/
+
+# ── Gold / reference material: NOT for the public repo ──
+docs/
+gold.docx
+
+# ── Binary documents: ignored by default, whitelist what the repo needs ──
+*.docx
+*.pdf
+*.pptx
+!assets/reference.docx
+
+# ── Local scratch (first-gen sample proposals, test_judge.py defaults) ──
+/test.md
+/test2.md
+
+# ── Junk ──
+~$*
+analyses/
+tests/
 _codex/
 human_review_showcase/
