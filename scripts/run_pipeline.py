@@ -252,7 +252,10 @@ def main():
     ap.add_argument("--figures", choices=["go", "dry", "off"], default="go",
                     help="go=generate+patch | dry=write prompts & keep markers, no gen | off=text placeholder")
     ap.add_argument("--figures-from", default="", help="generate images for an existing --figures dry run dir; skips all text gen")
-    ap.add_argument("--judge", choices=["none", "single", "panel"], default="none")
+    ap.add_argument("--judge", choices=["none", "rubric"], default="none",
+                    help="rubric = 7-dimension panel (see scripts/evaluate.py)")
+    ap.add_argument("--judge-evidence", action="store_true",
+                    help="retrieve external literature for the science judge")
     args = ap.parse_args()
 
     if args.figures_from:
@@ -351,27 +354,21 @@ def main():
     }
 
     print("  [4/4] 评分 ...")
-    if args.judge != "none":
+    if args.judge == "rubric":
         try:
-            if args.judge == "panel":
-                from ai4proposal.panel_judge import PanelJudge
-                jr = PanelJudge(llm).evaluate(proposal_text, task)   # panel reads the task directly
-            else:
-                from ai4proposal.ai_judge import AIJudge
-                call = {
-                    "case_id": case_id, "title": task.get("title", ""), "sponsor": task.get("sponsor", ""),
-                    "abstract": task.get("background", ""), "budget": task.get("budget", {}),
-                    "challenges": task.get("challenges", []), "references": task.get("references", []),
-                }
-                jr = AIJudge(llm).evaluate(proposal_text, call, {})
-            result["judge"] = {"overall_score": jr.overall_score, "verdict": jr.verdict,
-                               "scores": jr.scores, "summary": jr.summary}
-            print(f"      overall={jr.overall_score} verdict={jr.verdict}")
+            from ai4proposal.evaluation import RubricPanel
+            pack = None
+            if args.judge_evidence:
+                from ai4proposal.evidence import gather_evidence
+                pack = gather_evidence(llm, proposal_text, verbose=True)
+            jr = RubricPanel(llm, verbose=True).evaluate(proposal_text, task, evidence=pack)
+            result["judge"] = jr.to_dict()
+            print(f"      overall={jr.overall_100}/100 verdict={jr.verdict}")
         except Exception as e:
             result["judge"] = {"error": str(e)}
             print(f"      judge error: {e}")
     else:
-        print("      skipped")
+        print("      skipped (评分请用 scripts/evaluate.py 或 --judge rubric)")
 
     json.dump(result, (out_dir / "result.json").open("w", encoding="utf-8"), indent=2, ensure_ascii=False)
     imgs = sum(1 for m in manifest if m["image"])

@@ -1,10 +1,10 @@
-"""External-knowledge retrieval for the judge panel.
+"""External-knowledge retrieval for the rubric panel.
 
 Before scoring, we extract the proposal's most check-worthy claims (novelty /
-metric / method) with one LLM call, then retrieve real papers from Semantic
-Scholar. The retrieved "evidence cards" are injected into the innovation and
-feasibility judges so their verdicts on over-claiming and unrealistic metrics
-rest on real literature rather than model memory.
+metric / method) with one LLM call, then retrieve real papers from OpenAlex
+(Semantic Scholar available as an alternative). The resulting "evidence cards"
+are injected into the science judge, so its `scientific_quality` / `innovation`
+verdicts on over-claiming rest on real literature rather than model memory.
 
 The retriever only supplies EVIDENCE — never a verdict. The judge still decides.
 All failures degrade gracefully to an empty pack (→ pure-LLM judging).
@@ -23,12 +23,7 @@ from typing import Any, Callable, Dict, List, Optional
 
 MAX_PROPOSAL_CHARS = 24000
 
-# claim.type → which specialist role consumes it
-TYPE_TO_ROLE = {
-    "novelty": "science_innovation",
-    "metric": "kpi_requirements",     # quantitative indicators now judged by the KPI role
-    "method": "method_feasibility",
-}
+CLAIM_TYPES = ("novelty", "metric", "method")
 
 NEUTRAL_EVIDENCE = "(未提供外部检索证据)"
 
@@ -44,10 +39,6 @@ class Claim:
     query: str
     type: str  # novelty | metric | method
 
-    @property
-    def role(self) -> str:
-        return TYPE_TO_ROLE.get(self.type, "method_feasibility")
-
 
 @dataclass
 class EvidencePack:
@@ -57,12 +48,12 @@ class EvidencePack:
     def is_empty(self) -> bool:
         return not self.claims
 
-    def for_role(self, role: str) -> str:
-        """Formatted evidence cards for the claims that belong to `role`."""
+    def format_cards(self, types: Optional[tuple] = None) -> str:
+        """Formatted evidence cards, optionally restricted to certain claim types."""
         lines: List[str] = []
         n = 0
         for i, c in enumerate(self.claims):
-            if c.role != role:
+            if types is not None and c.type not in types:
                 continue
             n += 1
             lines.append(f"【待核查论断{n}】{c.claim}")
@@ -83,7 +74,7 @@ class EvidencePack:
                         lines.append(f"      摘要节选: {abs[:200]}")
             lines.append("")
         if not lines:
-            return "(本轮未针对该维度检索到需核查的论断)"
+            return NEUTRAL_EVIDENCE
         header = "针对以下待核查论断，系统检索到的真实文献证据（仅供参考，判断权在你，勿被检索结果直接左右）：\n"
         return header + "\n".join(lines)
 
