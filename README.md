@@ -1,269 +1,249 @@
 # AI4Proposal
 
-**Multi-Agent Grant Proposal Generation System with Built-in Benchmark & AI Judge.**
+**面向真实资助指南的科研项目申请书生成与评审系统。**
 
-Given a research topic and open challenges, AI4Proposal automatically generates a complete, submission-ready grant proposal (基金本子) — 10 sections, 10,000+ Chinese characters, with AI-generated figures and multi-dimensional automated scoring.
+输入一份从**真实公开指南**转写的 task（含硬性交付物、约束、资格与溯源），系统产出申请书的**核心研究内容**，并用一套写死细则的多评委框架给它打分。
 
 ```
-Research Topic → [Writer → Reviewer → Reviser]×10 sections → Figure Agent → AI Judge → .docx
+task.json ──▶ 蓝图 ──▶ 逐章撰写 ──▶ 配图 ──▶ proposal_final.md ──▶ .docx
+                                                   │
+                                                   └──▶ 7 维评审 ──▶ evaluation.json
 ```
 
-## Highlights
+写作与评审是**两条独立的链路**：评审不回喂给写作，评分也不依赖任何标准答案。
 
-- **V4 Pipeline**: Step-by-step section generation with iterative review loop — no timeout, full 10-section output
-- **88-Topic Benchmark**: 24 AI sub-fields, Chinese/English bilingual, each with detailed background, open challenges, and references
-- **AI Judge**: 7-dimension LLM-based scoring with strengths, weaknesses, and verdict
-- **Auto Figures**: GPT-Image-2 integration for technical diagrams embedded in final .docx
-- **Model Agnostic**: Works with Claude, GPT, Qwen, DeepSeek — any OpenAI-compatible API
+---
 
-## Quickstart
+## 1. 快速开始
 
-### 1. Setup
+### 安装
 
 ```bash
-git clone https://github.com/your-org/ai4proposal
-cd ai4proposal
-pip install -e .
+pip install -e .          # 或 uv sync
 ```
 
-### 2. Configure
+Python ≥ 3.9。依赖 `openai`、`pypandoc-binary`、`python-docx`；检索模块只用标准库。
+
+### 配置
+
+所有配置走环境变量，源码中不含任何密钥。
 
 ```bash
-cp .env.example .env
-# Edit .env with your API keys
+export AI4PROPOSAL_API_KEY=sk-...
+export AI4PROPOSAL_BASE_URL=https://api.deepseek.com
+export AI4PROPOSAL_MODEL=deepseek-v4-pro
+export AI4PROPOSAL_IMAGE_API_KEY=sk-...        # 出图（可选）
 ```
 
-Required environment variables:
-```bash
-export AI4PROPOSAL_API_KEY=sk-your-key
-export AI4PROPOSAL_BASE_URL=https://api.openai.com/v1
-export AI4PROPOSAL_MODEL=gpt-4.1
-```
+| 变量 | 必需 | 默认 | 说明 |
+|---|:--:|---|---|
+| `AI4PROPOSAL_API_KEY` | ✅ | — | 文本 LLM 密钥 |
+| `AI4PROPOSAL_BASE_URL` | | `https://api.deepseek.com` | OpenAI 兼容端点 |
+| `AI4PROPOSAL_MODEL` | | `deepseek-chat` | 正式跑建议 `deepseek-v4-pro` |
+| `AI4PROPOSAL_TIMEOUT_SECONDS` | | `180` | 单次调用超时 |
+| `AI4PROPOSAL_IMAGE_API_KEY` | | — | 留空则跳过出图，退化为文字占位符 |
+| `AI4PROPOSAL_IMAGE_BASE_URL` | | `https://api.chatanywhere.tech/v1` | |
+| `AI4PROPOSAL_IMAGE_MODEL` | | `gpt-image-2` | |
+| `AI4PROPOSAL_MAILTO` | | — | OpenAlex 礼貌池邮箱，检索更快 |
+| `AI4PROPOSAL_S2_API_KEY` | | — | 改用 Semantic Scholar 时的配额密钥 |
 
-### 3. Run
+Windows PowerShell 下建议同时设 `$env:PYTHONUTF8=1`。
 
-```bash
-# Generate a proposal from a benchmark topic
-python scripts/run_pipeline.py --topic-id topic_003
-
-# With custom team
-python scripts/run_pipeline.py --topic-id topic_021 \
-    --team my_team.json \
-    --output runs/my_proposal
-
-# Without review loop (single-pass generation)
-python scripts/run_pipeline.py --topic-id topic_003 --no-review
-```
-
-## Pipeline Architecture
-
-```
-┌──────────────┐    ┌──────────┐    ┌──────────┐    ┌──────────┐    ┌──────────┐
-│  Research    │───▶│  Writer  │───▶│ Reviewer │───▶│ Reviser  │───▶│ Assembler│
-│  Topic       │    │ (10 sections) │ (score 1-10) │ (if < 7)   │    │          │
-└──────────────┘    └──────────┘    └──────────┘    └──────────┘    └──────────┘
-                                                                          │
-┌──────────┐    ┌──────────┐                                           │
-│  .docx   │◀───│ Figure   │◀──────────────────────────────────────────┘
-│  output  │    │ Agent    │
-└──────────┘    └──────────┘
-```
-
-### V4 Pipeline (current)
-
-Each of the 10 proposal sections is generated independently:
-1. **Writer** (LLM) generates one section (300-600 words)
-2. **Reviewer** (LLM) scores it 1-10 with strengths/weaknesses/suggestions
-3. **Reviser** (LLM) revises the section if score < 7 (up to 2 rounds)
-4. **Assembler** merges all 10 sections into a complete proposal
-5. **Figure Agent** scans `[figure: description]` markers → calls GPT-Image-2 → embeds in .docx
-6. **AI Judge** holistically scores the final proposal on 7 dimensions
-
-This step-by-step approach avoids API timeouts that plague end-to-end generation.
-
-### AI Judge Dimensions
-
-| Dimension | Description |
-|-----------|-------------|
-| `scientific_quality` | Scientific/technical excellence and rigour |
-| `feasibility` | Realistic approach and well-planned execution |
-| `innovation` | Novelty and creative thinking |
-| `clarity` | Writing quality, structure, readability |
-| `compliance` | Section completeness and constraint satisfaction |
-| `impact` | Potential significance and broader impact |
-| `team_fit` | Team expertise match with the research topic |
-
-Output includes: numerical scores, 4-5 specific strengths, 4-5 specific weaknesses, overall verdict (`recommend_submit` / `revise_resubmit` / `reject`), and a one-paragraph summary.
-
-## Benchmark
-
-### 88 Research Topics × 24 AI Sub-fields
-
-```
-AI Safety (4)   Agentic AI (5)   Multimodal (5)   Efficient ML (5)
-AI4Science (6)  Robotics (5)     Privacy (5)      NLP (4)
-Vision (5)      AI Infra (5)     Embodied AI (4)  Healthcare (5)
-ML Theory (3)   Climate AI (4)   AI Education (2) AI4Code (3)
-AI Society (2)  AI Hardware (3)  AI Finance (2)   Agriculture (2)
-AI Energy (2)   Neuroscience (3) AI4Math (2)      AI Networks (2)
-```
-
-Each topic contains:
-- **Title**: Research direction
-- **Background**: 800-2,000 characters with [1][2][3] citations to prior work
-- **Challenges**: 4-5 specific open problems
-- **References**: 6-7 papers with venue and year
-- **Sponsor**: NSFC / NSF / Horizon Europe with budget amount
-- **Language**: Chinese (46) / English (42)
-
-### Topic Format
-
-```json
-{
-  "topic_id": "topic_003",
-  "domain": "ai_safety",
-  "language": "zh",
-  "title": "面向大语言模型的自动化红队测试与多维安全评估框架研究",
-  "sponsor": "国家自然科学基金",
-  "budget": {"amount": 2800000, "currency": "CNY"},
-  "background": "大语言模型在对抗性提示、间接注入与长上下文操纵下的安全脆弱性已成为...",
-  "challenges": [
-    "对抗性提示的语义自然性、多样性与跨模型迁移性难以兼顾",
-    "多维安全评测基准的动态构建与抗污染机制缺失",
-    "攻防协同闭环框架的稳定性、收敛性与算力效率瓶颈"
-  ],
-  "references": [
-    {"title": "Universal and Transferable Adversarial Attacks...", "venue": "ICML 2024", "authors": "Zou et al."}
-  ]
-}
-```
-
-### Extending the Benchmark
+### 跑一遍
 
 ```bash
-# Generate more topics (requires LLM API)
-python build_topics.py
+# 生成（含出图）
+python scripts/run_pipeline.py --task cases/tasks/task_001.json
+
+# 评审
+python scripts/evaluate.py outputs/task_001/proposal_final.md --evidence
+
+# 转 Word
+python scripts/md_to_docx.py outputs/task_001/proposal_final.md
 ```
 
-Edit `TOPIC_SEEDS` in `build_topics.py` to add new research areas.
+---
 
-## Generated Output
+## 2. 写作流水线
 
-Each run produces:
+`scripts/run_pipeline.py`
 
-```
-runs/<case_id>/
-├── proposal_final.md          # Complete proposal (10 sections, Markdown)
-├── score.json                 # AI Judge scores + strengths + weaknesses
-├── fig_01.png                 # Generated technical diagram
-├── fig_02.png                 # Generated roadmap
-├── fig_03.png                 # Generated Gantt chart
-├── figure_manifest.json       # Figure descriptions
-└── sec_*.md                   # Individual section files
-```
+| 步骤 | 做什么 |
+|---|---|
+| **Step 0 蓝图** | 从 task 提炼统一主线 thesis、可交付成果体系、关键方法、创新角度，写入 `blueprint.json`。后续每章回扣它，避免模块平铺 |
+| **逐章撰写** | 按 `task.structure.core_sections` 逐节生成，**一次成稿**（不在流水线内做 review-revise）。每章带上前文摘要，防重复 |
+| **出图** | 正文中的 `[figure: 图注 \|\| 详细描述]` 标记 → 调图像模型 → 回填 Markdown |
+| **评分** | 可选，`--judge rubric` 直接串联评审框架 |
 
-### Sample Cherry-Pick Results
+### 提示词设计
 
-| Case | Domain | Words | Sections | Figures | AI Judge | Verdict |
-|------|--------|-------|----------|---------|----------|---------|
-| AI Safety | ai_safety | 11,400 | 10/10 | 3 | 80/100 | recommend_submit |
-| Protein Design | ai4science | 14,400 | 10/10 | 3 | 80/100 | recommend_submit |
+`src/ai4proposal/writer_prompts.py` —— **域中立**：固定文本只描述*形式*与*质量标准*，全部实质内容经 `${...}`（`string.Template`）注入。因此同一套提示词可跨学科使用，换 task 即可。
 
-## Project Structure
+组成：Step-0 蓝图 / 结构规划器 / 写作通则 / 通用 writer / 格式修饰符（考核指标结构化、创新点对比写法、进度阶段量化、方法语体）/ reviewer / reviser。
 
-```
-ai4proposal/
-├── .env.example               # Configuration template
-├── .gitignore
-├── pyproject.toml
-├── README.md
-│
-├── src/ai4proposal/           # Core library
-│   ├── config.py              #   Env var configuration (no hardcoded keys)
-│   ├── llm.py                 #   LLM backend (OpenAI-compatible API)
-│   ├── ai_judge.py            #   7-dimension AI proposal scoring
-│   ├── pipeline_v4.py         #   V4: Step-by-step generation + review loop
-│   ├── eval_v2.py             #   Evaluation orchestration
-│   └── pipeline_v3.py         #   V3: End-to-end generation (legacy)
-│
-├── build_topics.py            # Benchmark: generate research topics via LLM
-│
-├── scripts/
-│   └── run_pipeline.py        # CLI: run pipeline on a topic
-│
-├── cases/
-│   └── research_topics/       # 88 benchmark topics
-│       ├── topic_001.json
-│       ├── topic_002.json
-│       └── ...
-│
-└── tests/
+修饰符按章节的 `required` 字段**自动触发** —— 例如某章要求"每条量化"，`MOD_KPI` 才会追加进 system prompt。
+
+### 章节结构从哪来
+
+优先用 `task.structure.core_sections`（指南强制的行文结构）。task 未声明时，由 `STRUCTURE_PLANNER` 现场规划，而非套用硬编码模板。
+
+### 常用参数
+
+```bash
+--task <path|id>          # cases/tasks/ 下可只给 id
+--sections N              # 只跑前 N 章，调试用
+--figures {go,dry,off}    # dry = 只出 prompt 不生图，人工确认后再补
+--figures-from <dir>      # 用已确认的 prompt 补生图，不重跑文本
+--max-figures N           # 默认 5
+--judge rubric            # 生成后直接评审
+--judge-evidence          # 评审时开外部检索
 ```
 
-## Configuration
+`--figures dry` → 人工看 prompt → `--figures-from` 是推荐的出图工作流，避免图不满意就得重跑全文。
 
-All configuration via environment variables. No keys in source code.
+---
 
-| Variable | Required | Default | Description |
-|----------|:--------:|---------|-------------|
-| `AI4PROPOSAL_API_KEY` | Yes | — | LLM API key |
-| `AI4PROPOSAL_BASE_URL` | No | `api.openai.com/v1` | LLM API endpoint |
-| `AI4PROPOSAL_MODEL` | No | `gpt-4.1` | Model name |
-| `AI4PROPOSAL_USE_REVIEW` | No | `1` | Enable review loop (0/1) |
-| `AI4PROPOSAL_MAX_REVISIONS` | No | `2` | Max revision rounds |
-| `AI4PROPOSAL_IMAGE_API_KEY` | No | Same as LLM | Image gen API key |
-| `AI4PROPOSAL_IMAGE_MODEL` | No | `gpt-image-2` | Image model |
+## 3. 评审框架
 
-## Supported Models
+`src/ai4proposal/evaluation.py` · `scripts/evaluate.py`
 
-Any OpenAI-compatible API works. Tested with:
+**不比对标准答案。** 每个维度写死五档锚点（9-10 / 7-8 / 5-6 / 3-4 / 1-2），评委是"选档位"而非凭印象打分 —— 这是保证跨本子可比的手段。
 
-| Model | API Provider | Notes |
-|-------|-------------|-------|
-| Claude Opus 4.7 | micuapi.ai (proxy) | Best quality, 120s timeout per call |
-| GPT-4.1 | ChatAnywhere / OpenAI | Good quality, stable |
-| GPT-4o | OpenAI / ChatAnywhere | Fast, good for Reviewer |
-| GLM-5.1 | mydamoxing.cn | Chinese-optimized |
-| DeepSeek-V3 | DeepSeek API | Open-source alternative |
-| Qwen-3 | Alibaba / local | Open-source, requires deployment |
+**四位专家 + 主席。** 每位专家独立通读全文，只对自己负责的维度打分，彼此不见对方结论。主席只汇总定性意见，不打分。
 
-## Contributing
+**总分与判定由代码算，不由 LLM 给。**
 
-Areas open for contribution:
+| 维度 | 权重 | 评委 | 关注 |
+|---|---:|---|---|
+| `scientific_quality` 科学质量 | 0.20 | science ＋检索 | 问题是否明确、重要、可证伪；有无机制/理论层面价值 |
+| `innovation` 创新性 | 0.18 | science ＋检索 | 是否超越已有工作的组合、调参与工程集成 |
+| `feasibility` 可行性 | 0.16 | feasibility | 路线、实验设计、数据、周期、指标可达性 |
+| `alignment` 一致性 | 0.14 | value | 目标—内容—路线—创新点—成果是否闭环、是否契合指南 |
+| `impact` 学术影响 | 0.12 | value | 意义论述是否可信，还是可套用到任意课题 |
+| `compliance` 规范性 | 0.11 | writing | 结构完整性、占位符残留、术语规范 |
+| `clarity` 清晰度 | 0.09 | writing | 概念、编号、指标、时间表是否前后一致 |
 
-- **New Topics**: Add research seeds to `build_topics.py` for under-represented domains
-- **New Sponsors**: Add templates for ERC, JST, DFG, CIHR, etc.
-- **Open-Source Models**: Test and optimize prompts for Qwen, DeepSeek, Llama
-- **Vector Figures**: Replace raster GPT-Image-2 with Mermaid/PlantUML SVG generation
-- **Human Evaluation**: Build blind review interface for comparing generated vs. human proposals
-- **Multi-Language**: Extend beyond Chinese/English to Japanese, Korean, German, etc.
-- **Prompt Optimization**: Improve Writer/Reviewer prompts for higher quality output
+权重在 `WEIGHTS` 一处定义，改它即可，聚合逻辑自动跟随。某维解析失败时其权重**重分配**给其余维度，而非记 0 分。
 
-### Adding a New Model
+### 硬闸
 
-```python
-# In scripts/run_pipeline.py or your own script:
-from ai4proposal.pipeline_v4 import PipelineConfig
+分数再高，命中以下任一项也不会给出 `recommend_submit`：
 
-config = PipelineConfig(
-    model="your-model-name",
-    api_key=os.environ["YOUR_API_KEY"],
-    base_url="https://your-api-endpoint.com/v1",
-)
+- 指南硬性要求未在正文落实
+- 缺失被要求的章节
+- 存在占位符 / 模板残留
+
+判定取值：`recommend_submit` / `revise_resubmit` / `reject`（< 6.0）。
+
+### 评分范围限定
+
+流水线只产出**核心研究内容**（目标 / 考核指标 / 研发内容·关键技术·创新点 / 技术方案·路线·进度 / 预期成果）。团队、研究基础、经费预算、设备条件、参考文献列表**不在生成范围**。
+
+细则据此收窄，且每位评委的 prompt 里都有一条显式指令：这些内容的缺失不得作为扣分理由，也不得写进 weaknesses —— 没有这条，模型会自发地"发现"这些缺失并反复扣分。
+
+### 外部检索
+
+`src/ai4proposal/evidence.py`。一次 LLM 调用抽出最该核查的论断（novelty / metric / method），到 OpenAlex（免密钥）检索真实论文，把证据卡注入 **science 评委**。
+
+检索只提供**证据**，不提供结论，判断权始终在评委。检索失败、超时或关闭时退化为中性占位符，评审照常进行。
+
+### 输出
+
+除七个维度分数外，`evaluation.json` 还结构化收集：过度声称、识别到的科学假设、指南要求逐条覆盖情况、跑题内容、存疑指标、风险预案、章节 checklist、占位符、约束违反。
+
+```bash
+python scripts/evaluate.py <md>              # task.json 自动从同目录读取
+python scripts/evaluate.py <md> --evidence   # 开外部检索
+python scripts/evaluate.py --show-rubric     # 只看细则，不消耗 token
+python scripts/test_evaluation.py            # 离线自检，无需密钥与网络
 ```
+
+---
+
+## 4. Task 数据
+
+### `cases/tasks/` —— 指南锚定的 task（当前使用）
+
+6 个跨学科 task，均从**真实公开资助指南**转写，带硬约束与溯源。详见 [cases/tasks/INDEX.md](cases/tasks/INDEX.md)。
+
+| task | 领域 | 资助方 |
+|---|---|---|
+| task_001 | AI / 系统软件 | 众智 FlagOS 加速计划—智源学者 |
+| task_002 | 人文（历史/文献学） | 国家社科基金重大项目 |
+| task_003 | 生物医学 | Wellcome Discovery Awards |
+| task_004 | 合成生物学 | 国家重点研发计划重点专项 |
+| task_005 | 社会科学 | 教育部人文社科一般项目 |
+| task_006 | 材料 / 物理 | NSF DMREF |
+
+关键字段：`program` / `direction` / `budget.is_cap` / `eligibility` / `requirements`（硬交付物）/ `constraints`（硬约束）/ `structure`（指南强制的行文结构）/ `provenance`（溯源）。
+
+`provenance.origin_type` 全部为 `public_guideline_plus_expert_reconstruction`：资助方、额度、周期、资格、交付物来自官方原文；具体选题为该方向下的合理重构（指南本身不指定课题）。
+
+### `cases/research_topics/` —— 合成选题（继承，价值待评估）
+
+88 个纯合成的学术选题，由项目前任维护者用 `build_topics.py` 生成、`scripts/fix_references.py` 替换过参考文献。**与当前流水线不兼容**（无 `structure` / `requirements` / `constraints`），保留待评估。
+
+---
+
+## 5. 项目结构
+
+```
+src/ai4proposal/
+├── llm.py              OpenAI 兼容后端 + generate_with_retry / parse_json
+├── writer_prompts.py   域中立提示词集（蓝图/通则/writer/修饰符/reviewer/reviser）
+├── evaluation.py       7 维细则 · 4 评委 + 主席 · 代码算总分与硬闸
+├── evidence.py         论断抽取 + OpenAlex/S2 检索 → 证据卡
+├── image_gen.py        [figure:] 标记 → PNG
+└── config.py           （保留，当前未被调用）
+
+scripts/
+├── run_pipeline.py     写作流水线 CLI
+├── evaluate.py         评审 CLI（对 Markdown 打分）
+├── md_to_docx.py       Markdown → Word（pandoc + 中文样式模板）
+├── test_evaluation.py  评审框架离线自检
+└── fix_references.py   （继承）一次性参考文献替换，已执行完毕
+
+build_topics.py         （继承）合成选题生成，位于仓库根目录
+
+cases/tasks/            指南锚定 task + INDEX.md
+cases/research_topics/  合成选题（继承）
+assets/reference.docx   Word 样式模板（宋体正文 / 黑体标题）
+outputs/                生成产物（不入库）
+```
+
+### 产物布局
+
+```
+outputs/<task_id>/
+├── proposal_final.md      完整申请书
+├── blueprint.json         Step-0 蓝图
+├── <section>.md           各章单独文件
+├── figures/fig_*.png      配图
+├── figure_prompts.json    生图 prompt（供 --figures-from 复用）
+├── figure_manifest.json
+├── task.json              输入快照
+├── result.json            运行元数据
+└── evaluation.json        评审结果（跑过 evaluate.py 后）
+```
+
+---
+
+## 6. 当前状态
+
+| 部分 | 状态 |
+|---|---|
+| 写作流水线 | 基本完善 |
+| 文本 / 生图 prompt | 待调优，等待领域专家意见 |
+| 多学科 task（002–006） | **尚未跑过**，仅 task_001 有多轮产出 |
+| 评审框架 | 已重做完成，权重为初版，待跨学科样本后微调 |
+| `md_to_docx.py` | 待增强兼容性，需先有新产出以暴露排版问题 |
+
+已知问题：`proposal_final.md` 中章节标题重复一次（组装时写入一次，writer 正文自带一次）。
+
+**不在仓库内**：作为写作质量标杆的中标本子（gold）及其摘录属非公开材料，已在 `.gitignore` 中排除。
+
+---
 
 ## License
 
 MIT
-
-## Citation
-
-If you use AI4Proposal in your research, please cite:
-
-```bibtex
-@software{ai4proposal2026,
-  title = {AI4Proposal: Multi-Agent Grant Proposal Generation System},
-  year = {2026},
-  url = {https://github.com/your-org/ai4proposal}
-}
-```
