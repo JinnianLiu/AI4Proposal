@@ -73,19 +73,45 @@ OUT_OF_SCOPE_NOTE = """## 评分范围限定（重要）
 # selects the band its reading matches rather than scoring on intuition.
 
 RUBRICS: Dict[str, str] = {
-    "scientific_quality": """scientific_quality（科学质量）：科学问题是否明确、重要、可证伪；是否具有机制、理论或规律层面的研究价值；假设与验证是否成立。
-  9-10 科学问题明确到可证伪的程度，给出了具体假设与相应的验证方式；研究触及机制/理论/规律层面而非仅实现某功能；假设—验证链条完整，并交代了何种结果可推翻假设
-  7-8  科学问题清晰且重要，有机制层面的追问；但假设与验证方式的对应关系部分需靠读者推断
-  5-6  问题偏向工程实现或表述为"研究某某技术"而非可证伪的科学问题；验证方式笼统（如"通过实验验证有效性"）
+    "scientific_quality": """scientific_quality（科学质量）：研究问题是否明确、重要，是否具有超出"把某个东西做出来"的认识价值。
+
+**先判定本课题属于哪一类，再用对应的分档锚点。** 依据是"课题信息"与"指南硬性要求"：
+- 若硬性交付以**认识性产出**为主（理论模型、机理阐明、规律发现、论文），按【基础研究型】评。
+- 若硬性交付以**制品与生态产出**为主（系统、算子、开源仓库、基准、专利、示范应用），
+  按【应用/系统型】评。这类程序资助的就是把关键能力做出来并被他人复用，
+  **不得因为申请书没有写成假设检验的形式就判定其科学质量低**。
+- 两者兼有时按占比大的一类评，并在 reason 中说明你用的是哪一类。
+
+【基础研究型】分档锚点：
+  9-10 科学问题明确到可证伪的程度，给出具体假设与相应验证方式；触及机制/理论/规律层面；
+       假设—验证链条完整，并交代了何种结果可推翻假设
+  7-8  问题清晰且重要，有机制层面的追问；但假设与验证方式的对应关系部分需靠读者推断
+  5-6  问题偏向工程实现，或表述为"研究某某技术"而非可证伪的科学问题；验证方式笼统
   3-4  只有任务描述与技术堆叠，看不出科学问题；无可识别的假设
-  1-2  无法识别出研究问题""",
+  1-2  无法识别出研究问题
+
+【应用/系统型】分档锚点：
+  9-10 准确定位了真实且有普遍性的技术瓶颈，并说明现有方案**在机理上**为何不足
+       （而不只是"性能不够好"）；所提方法给出了起作用的道理，而非试错堆叠；
+       给出可量化、可第三方复现的验证方案，指标与所述瓶颈直接对应；
+       交代了方法的**适用边界与失效条件**（这是本类的"可证伪"对应物）
+  7-8  瓶颈定位准确、方法有明确的作用机理说明、验证方案可量化，但适用边界或失效条件交代不足
+  5-6  问题停留在现象层面（"效率低""不通用"），未追问原因；方法罗列而缺少选择理由；
+       验证只有笼统的性能对比
+  3-4  只是把已有工具串起来完成一个任务，看不出要解决什么普遍性问题
+  1-2  无法识别出所解决的问题
+
+**防止形式化刷分**：假设、判据、阈值必须与研究内容实质耦合——即研究内容确实是围绕
+检验它们而组织的。若假设只是写在开头、后续章节各行其是，属于装饰性假设，最高 7 分。""",
 
     "feasibility": """feasibility（可行性）：技术路线、实验设计、数据、周期与指标可达性是否支撑项目完成。
-  9-10 技术路线分解到可执行步骤，每步交代输入、输出与判定依据；数据/实验设计具体（来源、规模、对照设置）；周期与里程碑同工作量匹配；关键指标给出可达性论证；有风险识别与备选方案
-  7-8  路线完整、阶段划分合理，但个别环节的可达性论证或数据来源交代不足
-  5-6  路线停留在框架层面（"设计…构建…验证…"），缺少判定依据；进度安排与工作量是否匹配存疑
+  9-10 技术路线分解到可执行步骤，每步交代输入、输出与判定依据；数据/实验设计具体（来源、规模、对照设置）；**进度周期与指南规定的课题周期一致**；**每条指南硬性交付都能在正文中找到落实路径**；关键指标给出可达性论证；有风险识别与备选方案
+  7-8  路线完整、阶段划分合理、周期一致，但个别环节的可达性论证或数据来源交代不足
+  5-6  路线停留在框架层面（"设计…构建…验证…"），缺少判定依据；或有硬性交付在正文中找不到落实路径
   3-4  路线与目标脱节，或明显低估工作量；无风险考虑
   1-2  给不出可执行的路径
+  硬性规则：**若正文的进度周期与指南规定的课题周期不一致（例如指南限定1年而正文按3年规划），
+            本维度不得高于 5 分**——这是结构性的不可行，不因其他部分写得好而抵消。
   注：团队、经费、设备、算力条件不在本文档范围，不得据此扣分。""",
 
     "innovation": """innovation（创新性）：是否提出新机制、新理论、新方法或新规律；是否超越已有工作的简单组合、调参与工程集成。
@@ -212,9 +238,11 @@ SCIENCE_USER = _judge_prompt(
 ${evidence}
 
 ## 附加任务
+- research_type：说明你按【基础研究型】还是【应用/系统型】评的，并给出依据。
 - 列出识别到的过度声称 over_claims（原文表述 + 为何缺乏支撑），无则空数组。
-- 列出正文中明确可辨的科学假设 hypotheses，无则空数组。""",
+- 列出正文中明确可辨的科学假设或核心技术判据 hypotheses，无则空数组。""",
     _dim_schema("science", ["scientific_quality", "innovation"],
+                '\n  "research_type": {"type": "basic|applied", "reason": "..."},'
                 '\n  "over_claims": ["..."],\n  "hypotheses": ["..."]'),
 )
 
@@ -241,11 +269,25 @@ FEASIBILITY_SYSTEM = """你是本资助计划的资深评审专家，专精"可�
 FEASIBILITY_USER = _judge_prompt(
     "评审以下申请书核心内容的【可行性】。",
     ["feasibility"],
-    """## 附加任务
-- 列出你认为难以达成或缺乏可达性论证的指标 risky_targets（指标原文 + 存疑理由），无则空数组。
-- 列出正文中已给出的风险应对/备选方案 mitigations，无则空数组。""",
+    """## 强制核对（必须逐项完成后再打分，不得跳过）
+以下三项是本维度的必查项。经验表明不强制要求时，同一份文档在不同轮次会时查时不查，
+导致同一处硬伤有时被发现、有时被忽略。
+
+1. **周期核对** schedule_check：从上面"指南硬性约束"中找出规定的课题周期，
+   再从正文进度安排中读出实际规划的总时长，二者是否一致。
+2. **硬性交付落实核对** requirement_feasibility：对"指南硬性要求"中的**每一条**，
+   在正文中查找其落实路径（做什么、何时做、如何验收）。找不到就记 has_path=false。
+3. **风险预案清点** mitigations：逐条列出正文中真实写出的风险应对或备选方案。
+   没有就返回空数组，不要为了凑数把普通技术步骤当成风险预案。
+
+## 附加任务
+- risky_targets：列出难以达成或缺乏可达性论证的指标（指标原文 + 存疑理由），无则空数组。""",
     _dim_schema("feasibility", ["feasibility"],
-                '\n  "risky_targets": ["..."],\n  "mitigations": ["..."]'),
+                '\n  "schedule_check": {"required": "指南规定周期", "planned": "正文规划周期",'
+                ' "consistent": true},'
+                '\n  "requirement_feasibility": [{"requirement": "...", "has_path": true,'
+                ' "where": "正文对应表述，缺失则空字符串"}],'
+                '\n  "mitigations": ["..."],\n  "risky_targets": ["..."]'),
 )
 
 WRITING_SYSTEM = """你是本资助计划的形式审查专家，专精"表达清晰度与规范性"。你通读申请书核心内容全文，只对清晰度与规范性负责，不评价科学价值或创新性高低。
@@ -316,6 +358,9 @@ class EvaluationResult:
     reviews: Dict[str, Any] = field(default_factory=dict)
     over_claims: List[str] = field(default_factory=list)
     hypotheses: List[str] = field(default_factory=list)
+    research_type: Dict[str, Any] = field(default_factory=dict)
+    schedule_check: Dict[str, Any] = field(default_factory=dict)
+    requirement_feasibility: List[Dict[str, Any]] = field(default_factory=list)
     requirement_coverage: List[Dict[str, Any]] = field(default_factory=list)
     off_topic: List[str] = field(default_factory=list)
     risky_targets: List[str] = field(default_factory=list)
@@ -504,6 +549,9 @@ class RubricPanel:
             reviews=reviews,
             over_claims=sci.get("over_claims") or [],
             hypotheses=sci.get("hypotheses") or [],
+            research_type=sci.get("research_type") or {},
+            schedule_check=fea.get("schedule_check") or {},
+            requirement_feasibility=fea.get("requirement_feasibility") or [],
             requirement_coverage=coverage,
             off_topic=val.get("off_topic") or [],
             risky_targets=fea.get("risky_targets") or [],

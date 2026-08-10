@@ -91,6 +91,23 @@ def print_report(r) -> None:
             for x in v:
                 print(f"    - {x}")
 
+    if r.research_type:
+        print(f"
+## 评分口径
+  按【{r.research_type.get('type','?')}】评："
+              f"{r.research_type.get('reason','')}")
+    sc = r.schedule_check
+    if sc and sc.get("consistent") is False:
+        print(f"
+## 周期不符
+  指南规定 {sc.get('required','?')}，正文规划 {sc.get('planned','?')}")
+    no_path = [x for x in r.requirement_feasibility if not x.get("has_path", True)]
+    if no_path:
+        print("
+## 硬性交付缺少落实路径")
+        for x in no_path:
+            print(f"  - {x.get('requirement','')}")
+
     uncovered = [c for c in r.requirement_coverage if not c.get("covered", True)]
     missing = [s for s in r.section_checklist if not s.get("present", True)]
     if uncovered:
