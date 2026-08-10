@@ -88,7 +88,8 @@ class EvidencePack:
             lines.append(f"  检索词: {c.query}")
             papers = self.results.get(i, [])
             if not papers:
-                lines.append("  相关文献: 未检索到直接相关工作（可能确属新颖，也可能过于冷门）。")
+                lines.append("  相关文献: 未检索到直接相关工作。注意这**不能**作为该论断不成立的证据——"
+                             "文献库对近 1-2 年成果、新模型名称与预印本收录滞后，冷门方向亦可能查无结果。")
             else:
                 lines.append("  检索到的真实文献:")
                 for p in papers:

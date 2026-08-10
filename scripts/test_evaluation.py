@@ -22,7 +22,7 @@ except Exception:
     pass
 
 from ai4proposal.evaluation import (  # noqa: E402
-    JUDGES, RUBRICS, WEIGHTS, DIMENSION_NAMES, RubricPanel,
+    JUDGES, MIN_ALIGNMENT, RUBRICS, WEIGHTS, DIMENSION_NAMES, RubricPanel,
     _science_evidence, decide_verdict, weighted_overall,
 )
 from ai4proposal.evidence import Claim, EvidencePack, NEUTRAL_EVIDENCE  # noqa: E402
@@ -103,6 +103,12 @@ def main() -> int:
     ok &= check("unmet requirement blocks submit", decide_verdict(8.0, True, False, False) == "revise_resubmit")
     ok &= check("missing section blocks submit", decide_verdict(8.0, False, True, False) == "revise_resubmit")
     ok &= check("below 6.0 rejects", decide_verdict(5.9, False, False, False) == "reject")
+    ok &= check("failing alignment rejects however high the total",
+                decide_verdict(9.5, False, False, False, alignment=1.0) == "reject")
+    ok &= check("alignment at the threshold does not reject",
+                decide_verdict(8.0, False, False, False, alignment=MIN_ALIGNMENT) == "recommend_submit")
+    ok &= check("absent alignment leaves the gate inactive",
+                decide_verdict(8.0, False, False, False, alignment=None) == "recommend_submit")
 
     print("\n== evaluate() ==")
     fake = FakePanel()
@@ -133,6 +139,14 @@ def main() -> int:
     ok &= check("evidence goes only to the science judge",
                 "外部文献证据" in fake.prompts["science"]
                 and not any("外部文献证据" in p for k, p in fake.prompts.items() if k != "science"))
+    ok &= check("dimension-isolation rule in every judge prompt",
+                all("不属于你所负责维度的缺陷，一律不得影响你的分数" in p
+                    for p in fake.prompts.values()))
+    ok &= check("off-topic bleed blocked for the form judge",
+                "不得因跑题而压低本维度" in fake.prompts["writing"])
+    ok &= check("9-10 band called out as rare", all("应当罕见" in p for p in fake.prompts.values()))
+    ok &= check("retrieval-recency caveat reaches the science judge",
+                "检索不到 ≠ 不存在" in fake.prompts["science"])
 
     print("\n== evidence ==")
     ok &= check("no pack → neutral", _science_evidence(None) == NEUTRAL_EVIDENCE)

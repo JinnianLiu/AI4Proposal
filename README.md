@@ -128,13 +128,21 @@ python scripts/md_to_docx.py outputs/task_001/proposal_final.md
 
 ### 硬闸
 
-分数再高，命中以下任一项也不会给出 `recommend_submit`：
+分数再高，命中以下任一项也不会给出 `recommend_submit`（可通过修改补救）：
 
 - 指南硬性要求未在正文落实
 - 缺失被要求的章节
 - 存在占位符 / 模板残留
 
-判定取值：`recommend_submit` / `revise_resubmit` / `reject`（< 6.0）。
+`alignment < 4` **直接 reject**，不论总分多少 —— 答非所问不是改稿能补救的。单靠权重时，一份完全跑题的文档仍能拿到 64/100。
+
+判定取值：`recommend_submit` / `revise_resubmit` / `reject`（总分 < 6.0 或 alignment 不及格）。
+
+### 维度隔离
+
+每位评委的 prompt 里都写明：只对自己负责的维度打分，**不属于自己维度的缺陷一律不得影响分数**，尤其是跑题（那是 `alignment` 的职责）。
+
+这条是实测逼出来的：早期版本拿一份跑题文档去评，文字评委把 `clarity` 打到 2 分、`compliance` 打到 3 分，理由全是"与课题设定割裂"—— 形式评委在替 alignment 扣分，等于同一个缺陷被罚了三次。加上隔离指令后，同一文档的 `clarity` 回到 8。
 
 ### 评分范围限定
 

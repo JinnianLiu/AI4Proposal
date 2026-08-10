@@ -94,22 +94,30 @@ RUBRICS: Dict[str, str] = {
   5-6  增量改进、参数调优或工程集成；创新性主要靠形容词（"首创""突破""国际领先"）支撑
   3-4  以新名词包装已有工作
   1-2  无创新，或与已有工作无法区分
-  注：外部检索证据仅供参考，判断权在你；检索不到相关工作既可能说明确属新颖，也可能说明方向冷门。""",
+  注：外部检索证据仅供参考，判断权在你。**检索不到 ≠ 不存在**——文献库对最近 1-2 年的成果、
+      新发布的模型/系统名称、预印本与工业界发布收录严重滞后。因此不得仅凭"检索无结果"就判定
+      某项工作或某个模型名称属于虚构或过度声称；只有当检索**明确检出**了在先工作、而正文仍声称
+      "首次/填补空白"时，才构成过度声称。""",
 
     "clarity": """clarity（清晰度）：表达是否清楚；概念、变量、术语、任务编号、指标、时间表是否明确且前后一致。
   9-10 概念/变量/术语首次出现即定义且全文一致；任务编号与指标编号可相互索引；时间表与研究内容对应无歧义
   7-8  整体清楚，个别术语或编号存在前后不一致
   5-6  存在指代不明、术语漂移、编号断裂，或时间表与研究内容对不上
   3-4  需反复回读才能理解；关键定义缺失
-  1-2  表述混乱，无法稳定理解其主张""",
+  1-2  表述混乱，无法稳定理解其主张
+  注：只评价**文本自身**是否清楚一致。正文主题与课题标题是否吻合由"一致性/契合度"维度负责；
+      即使本文写的是另一个课题，只要它自身表述清楚一致，本维度仍应给高分。""",
 
-    "compliance": """compliance（规范性/合规性）：是否符合项目书基本结构与规范；是否存在占位符或不规范内容。
-  9-10 覆盖指南要求的全部章节与要素；无占位符、无"待补充/TBD/xxx/【】"一类残留；外文名词首次出现给出全称与缩写；字数限制满足
-  7-8  结构完整，个别要素缺失或字数轻微越界
-  5-6  缺少某个被要求的章节或要素；存在少量占位符或模板残留
-  3-4  多个必需要素缺失，或存在大段套话式模板内容
+    "compliance": """compliance（规范性/合规性）：是否符合项目书基本结构与规范；是否满足指南列明的硬性约束；是否存在占位符或不规范内容。
+  9-10 覆盖指南要求的全部章节与要素；**逐条满足"指南硬性约束"**；无占位符、无"待补充/TBD/xxx/【】"一类残留；外文名词首次出现给出全称与缩写；字数限制满足
+  7-8  结构完整、无约束违反，但个别要素缺失或字数轻微越界
+  5-6  缺少某个被要求的章节或要素；或有 1 条硬性约束未落实；或存在少量占位符
+  3-4  多个必需要素缺失；或有 2 条及以上硬性约束未落实；或存在大段套话式模板内容
   1-2  结构不成立
-  注：团队、经费预算、参考文献列表不在本文档生成范围，其缺失不得扣分。""",
+  注1：团队、经费预算、参考文献列表不在本文档生成范围，其缺失不得扣分。
+  注2：你在 constraint_violations 中列出的每一条，都必须在本维度的档位选择中体现——
+       列出了违反项却仍给 9-10 分，属于自相矛盾。
+  注3：正文主题是否契合课题标题/指南方向，**不由本维度评价**，不得因跑题而压低本维度。""",
 
     "impact": """impact（学术影响/意义）：科学问题的重要性、预期理论贡献、潜在学术影响及应用价值是否可信且可说明。
   9-10 重要性论述有依据而非"具有重要意义"式空话；预期理论贡献具体到改变了什么认知或能力；应用价值有明确的承接对象或场景
@@ -156,7 +164,21 @@ _SCORING_RULES = """## 评分要求
 - 严格对照上面的分档锚点选择档位，不要凭印象给分。先写 reason（引用正文中的具体表述作为依据），再给 score。
 - reason 必须指向正文里的具体内容；不接受"整体较好""有待加强"这类无指向的评语。
 - 分数为 1-10 的整数。同一维度不同本子之间必须可比。
-- 只输出 JSON，不要 markdown 代码块，不要任何解释性文字。"""
+- 只输出 JSON，不要 markdown 代码块，不要任何解释性文字。
+
+## 维度隔离（必须遵守）
+你**只对上面列出的维度负责**。评审组另有专家分别负责科学质量、创新性、可行性、
+学术影响、一致性/契合度、清晰度、规范性中你不负责的部分，总分由系统按权重合成。
+
+因此：**不属于你所负责维度的缺陷，一律不得影响你的分数。** 尤其是——
+- 正文主题是否契合课题标题与指南方向，由"一致性/契合度"维度的专家负责。
+  即使你认为本文严重跑题，也**不得**因此压低你所负责的任何维度；请只就你的维度评价文中实际写出的内容。
+- 反过来，也不要因为某一维度表现突出就抬高其他维度。
+把你负责的维度当作独立量表来打分，就像这份文档在其他方面都合格一样。
+
+## 9-10 档的使用
+9-10 档表示"该维度可作为同类申请书的范例"，应当罕见。若你只是觉得"写得不错、
+没有明显问题"，那是 7-8 档。只有当正文提供了锚点所要求的**全部**要素时才给 9-10。"""
 
 
 def _judge_prompt(intro: str, dims: List[str], extra_task: str, schema: str) -> Template:
@@ -318,10 +340,22 @@ def weighted_overall(scores: Dict[str, Optional[float]]) -> float:
     return round(sum(present[k] * WEIGHTS[k] for k in present) / total_w, 2)
 
 
+MIN_ALIGNMENT = 4.0   # below this the proposal is answering a different call
+
+
 def decide_verdict(overall: float, has_uncovered_requirement: bool,
-                   has_missing_section: bool, has_placeholder: bool) -> str:
-    """Hard gates outrank the score: an unmet guideline requirement, a missing
-    mandated section or leftover placeholders block a submit recommendation."""
+                   has_missing_section: bool, has_placeholder: bool,
+                   alignment: Optional[float] = None) -> str:
+    """Hard gates outrank the score.
+
+    A proposal that does not address the call cannot be fixed by revision, so a
+    failing `alignment` rejects outright however well the text scores elsewhere —
+    dimension weighting alone let a wholly off-topic document reach 64/100. An
+    unmet requirement, a missing mandated section or leftover placeholders are
+    repairable, so they cap the verdict at revise_resubmit instead.
+    """
+    if alignment is not None and alignment < MIN_ALIGNMENT:
+        return "reject"
     if overall < 6.0:
         return "reject"
     blocked = has_uncovered_requirement or has_missing_section or has_placeholder
@@ -447,6 +481,7 @@ class RubricPanel:
             has_uncovered_requirement=any(not c.get("covered", True) for c in coverage),
             has_missing_section=any(not s.get("present", True) for s in checklist),
             has_placeholder=bool(placeholders),
+            alignment=scores.get("alignment"),
         )
 
         chair = self._chair(task, reviews, overall, errors)
