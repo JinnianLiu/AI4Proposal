@@ -25,7 +25,9 @@ from ai4proposal.evaluation import (  # noqa: E402
     JUDGES, MIN_ALIGNMENT, RUBRICS, WEIGHTS, DIMENSION_NAMES, RubricPanel,
     _science_evidence, decide_verdict, weighted_overall,
 )
-from ai4proposal.evidence import Claim, EvidencePack, NEUTRAL_EVIDENCE  # noqa: E402
+from ai4proposal.evidence import (  # noqa: E402
+    Claim, EvidencePack, NEUTRAL_EVIDENCE, _is_relevant, _query_terms,
+)
 
 TASK = {
     "title": "T", "program": "P", "background": "B",
@@ -159,6 +161,26 @@ def main() -> int:
     ok &= check("cards carry claim and retrieved paper",
                 "首次提出X" in cards and "A Prior Work On X" in cards)
     ok &= check("type filter works", pack.format_cards(types=("metric",)) == NEUTRAL_EVIDENCE)
+    ok &= check("cards warn that hits are unvetted keyword matches",
+                "未经人工筛选" in cards)
+
+    print("\n== relevance filtering ==")
+    terms = _query_terms("World-in-World high visual quality does not equal task success")
+    ok &= check("stopwords dropped, technical terms kept",
+                "high" not in terms and "does" not in terms and "visual" in terms)
+    # the real failure this guards against: a 19k-citation paper sharing one word
+    ok &= check("high-citation near-miss rejected",
+                not _is_relevant({"title": "The Pascal Visual Object Classes (VOC) Challenge",
+                                  "abstract": "A benchmark for object category recognition."}, terms))
+    ok &= check("genuine hit kept",
+                _is_relevant({"title": "World-in-World: closed-loop evaluation",
+                              "abstract": "visual quality does not predict task success"}, terms))
+    ok &= check("no terms → keep (never filter on an empty query)",
+                _is_relevant({"title": "anything"}, []))
+    short = _query_terms("paged attention KV cache")
+    ok &= check("short query needs 2 terms, not all of them",
+                _is_relevant({"title": "Paged attention for serving", "abstract": "KV reuse"}, short)
+                and not _is_relevant({"title": "Attention is all you need", "abstract": ""}, short))
 
     print("\n== degradation ==")
     r2 = RubricPanel(BrokenLLM(), max_retries=0).evaluate("body", TASK)

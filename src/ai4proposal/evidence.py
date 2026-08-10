@@ -13,8 +13,10 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import ssl
 import time
+from math import ceil
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -91,7 +93,7 @@ class EvidencePack:
                 lines.append("  相关文献: 未检索到直接相关工作。注意这**不能**作为该论断不成立的证据——"
                              "文献库对近 1-2 年成果、新模型名称与预印本收录滞后，冷门方向亦可能查无结果。")
             else:
-                lines.append("  检索到的真实文献:")
+                lines.append("  关键词匹配到的文献（未经人工筛选，可能与论断无关）:")
                 for p in papers:
                     meta = f"{p.get('venue') or '?'} {p.get('year') or '?'}, {p.get('authors') or '?'}"
                     cites = p.get("citations")
@@ -104,7 +106,11 @@ class EvidencePack:
             lines.append("")
         if not lines:
             return NEUTRAL_EVIDENCE
-        header = "针对以下待核查论断，系统检索到的真实文献证据（仅供参考，判断权在你，勿被检索结果直接左右）：\n"
+        header = (
+            "以下为系统按关键词自动检索的文献，**未经人工筛选**，其中可能混有与论断无关的结果。\n"
+            "使用方式：先自行判断每篇是否真的与论断相关，只采信相关者；不相关的直接忽略，"
+            "不要因为列出了文献就认为论断已被证实或证伪。判断权在你。\n"
+        )
         return header + "\n".join(lines)
 
 
@@ -117,8 +123,20 @@ EXTRACT_USER = """从下面的申请书中挑出至多 ${max_claims} 条最该�
 - metric：具体量化指标（如"成功率≥85%""亲和力提升10倍""误差≤1.0"）
 - method：依赖的关键已有方法，需核对其真实能力（如 GCG、PAIR、RFdiffusion、AlphaFold 等）
 
-对每条论断给出一个**英文**检索词（query），用于在 Semantic Scholar 检索相关论文。
 优先挑选"若不成立则严重影响评审结论"的论断。
+
+对每条论断给出一个**英文检索词**（query）。检索走的是学术文献库的关键词匹配，**不是搜索引擎**，
+写法直接决定检索质量：
+
+- 只写 **3-6 个精确的技术名词**，用空格分隔。例如 `paged attention KV cache LLM serving`。
+- **不要写整句英文**。像 `high visual quality does not equal task success` 这样的句子，
+  会因为 quality / task / success 等高频词匹配到大量完全无关的高引论文。
+- **不要用引号、OR、AND、括号**等语法，文献库不支持，只会被当成普通字符。
+- **不要只用通用词**（system / method / model / framework / performance / evaluation / data /
+  learning / task / world / real-time）。这类词必须与具体的技术名词搭配出现。
+- 优先使用**该领域的专有名称**：方法名、模型名、数据集名、基准名、算法名、架构名。
+- 若论断涉及具体数值指标，检索该指标背后的**技术手段**，而不是数字本身
+  （`40% communication latency hiding` 应写成 `communication computation overlap distributed training`）。
 
 ## 申请书
 ${proposal_text}
@@ -164,6 +182,53 @@ def extract_claims(llm: Any, proposal_text: str, max_claims: int = 6) -> List[Cl
         if claim and query:
             claims.append(Claim(claim=claim, query=query, type=ctype))
     return claims
+
+
+# ═══════════════════════════ relevance filtering ═══════════════════════════
+# OpenAlex ranks by a relevance_score that tracks citation count and term
+# frequency, so it happily returns a 19k-citation survey for a query it barely
+# matches — measured: a junk query outscored a precise one. Thresholding that
+# score therefore does not work; requiring the query's own terms to actually
+# appear in the paper does.
+
+_QUERY_STOPWORDS = {
+    "a", "an", "the", "of", "for", "and", "or", "in", "on", "with", "to", "is",
+    "are", "be", "that", "this", "by", "as", "at", "from", "does", "not", "than",
+    "versus", "vs", "using", "based", "via", "new", "novel", "high", "low", "its",
+}
+
+
+def _query_terms(query: str) -> List[str]:
+    """Distinctive lowercase terms of a query, in order, de-duplicated."""
+    words = re.findall(r"[a-z0-9][a-z0-9\-]*", query.lower())
+    seen, out = set(), []
+    for w in words:
+        if len(w) > 2 and w not in _QUERY_STOPWORDS and w not in seen:
+            seen.add(w)
+            out.append(w)
+    return out
+
+
+MAX_TERMS_REQUIRED = 3
+
+
+def _is_relevant(paper: dict, terms: List[str], min_fraction: float = 0.5) -> bool:
+    """Keep a paper only if enough of the query's terms appear in its text.
+
+    Guards against the failure mode where a broad query pulls in highly-cited
+    papers sharing only a common word ("task", "quality", "world").
+
+    The requirement is capped at MAX_TERMS_REQUIRED rather than scaling with
+    query length: a genuinely relevant paper rarely echoes every term of a long
+    query, so a strict fraction discards real hits (measured: it dropped Imagen
+    Video for a query about video-diffusion latency).
+    """
+    if not terms:
+        return True
+    hay = f"{paper.get('title') or ''} {paper.get('abstract') or ''}".lower()
+    hits = sum(1 for t in terms if t in hay)
+    need = min(len(terms), MAX_TERMS_REQUIRED, max(2, ceil(len(terms) * min_fraction)))
+    return hits >= need
 
 
 # ═══════════════════════════════ retrieval ═══════════════════════════════
@@ -300,9 +365,13 @@ def gather_evidence(
             papers = search_fn(c.query, per_query)
         except Exception:
             papers = []
-        results[i] = papers
+        terms = _query_terms(c.query)
+        kept = [p for p in papers if _is_relevant(p, terms)]
+        results[i] = kept
         if verbose:
-            print(f"    [evidence] '{c.query[:50]}' → {len(papers)} papers")
+            dropped = len(papers) - len(kept)
+            note = f" ({dropped} 篇词面不符已丢弃)" if dropped else ""
+            print(f"    [evidence] '{c.query[:50]}' → {len(kept)} papers{note}")
         if delay and i < len(claims) - 1:
             time.sleep(delay)  # S2 free tier: ~1 req / 3s
     return EvidencePack(claims=claims, results=results)
