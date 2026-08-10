@@ -385,7 +385,9 @@ def main():
             pack = None
             if args.judge_evidence:
                 from ai4proposal.evidence import gather_evidence
-                pack = gather_evidence(llm, proposal_text, verbose=True)
+                from ai4proposal.llm import cheap_backend
+                pack = gather_evidence(llm, proposal_text, verbose=True,
+                                       rerank_llm=cheap_backend(llm))
             jr = RubricPanel(llm, verbose=True).evaluate(proposal_text, task, evidence=pack)
             result["judge"] = jr.to_dict()
             print(f"      overall={jr.overall_100}/100 verdict={jr.verdict}")

@@ -106,6 +106,18 @@ class LLMBackend:
         return str(message).strip()
 
 
+def cheap_backend(main: LLMBackend) -> LLMBackend:
+    """A smaller/faster model on the same endpoint, for auxiliary calls such as
+    evidence reranking where judgement quality is not the bottleneck.
+    Override with AI4PROPOSAL_CHEAP_MODEL."""
+    return LLMBackend(
+        model=os.getenv("AI4PROPOSAL_CHEAP_MODEL", "deepseek-v4-flash").strip() or main.model,
+        api_key=main.api_key,
+        base_url=main.base_url,
+        timeout_seconds=main.timeout_seconds,
+    )
+
+
 def generate_with_retry(llm: Optional[LLMBackend], system: str, prompt: str,
                         fallback: str = "", attempts: int = 4) -> str:
     """Call the backend with linear backoff; return `fallback` if every try fails."""

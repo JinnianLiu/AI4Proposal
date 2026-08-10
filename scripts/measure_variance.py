@@ -59,8 +59,9 @@ def main() -> int:
     pack = None
     if args.evidence:
         from ai4proposal.evidence import gather_evidence
+        from ai4proposal.llm import cheap_backend
         print("  检索证据（一次，全部轮次复用）…")
-        pack = gather_evidence(llm, text, verbose=True)
+        pack = gather_evidence(llm, text, verbose=True, rerank_llm=cheap_backend(llm))
 
     panel = RubricPanel(llm)
     runs = []

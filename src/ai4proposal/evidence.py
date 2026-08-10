@@ -21,6 +21,7 @@ import urllib.error
 import urllib.parse
 import urllib.request
 from dataclasses import dataclass, field
+from xml.etree import ElementTree
 from typing import Any, Callable, Dict, List, Optional
 
 MAX_PROPOSAL_CHARS = 24000
@@ -66,8 +67,13 @@ def _urlopen(req: urllib.request.Request, timeout: int = 20):
 @dataclass
 class Claim:
     claim: str
-    query: str
-    type: str  # novelty | metric | method
+    queries: List[str]      # several angles per claim; results are unioned
+    type: str               # novelty | metric | method
+
+    @property
+    def query(self) -> str:
+        """Primary query, for logging."""
+        return self.queries[0] if self.queries else ""
 
 
 @dataclass
@@ -138,13 +144,18 @@ EXTRACT_USER = """从下面的申请书中挑出至多 ${max_claims} 条最该�
 - 若论断涉及具体数值指标，检索该指标背后的**技术手段**，而不是数字本身
   （`40% communication latency hiding` 应写成 `communication computation overlap distributed training`）。
 
+每条论断给 **2-3 个不同角度**的检索词，结果取并集，以提高召回：
+一个用具体的方法/模型/系统专有名称；一个用该问题的通用技术表述；必要时再加一个相邻技术族的说法。
+
 ## 申请书
 ${proposal_text}
 
 只输出：
 {
   "claims": [
-    {"claim": "论断原文或简述", "query": "english search terms", "type": "novelty|metric|method"}
+    {"claim": "论断原文或简述",
+     "queries": ["specific method name terms", "general problem terms", "adjacent technique terms"],
+     "type": "novelty|metric|method"}
   ]
 }"""
 
@@ -177,10 +188,15 @@ def extract_claims(llm: Any, proposal_text: str, max_claims: int = 6) -> List[Cl
         if not isinstance(item, dict):
             continue
         claim = str(item.get("claim", "")).strip()
-        query = str(item.get("query", "")).strip()
+        raw_qs = item.get("queries")
+        if isinstance(raw_qs, str):
+            raw_qs = [raw_qs]
+        elif not isinstance(raw_qs, list):
+            raw_qs = [item.get("query", "")]      # tolerate the older single-query shape
+        queries = [str(q).strip() for q in raw_qs if str(q).strip()][:3]
         ctype = str(item.get("type", "method")).strip().lower()
-        if claim and query:
-            claims.append(Claim(claim=claim, query=query, type=ctype))
+        if claim and queries:
+            claims.append(Claim(claim=claim, queries=queries, type=ctype))
     return claims
 
 
@@ -296,6 +312,70 @@ def search_openalex(query: str, limit: int = 3, max_retries: int = 3) -> List[di
     return papers
 
 
+_ATOM = "{http://www.w3.org/2005/Atom}"
+
+
+def search_arxiv(query: str, limit: int = 3, max_retries: int = 2) -> List[dict]:
+    """Search arXiv. Free, no API key. Returns [] on failure.
+
+    Complements OpenAlex, which indexes published records and so lags one to two
+    years behind — exactly where novelty claims live. New model and system names
+    are usually on arXiv the day they appear.
+    """
+    terms = " AND ".join(f'all:"{t}"' if " " in t else f"all:{t}"
+                         for t in _query_terms(query)[:6]) or f"all:{query}"
+    url = ("http://export.arxiv.org/api/query"
+           f"?search_query={urllib.parse.quote(terms)}"
+           f"&max_results={limit}&sortBy=relevance")
+    headers = {"User-Agent": "AI4Proposal/1.0"}
+
+    body = None
+    for attempt in range(max_retries):
+        try:
+            req = urllib.request.Request(url, headers=headers)
+            with _urlopen(req, timeout=25) as resp:
+                body = resp.read().decode("utf-8", errors="ignore")
+            break
+        except Exception:
+            if attempt < max_retries - 1:
+                time.sleep(2 * (attempt + 1))
+            else:
+                return []
+    if not body:
+        return []
+
+    try:
+        root = ElementTree.fromstring(body)
+    except ElementTree.ParseError:
+        return []
+
+    papers = []
+    for entry in root.findall(f"{_ATOM}entry"):
+        def txt(tag: str) -> str:
+            el = entry.find(f"{_ATOM}{tag}")
+            return " ".join((el.text or "").split()) if el is not None else ""
+        authors = [" ".join((a.findtext(f"{_ATOM}name") or "").split())
+                   for a in entry.findall(f"{_ATOM}author")[:3]]
+        published = txt("published")
+        papers.append({
+            "title": txt("title"),
+            "authors": ", ".join(a for a in authors if a),
+            "year": int(published[:4]) if published[:4].isdigit() else None,
+            "venue": "arXiv",
+            "abstract": txt("summary"),
+            "citations": None,
+        })
+    return papers
+
+
+def search_all(query: str, limit: int = 3) -> List[dict]:
+    """Default retriever: OpenAlex (published record, citation counts) plus arXiv
+    (preprints and recent work). Either failing degrades to the other."""
+    papers = search_openalex(query, limit)
+    papers.extend(search_arxiv(query, limit))
+    return papers
+
+
 def search_semantic_scholar(query: str, limit: int = 3, max_retries: int = 3) -> List[dict]:
     """Search Semantic Scholar for real papers. Returns [] on any failure.
 
@@ -344,34 +424,116 @@ def search_semantic_scholar(query: str, limit: int = 3, max_retries: int = 3) ->
     return papers
 
 
+# ═══════════════════════════════ reranking ═══════════════════════════════
+
+RERANK_SYSTEM = """你是文献筛选助手。给你一条待核查论断和若干篇候选论文，你判断每篇是否**真的**与核查该论断相关。只输出 JSON。"""
+
+RERANK_USER = """## 待核查论断
+${claim}
+
+## 候选论文
+${papers}
+
+## 判断标准
+保留的条件是：这篇论文能够为"该论断是否成立/是否新颖/该指标是否可达"提供参考——
+即它研究的是同一个问题、同一类方法，或给出了可比的数值结果。
+
+以下情况一律剔除：
+- 只是碰巧共用了通用词（如 world / task / quality / system / real-time / video），主题实际无关
+- 属于完全不同的学科或应用领域
+- 过于宽泛的综述或教科书式文献，对具体论断没有判别力
+
+宁可少留，不要凑数。全部不相关就返回空数组。
+
+只输出：{"keep": [1, 3]}   // 保留论文的编号"""
+
+
+def rerank_papers(llm: Any, claim: str, papers: List[dict]) -> List[dict]:
+    """Keep only the papers an LLM judges genuinely relevant to `claim`.
+
+    Replaces term-overlap filtering, which cannot tell a shared common word from
+    a shared topic: it discarded a real hit (Imagen Video) while keeping an
+    unrelated quadrotor paper. Returns `papers` unchanged on any failure, so a
+    rerank outage degrades to no filtering rather than to no evidence.
+    """
+    if not papers:
+        return papers
+    listing = []
+    for i, p in enumerate(papers, 1):
+        abstract = (p.get("abstract") or "").strip()[:300]
+        listing.append(f"{i}. {p.get('title','')} ({p.get('venue') or '?'} {p.get('year') or '?'})"
+                       + (f"\n   摘要: {abstract}" if abstract else ""))
+    user = (RERANK_USER.replace("${claim}", claim)
+                       .replace("${papers}", "\n".join(listing)))
+    try:
+        raw = llm.generate_text(system_prompt=RERANK_SYSTEM, user_prompt=user)
+    except Exception:
+        return papers
+    data = _parse_json(raw)
+    keep = data.get("keep")
+    if not isinstance(keep, list):
+        return papers
+    idx = {int(k) for k in keep if isinstance(k, (int, float, str)) and str(k).strip().isdigit()}
+    return [p for i, p in enumerate(papers, 1) if i in idx]
+
+
+def _dedupe(papers: List[dict]) -> List[dict]:
+    """Collapse the same work retrieved by several queries or both sources."""
+    seen, out = set(), []
+    for p in papers:
+        key = re.sub(r"[^a-z0-9]", "", (p.get("title") or "").lower())[:60]
+        if key and key not in seen:
+            seen.add(key)
+            out.append(p)
+    return out
+
+
 # ═══════════════════════════════ orchestration ═══════════════════════════════
 
 def gather_evidence(
     llm: Any,
     proposal_text: str,
-    search_fn: Callable[[str, int], List[dict]] = search_openalex,
+    search_fn: Callable[[str, int], List[dict]] = search_all,
     max_claims: int = 6,
     per_query: int = 3,
     delay: float = 1.0,
     verbose: bool = False,
+    rerank_llm: Any = None,
+    keep_per_claim: int = 4,
 ) -> EvidencePack:
-    """Extract claims + retrieve evidence. Never raises; degrades to empty pack."""
+    """Extract claims, retrieve across every query and source, then filter.
+
+    `rerank_llm` should be a cheap backend: relevance filtering is a much easier
+    task than judging, and it runs once per claim. Without one, filtering falls
+    back to term overlap, which is markedly worse. Never raises; degrades to an
+    empty pack.
+    """
     claims = extract_claims(llm, proposal_text, max_claims=max_claims)
     if verbose:
-        print(f"    [evidence] extracted {len(claims)} claims")
+        print(f"    [evidence] extracted {len(claims)} claims"
+              f"{'（LLM 重排已启用）' if rerank_llm is not None else '（无重排，退化为词面过滤）'}")
     results: Dict[int, List[dict]] = {}
     for i, c in enumerate(claims):
-        try:
-            papers = search_fn(c.query, per_query)
-        except Exception:
-            papers = []
-        terms = _query_terms(c.query)
-        kept = [p for p in papers if _is_relevant(p, terms)]
-        results[i] = kept
+        candidates: List[dict] = []
+        for q in c.queries:
+            try:
+                candidates.extend(search_fn(q, per_query))
+            except Exception:
+                pass
+            if delay:
+                time.sleep(delay)
+        candidates = _dedupe(candidates)
+
+        if rerank_llm is not None:
+            kept = rerank_papers(rerank_llm, c.claim, candidates)
+            how = "重排"
+        else:
+            terms = _query_terms(" ".join(c.queries))
+            kept = [p for p in candidates if _is_relevant(p, terms)]
+            how = "词面"
+        results[i] = kept[:keep_per_claim]
+
         if verbose:
-            dropped = len(papers) - len(kept)
-            note = f" ({dropped} 篇词面不符已丢弃)" if dropped else ""
-            print(f"    [evidence] '{c.query[:50]}' → {len(kept)} papers{note}")
-        if delay and i < len(claims) - 1:
-            time.sleep(delay)  # S2 free tier: ~1 req / 3s
+            print(f"    [evidence] {len(c.queries)} 查询 → {len(candidates)} 候选 "
+                  f"→ {how}后 {len(results[i])} 篇 | {c.query[:44]}")
     return EvidencePack(claims=claims, results=results)

@@ -463,6 +463,13 @@ class RubricPanel:
             for d in dims:
                 entry = (data.get("dimensions") or {}).get(d) or {}
                 scores[d] = _clamp_score(entry.get("score"))
+                if scores[d] is None and data:
+                    # The call succeeded but this dimension came back missing or
+                    # unparseable. weighted_overall would silently redistribute its
+                    # weight and the run would look clean, so record it.
+                    errors.append(
+                        f"{role}: dimension '{d}' unscored (raw={entry.get('score')!r}); "
+                        f"its weight {WEIGHTS.get(d, 0):.2f} was redistributed")
                 if self.verbose:
                     got = scores[d]
                     print(f"      {d}: {got if got is not None else 'FAILED'}")

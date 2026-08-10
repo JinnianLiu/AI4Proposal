@@ -154,7 +154,9 @@ def main() -> int:
     pack = None
     if args.evidence:
         from ai4proposal.evidence import gather_evidence
-        pack = gather_evidence(llm, proposal_text, verbose=True)
+        from ai4proposal.llm import cheap_backend
+        pack = gather_evidence(llm, proposal_text, verbose=True,
+                               rerank_llm=cheap_backend(llm))
 
     result = RubricPanel(llm, verbose=True).evaluate(proposal_text, task, evidence=pack)
     print_report(result)

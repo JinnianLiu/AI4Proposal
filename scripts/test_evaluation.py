@@ -154,7 +154,7 @@ def main() -> int:
     ok &= check("no pack → neutral", _science_evidence(None) == NEUTRAL_EVIDENCE)
     ok &= check("empty pack → neutral", _science_evidence(EvidencePack()) == NEUTRAL_EVIDENCE)
     pack = EvidencePack(
-        claims=[Claim(claim="首次提出X", query="x method", type="novelty")],
+        claims=[Claim(claim="首次提出X", queries=["x method", "x alternative"], type="novelty")],
         results={0: [{"title": "A Prior Work On X", "year": 2024, "venue": "ICML",
                       "authors": "Doe", "citations": 12, "abstract": "we propose x"}]})
     cards = _science_evidence(pack)
@@ -186,6 +186,20 @@ def main() -> int:
     r2 = RubricPanel(BrokenLLM(), max_retries=0).evaluate("body", TASK)
     ok &= check("judge failure does not raise", r2.scores == {} and r2.overall_score == 5.0)
     ok &= check("failures recorded in errors", len(r2.errors) >= 4)
+
+    # a judge that answers but omits a dimension used to vanish silently: the
+    # weight was redistributed and the run looked clean.
+    class PartialLLM:
+        def generate_text(self, system_prompt, user_prompt):
+            if '"role": "feasibility"' in user_prompt:
+                return json.dumps({"role": "feasibility",
+                                   "dimensions": {"feasibility": {"reason": "r"}}})
+            return FakePanel().generate_text(system_prompt, user_prompt)
+
+    r3 = RubricPanel(PartialLLM()).evaluate("body", TASK)
+    ok &= check("unscored dimension is dropped from scores", "feasibility" not in r3.scores)
+    ok &= check("unscored dimension is reported rather than silently dropped",
+                any("feasibility" in e and "unscored" in e for e in r3.errors))
 
     print("\n" + ("PASS" if ok else "FAIL") + "\n")
     return 0 if ok else 1
