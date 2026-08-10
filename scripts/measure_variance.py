@@ -55,6 +55,13 @@ def main() -> int:
     if not llm.api_key:
         sys.exit("ERROR: AI4PROPOSAL_API_KEY not set")
 
+    # long runs are usually redirected to a file; unbuffered output keeps them
+    # observable instead of silent until exit
+    try:
+        sys.stdout.reconfigure(line_buffering=True)
+    except Exception:
+        pass
+
     print(f"== {md}  ×{args.runs} 次  ({task.get('title','')[:40]})")
     pack = None
     if args.evidence:
