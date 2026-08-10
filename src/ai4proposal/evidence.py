@@ -27,10 +27,38 @@ CLAIM_TYPES = ("novelty", "metric", "method")
 
 NEUTRAL_EVIDENCE = "(未提供外部检索证据)"
 
-# ── SSL context matching fix_references.py (some proxies break cert chains) ──
-_SSL_CTX = ssl.create_default_context()
-_SSL_CTX.check_hostname = False
-_SSL_CTX.verify_mode = ssl.CERT_NONE
+# ── TLS: verify by default, fall back only when the chain genuinely fails ──
+# Some corporate proxies / VPNs terminate TLS with their own CA, which breaks
+# verification. Rather than disabling checks outright, try a verified connection
+# first and drop to an unverified one only on an SSL error. Set
+# AI4PROPOSAL_INSECURE_TLS=1 to skip straight to unverified.
+_SSL_VERIFIED = ssl.create_default_context()
+
+_SSL_UNVERIFIED = ssl.create_default_context()
+_SSL_UNVERIFIED.check_hostname = False
+_SSL_UNVERIFIED.verify_mode = ssl.CERT_NONE
+
+_warned_insecure = False
+
+
+def _insecure_allowed() -> bool:
+    return os.getenv("AI4PROPOSAL_INSECURE_TLS", "").strip().lower() in {"1", "true", "yes", "on"}
+
+
+def _urlopen(req: urllib.request.Request, timeout: int = 20):
+    """Open `req` with certificate verification, retrying unverified if the TLS
+    chain fails. Only SSL errors trigger the fallback — every other error
+    propagates, so a 429 or timeout is still handled by the caller's retry loop."""
+    global _warned_insecure
+    if not _insecure_allowed():
+        try:
+            return urllib.request.urlopen(req, timeout=timeout, context=_SSL_VERIFIED)
+        except ssl.SSLError:
+            if not _warned_insecure:
+                print("    [evidence] TLS 证书校验失败（可能是代理拆包），本次改用不校验连接；"
+                      "检索到的文献无法保证来源真实")
+                _warned_insecure = True
+    return urllib.request.urlopen(req, timeout=timeout, context=_SSL_UNVERIFIED)
 
 
 @dataclass
@@ -171,7 +199,7 @@ def search_openalex(query: str, limit: int = 3, max_retries: int = 3) -> List[di
     for attempt in range(max_retries):
         try:
             req = urllib.request.Request(url, headers=headers)
-            with urllib.request.urlopen(req, timeout=20, context=_SSL_CTX) as resp:
+            with _urlopen(req) as resp:
                 data = json.loads(resp.read().decode())
             break
         except urllib.error.HTTPError as e:
@@ -224,7 +252,7 @@ def search_semantic_scholar(query: str, limit: int = 3, max_retries: int = 3) ->
     for attempt in range(max_retries):
         try:
             req = urllib.request.Request(url, headers=headers)
-            with urllib.request.urlopen(req, timeout=20, context=_SSL_CTX) as resp:
+            with _urlopen(req) as resp:
                 data = json.loads(resp.read().decode())
             break
         except urllib.error.HTTPError as e:

@@ -46,6 +46,7 @@ export AI4PROPOSAL_IMAGE_API_KEY=sk-...        # 出图（可选）
 | `AI4PROPOSAL_IMAGE_MODEL` | | `gpt-image-2` | |
 | `AI4PROPOSAL_MAILTO` | | — | OpenAlex 礼貌池邮箱，检索更快 |
 | `AI4PROPOSAL_S2_API_KEY` | | — | 改用 Semantic Scholar 时的配额密钥 |
+| `AI4PROPOSAL_INSECURE_TLS` | | — | 设 `1` 则检索跳过证书校验（见下）|
 
 Windows PowerShell 下建议同时设 `$env:PYTHONUTF8=1`。
 
@@ -146,6 +147,8 @@ python scripts/md_to_docx.py outputs/task_001/proposal_final.md
 `src/ai4proposal/evidence.py`。一次 LLM 调用抽出最该核查的论断（novelty / metric / method），到 OpenAlex（免密钥）检索真实论文，把证据卡注入 **science 评委**。
 
 检索只提供**证据**，不提供结论，判断权始终在评委。检索失败、超时或关闭时退化为中性占位符，评审照常进行。
+
+TLS 证书**默认校验**；仅当证书链确实失败（公司网/VPN 拆包）才自动降级为不校验并打印告警，其他错误（如 429）照常走重试。设 `AI4PROPOSAL_INSECURE_TLS=1` 可直接跳过校验。
 
 ### 输出
 
