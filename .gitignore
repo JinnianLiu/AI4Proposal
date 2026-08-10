@@ -18,6 +18,7 @@ runs*/
 # ── Gold / reference material: NOT for the public repo ──
 docs/
 gold.docx
+cases/tasks/_local/
 
 # ── Binary documents: ignored by default, whitelist what the repo needs ──
 *.docx
