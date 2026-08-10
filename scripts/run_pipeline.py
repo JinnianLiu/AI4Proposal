@@ -162,6 +162,30 @@ def write_one_section(llm, sec, base_vars, blueprint, prev_summary):
     return generate_with_retry(llm, system, WP.fill(WP.WRITER_USER, v)) or f"## {name}\n\n[待补充]"
 
 
+_LEADING_HEADING = re.compile(r"^\s*#{1,2}\s+(.+?)\s*$")
+
+
+def strip_leading_heading(draft: str, name: str) -> str:
+    """Drop the section title the writer repeats at the top of its own draft.
+
+    The assembler emits the canonical `## {name}`, so a draft opening with its own
+    copy renders the heading twice. Matching is exact, mirroring `_normalize_md`
+    in md_to_docx.py: a leading heading that is NOT the section title is a real
+    subheading the writer chose (e.g. 预期成果形式 under 项目成果及推广措施), and
+    md_to_docx demotes those to `###` — so they must survive assembly intact.
+    """
+    lines = draft.split("\n")
+    i = 0
+    while i < len(lines) and not lines[i].strip():
+        i += 1
+    if i >= len(lines):
+        return draft
+    m = _LEADING_HEADING.match(lines[i])
+    if m and m.group(1).strip() == name.strip():
+        return "\n".join(lines[i + 1:]).lstrip("\n")
+    return draft
+
+
 def _img_md(fig_id, i, caption):
     return f"\n\n![{fig_id}](figures/{fig_id}.png)\n\n*图{i+1}：{caption}*\n\n"
 
@@ -326,7 +350,8 @@ def main():
     parts = [f"# {task.get('title','')}\n"]
     for sec in core_sections:
         sid = sec.get("id", sec.get("name"))
-        parts.append(f"## {sec.get('name','')}\n\n{sections.get(sid,'')}")
+        name = sec.get("name", "")
+        parts.append(f"## {name}\n\n{strip_leading_heading(sections.get(sid, ''), name)}")
     proposal_text = "\n\n".join(parts)
 
     fig_mode = "off" if args.no_images else args.figures
