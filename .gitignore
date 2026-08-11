@@ -33,3 +33,6 @@ _scratch/
 
 # ── Junk ──
 ~$*
+
+# ── Web 任务产物 ──
+outputs/_web/

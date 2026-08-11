@@ -1,0 +1,588 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI4Proposal · 科研项目申请书智能体</title>
+<style>
+:root{
+  color-scheme: light;
+  --page:#f7f7f5; --surface:#fcfcfb; --surface-2:#f2f2ef; --line:#e1e0d9;
+  --ink:#0b0b0b; --ink-2:#52514e; --ink-3:#898781;
+  --accent:#2a78d6; --accent-soft:#e8f1fd;
+  --good:#0ca30c; --warn:#fab219; --crit:#d03b3b;
+  --radius:10px;
+  --font:"PingFang SC","Microsoft YaHei","Noto Sans CJK SC","Source Han Sans SC",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"SFMono-Regular",Consolas,"Liberation Mono",monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --page:#0d0d0d; --surface:#1a1a19; --surface-2:#232322; --line:#2c2c2a;
+    --ink:#fff; --ink-2:#c3c2b7; --ink-3:#898781;
+    --accent:#3987e5; --accent-soft:#16273c;
+    --good:#0ca30c; --warn:#fab219; --crit:#d03b3b;
+  }
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--page);color:var(--ink);font-family:var(--font);
+     font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased}
+.wrap{max-width:980px;margin:0 auto;padding:28px 22px 80px}
+
+/* ── header ── */
+header{display:flex;align-items:baseline;gap:12px;margin-bottom:8px}
+h1{font-size:20px;margin:0;letter-spacing:-.01em}
+.sub{color:var(--ink-3);font-size:13px}
+
+/* ── stepper ── */
+.steps{display:flex;gap:6px;margin:20px 0 26px;flex-wrap:wrap}
+.step{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--ink-3);
+      padding:5px 11px 5px 6px;border-radius:99px;background:var(--surface);border:1px solid var(--line)}
+.step .n{width:19px;height:19px;border-radius:50%;background:var(--surface-2);color:var(--ink-3);
+         display:grid;place-items:center;font-size:11px;font-weight:600;flex:none}
+.step.active{color:var(--ink);border-color:var(--accent);background:var(--accent-soft)}
+.step.active .n{background:var(--accent);color:#fff}
+.step.done{color:var(--ink-2)}
+.step.done .n{background:var(--good);color:#fff}
+
+/* ── panels ── */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+      padding:20px 22px;margin-bottom:16px}
+.card h2{font-size:15px;margin:0 0 4px}
+.card .hint{color:var(--ink-3);font-size:13px;margin:0 0 16px}
+.hidden{display:none !important}
+
+/* ── drop zone ── */
+.drop{border:1.5px dashed var(--line);border-radius:var(--radius);padding:44px 20px;text-align:center;
+      cursor:pointer;transition:.15s;background:var(--surface)}
+.drop:hover,.drop.over{border-color:var(--accent);background:var(--accent-soft)}
+.drop .big{font-size:15px;margin-bottom:5px}
+.drop .small{color:var(--ink-3);font-size:12.5px}
+
+/* ── forms & buttons ── */
+button{font:inherit;font-size:13.5px;padding:8px 17px;border-radius:7px;cursor:pointer;
+       border:1px solid var(--line);background:var(--surface-2);color:var(--ink);transition:.12s}
+button:hover:not(:disabled){border-color:var(--ink-3)}
+button.primary{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:500}
+button.primary:hover:not(:disabled){filter:brightness(1.08)}
+button:disabled{opacity:.45;cursor:not-allowed}
+.row{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-top:16px}
+.spacer{flex:1}
+
+/* ── option cards ── */
+.opts{display:grid;gap:9px}
+.opt{border:1px solid var(--line);border-radius:9px;padding:13px 15px;cursor:pointer;
+     background:var(--surface);transition:.12s}
+.opt:hover{border-color:var(--ink-3)}
+.opt.sel{border-color:var(--accent);background:var(--accent-soft);box-shadow:inset 3px 0 0 var(--accent)}
+.opt .t{font-weight:600;font-size:14px;margin-bottom:3px}
+.opt .d{color:var(--ink-2);font-size:13px}
+.opt .m{color:var(--ink-3);font-size:12px;margin-top:7px}
+
+/* ── parsed facts ── */
+.facts{display:grid;grid-template-columns:auto 1fr;gap:7px 16px;font-size:13.5px;align-items:baseline}
+.facts dt{color:var(--ink-3);white-space:nowrap}
+.facts dd{margin:0}
+.facts ul{margin:0;padding-left:17px}
+.facts li{margin:1px 0}
+.tag{display:inline-block;background:var(--surface-2);border:1px solid var(--line);
+     border-radius:5px;padding:1px 7px;font-size:12px;color:var(--ink-2);margin:0 4px 4px 0}
+
+/* ── progress ── */
+.stage{display:flex;align-items:center;gap:11px;padding:11px 0;border-bottom:1px solid var(--line)}
+.stage:last-child{border-bottom:0}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--line);flex:none}
+.stage.run .dot{background:var(--accent);animation:pulse 1.3s ease-in-out infinite}
+.stage.ok .dot{background:var(--good)}
+.stage.err .dot{background:var(--crit)}
+.stage .lbl{font-size:13.5px}
+.stage.pend .lbl{color:var(--ink-3)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.elapsed{color:var(--ink-3);font-size:12px;font-variant-numeric:tabular-nums}
+
+/* ── result ── */
+.tabs{display:flex;gap:3px;border-bottom:1px solid var(--line);margin-bottom:18px}
+.tab{padding:8px 15px;font-size:13.5px;cursor:pointer;color:var(--ink-3);
+     border-bottom:2px solid transparent;margin-bottom:-1px}
+.tab.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:500}
+.doc{font-size:14.5px;line-height:1.85;max-height:640px;overflow-y:auto;padding-right:8px}
+.doc h1{font-size:19px;margin:0 0 18px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.doc h2{font-size:16px;margin:26px 0 10px}
+.doc h3{font-size:14.5px;margin:18px 0 7px;color:var(--ink-2)}
+.doc p{margin:9px 0}
+.doc ul,.doc ol{margin:9px 0;padding-left:22px}
+.doc li{margin:3px 0}
+.doc img{max-width:100%;border:1px solid var(--line);border-radius:7px;margin:12px 0;display:block}
+.doc em{color:var(--ink-3);font-size:13px;font-style:normal;display:block;text-align:center;margin-top:-4px}
+.doc table{border-collapse:collapse;width:100%;font-size:13px;margin:12px 0;display:block;overflow-x:auto}
+.doc th,.doc td{border:1px solid var(--line);padding:6px 9px;text-align:left}
+.doc th{background:var(--surface-2)}
+.doc code{font-family:var(--mono);font-size:12.5px;background:var(--surface-2);padding:1px 5px;border-radius:4px}
+
+/* ── evaluation ── */
+.hero{display:flex;align-items:baseline;gap:14px;margin-bottom:4px}
+.hero .num{font-size:42px;font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1}
+.hero .of{color:var(--ink-3);font-size:14px}
+.badge{display:inline-block;padding:3px 11px;border-radius:99px;font-size:12.5px;font-weight:500;
+       border:1px solid}
+.badge.ok{color:var(--good);border-color:var(--good);background:color-mix(in srgb,var(--good) 10%,transparent)}
+.badge.mid{color:var(--warn);border-color:var(--warn);background:color-mix(in srgb,var(--warn) 12%,transparent)}
+.badge.bad{color:var(--crit);border-color:var(--crit);background:color-mix(in srgb,var(--crit) 10%,transparent)}
+.bars{margin:22px 0 6px}
+.bar{display:grid;grid-template-columns:118px 1fr 46px;gap:11px;align-items:center;
+     padding:5px 0;font-size:13px}
+.bar .nm{color:var(--ink-2);text-align:right}
+.bar .track{background:var(--surface-2);border-radius:4px;height:19px;position:relative;overflow:hidden}
+.bar .fill{background:var(--accent);height:100%;border-radius:0 4px 4px 0;min-width:2px;
+           transition:width .5s cubic-bezier(.2,.7,.3,1)}
+.bar .val{font-variant-numeric:tabular-nums;color:var(--ink);font-weight:500}
+.bar .wt{color:var(--ink-3);font-size:11.5px}
+.axis{display:grid;grid-template-columns:118px 1fr 46px;gap:11px;font-size:11px;color:var(--ink-3);margin-top:2px}
+.axis .marks{display:flex;justify-content:space-between}
+.lists{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:24px}
+@media (max-width:720px){.lists{grid-template-columns:1fr}}
+.lists h4{font-size:13px;margin:0 0 8px;color:var(--ink-2)}
+.lists li{font-size:13px;margin:6px 0;color:var(--ink-2)}
+.flag{border-left:2px solid var(--warn);padding-left:11px;margin:9px 0;font-size:13px;color:var(--ink-2)}
+.summary{background:var(--surface-2);border-radius:8px;padding:14px 16px;font-size:13.5px;
+         color:var(--ink-2);margin-top:20px}
+
+.err{background:color-mix(in srgb,var(--crit) 8%,transparent);border:1px solid var(--crit);
+     color:var(--crit);border-radius:8px;padding:12px 15px;font-size:13.5px;margin-top:14px;
+     white-space:pre-wrap}
+.figs{display:grid;gap:16px}
+.figs figure{margin:0}
+.figs img{width:100%;border:1px solid var(--line);border-radius:8px;display:block}
+.figs figcaption{font-size:12.5px;color:var(--ink-3);margin-top:6px;text-align:center}
+.spin{display:inline-block;width:13px;height:13px;border:2px solid var(--line);
+      border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;vertical-align:-2px}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>AI4Proposal</h1>
+    <span class="sub">上传资助指南，端到端产出可下载的项目申请书</span>
+  </header>
+
+  <div class="steps" id="steps"></div>
+
+  <!-- 1 上传 -->
+  <section class="card" id="s-upload">
+    <h2>上传资助指南</h2>
+    <p class="hint">支持 .docx / .txt / .md。系统只转写指南写明的内容，不会替你臆测未写明的信息。</p>
+    <div class="drop" id="drop">
+      <div class="big" id="dropBig">拖入文件，或点击选择</div>
+      <div class="small" id="dropSmall">申报指南、课题公告、Call for Proposals…</div>
+    </div>
+    <input type="file" id="file" class="hidden" accept=".docx,.txt,.md,.markdown">
+    <div id="upErr"></div>
+  </section>
+
+  <!-- 2 确认解析 -->
+  <section class="card hidden" id="s-call">
+    <h2>指南解析结果</h2>
+    <p class="hint">以下均转写自指南原文。请核对，尤其是硬性交付物与约束 —— 它们会贯穿写作与评审。</p>
+    <dl class="facts" id="facts"></dl>
+    <div class="row">
+      <button class="primary" id="toDir">下一步：选择研究方向</button>
+      <button id="reUpload">换一份指南</button>
+    </div>
+  </section>
+
+  <!-- 3 方向 -->
+  <section class="card hidden" id="s-dir">
+    <h2>选择研究方向</h2>
+    <p class="hint">指南通常只圈定方向、不指定课题。选一个方向，或让系统替你选。</p>
+    <div class="opts" id="dirs"></div>
+    <div class="row">
+      <button class="primary" id="toTopics" disabled>下一步：生成候选课题</button>
+      <button id="autoDir">让系统替我选</button>
+      <span class="spacer"></span>
+      <button id="backCall">上一步</button>
+    </div>
+    <div id="dirErr"></div>
+  </section>
+
+  <!-- 4 选题 -->
+  <section class="card hidden" id="s-topic">
+    <h2>候选课题</h2>
+    <p class="hint">这一步是系统唯一的"创作"环节，其余内容均来自指南。选一个，或重新生成。</p>
+    <div class="opts" id="topics"></div>
+    <div class="row">
+      <button class="primary" id="toRun" disabled>开始生成申请书</button>
+      <button id="regen">换一批</button>
+      <span class="spacer"></span>
+      <button id="backDir">上一步</button>
+    </div>
+    <div id="topicErr"></div>
+  </section>
+
+  <!-- 5 生成中 -->
+  <section class="card hidden" id="s-run">
+    <h2 id="runTitle">正在生成</h2>
+    <p class="hint">全流程约需 10–15 分钟，可以离开页面稍后回来。请勿关闭本机服务。</p>
+    <div id="stages"></div>
+    <div id="runErr"></div>
+  </section>
+
+  <!-- 6 结果 -->
+  <section class="card hidden" id="s-result">
+    <div class="row" style="margin:0 0 14px">
+      <h2 style="margin:0" id="resTitle">申请书已生成</h2>
+      <span class="spacer"></span>
+      <button class="primary" id="dlDocx">下载 Word</button>
+      <button id="dlMd">Markdown</button>
+      <button id="dlZip">全部打包</button>
+    </div>
+    <div class="tabs" id="tabs"></div>
+    <div id="tab-doc"><div class="doc" id="doc"></div></div>
+    <div id="tab-figs" class="hidden"><div class="figs" id="figs"></div></div>
+    <div id="tab-eval" class="hidden"><div id="evalBox"></div></div>
+    <div class="row"><button id="restart">再做一份</button></div>
+  </section>
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+const el = (t, c, x) => { const n = document.createElement(t); if (c) n.className = c;
+                          if (x !== undefined) n.textContent = x; return n; };
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+const STEPS = ['上传指南', '核对解析', '选择方向', '确定课题', '生成', '完成'];
+const S = { call:null, direction:null, topics:[], topic:null, job:null, step:0, t0:0, timer:null };
+
+function drawSteps(){
+  const box = $('#steps'); box.innerHTML = '';
+  STEPS.forEach((label, i) => {
+    const d = el('div', 'step' + (i === S.step ? ' active' : i < S.step ? ' done' : ''));
+    d.append(el('span', 'n', i < S.step ? '✓' : String(i + 1)), el('span', null, label));
+    box.append(d);
+  });
+}
+function show(id){
+  ['s-upload','s-call','s-dir','s-topic','s-run','s-result']
+    .forEach(x => $('#' + x).classList.toggle('hidden', x !== id));
+}
+function goto(step, id){ S.step = step; drawSteps(); show(id); window.scrollTo({top:0, behavior:'smooth'}); }
+function showErr(sel, msg){
+  const box = $(sel); box.innerHTML = '';
+  if (msg) box.append(el('div', 'err', msg));
+}
+async function api(path, body){
+  const r = await fetch(path, body ? {method:'POST', headers:{'Content-Type':'application/json'},
+                                      body: JSON.stringify(body)} : undefined);
+  const j = await r.json().catch(() => ({error:'服务端返回了无法解析的内容'}));
+  if (!r.ok) throw new Error(j.error || ('请求失败：' + r.status));
+  return j;
+}
+function busy(btn, on, text){
+  btn.disabled = on;
+  if (on){ btn.dataset.old = btn.textContent; btn.innerHTML = '<span class="spin"></span> ' + (text || '处理中'); }
+  else if (btn.dataset.old) btn.textContent = btn.dataset.old;
+}
+
+/* ── 1 上传 ── */
+const drop = $('#drop'), fileInput = $('#file');
+drop.onclick = () => fileInput.click();
+drop.ondragover = e => { e.preventDefault(); drop.classList.add('over'); };
+drop.ondragleave = () => drop.classList.remove('over');
+drop.ondrop = e => { e.preventDefault(); drop.classList.remove('over');
+                     if (e.dataTransfer.files[0]) upload(e.dataTransfer.files[0]); };
+fileInput.onchange = () => fileInput.files[0] && upload(fileInput.files[0]);
+
+async function upload(file){
+  showErr('#upErr', '');
+  $('#dropBig').innerHTML = '<span class="spin"></span> 正在解析 ' + esc(file.name);
+  $('#dropSmall').textContent = '提取文字并转写为结构化指南，约 20 秒';
+  try{
+    const b64 = await new Promise((res, rej) => {
+      const fr = new FileReader();
+      fr.onload = () => res(fr.result.split(',')[1]);
+      fr.onerror = () => rej(new Error('文件读取失败'));
+      fr.readAsDataURL(file);
+    });
+    const { call } = await api('/api/parse', { filename: file.name, data_b64: b64 });
+    S.call = call; renderCall(call); goto(1, 's-call');
+  }catch(e){ showErr('#upErr', e.message); }
+  finally{
+    $('#dropBig').textContent = '拖入文件，或点击选择';
+    $('#dropSmall').textContent = '申报指南、课题公告、Call for Proposals…';
+    fileInput.value = '';
+  }
+}
+
+/* ── 2 解析结果 ── */
+function renderCall(c){
+  const dl = $('#facts'); dl.innerHTML = '';
+  const add = (k, node) => { dl.append(el('dt', null, k)); const dd = el('dd'); dd.append(node); dl.append(dd); };
+  const list = arr => { const ul = el('ul'); (arr||[]).forEach(x => ul.append(el('li', null, x))); return ul; };
+
+  add('资助计划', el('span', null, c.program || '—'));
+  if (c.sponsor) add('资助方', el('span', null, c.sponsor));
+  const b = c.budget || {};
+  if (b.amount || b.dur || b.note){
+    const bits = [];
+    if (b.amount) bits.push((b.is_cap ? '上限 ' : '') + Number(b.amount).toLocaleString() + ' ' + (b.currency || ''));
+    if (b.dur) bits.push('周期 ' + b.dur + ' 个月');
+    const d = el('div'); d.append(el('span', null, bits.join(' · ') || '—'));
+    if (b.note) d.append(el('div', 'm', b.note));
+    add('经费', d);
+  }
+  if (c.eligibility) add('申请资格', el('span', null, c.eligibility));
+  add('硬性交付物', c.requirements?.length ? list(c.requirements) : el('span', null, '（指南未列明）'));
+  add('硬性约束', c.constraints?.length ? list(c.constraints) : el('span', null, '（指南未列明）'));
+  const dirs = el('div');
+  (c.directions || []).forEach(d => dirs.append(el('span', 'tag', d.name)));
+  add('可选方向', dirs);
+  add('行文结构', el('span', null, c.structure?.core_sections?.length
+      ? c.structure.core_sections.map(s => s.name).join(' / ')
+      : '指南未规定，将由系统按本计划特点规划'));
+  if (c.uncertain?.length){
+    const u = el('div');
+    c.uncertain.forEach(x => u.append(el('div', 'flag', x)));
+    add('需你核对', u);
+  }
+}
+$('#toDir').onclick = () => { renderDirs(); goto(2, 's-dir'); };
+$('#reUpload').onclick = () => goto(0, 's-upload');
+$('#backCall').onclick = () => goto(1, 's-call');
+$('#backDir').onclick = () => goto(2, 's-dir');
+
+/* ── 3 方向 ── */
+function renderDirs(){
+  const box = $('#dirs'); box.innerHTML = '';
+  (S.call.directions || []).forEach(d => {
+    const o = el('div', 'opt' + (S.direction?.id === d.id ? ' sel' : ''));
+    o.append(el('div', 't', d.name));
+    if (d.detail) o.append(el('div', 'd', d.detail));
+    if (d.reason) o.append(el('div', 'm', '系统推荐理由：' + d.reason));
+    o.onclick = () => { S.direction = d; S.topics = []; S.topic = null; renderDirs(); };
+    box.append(o);
+  });
+  $('#toTopics').disabled = !S.direction;
+}
+$('#autoDir').onclick = async e => {
+  showErr('#dirErr', ''); busy(e.target, true, '正在选择');
+  try{
+    const { direction } = await api('/api/direction', { call: S.call, mode: 'auto' });
+    S.direction = direction; S.topics = []; S.topic = null; renderDirs();
+  }catch(err){ showErr('#dirErr', err.message); }
+  finally{ busy(e.target, false); }
+};
+$('#toTopics').onclick = e => { goto(3, 's-topic'); loadTopics(e); };
+$('#regen').onclick = e => loadTopics(e);
+
+/* ── 4 选题 ── */
+async function loadTopics(evt){
+  const btn = evt?.target?.id === 'regen' ? $('#regen') : null;
+  showErr('#topicErr', '');
+  $('#topics').innerHTML = '<div class="opt"><span class="spin"></span> 正在生成候选课题，约 30 秒…</div>';
+  if (btn) busy(btn, true, '生成中');
+  try{
+    const { topics } = await api('/api/topics', { call: S.call, direction: S.direction, n: 3 });
+    S.topics = topics; S.topic = null; renderTopics();
+  }catch(e){ $('#topics').innerHTML = ''; showErr('#topicErr', e.message); }
+  finally{ if (btn) busy(btn, false); }
+}
+function renderTopics(){
+  const box = $('#topics'); box.innerHTML = '';
+  S.topics.forEach((t, i) => {
+    const o = el('div', 'opt' + (S.topic === t ? ' sel' : ''));
+    o.append(el('div', 't', t.title));
+    o.append(el('div', 'd', t.background));
+    if (t.challenges?.length){
+      const m = el('div', 'm', '关键难点：' + t.challenges.join('；'));
+      o.append(m);
+    }
+    if (t.fit) o.append(el('div', 'm', '如何承接交付物：' + t.fit));
+    o.onclick = () => { S.topic = t; renderTopics(); };
+    box.append(o);
+  });
+  $('#toRun').disabled = !S.topic;
+}
+
+/* ── 5 生成 ── */
+$('#toRun').onclick = async () => {
+  showErr('#runErr', '');
+  try{
+    const r = await api('/api/run', { call: S.call, direction: S.direction, topic: S.topic, review: true });
+    S.job = r.job_id; S.stagesDef = r.stages; S.t0 = Date.now();
+    $('#runTitle').textContent = '正在生成：' + S.topic.title;
+    goto(4, 's-run'); renderStages('queued');
+    S.timer = setInterval(poll, 3000); poll();
+  }catch(e){ showErr('#runErr', e.message); }
+};
+function renderStages(current, failed){
+  const box = $('#stages'); box.innerHTML = '';
+  const order = S.stagesDef.map(s => s.id);
+  const idx = order.indexOf(current);
+  S.stagesDef.forEach((s, i) => {
+    let cls = 'pend';
+    if (failed && i === idx) cls = 'err';
+    else if (current === 'done' || (idx >= 0 && i < idx)) cls = 'ok';
+    else if (i === idx) cls = 'run';
+    const row = el('div', 'stage ' + cls);
+    row.append(el('span', 'dot'), el('span', 'lbl', s.label));
+    if (cls === 'run' || (current === 'done' && i === S.stagesDef.length - 1)){
+      const sp = el('span', 'spacer'); row.append(sp);
+      row.append(el('span', 'elapsed', fmt((Date.now() - S.t0) / 1000)));
+    }
+    box.append(row);
+  });
+}
+const fmt = s => `${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,'0')}`;
+async function poll(){
+  try{
+    const j = await api('/api/job/' + S.job);
+    if (j.status === 'failed'){
+      clearInterval(S.timer); renderStages(j.stage, true);
+      showErr('#runErr', '生成失败：\n' + (j.error || '未知错误'));
+      return;
+    }
+    renderStages(j.stage);
+    if (j.status === 'done'){ clearInterval(S.timer); renderResult(j.result); goto(5, 's-result'); }
+  }catch(e){ /* 服务重启等瞬时错误：下一轮继续 */ }
+}
+
+/* ── 6 结果 ── */
+function renderResult(r){
+  $('#resTitle').textContent = S.topic.title;
+  $('#dlDocx').classList.toggle('hidden', !r.has_docx);
+  $('#doc').innerHTML = md(r.markdown || '', S.job);
+
+  const figs = $('#figs'); figs.innerHTML = '';
+  (r.figures || []).forEach((name, i) => {
+    const f = el('figure');
+    const img = el('img'); img.src = `/api/figure/${S.job}/${name}`; img.alt = `图${i+1}`;
+    f.append(img, el('figcaption', null, `图 ${i+1} · ${name}`));
+    figs.append(f);
+  });
+
+  const tabs = [['doc','申请书正文'], ['figs',`配图 ${r.figures?.length||0}`], ['eval','评审报告']];
+  const box = $('#tabs'); box.innerHTML = '';
+  tabs.forEach(([id, label], i) => {
+    if (id === 'figs' && !(r.figures||[]).length) return;
+    if (id === 'eval' && !r.evaluation) return;
+    const t = el('div', 'tab' + (i === 0 ? ' on' : ''), label);
+    t.onclick = () => {
+      box.querySelectorAll('.tab').forEach(x => x.classList.remove('on'));
+      t.classList.add('on');
+      ['doc','figs','eval'].forEach(x => $('#tab-' + x).classList.toggle('hidden', x !== id));
+    };
+    box.append(t);
+  });
+  if (r.evaluation) renderEval(r.evaluation);
+
+  $('#dlDocx').onclick = () => location.href = `/api/download/${S.job}/docx`;
+  $('#dlMd').onclick   = () => location.href = `/api/download/${S.job}/md`;
+  $('#dlZip').onclick  = () => location.href = `/api/download/${S.job}/zip`;
+}
+
+const DIM = { scientific_quality:['科学质量',.20], innovation:['创新性',.18], feasibility:['可行性',.16],
+              alignment:['一致性',.14], impact:['学术影响',.12], compliance:['规范性',.11], clarity:['清晰度',.09] };
+const VERDICT = { recommend_submit:['建议提交','ok'], revise_resubmit:['修改后重投','mid'], reject:['不予推荐','bad'] };
+
+function renderEval(e){
+  const box = $('#evalBox'); box.innerHTML = '';
+  const [vLabel, vCls] = VERDICT[e.verdict] || [e.verdict, 'mid'];
+
+  const hero = el('div', 'hero');
+  hero.append(el('span', 'num', String(e.overall_100 ?? '—')), el('span', 'of', '/ 100'));
+  const badge = el('span', 'badge ' + vCls, vLabel); hero.append(badge);
+  box.append(hero);
+  if (e.research_type?.type)
+    box.append(el('div', 'sub', `评分口径：${e.research_type.type === 'applied' ? '应用/系统型' : '基础研究型'}`));
+
+  const bars = el('div', 'bars');
+  Object.entries(DIM).forEach(([k, [name, w]]) => {
+    const v = e.scores?.[k];
+    const row = el('div', 'bar');
+    const nm = el('div', 'nm'); nm.append(el('div', null, name), el('div', 'wt', '权重 ' + w.toFixed(2)));
+    const track = el('div', 'track');
+    const fill = el('div', 'fill'); fill.style.width = v ? (v * 10) + '%' : '0';
+    track.append(fill);
+    row.append(nm, track, el('div', 'val', v != null ? v.toFixed(0) : '—'));
+    bars.append(row);
+  });
+  const axis = el('div', 'axis');
+  axis.append(el('div'), (() => { const m = el('div', 'marks');
+    ['0','2','4','6','8','10'].forEach(x => m.append(el('span', null, x))); return m; })(), el('div'));
+  bars.append(axis);
+  box.append(bars);
+
+  const lists = el('div', 'lists');
+  [['优点', e.strengths], ['待改进', e.weaknesses]].forEach(([h, items]) => {
+    if (!items?.length) return;
+    const c = el('div'); c.append(el('h4', null, h));
+    const ul = el('ul'); items.forEach(x => ul.append(el('li', null, x))); c.append(ul); lists.append(c);
+  });
+  if (lists.children.length) box.append(lists);
+
+  const flags = [['过度声称', e.over_claims], ['跑题内容', e.off_topic], ['存疑指标', e.risky_targets],
+                 ['占位符残留', e.placeholders], ['违反约束', e.constraint_violations]];
+  const shown = flags.filter(([, v]) => v?.length);
+  if (shown.length){
+    const c = el('div'); c.append(el('h4', null, '硬性问题'));
+    shown.forEach(([k, v]) => v.forEach(x => c.append(el('div', 'flag', `【${k}】${x}`))));
+    box.append(c);
+  }
+  if (e.summary) box.append(el('div', 'summary', e.summary));
+}
+
+/* ── 极简 Markdown 渲染（只覆盖流水线实际产出的语法）── */
+function md(src, job){
+  const lines = src.split('\n');
+  const out = []; let inList = null, inTable = false;
+  const closeList = () => { if (inList){ out.push(`</${inList}>`); inList = null; } };
+  const closeTable = () => { if (inTable){ out.push('</tbody></table>'); inTable = false; } };
+  const inline = s => esc(s)
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/`([^`]+)`/g, '<code>$1</code>');
+
+  for (let i = 0; i < lines.length; i++){
+    const ln = lines[i];
+    let m;
+    if ((m = ln.match(/^!\[[^\]]*\]\(figures\/([^)]+)\)/))){
+      closeList(); closeTable();
+      out.push(`<img src="/api/figure/${job}/${esc(m[1])}" alt="">`); continue;
+    }
+    if ((m = ln.match(/^(#{1,4})\s+(.*)$/))){
+      closeList(); closeTable();
+      out.push(`<h${m[1].length}>${inline(m[2])}</h${m[1].length}>`); continue;
+    }
+    if (/^\s*\|.*\|\s*$/.test(ln)){
+      const cells = ln.trim().slice(1, -1).split('|').map(c => c.trim());
+      if (/^[\s|:-]+$/.test(ln)) continue;                    // 分隔行
+      if (!inTable){ closeList(); out.push('<table><thead><tr>' +
+          cells.map(c => `<th>${inline(c)}</th>`).join('') + '</tr></thead><tbody>'); inTable = true; }
+      else out.push('<tr>' + cells.map(c => `<td>${inline(c)}</td>`).join('') + '</tr>');
+      continue;
+    }
+    closeTable();
+    if ((m = ln.match(/^\s*[-*]\s+(.*)$/))){
+      if (inList !== 'ul'){ closeList(); out.push('<ul>'); inList = 'ul'; }
+      out.push(`<li>${inline(m[1])}</li>`); continue;
+    }
+    if ((m = ln.match(/^\s*\d+[.)]\s+(.*)$/))){
+      if (inList !== 'ol'){ closeList(); out.push('<ol>'); inList = 'ol'; }
+      out.push(`<li>${inline(m[1])}</li>`); continue;
+    }
+    closeList();
+    if ((m = ln.match(/^\*(.+)\*$/))){ out.push(`<em>${inline(m[1])}</em>`); continue; }
+    if (ln.trim()) out.push(`<p>${inline(ln)}</p>`);
+  }
+  closeList(); closeTable();
+  return out.join('\n');
+}
+
+$('#restart').onclick = () => {
+  Object.assign(S, { call:null, direction:null, topics:[], topic:null, job:null });
+  goto(0, 's-upload');
+};
+drawSteps();
+</script>
+</body>
+</html>
