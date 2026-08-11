@@ -44,6 +44,7 @@ export AI4PROPOSAL_IMAGE_API_KEY=sk-...        # 出图（可选）
 | `AI4PROPOSAL_IMAGE_API_KEY` | | — | 留空则跳过出图，退化为文字占位符 |
 | `AI4PROPOSAL_IMAGE_BASE_URL` | | `https://api.chatanywhere.tech/v1` | |
 | `AI4PROPOSAL_IMAGE_MODEL` | | `gpt-image-2` | |
+| `AI4PROPOSAL_FIGURE_PALETTE` | | 内置学术配色 | 逗号分隔的 HEX 色板（≤6 个），如 `#E3F2FD,#1E88E5` |
 | `AI4PROPOSAL_MAILTO` | | — | OpenAlex 礼貌池邮箱，检索更快 |
 | `AI4PROPOSAL_S2_API_KEY` | | — | 改用 Semantic Scholar 时的配额密钥 |
 | `AI4PROPOSAL_INSECURE_TLS` | | — | 设 `1` 则检索跳过证书校验（见下）|
@@ -80,7 +81,9 @@ python scripts/md_to_docx.py outputs/task_001/proposal_final.md
 
 `src/ai4proposal/writer_prompts.py` —— **域中立**：固定文本只描述*形式*与*质量标准*，全部实质内容经 `${...}`（`string.Template`）注入。因此同一套提示词可跨学科使用，换 task 即可。
 
-组成：Step-0 蓝图 / 结构规划器 / 写作通则 / 通用 writer / 格式修饰符（考核指标结构化、创新点对比写法、进度阶段量化、方法语体）/ reviewer / reviser。
+组成：Step-0 蓝图 / 结构规划器 / 写作通则 / 通用 writer / 格式修饰符（考核指标结构化、创新点对比写法、进度阶段量化、方法语体）。
+
+每章**一次成稿** —— 流水线内不做评审-改写循环。早期设计过逐段 review-revise，已废弃，相应提示词已删除。
 
 修饰符按章节的 `required` 字段**自动触发** —— 例如某章要求"每条量化"，`MOD_KPI` 才会追加进 system prompt。
 

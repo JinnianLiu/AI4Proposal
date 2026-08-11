@@ -157,7 +157,7 @@ def write_one_section(llm, sec, base_vars, blueprint, prev_summary):
     })
 
     # build writer system: 通则 + writer role + triggered modifiers, one substitution pass
-    raw_system = WP.GENERAL_RULES + "\n\n" + WP.WRITER_SYSTEM + WP.modifiers_for(required_str)
+    raw_system = WP.GENERAL_RULES + "\n\n" + WP.WRITER_SYSTEM + WP.modifiers_for(required_str, name)
     system = WP.fill(raw_system, v)
     return generate_with_retry(llm, system, WP.fill(WP.WRITER_USER, v)) or f"## {name}\n\n[待补充]"
 
@@ -202,20 +202,20 @@ def _split_marker(inner):
     return (cap or desc[:24]), desc
 
 
-def extract_figure_prompts(proposal_text):
+def extract_figure_prompts(proposal_text, language="zh"):
     """Each [figure:] marker -> short caption (for the proposal) + detailed prompt
     (for the image model) + the exact marker text to replace."""
     out = []
     for i, m in enumerate(re.finditer(r"\[figure:\s*([^\]]+)\]", proposal_text)):
         cap, desc = _split_marker(m.group(1))
         out.append({"id": f"fig_{i+1:02d}", "caption": cap, "description": desc,
-                    "full_prompt": build_image_prompt(desc), "marker": m.group(0)})
+                    "full_prompt": build_image_prompt(desc, language=language), "marker": m.group(0)})
     return out
 
 
-def process_figures(proposal_text, out_dir, img_cfg, max_figures, mode="go"):
+def process_figures(proposal_text, out_dir, img_cfg, max_figures, mode="go", language="zh"):
     """mode: 'go' generate+patch | 'dry' keep markers, no gen | 'off' text placeholder."""
-    prompts = extract_figure_prompts(proposal_text)
+    prompts = extract_figure_prompts(proposal_text, language=language)
     manifest, made = [], 0
     for i, p in enumerate(prompts):
         fig_id, desc, cap, marker = p["id"], p["description"], p["caption"], p["marker"]
@@ -225,7 +225,9 @@ def process_figures(proposal_text, out_dir, img_cfg, max_figures, mode="go"):
         if mode == "go" and made < max_figures and img_cfg.get("api_key"):
             print(f"    [img] {fig_id}: {cap[:40]}...")
             path = generate_image(desc, out_dir / "figures" / f"{fig_id}.png",
-                                  api_key=img_cfg["api_key"], base_url=img_cfg["base_url"], model=img_cfg["model"])
+                                  api_key=img_cfg["api_key"], base_url=img_cfg["base_url"],
+                                  model=img_cfg["model"], size=img_cfg.get("size") or "1536x1024",
+                                  language=language)
             if path:
                 made += 1
                 proposal_text = proposal_text.replace(marker, _img_md(fig_id, i, cap), 1)
@@ -251,7 +253,8 @@ def generate_from_dir(out_dir: Path, img_cfg, max_figures):
             print(f"    [img] {fig_id}: {cap[:40]}...")
             # use the exact saved prompt (style already baked in) -> style_prefix=False
             path = generate_image(full, out_dir / "figures" / f"{fig_id}.png", style_prefix=False,
-                                  api_key=img_cfg["api_key"], base_url=img_cfg["base_url"], model=img_cfg["model"])
+                                  api_key=img_cfg["api_key"], base_url=img_cfg["base_url"],
+                                  model=img_cfg["model"], size=img_cfg.get("size") or "1536x1024")
             if path:
                 made += 1
                 md = md.replace(marker, _img_md(fig_id, i, cap), 1)
@@ -356,8 +359,11 @@ def main():
 
     fig_mode = "off" if args.no_images else args.figures
     print(f"  [3/4] 出图 (mode={fig_mode}) ...")
-    img_cfg = {"api_key": "", "base_url": "", "model": ""} if fig_mode == "off" else image_config_from_env()
-    proposal_text, manifest, fig_prompts = process_figures(proposal_text, out_dir, img_cfg, args.max_figures, mode=fig_mode)
+    img_cfg = {"api_key": "", "base_url": "", "model": "", "size": ""} if fig_mode == "off" else image_config_from_env()
+    language = task.get("language", "zh")
+    proposal_text, manifest, fig_prompts = process_figures(
+        proposal_text, out_dir, img_cfg, args.max_figures, mode=fig_mode, language=language
+    )
 
     (out_dir / "proposal_final.md").write_text(proposal_text, encoding="utf-8")
     json.dump(manifest, (out_dir / "figure_manifest.json").open("w", encoding="utf-8"), indent=2, ensure_ascii=False)
