@@ -19,10 +19,18 @@ task.json ──▶ 蓝图 ──▶ 逐章撰写 ──▶ 配图 ──▶ pro
 ### 安装
 
 ```bash
-pip install -e .          # 或 uv sync
+uv sync
 ```
 
 Python ≥ 3.9。依赖 `openai`、`pypandoc-binary`、`python-docx`；检索模块只用标准库。
+
+本项目用 **uv** 管理环境，命令一律走 `uv run`（否则可能落到别的 Python 环境、缺依赖）：
+
+```bash
+uv run python scripts/run_pipeline.py --task cases/tasks/task_001.json
+```
+
+下文命令为简洁起见省略了 `uv run` 前缀。
 
 ### 配置
 
@@ -169,7 +177,7 @@ TLS 证书**默认校验**；仅当证书链确实失败（公司网/VPN 拆包�
 python scripts/evaluate.py <md>              # task.json 自动从同目录读取
 python scripts/evaluate.py <md> --evidence   # 开外部检索
 python scripts/evaluate.py --show-rubric     # 只看细则，不消耗 token
-python scripts/test_evaluation.py            # 离线自检，无需密钥与网络
+python tests/test_evaluation.py            # 离线自检，无需密钥与网络
 ```
 
 ---
@@ -195,29 +203,37 @@ python scripts/test_evaluation.py            # 离线自检，无需密钥与网
 
 ### `cases/research_topics/` —— 合成选题（继承，价值待评估）
 
-88 个纯合成的学术选题，由项目前任维护者用 `build_topics.py` 生成、`scripts/fix_references.py` 替换过参考文献。**与当前流水线不兼容**（无 `structure` / `requirements` / `constraints`），保留待评估。
+88 个纯合成的学术选题，由项目前任维护者用 `legacy/build_topics.py` 生成、`legacy/fix_references.py` 替换过参考文献。**与当前流水线不兼容**（无 `structure` / `requirements` / `constraints`），保留待评估。
 
 ---
 
 ## 5. 项目结构
 
+目录按**职责**分层：`src/` 是库，`scripts/` 是日常使用的生产 CLI，`tools/` 是消耗 API 的开发工具，`tests/` 是离线自检，`legacy/` 是继承下来、已完成使命的脚本。
+
 ```
-src/ai4proposal/
-├── llm.py              OpenAI 兼容后端 + generate_with_retry / parse_json
-├── writer_prompts.py   域中立提示词集（蓝图/通则/writer/修饰符/reviewer/reviser）
+src/ai4proposal/        核心库
+├── llm.py              OpenAI 兼容后端 + generate_with_retry / parse_json / cheap_backend
+├── writer_prompts.py   域中立提示词集（蓝图 / 结构规划 / 通则 / writer / 格式修饰符）
 ├── evaluation.py       7 维细则 · 4 评委 + 主席 · 代码算总分与硬闸
-├── evidence.py         论断抽取 + OpenAlex/S2 检索 → 证据卡
-├── image_gen.py        [figure:] 标记 → PNG
-└── config.py           （保留，当前未被调用）
+├── evidence.py         论断抽取 + OpenAlex/arXiv 检索 + LLM 重排 → 证据卡
+├── image_gen.py        [figure:] 标记 → PNG（Renderer 模板 + 色板 + 语言跟随）
+└── config.py           （保留待兼容，当前无调用方）
 
-scripts/
-├── run_pipeline.py     写作流水线 CLI
-├── evaluate.py         评审 CLI（对 Markdown 打分）
-├── md_to_docx.py       Markdown → Word（pandoc + 中文样式模板）
-├── test_evaluation.py  评审框架离线自检
-└── fix_references.py   （继承）一次性参考文献替换，已执行完毕
+scripts/                生产 CLI
+├── run_pipeline.py     写作流水线
+├── evaluate.py         评审（对 Markdown 打分）
+└── md_to_docx.py       Markdown → Word（pandoc + 中文样式模板）
 
-build_topics.py         （继承）合成选题生成，位于仓库根目录
+tools/                  开发与校准（会消耗 API 额度）
+└── measure_variance.py 同一文档重复评分，量化噪声底线
+
+tests/                  离线自检（无需密钥与网络）
+└── test_evaluation.py
+
+legacy/                 继承脚本，保留备查
+├── build_topics.py     合成选题生成
+└── fix_references.py   一次性参考文献替换，已执行完毕
 
 cases/tasks/            指南锚定 task + INDEX.md
 cases/research_topics/  合成选题（继承）

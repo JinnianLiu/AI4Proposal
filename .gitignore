@@ -26,13 +26,10 @@ cases/tasks/_local/
 *.pptx
 !assets/reference.docx
 
-# ── Local scratch (first-gen sample proposals, test_judge.py defaults) ──
+# ── Local scratch (strays now collected under docs/_scratch/) ──
 /test.md
 /test2.md
+_scratch/
 
 # ── Junk ──
 ~$*
-analyses/
-tests/
-_codex/
-human_review_showcase/
