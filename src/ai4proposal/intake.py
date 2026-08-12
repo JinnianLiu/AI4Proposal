@@ -165,6 +165,112 @@ def parse_call(llm: Any, guideline_text: str) -> Dict[str, Any]:
     return data
 
 
+# ═══════════════════════════ template & topic documents ═══════════════════════════
+# A call is often split across several files: the call itself, a proposal template
+# the funder wants filled in, and sometimes a topic the applicant has already
+# settled on. Each is parsed by its own prompt and merged into the task.
+
+TEMPLATE_SYSTEM = """你是科研项目管理专家。用户提供了一份申请书模板或提纲，你要把它转写为结构化的章节定义。
+
+**只转写模板实际写明的章节**，不要补充你认为"应该有"的章节。模板里的填写说明、示例文字、
+页眉页脚不是章节，不要当成章节。只输出 JSON。"""
+
+TEMPLATE_USER = """把下面的申请书模板转写为章节结构。
+
+## 只保留"核心研究内容"相关的章节
+团队组成、研究基础、经费预算、知识产权、附件清单等**不属于核心研究内容**的章节请**排除**，
+本系统只生成核心内容部分。
+
+## 模板原文
+${template_text}
+
+只输出：
+{
+  "template": "模板名称",
+  "core_sections": [
+    {"id": "英文小写短标识，如 objectives", "name": "章节名（用模板原文的写法）",
+     "required": ["该章要求写明的要素，逐条；模板未写明则空数组"],
+     "word_limit": 数字或null}
+  ],
+  "rules": ["模板规定的行文规则，如字数、编号方式；没有则空数组"]
+}"""
+
+TOPIC_DOC_SYSTEM = """你是科研项目管理专家。用户已经确定了课题选题，并提供了描述该选题的文档。
+你要把它转写为结构化的选题信息。忠实转写，不要替用户重新构思选题。只输出 JSON。"""
+
+TOPIC_DOC_USER = """把下面的选题文档转写为结构化选题。
+
+## 文档原文
+${topic_text}
+
+## 说明
+- title：课题名称。文档若有明确标题就用它，没有则从内容中概括一个。
+- background：立项依据。用文档中的论述，可精简但不得改变原意；文档未提供则留空字符串。
+- challenges：该课题的关键难点/开放问题。文档未列出则返回空数组，**不要替用户编造**。
+
+只输出：{"title": "...", "domain": "英文小写领域标识", "background": "...", "challenges": ["..."]}"""
+
+
+def parse_template(llm: Any, template_text: str) -> Optional[Dict[str, Any]]:
+    """Transcribe a proposal template into a `structure` block, or None if it
+    yields nothing usable — in which case the pipeline plans a layout itself."""
+    raw = llm.generate_text(
+        system_prompt=TEMPLATE_SYSTEM,
+        user_prompt=TEMPLATE_USER.replace("${template_text}", template_text[:MAX_GUIDELINE_CHARS]),
+    )
+    data = _parse_json(raw)
+    sections = data.get("core_sections") if isinstance(data, dict) else None
+    if not isinstance(sections, list) or not sections:
+        return None
+    clean = []
+    for i, s in enumerate(sections, 1):
+        if not isinstance(s, dict) or not s.get("name"):
+            continue
+        clean.append({
+            "id": str(s.get("id") or f"sec_{i}").strip(),
+            "name": str(s["name"]).strip(),
+            "required": [str(r).strip() for r in (s.get("required") or []) if str(r).strip()],
+            "word_limit": s.get("word_limit") if isinstance(s.get("word_limit"), int) else None,
+        })
+    if not clean:
+        return None
+    return {
+        "template": str(data.get("template") or "申请书模板").strip(),
+        "core_sections": clean,
+        "rules": [str(r).strip() for r in (data.get("rules") or []) if str(r).strip()],
+    }
+
+
+def parse_topic_doc(llm: Any, topic_text: str) -> Dict[str, Any]:
+    """Transcribe a topic the applicant already settled on."""
+    raw = llm.generate_text(
+        system_prompt=TOPIC_DOC_SYSTEM,
+        user_prompt=TOPIC_DOC_USER.replace("${topic_text}", topic_text[:MAX_GUIDELINE_CHARS]),
+    )
+    data = _parse_json(raw)
+    title = str(data.get("title") or "").strip()
+    if not title:
+        raise ValueError("选题文档解析失败：未能识别出课题名称")
+    return {
+        "title": title,
+        "domain": str(data.get("domain") or "general").strip(),
+        "background": str(data.get("background") or "").strip(),
+        "challenges": [str(c).strip() for c in (data.get("challenges") or []) if str(c).strip()],
+        "fit": "",
+        "source": "uploaded",
+    }
+
+
+def guess_role(filename: str) -> str:
+    """Best guess at what an uploaded file is, from its name. The user can override."""
+    n = (filename or "").lower()
+    if any(w in n for w in ("模板", "template", "提纲", "格式", "样表", "表格")):
+        return "template"
+    if any(w in n for w in ("选题", "课题", "topic", "idea", "构思", "方案书")):
+        return "topic"
+    return "guideline"
+
+
 # ═══════════════════════════════ direction choice ═══════════════════════════════
 
 PICK_SYSTEM = """你是科研战略顾问。用户上传了一份资助指南，但没有指定研究方向，希望你替他选。
@@ -291,12 +397,14 @@ def propose_topics(llm: Any, call: Dict[str, Any], direction: Dict[str, Any],
 # ═══════════════════════════════ task assembly ═══════════════════════════════
 
 def build_task(call: Dict[str, Any], direction: Dict[str, Any],
-               topic: Dict[str, Any], task_id: str = "task_web") -> Dict[str, Any]:
+               topic: Dict[str, Any], task_id: str = "task_web",
+               structure: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
     """Assemble the task dict `run_pipeline` and `evaluation` consume.
 
-    `structure` is passed through only when the call actually mandated one;
-    otherwise it is omitted so the pipeline's STRUCTURE_PLANNER designs a layout
-    for this specific call rather than a hardcoded default being assumed.
+    Section layout comes from the first of: an uploaded template (`structure`),
+    a layout the call itself mandates, or nothing — and nothing is a real answer,
+    leaving the pipeline's STRUCTURE_PLANNER to design one for this call rather
+    than a hardcoded default being assumed.
     """
     direction_text = direction.get("name", "")
     if direction.get("detail"):
@@ -336,8 +444,10 @@ def build_task(call: Dict[str, Any], direction: Dict[str, Any],
                      "title/background/challenges 由系统在该方向下生成，非指南原文。"),
         },
     }
-    if isinstance(call.get("structure"), dict) and call["structure"].get("core_sections"):
-        task["structure"] = call["structure"]
+    chosen = structure or call.get("structure")
+    if isinstance(chosen, dict) and chosen.get("core_sections"):
+        task["structure"] = chosen
+        task["provenance"]["structure_from"] = "uploaded_template" if structure else "guideline"
     return task
 
 

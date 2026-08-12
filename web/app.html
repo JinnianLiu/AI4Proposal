@@ -1,588 +1,570 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN" class="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AI4Proposal · 科研项目申请书智能体</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: { extend: {
+    colors: {
+      ink:  { DEFAULT:'#0a0a0a', 2:'#111111', 3:'#171717' },
+      line: { DEFAULT:'#262626', 2:'#333333' },
+      fg:   { DEFAULT:'#fafafa', 2:'#a3a3a3', 3:'#737373' },
+      brand:{ DEFAULT:'#5b8cff', soft:'#1a2540' },
+      ok:'#22c55e', warn:'#eab308', bad:'#ef4444',
+    },
+    fontFamily: { sans:['Inter','PingFang SC','Microsoft YaHei','Noto Sans CJK SC','system-ui','sans-serif'] },
+    maxWidth: { content:'1080px' },
+  }}
+}
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
 <style>
-:root{
-  color-scheme: light;
-  --page:#f7f7f5; --surface:#fcfcfb; --surface-2:#f2f2ef; --line:#e1e0d9;
-  --ink:#0b0b0b; --ink-2:#52514e; --ink-3:#898781;
-  --accent:#2a78d6; --accent-soft:#e8f1fd;
-  --good:#0ca30c; --warn:#fab219; --crit:#d03b3b;
-  --radius:10px;
-  --font:"PingFang SC","Microsoft YaHei","Noto Sans CJK SC","Source Han Sans SC",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --mono:"SFMono-Regular",Consolas,"Liberation Mono",monospace;
-}
-@media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){
-    color-scheme: dark;
-    --page:#0d0d0d; --surface:#1a1a19; --surface-2:#232322; --line:#2c2c2a;
-    --ink:#fff; --ink-2:#c3c2b7; --ink-3:#898781;
-    --accent:#3987e5; --accent-soft:#16273c;
-    --good:#0ca30c; --warn:#fab219; --crit:#d03b3b;
+  html,body{background:#0a0a0a}
+  /* 线框纹理：极淡的网格，只在顶部铺开 */
+  .wireframe{
+    background-image:linear-gradient(rgba(255,255,255,.028) 1px,transparent 1px),
+                     linear-gradient(90deg,rgba(255,255,255,.028) 1px,transparent 1px);
+    background-size:46px 46px;
+    mask-image:radial-gradient(120% 70% at 50% 0%,#000 30%,transparent 78%);
   }
-}
-*{box-sizing:border-box}
-html,body{margin:0;padding:0}
-body{background:var(--page);color:var(--ink);font-family:var(--font);
-     font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased}
-.wrap{max-width:980px;margin:0 auto;padding:28px 22px 80px}
-
-/* ── header ── */
-header{display:flex;align-items:baseline;gap:12px;margin-bottom:8px}
-h1{font-size:20px;margin:0;letter-spacing:-.01em}
-.sub{color:var(--ink-3);font-size:13px}
-
-/* ── stepper ── */
-.steps{display:flex;gap:6px;margin:20px 0 26px;flex-wrap:wrap}
-.step{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--ink-3);
-      padding:5px 11px 5px 6px;border-radius:99px;background:var(--surface);border:1px solid var(--line)}
-.step .n{width:19px;height:19px;border-radius:50%;background:var(--surface-2);color:var(--ink-3);
-         display:grid;place-items:center;font-size:11px;font-weight:600;flex:none}
-.step.active{color:var(--ink);border-color:var(--accent);background:var(--accent-soft)}
-.step.active .n{background:var(--accent);color:#fff}
-.step.done{color:var(--ink-2)}
-.step.done .n{background:var(--good);color:#fff}
-
-/* ── panels ── */
-.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
-      padding:20px 22px;margin-bottom:16px}
-.card h2{font-size:15px;margin:0 0 4px}
-.card .hint{color:var(--ink-3);font-size:13px;margin:0 0 16px}
-.hidden{display:none !important}
-
-/* ── drop zone ── */
-.drop{border:1.5px dashed var(--line);border-radius:var(--radius);padding:44px 20px;text-align:center;
-      cursor:pointer;transition:.15s;background:var(--surface)}
-.drop:hover,.drop.over{border-color:var(--accent);background:var(--accent-soft)}
-.drop .big{font-size:15px;margin-bottom:5px}
-.drop .small{color:var(--ink-3);font-size:12.5px}
-
-/* ── forms & buttons ── */
-button{font:inherit;font-size:13.5px;padding:8px 17px;border-radius:7px;cursor:pointer;
-       border:1px solid var(--line);background:var(--surface-2);color:var(--ink);transition:.12s}
-button:hover:not(:disabled){border-color:var(--ink-3)}
-button.primary{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:500}
-button.primary:hover:not(:disabled){filter:brightness(1.08)}
-button:disabled{opacity:.45;cursor:not-allowed}
-.row{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-top:16px}
-.spacer{flex:1}
-
-/* ── option cards ── */
-.opts{display:grid;gap:9px}
-.opt{border:1px solid var(--line);border-radius:9px;padding:13px 15px;cursor:pointer;
-     background:var(--surface);transition:.12s}
-.opt:hover{border-color:var(--ink-3)}
-.opt.sel{border-color:var(--accent);background:var(--accent-soft);box-shadow:inset 3px 0 0 var(--accent)}
-.opt .t{font-weight:600;font-size:14px;margin-bottom:3px}
-.opt .d{color:var(--ink-2);font-size:13px}
-.opt .m{color:var(--ink-3);font-size:12px;margin-top:7px}
-
-/* ── parsed facts ── */
-.facts{display:grid;grid-template-columns:auto 1fr;gap:7px 16px;font-size:13.5px;align-items:baseline}
-.facts dt{color:var(--ink-3);white-space:nowrap}
-.facts dd{margin:0}
-.facts ul{margin:0;padding-left:17px}
-.facts li{margin:1px 0}
-.tag{display:inline-block;background:var(--surface-2);border:1px solid var(--line);
-     border-radius:5px;padding:1px 7px;font-size:12px;color:var(--ink-2);margin:0 4px 4px 0}
-
-/* ── progress ── */
-.stage{display:flex;align-items:center;gap:11px;padding:11px 0;border-bottom:1px solid var(--line)}
-.stage:last-child{border-bottom:0}
-.dot{width:9px;height:9px;border-radius:50%;background:var(--line);flex:none}
-.stage.run .dot{background:var(--accent);animation:pulse 1.3s ease-in-out infinite}
-.stage.ok .dot{background:var(--good)}
-.stage.err .dot{background:var(--crit)}
-.stage .lbl{font-size:13.5px}
-.stage.pend .lbl{color:var(--ink-3)}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-.elapsed{color:var(--ink-3);font-size:12px;font-variant-numeric:tabular-nums}
-
-/* ── result ── */
-.tabs{display:flex;gap:3px;border-bottom:1px solid var(--line);margin-bottom:18px}
-.tab{padding:8px 15px;font-size:13.5px;cursor:pointer;color:var(--ink-3);
-     border-bottom:2px solid transparent;margin-bottom:-1px}
-.tab.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:500}
-.doc{font-size:14.5px;line-height:1.85;max-height:640px;overflow-y:auto;padding-right:8px}
-.doc h1{font-size:19px;margin:0 0 18px;padding-bottom:10px;border-bottom:1px solid var(--line)}
-.doc h2{font-size:16px;margin:26px 0 10px}
-.doc h3{font-size:14.5px;margin:18px 0 7px;color:var(--ink-2)}
-.doc p{margin:9px 0}
-.doc ul,.doc ol{margin:9px 0;padding-left:22px}
-.doc li{margin:3px 0}
-.doc img{max-width:100%;border:1px solid var(--line);border-radius:7px;margin:12px 0;display:block}
-.doc em{color:var(--ink-3);font-size:13px;font-style:normal;display:block;text-align:center;margin-top:-4px}
-.doc table{border-collapse:collapse;width:100%;font-size:13px;margin:12px 0;display:block;overflow-x:auto}
-.doc th,.doc td{border:1px solid var(--line);padding:6px 9px;text-align:left}
-.doc th{background:var(--surface-2)}
-.doc code{font-family:var(--mono);font-size:12.5px;background:var(--surface-2);padding:1px 5px;border-radius:4px}
-
-/* ── evaluation ── */
-.hero{display:flex;align-items:baseline;gap:14px;margin-bottom:4px}
-.hero .num{font-size:42px;font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1}
-.hero .of{color:var(--ink-3);font-size:14px}
-.badge{display:inline-block;padding:3px 11px;border-radius:99px;font-size:12.5px;font-weight:500;
-       border:1px solid}
-.badge.ok{color:var(--good);border-color:var(--good);background:color-mix(in srgb,var(--good) 10%,transparent)}
-.badge.mid{color:var(--warn);border-color:var(--warn);background:color-mix(in srgb,var(--warn) 12%,transparent)}
-.badge.bad{color:var(--crit);border-color:var(--crit);background:color-mix(in srgb,var(--crit) 10%,transparent)}
-.bars{margin:22px 0 6px}
-.bar{display:grid;grid-template-columns:118px 1fr 46px;gap:11px;align-items:center;
-     padding:5px 0;font-size:13px}
-.bar .nm{color:var(--ink-2);text-align:right}
-.bar .track{background:var(--surface-2);border-radius:4px;height:19px;position:relative;overflow:hidden}
-.bar .fill{background:var(--accent);height:100%;border-radius:0 4px 4px 0;min-width:2px;
-           transition:width .5s cubic-bezier(.2,.7,.3,1)}
-.bar .val{font-variant-numeric:tabular-nums;color:var(--ink);font-weight:500}
-.bar .wt{color:var(--ink-3);font-size:11.5px}
-.axis{display:grid;grid-template-columns:118px 1fr 46px;gap:11px;font-size:11px;color:var(--ink-3);margin-top:2px}
-.axis .marks{display:flex;justify-content:space-between}
-.lists{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:24px}
-@media (max-width:720px){.lists{grid-template-columns:1fr}}
-.lists h4{font-size:13px;margin:0 0 8px;color:var(--ink-2)}
-.lists li{font-size:13px;margin:6px 0;color:var(--ink-2)}
-.flag{border-left:2px solid var(--warn);padding-left:11px;margin:9px 0;font-size:13px;color:var(--ink-2)}
-.summary{background:var(--surface-2);border-radius:8px;padding:14px 16px;font-size:13.5px;
-         color:var(--ink-2);margin-top:20px}
-
-.err{background:color-mix(in srgb,var(--crit) 8%,transparent);border:1px solid var(--crit);
-     color:var(--crit);border-radius:8px;padding:12px 15px;font-size:13.5px;margin-top:14px;
-     white-space:pre-wrap}
-.figs{display:grid;gap:16px}
-.figs figure{margin:0}
-.figs img{width:100%;border:1px solid var(--line);border-radius:8px;display:block}
-.figs figcaption{font-size:12.5px;color:var(--ink-3);margin-top:6px;text-align:center}
-.spin{display:inline-block;width:13px;height:13px;border:2px solid var(--line);
-      border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;vertical-align:-2px}
-@keyframes spin{to{transform:rotate(360deg)}}
+  .prose-doc{color:#d4d4d4;font-size:15px;line-height:1.9}
+  .prose-doc h1{font-size:24px;font-weight:600;color:#fafafa;margin:0 0 22px;padding-bottom:14px;border-bottom:1px solid #262626}
+  .prose-doc h2{font-size:18px;font-weight:600;color:#fafafa;margin:34px 0 12px}
+  .prose-doc h3{font-size:15px;font-weight:600;color:#e5e5e5;margin:22px 0 8px}
+  .prose-doc h4{font-size:14px;font-weight:600;color:#a3a3a3;margin:16px 0 6px}
+  .prose-doc p{margin:11px 0}
+  .prose-doc ul,.prose-doc ol{margin:11px 0;padding-left:24px}
+  .prose-doc li{margin:4px 0}
+  .prose-doc strong{color:#fafafa;font-weight:600}
+  .prose-doc img{max-width:100%;border:1px solid #262626;border-radius:10px;margin:18px 0}
+  .prose-doc em{display:block;text-align:center;color:#737373;font-style:normal;font-size:13px;margin-top:-8px}
+  .prose-doc table{width:100%;border-collapse:collapse;font-size:13.5px;margin:14px 0;display:block;overflow-x:auto}
+  .prose-doc th,.prose-doc td{border:1px solid #262626;padding:8px 11px;text-align:left;vertical-align:top}
+  .prose-doc th{background:#171717;color:#fafafa;font-weight:600}
+  .prose-doc code{background:#171717;padding:2px 6px;border-radius:5px;font-size:13px}
+  ::-webkit-scrollbar{width:9px;height:9px}
+  ::-webkit-scrollbar-thumb{background:#333;border-radius:5px}
+  ::-webkit-scrollbar-track{background:transparent}
+  [x-cloak]{display:none!important}
+  @keyframes rise{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+  .rise{animation:rise .32s cubic-bezier(.2,.7,.3,1) both}
 </style>
 </head>
-<body>
-<div class="wrap">
-  <header>
-    <h1>AI4Proposal</h1>
-    <span class="sub">上传资助指南，端到端产出可下载的项目申请书</span>
+
+<body class="bg-ink text-fg font-sans antialiased" x-data="agent()" x-init="boot()" x-cloak>
+
+<!-- ══ 顶部 ══ -->
+<div class="wireframe border-b border-line">
+  <header class="max-w-content mx-auto px-6 py-4 flex items-center gap-3">
+    <div class="w-7 h-7 rounded-lg bg-brand/15 border border-brand/35 grid place-items-center">
+      <svg viewBox="0 0 24 24" class="w-4 h-4 stroke-brand" fill="none" stroke-width="2" stroke-linecap="round">
+        <path d="M5 4h9l5 5v11H5z"/><path d="M14 4v5h5"/><path d="M9 13h6M9 17h4"/></svg>
+    </div>
+    <span class="font-semibold tracking-tight">AI4Proposal</span>
+    <span class="text-fg-3 text-xs hidden sm:inline">科研项目申请书智能体</span>
+    <div class="flex-1"></div>
+    <template x-if="cfg.debug">
+      <span class="text-[11px] px-2.5 py-1 rounded-full bg-warn/12 text-warn border border-warn/35">
+        调试模式 · 生成阶段回放 <span x-text="cfg.replay_source"></span>
+      </span>
+    </template>
+    <span class="text-[11px] text-fg-3 hidden md:inline" x-text="cfg.model"></span>
   </header>
 
-  <div class="steps" id="steps"></div>
-
-  <!-- 1 上传 -->
-  <section class="card" id="s-upload">
-    <h2>上传资助指南</h2>
-    <p class="hint">支持 .docx / .txt / .md。系统只转写指南写明的内容，不会替你臆测未写明的信息。</p>
-    <div class="drop" id="drop">
-      <div class="big" id="dropBig">拖入文件，或点击选择</div>
-      <div class="small" id="dropSmall">申报指南、课题公告、Call for Proposals…</div>
-    </div>
-    <input type="file" id="file" class="hidden" accept=".docx,.txt,.md,.markdown">
-    <div id="upErr"></div>
-  </section>
-
-  <!-- 2 确认解析 -->
-  <section class="card hidden" id="s-call">
-    <h2>指南解析结果</h2>
-    <p class="hint">以下均转写自指南原文。请核对，尤其是硬性交付物与约束 —— 它们会贯穿写作与评审。</p>
-    <dl class="facts" id="facts"></dl>
-    <div class="row">
-      <button class="primary" id="toDir">下一步：选择研究方向</button>
-      <button id="reUpload">换一份指南</button>
-    </div>
-  </section>
-
-  <!-- 3 方向 -->
-  <section class="card hidden" id="s-dir">
-    <h2>选择研究方向</h2>
-    <p class="hint">指南通常只圈定方向、不指定课题。选一个方向，或让系统替你选。</p>
-    <div class="opts" id="dirs"></div>
-    <div class="row">
-      <button class="primary" id="toTopics" disabled>下一步：生成候选课题</button>
-      <button id="autoDir">让系统替我选</button>
-      <span class="spacer"></span>
-      <button id="backCall">上一步</button>
-    </div>
-    <div id="dirErr"></div>
-  </section>
-
-  <!-- 4 选题 -->
-  <section class="card hidden" id="s-topic">
-    <h2>候选课题</h2>
-    <p class="hint">这一步是系统唯一的"创作"环节，其余内容均来自指南。选一个，或重新生成。</p>
-    <div class="opts" id="topics"></div>
-    <div class="row">
-      <button class="primary" id="toRun" disabled>开始生成申请书</button>
-      <button id="regen">换一批</button>
-      <span class="spacer"></span>
-      <button id="backDir">上一步</button>
-    </div>
-    <div id="topicErr"></div>
-  </section>
-
-  <!-- 5 生成中 -->
-  <section class="card hidden" id="s-run">
-    <h2 id="runTitle">正在生成</h2>
-    <p class="hint">全流程约需 10–15 分钟，可以离开页面稍后回来。请勿关闭本机服务。</p>
-    <div id="stages"></div>
-    <div id="runErr"></div>
-  </section>
-
-  <!-- 6 结果 -->
-  <section class="card hidden" id="s-result">
-    <div class="row" style="margin:0 0 14px">
-      <h2 style="margin:0" id="resTitle">申请书已生成</h2>
-      <span class="spacer"></span>
-      <button class="primary" id="dlDocx">下载 Word</button>
-      <button id="dlMd">Markdown</button>
-      <button id="dlZip">全部打包</button>
-    </div>
-    <div class="tabs" id="tabs"></div>
-    <div id="tab-doc"><div class="doc" id="doc"></div></div>
-    <div id="tab-figs" class="hidden"><div class="figs" id="figs"></div></div>
-    <div id="tab-eval" class="hidden"><div id="evalBox"></div></div>
-    <div class="row"><button id="restart">再做一份</button></div>
-  </section>
+  <!-- hero，仅第 0 步 -->
+  <div class="max-w-content mx-auto px-6 pt-10 pb-14" x-show="step===0">
+    <h1 class="text-[34px] sm:text-[44px] leading-[1.15] font-semibold tracking-tight max-w-2xl">
+      上传资助指南，<br>产出可提交的项目申请书
+    </h1>
+    <p class="text-fg-2 mt-5 max-w-xl leading-relaxed">
+      系统只转写指南写明的内容，不替你臆测未写明的信息。方向与选题由你决定，
+      正文、配图、Word 与评审报告由系统产出。
+    </p>
+  </div>
 </div>
 
+<main class="max-w-content mx-auto px-6 py-10">
+
+  <!-- ══ 步骤条 ══ -->
+  <nav class="flex flex-wrap gap-1.5 mb-9" x-show="step>0">
+    <template x-for="(s,i) in steps" :key="i">
+      <div class="flex items-center gap-2 text-xs px-3 py-1.5 rounded-full border transition"
+           :class="i===step ? 'border-brand/50 bg-brand/10 text-fg'
+                 : i<step ? 'border-line bg-ink-3 text-fg-2' : 'border-line text-fg-3'">
+        <span class="w-4 h-4 rounded-full grid place-items-center text-[10px] font-semibold"
+              :class="i<step ? 'bg-ok text-ink' : i===step ? 'bg-brand text-white' : 'bg-line-2 text-fg-3'"
+              x-text="i<step ? '✓' : i+1"></span>
+        <span x-text="s"></span>
+      </div>
+    </template>
+  </nav>
+
+  <!-- ══ 0 上传 ══ -->
+  <section x-show="step===0" class="rise">
+    <div class="border-2 border-dashed rounded-2xl p-12 text-center cursor-pointer transition"
+         :class="dragging ? 'border-brand bg-brand/6' : 'border-line hover:border-line-2 hover:bg-ink-2'"
+         @click="$refs.file.click()"
+         @dragover.prevent="dragging=true" @dragleave="dragging=false"
+         @drop.prevent="dragging=false; addFiles($event.dataTransfer.files)">
+      <svg viewBox="0 0 24 24" class="w-9 h-9 mx-auto mb-4 stroke-fg-3" fill="none" stroke-width="1.5" stroke-linecap="round">
+        <path d="M12 16V4m0 0L8 8m4-4 4 4"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg>
+      <div class="text-[15px]">拖入文件，或点击选择</div>
+      <div class="text-fg-3 text-[13px] mt-1.5">支持 .docx / .txt / .md，可一次上传多份</div>
+    </div>
+    <input type="file" x-ref="file" class="hidden" multiple accept=".docx,.txt,.md,.markdown"
+           @change="addFiles($event.target.files); $event.target.value=''">
+
+    <!-- 待上传文件与角色指派 -->
+    <div class="mt-5 space-y-2" x-show="pending.length">
+      <div class="text-[13px] text-fg-2 mb-3">为每份文件指定用途 —— 系统已按文件名猜了一个，可以改：</div>
+      <template x-for="(f,i) in pending" :key="i">
+        <div class="flex items-center gap-3 bg-ink-2 border border-line rounded-xl px-4 py-3">
+          <svg viewBox="0 0 24 24" class="w-4 h-4 stroke-fg-3 shrink-0" fill="none" stroke-width="1.6">
+            <path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg>
+          <div class="min-w-0 flex-1">
+            <div class="text-[13.5px] truncate" x-text="f.file.name"></div>
+            <div class="text-fg-3 text-[11.5px]" x-text="(f.file.size/1024).toFixed(0)+' KB'"></div>
+          </div>
+          <div class="flex gap-1">
+            <template x-for="r in roles" :key="r.id">
+              <button class="text-[12px] px-2.5 py-1 rounded-lg border transition"
+                      :class="f.role===r.id ? 'border-brand bg-brand/12 text-fg' : 'border-line text-fg-3 hover:text-fg-2'"
+                      @click="f.role=r.id" x-text="r.label"></button>
+            </template>
+          </div>
+          <button class="text-fg-3 hover:text-bad text-lg leading-none px-1" @click="pending.splice(i,1)">×</button>
+        </div>
+      </template>
+      <div class="flex items-center gap-3 pt-3">
+        <button class="px-5 py-2.5 rounded-xl bg-fg text-ink font-medium text-sm hover:bg-white transition disabled:opacity-40"
+                :disabled="busy || !pending.some(f=>f.role==='guideline')" @click="doUpload()">
+          <span x-show="!busy">解析文件</span>
+          <span x-show="busy" class="flex items-center gap-2"><span class="spinner"></span> 解析中…</span>
+        </button>
+        <span class="text-fg-3 text-[12.5px]" x-show="!pending.some(f=>f.role==='guideline')">
+          至少需要一份「资助指南」
+        </span>
+      </div>
+    </div>
+    <div x-show="err" class="mt-4 text-[13px] text-bad bg-bad/8 border border-bad/30 rounded-xl px-4 py-3 whitespace-pre-wrap" x-text="err"></div>
+  </section>
+
+  <!-- ══ 1 核对解析 ══ -->
+  <section x-show="step===1" class="rise space-y-5">
+    <div>
+      <h2 class="text-xl font-semibold tracking-tight">指南解析结果</h2>
+      <p class="text-fg-2 text-sm mt-1.5">以下均转写自原文。请核对硬性交付物与约束 —— 它们会贯穿写作与评审。</p>
+    </div>
+
+    <div class="bg-ink-2 border border-line rounded-2xl p-6 space-y-4" x-show="call">
+      <div class="grid sm:grid-cols-[110px_1fr] gap-x-6 gap-y-3.5 text-[13.5px]">
+        <div class="text-fg-3">资助计划</div><div x-text="call?.program||'—'"></div>
+        <template x-if="call?.sponsor"><div class="text-fg-3">资助方</div></template>
+        <template x-if="call?.sponsor"><div x-text="call.sponsor"></div></template>
+        <template x-if="budgetText()"><div class="text-fg-3">经费</div></template>
+        <template x-if="budgetText()"><div>
+          <span x-text="budgetText()"></span>
+          <div class="text-fg-3 text-[12px] mt-0.5" x-text="call?.budget?.note"></div>
+        </div></template>
+        <template x-if="call?.eligibility"><div class="text-fg-3">申请资格</div></template>
+        <template x-if="call?.eligibility"><div class="text-fg-2" x-text="call.eligibility"></div></template>
+
+        <div class="text-fg-3">硬性交付物</div>
+        <ul class="space-y-1"><template x-for="r in (call?.requirements||[])" :key="r">
+          <li class="flex gap-2"><span class="text-brand">·</span><span x-text="r"></span></li></template>
+          <li x-show="!call?.requirements?.length" class="text-fg-3">（指南未列明）</li>
+        </ul>
+
+        <div class="text-fg-3">硬性约束</div>
+        <ul class="space-y-1"><template x-for="c in (call?.constraints||[])" :key="c">
+          <li class="flex gap-2"><span class="text-brand">·</span><span x-text="c"></span></li></template>
+          <li x-show="!call?.constraints?.length" class="text-fg-3">（指南未列明）</li>
+        </ul>
+
+        <div class="text-fg-3">行文结构</div>
+        <div>
+          <span x-show="structure" class="text-ok text-[12px] mr-2">来自你上传的模板</span>
+          <span x-text="structureText()"></span>
+        </div>
+      </div>
+
+      <div x-show="call?.uncertain?.length" class="pt-1">
+        <div class="text-[12.5px] text-warn mb-2">需你核对</div>
+        <template x-for="u in (call?.uncertain||[])" :key="u">
+          <div class="border-l-2 border-warn/60 pl-3 text-[13px] text-fg-2 my-1.5" x-text="u"></div></template>
+      </div>
+    </div>
+
+    <div class="flex gap-2.5">
+      <button class="px-5 py-2.5 rounded-xl bg-fg text-ink font-medium text-sm hover:bg-white transition"
+              @click="step=2">下一步：选择研究方向</button>
+      <button class="px-5 py-2.5 rounded-xl border border-line text-sm text-fg-2 hover:text-fg transition"
+              @click="reset()">换一批文件</button>
+    </div>
+  </section>
+
+  <!-- ══ 2 方向 ══ -->
+  <section x-show="step===2" class="rise space-y-5">
+    <div>
+      <h2 class="text-xl font-semibold tracking-tight">选择研究方向</h2>
+      <p class="text-fg-2 text-sm mt-1.5">指南通常只圈定方向、不指定课题。选一个，或交给系统。</p>
+    </div>
+    <div class="space-y-2.5">
+      <template x-for="d in (call?.directions||[])" :key="d.id">
+        <div class="border rounded-xl p-4 cursor-pointer transition"
+             :class="direction?.id===d.id ? 'border-brand bg-brand/8' : 'border-line hover:border-line-2 bg-ink-2'"
+             @click="direction=d; topics=[]; topic=null">
+          <div class="font-medium text-[14.5px]" x-text="d.name"></div>
+          <div class="text-fg-2 text-[13px] mt-1" x-text="d.detail" x-show="d.detail"></div>
+          <div class="text-brand text-[12.5px] mt-2" x-show="d.reason" x-text="'系统推荐：'+d.reason"></div>
+        </div>
+      </template>
+    </div>
+    <div class="flex flex-wrap gap-2.5">
+      <button class="px-5 py-2.5 rounded-xl bg-fg text-ink font-medium text-sm hover:bg-white transition disabled:opacity-40"
+              :disabled="!direction" @click="goTopics()">下一步：生成候选课题</button>
+      <button class="px-5 py-2.5 rounded-xl border border-line text-sm text-fg-2 hover:text-fg transition disabled:opacity-40"
+              :disabled="busy" @click="autoDirection()">
+        <span x-show="!busy">让系统替我选</span><span x-show="busy">选择中…</span></button>
+      <div class="flex-1"></div>
+      <button class="px-4 py-2.5 rounded-xl text-sm text-fg-3 hover:text-fg transition" @click="step=1">上一步</button>
+    </div>
+    <div x-show="err" class="text-[13px] text-bad bg-bad/8 border border-bad/30 rounded-xl px-4 py-3" x-text="err"></div>
+  </section>
+
+  <!-- ══ 3 选题 ══ -->
+  <section x-show="step===3" class="rise space-y-5">
+    <div>
+      <h2 class="text-xl font-semibold tracking-tight">确定课题</h2>
+      <p class="text-fg-2 text-sm mt-1.5">
+        <span x-show="uploadedTopic">已使用你上传的选题文档。也可以让系统另出候选。</span>
+        <span x-show="!uploadedTopic">这是系统唯一的"创作"环节，其余内容均来自指南。</span>
+      </p>
+    </div>
+
+    <div x-show="busy && !topics.length" class="border border-line bg-ink-2 rounded-xl p-8 text-center text-fg-3 text-sm">
+      <span class="spinner mr-2"></span>正在生成候选课题，约 30 秒…
+    </div>
+
+    <div class="space-y-2.5">
+      <template x-for="(t,i) in topics" :key="i">
+        <div class="border rounded-xl p-4 cursor-pointer transition"
+             :class="topic===t ? 'border-brand bg-brand/8' : 'border-line hover:border-line-2 bg-ink-2'"
+             @click="topic=t">
+          <div class="flex items-start gap-2">
+            <div class="font-medium text-[14.5px] flex-1" x-text="t.title"></div>
+            <span x-show="t.source==='uploaded'"
+                  class="text-[11px] px-2 py-0.5 rounded-full bg-ok/12 text-ok border border-ok/30 shrink-0">来自上传</span>
+          </div>
+          <div class="text-fg-2 text-[13px] mt-2 leading-relaxed" x-text="t.background"></div>
+          <div class="text-fg-3 text-[12.5px] mt-2.5" x-show="t.challenges?.length"
+               x-text="'关键难点：'+t.challenges.join('；')"></div>
+          <div class="text-fg-3 text-[12.5px] mt-1" x-show="t.fit" x-text="'承接交付物：'+t.fit"></div>
+        </div>
+      </template>
+    </div>
+
+    <div class="flex flex-wrap gap-2.5">
+      <button class="px-5 py-2.5 rounded-xl bg-fg text-ink font-medium text-sm hover:bg-white transition disabled:opacity-40"
+              :disabled="!topic" @click="start()">开始生成申请书</button>
+      <button class="px-5 py-2.5 rounded-xl border border-line text-sm text-fg-2 hover:text-fg transition disabled:opacity-40"
+              :disabled="busy" @click="loadTopics()" x-text="topics.length?'换一批':'生成候选'"></button>
+      <div class="flex-1"></div>
+      <button class="px-4 py-2.5 rounded-xl text-sm text-fg-3 hover:text-fg transition" @click="step=2">上一步</button>
+    </div>
+    <div x-show="err" class="text-[13px] text-bad bg-bad/8 border border-bad/30 rounded-xl px-4 py-3" x-text="err"></div>
+  </section>
+
+  <!-- ══ 4 生成中 ══ -->
+  <section x-show="step===4" class="rise space-y-6">
+    <div>
+      <h2 class="text-xl font-semibold tracking-tight" x-text="topic?.title"></h2>
+      <p class="text-fg-2 text-sm mt-1.5">
+        <span x-show="!cfg.debug">全流程约 10–15 分钟。可以离开页面稍后回来，不要关闭本机服务。</span>
+        <span x-show="cfg.debug" class="text-warn">调试模式：回放已完成的任务，不消耗额度。</span>
+      </p>
+    </div>
+    <div class="bg-ink-2 border border-line rounded-2xl divide-y divide-line">
+      <template x-for="(s,i) in cfg.stages" :key="s.id">
+        <div class="flex items-center gap-3.5 px-5 py-4">
+          <span class="w-2 h-2 rounded-full shrink-0"
+                :class="stageState(i)==='ok' ? 'bg-ok'
+                      : stageState(i)==='run' ? 'bg-brand animate-pulse'
+                      : stageState(i)==='err' ? 'bg-bad' : 'bg-line-2'"></span>
+          <div class="flex-1">
+            <div class="text-[14px]" :class="stageState(i)==='pend' ? 'text-fg-3' : 'text-fg'" x-text="s.label"></div>
+            <div class="text-fg-3 text-[12px] mt-0.5" x-text="s.hint"></div>
+          </div>
+          <span class="text-fg-3 text-[12px] tabular-nums" x-show="stageState(i)==='run'" x-text="elapsed"></span>
+          <svg x-show="stageState(i)==='ok'" viewBox="0 0 24 24" class="w-4 h-4 stroke-ok" fill="none" stroke-width="2.4"
+               stroke-linecap="round"><path d="M5 13l4 4L19 7"/></svg>
+        </div>
+      </template>
+    </div>
+    <div x-show="err" class="text-[13px] text-bad bg-bad/8 border border-bad/30 rounded-xl px-4 py-3 whitespace-pre-wrap" x-text="err"></div>
+    <button x-show="err" class="px-5 py-2.5 rounded-xl border border-line text-sm text-fg-2 hover:text-fg" @click="step=3">返回选题</button>
+  </section>
+
+  <!-- ══ 5 结果 ══ -->
+  <section x-show="step===5" class="rise space-y-6">
+    <div class="flex flex-wrap items-start gap-3">
+      <div class="flex-1 min-w-0">
+        <h2 class="text-xl font-semibold tracking-tight" x-text="topic?.title"></h2>
+        <p class="text-fg-3 text-[13px] mt-1.5">
+          <span x-text="(result?.chars||0).toLocaleString()+' 字'"></span> ·
+          <span x-text="(result?.figures?.length||0)+' 张配图'"></span>
+          <span x-show="cfg.debug" class="text-warn"> · 调试回放</span>
+        </p>
+      </div>
+      <div class="flex gap-2">
+        <button x-show="result?.has_docx" class="px-4 py-2 rounded-xl bg-fg text-ink font-medium text-[13px] hover:bg-white transition"
+                @click="dl('docx')">下载 Word</button>
+        <button class="px-4 py-2 rounded-xl border border-line text-[13px] text-fg-2 hover:text-fg transition" @click="dl('md')">Markdown</button>
+        <button class="px-4 py-2 rounded-xl border border-line text-[13px] text-fg-2 hover:text-fg transition" @click="dl('zip')">全部打包</button>
+      </div>
+    </div>
+
+    <div class="flex gap-1 border-b border-line">
+      <template x-for="t in tabs()" :key="t.id">
+        <button class="px-4 py-2.5 text-[13.5px] -mb-px border-b-2 transition"
+                :class="tab===t.id ? 'border-brand text-fg font-medium' : 'border-transparent text-fg-3 hover:text-fg-2'"
+                @click="tab=t.id" x-text="t.label"></button>
+      </template>
+    </div>
+
+    <div x-show="tab==='doc'" class="prose-doc max-h-[680px] overflow-y-auto pr-3" x-html="result?.html"></div>
+
+    <div x-show="tab==='figs'" class="space-y-5">
+      <template x-for="(f,i) in (result?.figures||[])" :key="f">
+        <figure>
+          <img :src="'/api/figure/'+job+'/'+f" class="w-full rounded-xl border border-line">
+          <figcaption class="text-fg-3 text-[12.5px] text-center mt-2" x-text="'图 '+(i+1)"></figcaption>
+        </figure>
+      </template>
+    </div>
+
+    <div x-show="tab==='eval'" x-show="result?.evaluation">
+      <template x-if="result?.evaluation">
+        <div class="space-y-7">
+          <div class="flex items-end gap-4 flex-wrap">
+            <div class="text-[46px] font-semibold leading-none tabular-nums" x-text="result.evaluation.overall_100"></div>
+            <div class="text-fg-3 text-sm pb-1.5">/ 100</div>
+            <div class="pb-1" x-html="verdictBadge(result.evaluation.verdict)"></div>
+            <div class="flex-1"></div>
+            <div class="text-fg-3 text-[12.5px] pb-1.5" x-show="result.evaluation.research_type?.type"
+                 x-text="'评分口径：'+(result.evaluation.research_type.type==='applied'?'应用/系统型':'基础研究型')"></div>
+          </div>
+
+          <div class="space-y-1.5">
+            <template x-for="d in dims" :key="d.k">
+              <div class="grid grid-cols-[104px_1fr_40px] gap-3 items-center">
+                <div class="text-right">
+                  <div class="text-[13px] text-fg-2" x-text="d.name"></div>
+                  <div class="text-[11px] text-fg-3" x-text="'权重 '+d.w.toFixed(2)"></div>
+                </div>
+                <div class="h-5 bg-ink-3 rounded-md overflow-hidden">
+                  <div class="h-full bg-brand rounded-r-md transition-all duration-700"
+                       :style="'width:'+((result.evaluation.scores?.[d.k]||0)*10)+'%'"></div>
+                </div>
+                <div class="text-[13px] font-medium tabular-nums"
+                     x-text="result.evaluation.scores?.[d.k]?.toFixed(0) ?? '—'"></div>
+              </div>
+            </template>
+            <div class="grid grid-cols-[104px_1fr_40px] gap-3 pt-1">
+              <div></div>
+              <div class="flex justify-between text-[11px] text-fg-3">
+                <template x-for="n in [0,2,4,6,8,10]" :key="n"><span x-text="n"></span></template>
+              </div><div></div>
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-7">
+            <div x-show="result.evaluation.strengths?.length">
+              <div class="text-[13px] text-fg-2 mb-2.5 font-medium">优点</div>
+              <ul class="space-y-2">
+                <template x-for="s in result.evaluation.strengths" :key="s">
+                  <li class="text-[13px] text-fg-2 flex gap-2"><span class="text-ok shrink-0">+</span><span x-text="s"></span></li>
+                </template></ul>
+            </div>
+            <div x-show="result.evaluation.weaknesses?.length">
+              <div class="text-[13px] text-fg-2 mb-2.5 font-medium">待改进</div>
+              <ul class="space-y-2">
+                <template x-for="w in result.evaluation.weaknesses" :key="w">
+                  <li class="text-[13px] text-fg-2 flex gap-2"><span class="text-warn shrink-0">·</span><span x-text="w"></span></li>
+                </template></ul>
+            </div>
+          </div>
+
+          <div x-show="flags().length">
+            <div class="text-[13px] text-fg-2 mb-2.5 font-medium">硬性问题</div>
+            <template x-for="f in flags()" :key="f.text">
+              <div class="border-l-2 border-warn/60 pl-3.5 py-0.5 my-2 text-[13px] text-fg-2">
+                <span class="text-warn" x-text="'【'+f.kind+'】'"></span><span x-text="f.text"></span>
+              </div></template>
+          </div>
+
+          <div x-show="result.evaluation.summary"
+               class="bg-ink-2 border border-line rounded-xl p-5 text-[13.5px] text-fg-2 leading-relaxed"
+               x-text="result.evaluation.summary"></div>
+        </div>
+      </template>
+    </div>
+
+    <div class="pt-2">
+      <button class="px-5 py-2.5 rounded-xl border border-line text-sm text-fg-2 hover:text-fg transition" @click="reset()">再做一份</button>
+    </div>
+  </section>
+</main>
+
+<footer class="max-w-content mx-auto px-6 pb-12 text-fg-3 text-[12px]">
+  本地运行 · 生成内容需经研究者核对后使用
+</footer>
+
+<style>
+.spinner{display:inline-block;width:13px;height:13px;border:2px solid #333;border-top-color:#5b8cff;
+         border-radius:50%;animation:spin .7s linear infinite;vertical-align:-2px}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+
 <script>
-const $ = s => document.querySelector(s);
-const el = (t, c, x) => { const n = document.createElement(t); if (c) n.className = c;
-                          if (x !== undefined) n.textContent = x; return n; };
-const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function agent(){
+  return {
+    steps:['上传文件','核对解析','选择方向','确定课题','生成','完成'],
+    roles:[{id:'guideline',label:'资助指南'},{id:'template',label:'申请书模板'},{id:'topic',label:'已定选题'}],
+    dims:[{k:'scientific_quality',name:'科学质量',w:.20},{k:'innovation',name:'创新性',w:.18},
+          {k:'feasibility',name:'可行性',w:.16},{k:'alignment',name:'一致性',w:.14},
+          {k:'impact',name:'学术影响',w:.12},{k:'compliance',name:'规范性',w:.11},
+          {k:'clarity',name:'清晰度',w:.09}],
+    cfg:{debug:false,stages:[],model:''},
+    step:0, busy:false, err:'', dragging:false,
+    pending:[], call:null, structure:null, uploadedTopic:null,
+    direction:null, topics:[], topic:null,
+    job:null, result:null, tab:'doc', t0:0, elapsed:'0:00', timer:null,
 
-const STEPS = ['上传指南', '核对解析', '选择方向', '确定课题', '生成', '完成'];
-const S = { call:null, direction:null, topics:[], topic:null, job:null, step:0, t0:0, timer:null };
-
-function drawSteps(){
-  const box = $('#steps'); box.innerHTML = '';
-  STEPS.forEach((label, i) => {
-    const d = el('div', 'step' + (i === S.step ? ' active' : i < S.step ? ' done' : ''));
-    d.append(el('span', 'n', i < S.step ? '✓' : String(i + 1)), el('span', null, label));
-    box.append(d);
-  });
-}
-function show(id){
-  ['s-upload','s-call','s-dir','s-topic','s-run','s-result']
-    .forEach(x => $('#' + x).classList.toggle('hidden', x !== id));
-}
-function goto(step, id){ S.step = step; drawSteps(); show(id); window.scrollTo({top:0, behavior:'smooth'}); }
-function showErr(sel, msg){
-  const box = $(sel); box.innerHTML = '';
-  if (msg) box.append(el('div', 'err', msg));
-}
-async function api(path, body){
-  const r = await fetch(path, body ? {method:'POST', headers:{'Content-Type':'application/json'},
-                                      body: JSON.stringify(body)} : undefined);
-  const j = await r.json().catch(() => ({error:'服务端返回了无法解析的内容'}));
-  if (!r.ok) throw new Error(j.error || ('请求失败：' + r.status));
-  return j;
-}
-function busy(btn, on, text){
-  btn.disabled = on;
-  if (on){ btn.dataset.old = btn.textContent; btn.innerHTML = '<span class="spin"></span> ' + (text || '处理中'); }
-  else if (btn.dataset.old) btn.textContent = btn.dataset.old;
-}
-
-/* ── 1 上传 ── */
-const drop = $('#drop'), fileInput = $('#file');
-drop.onclick = () => fileInput.click();
-drop.ondragover = e => { e.preventDefault(); drop.classList.add('over'); };
-drop.ondragleave = () => drop.classList.remove('over');
-drop.ondrop = e => { e.preventDefault(); drop.classList.remove('over');
-                     if (e.dataTransfer.files[0]) upload(e.dataTransfer.files[0]); };
-fileInput.onchange = () => fileInput.files[0] && upload(fileInput.files[0]);
-
-async function upload(file){
-  showErr('#upErr', '');
-  $('#dropBig').innerHTML = '<span class="spin"></span> 正在解析 ' + esc(file.name);
-  $('#dropSmall').textContent = '提取文字并转写为结构化指南，约 20 秒';
-  try{
-    const b64 = await new Promise((res, rej) => {
-      const fr = new FileReader();
-      fr.onload = () => res(fr.result.split(',')[1]);
-      fr.onerror = () => rej(new Error('文件读取失败'));
-      fr.readAsDataURL(file);
-    });
-    const { call } = await api('/api/parse', { filename: file.name, data_b64: b64 });
-    S.call = call; renderCall(call); goto(1, 's-call');
-  }catch(e){ showErr('#upErr', e.message); }
-  finally{
-    $('#dropBig').textContent = '拖入文件，或点击选择';
-    $('#dropSmall').textContent = '申报指南、课题公告、Call for Proposals…';
-    fileInput.value = '';
+    async boot(){
+      try{ this.cfg = await (await fetch('/api/config')).json(); }catch(e){}
+    },
+    addFiles(list){
+      this.err='';
+      for(const f of list) this.pending.push({file:f, role:this.guess(f.name)});
+    },
+    guess(n){
+      const s=(n||'').toLowerCase();
+      if(/模板|template|提纲|格式|样表/.test(s)) return 'template';
+      if(/选题|课题|topic|构思/.test(s)) return 'topic';
+      return 'guideline';
+    },
+    async doUpload(){
+      this.busy=true; this.err='';
+      try{
+        const fd=new FormData(); const roles={};
+        this.pending.forEach(p=>{ fd.append('files', p.file); roles[p.file.name]=p.role; });
+        fd.append('roles', JSON.stringify(roles));
+        const r=await fetch('/api/upload',{method:'POST',body:fd});
+        const j=await r.json();
+        if(!r.ok) throw new Error(j.detail||'上传失败');
+        const bad=(j.files||[]).filter(f=>f.error);
+        if(bad.length) this.err=bad.map(f=>`${f.filename}：${f.error}`).join('\n');
+        this.call=j.call; this.structure=j.structure; this.uploadedTopic=j.topic;
+        if(!this.call) throw new Error(this.err||'未能解析出资助指南');
+        this.pending=[]; this.step=1;
+      }catch(e){ this.err=e.message; }
+      finally{ this.busy=false; }
+    },
+    budgetText(){
+      const b=this.call?.budget||{}; const bits=[];
+      if(b.amount) bits.push((b.is_cap?'上限 ':'')+Number(b.amount).toLocaleString()+' '+(b.currency||''));
+      if(b.dur) bits.push('周期 '+b.dur+' 个月');
+      return bits.join(' · ');
+    },
+    structureText(){
+      const s=this.structure||this.call?.structure;
+      return s?.core_sections?.length ? s.core_sections.map(x=>x.name).join(' / ')
+                                      : '指南未规定，将由系统按本计划特点规划';
+    },
+    async autoDirection(){
+      this.busy=true; this.err='';
+      try{
+        const r=await fetch('/api/direction',{method:'POST',headers:{'Content-Type':'application/json'},
+              body:JSON.stringify({call:this.call,mode:'auto'})});
+        const j=await r.json(); if(!r.ok) throw new Error(j.detail||'选择失败');
+        this.direction=j.direction; this.topics=[]; this.topic=null;
+      }catch(e){ this.err=e.message; } finally{ this.busy=false; }
+    },
+    goTopics(){
+      this.step=3;
+      if(this.uploadedTopic){ this.topics=[this.uploadedTopic]; this.topic=this.uploadedTopic; }
+      else if(!this.topics.length) this.loadTopics();
+    },
+    async loadTopics(){
+      this.busy=true; this.err='';
+      try{
+        const r=await fetch('/api/topics',{method:'POST',headers:{'Content-Type':'application/json'},
+              body:JSON.stringify({call:this.call,direction:this.direction,n:3})});
+        const j=await r.json(); if(!r.ok) throw new Error(j.detail||'生成失败');
+        const kept=this.uploadedTopic?[this.uploadedTopic]:[];
+        this.topics=[...kept,...j.topics]; this.topic=null;
+      }catch(e){ this.err=e.message; } finally{ this.busy=false; }
+    },
+    async start(){
+      this.err='';
+      try{
+        const r=await fetch('/api/run',{method:'POST',headers:{'Content-Type':'application/json'},
+              body:JSON.stringify({call:this.call,direction:this.direction,topic:this.topic,
+                                   structure:this.structure,review:true})});
+        const j=await r.json(); if(!r.ok) throw new Error(j.detail||'启动失败');
+        this.job=j.job_id; this.stage='queued'; this.step=4; this.t0=Date.now();
+        this.timer=setInterval(()=>this.poll(), this.cfg.debug?800:3000); this.poll();
+      }catch(e){ this.err=e.message; }
+    },
+    stageState(i){
+      const ids=this.cfg.stages.map(s=>s.id);
+      const cur=ids.indexOf(this.stage);
+      if(this.stage==='failed') return i===Math.max(cur,0)?'err':(i<cur?'ok':'pend');
+      if(this.stage==='done') return 'ok';
+      if(cur<0) return i===0?'run':'pend';
+      return i<cur?'ok':i===cur?'run':'pend';
+    },
+    async poll(){
+      try{
+        const j=await (await fetch('/api/job/'+this.job)).json();
+        this.stage=j.stage;
+        const s=(Date.now()-this.t0)/1000;
+        this.elapsed=Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0');
+        if(j.status==='failed'){ clearInterval(this.timer); this.err='生成失败：\n'+(j.error||'未知错误'); return; }
+        if(j.status==='done'){ clearInterval(this.timer); this.result=j.result; this.tab='doc'; this.step=5; }
+      }catch(e){ /* 瞬时错误，下一轮继续 */ }
+    },
+    tabs(){
+      const t=[{id:'doc',label:'申请书正文'}];
+      if(this.result?.figures?.length) t.push({id:'figs',label:`配图 ${this.result.figures.length}`});
+      if(this.result?.evaluation) t.push({id:'eval',label:'评审报告'});
+      return t;
+    },
+    verdictBadge(v){
+      const m={recommend_submit:['建议提交','ok'],revise_resubmit:['修改后重投','warn'],reject:['不予推荐','bad']};
+      const [label,c]=m[v]||[v,'warn'];
+      return `<span class="text-[12.5px] px-3 py-1 rounded-full border border-${c}/40 bg-${c}/10 text-${c}">${label}</span>`;
+    },
+    flags(){
+      const e=this.result?.evaluation||{}; const out=[];
+      [['过度声称',e.over_claims],['跑题内容',e.off_topic],['存疑指标',e.risky_targets],
+       ['占位符残留',e.placeholders],['违反约束',e.constraint_violations]]
+        .forEach(([kind,arr])=>(arr||[]).forEach(text=>out.push({kind,text})));
+      return out;
+    },
+    dl(kind){ location.href=`/api/download/${this.job}/${kind}`; },
+    reset(){
+      clearInterval(this.timer);
+      Object.assign(this,{step:0,pending:[],call:null,structure:null,uploadedTopic:null,
+                          direction:null,topics:[],topic:null,job:null,result:null,err:''});
+    },
   }
 }
-
-/* ── 2 解析结果 ── */
-function renderCall(c){
-  const dl = $('#facts'); dl.innerHTML = '';
-  const add = (k, node) => { dl.append(el('dt', null, k)); const dd = el('dd'); dd.append(node); dl.append(dd); };
-  const list = arr => { const ul = el('ul'); (arr||[]).forEach(x => ul.append(el('li', null, x))); return ul; };
-
-  add('资助计划', el('span', null, c.program || '—'));
-  if (c.sponsor) add('资助方', el('span', null, c.sponsor));
-  const b = c.budget || {};
-  if (b.amount || b.dur || b.note){
-    const bits = [];
-    if (b.amount) bits.push((b.is_cap ? '上限 ' : '') + Number(b.amount).toLocaleString() + ' ' + (b.currency || ''));
-    if (b.dur) bits.push('周期 ' + b.dur + ' 个月');
-    const d = el('div'); d.append(el('span', null, bits.join(' · ') || '—'));
-    if (b.note) d.append(el('div', 'm', b.note));
-    add('经费', d);
-  }
-  if (c.eligibility) add('申请资格', el('span', null, c.eligibility));
-  add('硬性交付物', c.requirements?.length ? list(c.requirements) : el('span', null, '（指南未列明）'));
-  add('硬性约束', c.constraints?.length ? list(c.constraints) : el('span', null, '（指南未列明）'));
-  const dirs = el('div');
-  (c.directions || []).forEach(d => dirs.append(el('span', 'tag', d.name)));
-  add('可选方向', dirs);
-  add('行文结构', el('span', null, c.structure?.core_sections?.length
-      ? c.structure.core_sections.map(s => s.name).join(' / ')
-      : '指南未规定，将由系统按本计划特点规划'));
-  if (c.uncertain?.length){
-    const u = el('div');
-    c.uncertain.forEach(x => u.append(el('div', 'flag', x)));
-    add('需你核对', u);
-  }
-}
-$('#toDir').onclick = () => { renderDirs(); goto(2, 's-dir'); };
-$('#reUpload').onclick = () => goto(0, 's-upload');
-$('#backCall').onclick = () => goto(1, 's-call');
-$('#backDir').onclick = () => goto(2, 's-dir');
-
-/* ── 3 方向 ── */
-function renderDirs(){
-  const box = $('#dirs'); box.innerHTML = '';
-  (S.call.directions || []).forEach(d => {
-    const o = el('div', 'opt' + (S.direction?.id === d.id ? ' sel' : ''));
-    o.append(el('div', 't', d.name));
-    if (d.detail) o.append(el('div', 'd', d.detail));
-    if (d.reason) o.append(el('div', 'm', '系统推荐理由：' + d.reason));
-    o.onclick = () => { S.direction = d; S.topics = []; S.topic = null; renderDirs(); };
-    box.append(o);
-  });
-  $('#toTopics').disabled = !S.direction;
-}
-$('#autoDir').onclick = async e => {
-  showErr('#dirErr', ''); busy(e.target, true, '正在选择');
-  try{
-    const { direction } = await api('/api/direction', { call: S.call, mode: 'auto' });
-    S.direction = direction; S.topics = []; S.topic = null; renderDirs();
-  }catch(err){ showErr('#dirErr', err.message); }
-  finally{ busy(e.target, false); }
-};
-$('#toTopics').onclick = e => { goto(3, 's-topic'); loadTopics(e); };
-$('#regen').onclick = e => loadTopics(e);
-
-/* ── 4 选题 ── */
-async function loadTopics(evt){
-  const btn = evt?.target?.id === 'regen' ? $('#regen') : null;
-  showErr('#topicErr', '');
-  $('#topics').innerHTML = '<div class="opt"><span class="spin"></span> 正在生成候选课题，约 30 秒…</div>';
-  if (btn) busy(btn, true, '生成中');
-  try{
-    const { topics } = await api('/api/topics', { call: S.call, direction: S.direction, n: 3 });
-    S.topics = topics; S.topic = null; renderTopics();
-  }catch(e){ $('#topics').innerHTML = ''; showErr('#topicErr', e.message); }
-  finally{ if (btn) busy(btn, false); }
-}
-function renderTopics(){
-  const box = $('#topics'); box.innerHTML = '';
-  S.topics.forEach((t, i) => {
-    const o = el('div', 'opt' + (S.topic === t ? ' sel' : ''));
-    o.append(el('div', 't', t.title));
-    o.append(el('div', 'd', t.background));
-    if (t.challenges?.length){
-      const m = el('div', 'm', '关键难点：' + t.challenges.join('；'));
-      o.append(m);
-    }
-    if (t.fit) o.append(el('div', 'm', '如何承接交付物：' + t.fit));
-    o.onclick = () => { S.topic = t; renderTopics(); };
-    box.append(o);
-  });
-  $('#toRun').disabled = !S.topic;
-}
-
-/* ── 5 生成 ── */
-$('#toRun').onclick = async () => {
-  showErr('#runErr', '');
-  try{
-    const r = await api('/api/run', { call: S.call, direction: S.direction, topic: S.topic, review: true });
-    S.job = r.job_id; S.stagesDef = r.stages; S.t0 = Date.now();
-    $('#runTitle').textContent = '正在生成：' + S.topic.title;
-    goto(4, 's-run'); renderStages('queued');
-    S.timer = setInterval(poll, 3000); poll();
-  }catch(e){ showErr('#runErr', e.message); }
-};
-function renderStages(current, failed){
-  const box = $('#stages'); box.innerHTML = '';
-  const order = S.stagesDef.map(s => s.id);
-  const idx = order.indexOf(current);
-  S.stagesDef.forEach((s, i) => {
-    let cls = 'pend';
-    if (failed && i === idx) cls = 'err';
-    else if (current === 'done' || (idx >= 0 && i < idx)) cls = 'ok';
-    else if (i === idx) cls = 'run';
-    const row = el('div', 'stage ' + cls);
-    row.append(el('span', 'dot'), el('span', 'lbl', s.label));
-    if (cls === 'run' || (current === 'done' && i === S.stagesDef.length - 1)){
-      const sp = el('span', 'spacer'); row.append(sp);
-      row.append(el('span', 'elapsed', fmt((Date.now() - S.t0) / 1000)));
-    }
-    box.append(row);
-  });
-}
-const fmt = s => `${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,'0')}`;
-async function poll(){
-  try{
-    const j = await api('/api/job/' + S.job);
-    if (j.status === 'failed'){
-      clearInterval(S.timer); renderStages(j.stage, true);
-      showErr('#runErr', '生成失败：\n' + (j.error || '未知错误'));
-      return;
-    }
-    renderStages(j.stage);
-    if (j.status === 'done'){ clearInterval(S.timer); renderResult(j.result); goto(5, 's-result'); }
-  }catch(e){ /* 服务重启等瞬时错误：下一轮继续 */ }
-}
-
-/* ── 6 结果 ── */
-function renderResult(r){
-  $('#resTitle').textContent = S.topic.title;
-  $('#dlDocx').classList.toggle('hidden', !r.has_docx);
-  $('#doc').innerHTML = md(r.markdown || '', S.job);
-
-  const figs = $('#figs'); figs.innerHTML = '';
-  (r.figures || []).forEach((name, i) => {
-    const f = el('figure');
-    const img = el('img'); img.src = `/api/figure/${S.job}/${name}`; img.alt = `图${i+1}`;
-    f.append(img, el('figcaption', null, `图 ${i+1} · ${name}`));
-    figs.append(f);
-  });
-
-  const tabs = [['doc','申请书正文'], ['figs',`配图 ${r.figures?.length||0}`], ['eval','评审报告']];
-  const box = $('#tabs'); box.innerHTML = '';
-  tabs.forEach(([id, label], i) => {
-    if (id === 'figs' && !(r.figures||[]).length) return;
-    if (id === 'eval' && !r.evaluation) return;
-    const t = el('div', 'tab' + (i === 0 ? ' on' : ''), label);
-    t.onclick = () => {
-      box.querySelectorAll('.tab').forEach(x => x.classList.remove('on'));
-      t.classList.add('on');
-      ['doc','figs','eval'].forEach(x => $('#tab-' + x).classList.toggle('hidden', x !== id));
-    };
-    box.append(t);
-  });
-  if (r.evaluation) renderEval(r.evaluation);
-
-  $('#dlDocx').onclick = () => location.href = `/api/download/${S.job}/docx`;
-  $('#dlMd').onclick   = () => location.href = `/api/download/${S.job}/md`;
-  $('#dlZip').onclick  = () => location.href = `/api/download/${S.job}/zip`;
-}
-
-const DIM = { scientific_quality:['科学质量',.20], innovation:['创新性',.18], feasibility:['可行性',.16],
-              alignment:['一致性',.14], impact:['学术影响',.12], compliance:['规范性',.11], clarity:['清晰度',.09] };
-const VERDICT = { recommend_submit:['建议提交','ok'], revise_resubmit:['修改后重投','mid'], reject:['不予推荐','bad'] };
-
-function renderEval(e){
-  const box = $('#evalBox'); box.innerHTML = '';
-  const [vLabel, vCls] = VERDICT[e.verdict] || [e.verdict, 'mid'];
-
-  const hero = el('div', 'hero');
-  hero.append(el('span', 'num', String(e.overall_100 ?? '—')), el('span', 'of', '/ 100'));
-  const badge = el('span', 'badge ' + vCls, vLabel); hero.append(badge);
-  box.append(hero);
-  if (e.research_type?.type)
-    box.append(el('div', 'sub', `评分口径：${e.research_type.type === 'applied' ? '应用/系统型' : '基础研究型'}`));
-
-  const bars = el('div', 'bars');
-  Object.entries(DIM).forEach(([k, [name, w]]) => {
-    const v = e.scores?.[k];
-    const row = el('div', 'bar');
-    const nm = el('div', 'nm'); nm.append(el('div', null, name), el('div', 'wt', '权重 ' + w.toFixed(2)));
-    const track = el('div', 'track');
-    const fill = el('div', 'fill'); fill.style.width = v ? (v * 10) + '%' : '0';
-    track.append(fill);
-    row.append(nm, track, el('div', 'val', v != null ? v.toFixed(0) : '—'));
-    bars.append(row);
-  });
-  const axis = el('div', 'axis');
-  axis.append(el('div'), (() => { const m = el('div', 'marks');
-    ['0','2','4','6','8','10'].forEach(x => m.append(el('span', null, x))); return m; })(), el('div'));
-  bars.append(axis);
-  box.append(bars);
-
-  const lists = el('div', 'lists');
-  [['优点', e.strengths], ['待改进', e.weaknesses]].forEach(([h, items]) => {
-    if (!items?.length) return;
-    const c = el('div'); c.append(el('h4', null, h));
-    const ul = el('ul'); items.forEach(x => ul.append(el('li', null, x))); c.append(ul); lists.append(c);
-  });
-  if (lists.children.length) box.append(lists);
-
-  const flags = [['过度声称', e.over_claims], ['跑题内容', e.off_topic], ['存疑指标', e.risky_targets],
-                 ['占位符残留', e.placeholders], ['违反约束', e.constraint_violations]];
-  const shown = flags.filter(([, v]) => v?.length);
-  if (shown.length){
-    const c = el('div'); c.append(el('h4', null, '硬性问题'));
-    shown.forEach(([k, v]) => v.forEach(x => c.append(el('div', 'flag', `【${k}】${x}`))));
-    box.append(c);
-  }
-  if (e.summary) box.append(el('div', 'summary', e.summary));
-}
-
-/* ── 极简 Markdown 渲染（只覆盖流水线实际产出的语法）── */
-function md(src, job){
-  const lines = src.split('\n');
-  const out = []; let inList = null, inTable = false;
-  const closeList = () => { if (inList){ out.push(`</${inList}>`); inList = null; } };
-  const closeTable = () => { if (inTable){ out.push('</tbody></table>'); inTable = false; } };
-  const inline = s => esc(s)
-    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-    .replace(/`([^`]+)`/g, '<code>$1</code>');
-
-  for (let i = 0; i < lines.length; i++){
-    const ln = lines[i];
-    let m;
-    if ((m = ln.match(/^!\[[^\]]*\]\(figures\/([^)]+)\)/))){
-      closeList(); closeTable();
-      out.push(`<img src="/api/figure/${job}/${esc(m[1])}" alt="">`); continue;
-    }
-    if ((m = ln.match(/^(#{1,4})\s+(.*)$/))){
-      closeList(); closeTable();
-      out.push(`<h${m[1].length}>${inline(m[2])}</h${m[1].length}>`); continue;
-    }
-    if (/^\s*\|.*\|\s*$/.test(ln)){
-      const cells = ln.trim().slice(1, -1).split('|').map(c => c.trim());
-      if (/^[\s|:-]+$/.test(ln)) continue;                    // 分隔行
-      if (!inTable){ closeList(); out.push('<table><thead><tr>' +
-          cells.map(c => `<th>${inline(c)}</th>`).join('') + '</tr></thead><tbody>'); inTable = true; }
-      else out.push('<tr>' + cells.map(c => `<td>${inline(c)}</td>`).join('') + '</tr>');
-      continue;
-    }
-    closeTable();
-    if ((m = ln.match(/^\s*[-*]\s+(.*)$/))){
-      if (inList !== 'ul'){ closeList(); out.push('<ul>'); inList = 'ul'; }
-      out.push(`<li>${inline(m[1])}</li>`); continue;
-    }
-    if ((m = ln.match(/^\s*\d+[.)]\s+(.*)$/))){
-      if (inList !== 'ol'){ closeList(); out.push('<ol>'); inList = 'ol'; }
-      out.push(`<li>${inline(m[1])}</li>`); continue;
-    }
-    closeList();
-    if ((m = ln.match(/^\*(.+)\*$/))){ out.push(`<em>${inline(m[1])}</em>`); continue; }
-    if (ln.trim()) out.push(`<p>${inline(ln)}</p>`);
-  }
-  closeList(); closeTable();
-  return out.join('\n');
-}
-
-$('#restart').onclick = () => {
-  Object.assign(S, { call:null, direction:null, topics:[], topic:null, job:null });
-  goto(0, 's-upload');
-};
-drawSteps();
 </script>
 </body>
 </html>
