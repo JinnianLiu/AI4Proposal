@@ -38,11 +38,11 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 import markdown as md_lib  # noqa: E402
-from fastapi import Body, FastAPI, File, Form, HTTPException, UploadFile  # noqa: E402
+from fastapi import Body, FastAPI, File, HTTPException, UploadFile  # noqa: E402
 from fastapi.responses import FileResponse, HTMLResponse  # noqa: E402
 
 from ai4proposal.intake import (  # noqa: E402
-    build_task, extract_text, guess_role, parse_call, parse_template,
+    build_task, classify_documents, extract_text, parse_call, parse_template,
     parse_topic_doc, pick_direction, propose_topics,
 )
 from ai4proposal.llm import LLMBackend  # noqa: E402
@@ -214,40 +214,39 @@ async def config() -> Dict[str, Any]:
 
 
 @app.post("/api/upload")
-async def upload(files: List[UploadFile] = File(...),
-                 roles: str = Form("{}")) -> Dict[str, Any]:
-    """Parse one or more documents. `roles` maps filename -> guideline|template|topic;
-    anything unmapped is guessed from the name."""
-    try:
-        role_map = json.loads(roles or "{}")
-    except json.JSONDecodeError:
-        role_map = {}
-
+async def upload(files: List[UploadFile] = File(...)) -> Dict[str, Any]:
+    """Parse one or more documents. Roles are decided server-side from content —
+    the user should not have to tell us which file is which."""
     llm = _llm()
-    out: Dict[str, Any] = {"call": None, "structure": None, "topic": None, "files": []}
-
+    docs, failed = [], []
     for f in files:
         data = await f.read()
-        role = role_map.get(f.filename) or guess_role(f.filename)
-        entry = {"filename": f.filename, "role": role, "bytes": len(data)}
         try:
-            text = extract_text(f.filename, data)
-            entry["chars"] = len(text)
+            docs.append({"filename": f.filename, "text": extract_text(f.filename, data)})
+        except ValueError as exc:
+            failed.append({"filename": f.filename, "error": str(exc)})
+
+    if not docs:
+        raise HTTPException(400, "；".join(f["error"] for f in failed) or "没有可解析的文件")
+
+    roles = classify_documents(llm, docs)
+    out: Dict[str, Any] = {"call": None, "structure": None, "topic": None, "files": list(failed)}
+    for d in docs:
+        role = roles.get(d["filename"], "guideline")
+        entry = {"filename": d["filename"], "role": role, "chars": len(d["text"])}
+        try:
             if role == "template":
-                out["structure"] = parse_template(llm, text)
-                entry["sections"] = len(out["structure"]["core_sections"]) if out["structure"] else 0
+                out["structure"] = parse_template(llm, d["text"])
             elif role == "topic":
-                out["topic"] = parse_topic_doc(llm, text)
-                entry["title"] = out["topic"]["title"]
+                out["topic"] = parse_topic_doc(llm, d["text"])
             else:
-                out["call"] = parse_call(llm, text)
-                entry["directions"] = len(out["call"]["directions"])
+                out["call"] = parse_call(llm, d["text"])
         except ValueError as exc:
             entry["error"] = str(exc)
         out["files"].append(entry)
 
-    if not out["call"] and not any(e.get("error") for e in out["files"]):
-        raise HTTPException(400, "请至少上传一份资助指南")
+    if not out["call"]:
+        raise HTTPException(400, "未能从上传文件中解析出资助指南")
     return out
 
 
@@ -267,7 +266,8 @@ async def topics(payload: Dict[str, Any] = Body(...)) -> Dict[str, Any]:
     try:
         return {"topics": propose_topics(_llm(), payload.get("call") or {},
                                          payload.get("direction") or {},
-                                         n=int(payload.get("n") or 3))}
+                                         n=int(payload.get("n") or 3),
+                                         guidance=str(payload.get("guidance") or ""))}
     except ValueError as exc:
         raise HTTPException(400, str(exc)) from exc
 

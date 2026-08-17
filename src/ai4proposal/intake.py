@@ -262,13 +262,57 @@ def parse_topic_doc(llm: Any, topic_text: str) -> Dict[str, Any]:
 
 
 def guess_role(filename: str) -> str:
-    """Best guess at what an uploaded file is, from its name. The user can override."""
+    """Filename-only guess, used as the fallback when classification fails."""
     n = (filename or "").lower()
     if any(w in n for w in ("模板", "template", "提纲", "格式", "样表", "表格")):
         return "template"
     if any(w in n for w in ("选题", "课题", "topic", "idea", "构思", "方案书")):
         return "topic"
     return "guideline"
+
+
+CLASSIFY_SYSTEM = """你是文档分类助手。给定若干份文档的文件名与开头片段，判断每份属于哪一类。只输出 JSON。"""
+
+CLASSIFY_USER = """判断每份文档的类别：
+
+- guideline：**资助指南 / 课题申报通知 / Call for Proposals**。特征是规定资助计划、经费、周期、
+  申报资格、须交付的成果、可选研究方向。
+- template：**申请书模板或提纲**。特征是列出申请书应包含哪些章节、每章写什么、字数限制，
+  本身不含具体研究内容。
+- topic：**已确定的选题说明**。特征是描述一个具体课题要做什么、为什么做，不规定申报规则。
+
+## 文档
+${docs}
+
+只输出：{"roles": {"文件名": "guideline|template|topic"}}"""
+
+
+def classify_documents(llm: Any, docs: List[Dict[str, str]]) -> Dict[str, str]:
+    """Decide what each uploaded document is, so the user need not label them.
+
+    `docs` is [{"filename": ..., "text": ...}]. Falls back to the filename
+    heuristic for anything the model does not classify.
+    """
+    result = {d["filename"]: guess_role(d["filename"]) for d in docs}
+    if len(docs) == 1:
+        # A lone document is the call; nothing else makes sense on its own.
+        result[docs[0]["filename"]] = "guideline"
+        return result
+    listing = "\n\n".join(
+        f"【{d['filename']}】\n{d['text'][:600]}" for d in docs)
+    try:
+        raw = llm.generate_text(system_prompt=CLASSIFY_SYSTEM,
+                                user_prompt=CLASSIFY_USER.replace("${docs}", listing))
+        roles = (_parse_json(raw) or {}).get("roles") or {}
+        for name, role in roles.items():
+            if name in result and role in ("guideline", "template", "topic"):
+                result[name] = role
+    except Exception:
+        pass
+    # Exactly one call is expected; if none was identified, promote the longest.
+    if "guideline" not in result.values() and docs:
+        result[max(docs, key=lambda d: len(d["text"]))["filename"]] = "guideline"
+    return result
 
 
 # ═══════════════════════════════ direction choice ═══════════════════════════════
@@ -362,16 +406,25 @@ ${constraints}
 
 
 def propose_topics(llm: Any, call: Dict[str, Any], direction: Dict[str, Any],
-                   n: int = 3) -> List[Dict[str, Any]]:
+                   n: int = 3, guidance: str = "") -> List[Dict[str, Any]]:
     """Propose candidate topics under a chosen direction. This is the one stage
-    that invents rather than transcribes."""
+    that invents rather than transcribes.
+
+    `guidance` is the applicant's own steer — a rough idea, a technique they want
+    used, a sub-area to avoid. It is injected as a hard requirement rather than a
+    hint, since a user who bothers to type it means it.
+    """
+    steer = ""
+    if guidance.strip():
+        steer = ("\n\n## 申请人的要求（必须满足）\n" + guidance.strip() + "\n"
+                 "以上是申请人对选题的明确要求，每个候选课题都必须符合；与其冲突的想法一律不要提出。")
     user = (TOPIC_USER
             .replace("${program}", call.get("program", ""))
             .replace("${direction_name}", direction.get("name", ""))
             .replace("${direction_detail}", direction.get("detail", ""))
             .replace("${requirements}", "\n".join(f"- {r}" for r in call.get("requirements", [])) or "（未列明）")
             .replace("${constraints}", "\n".join(f"- {c}" for c in call.get("constraints", [])) or "（未列明）")
-            .replace("${n}", str(n)))
+            .replace("${n}", str(n))) + steer
     raw = llm.generate_text(system_prompt=TOPIC_SYSTEM, user_prompt=user)
     data = _parse_json(raw)
     topics = data.get("topics") if isinstance(data, dict) else None

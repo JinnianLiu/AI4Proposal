@@ -81,7 +81,7 @@ tailwind.config = {
       上传资助指南，<br>产出可提交的项目申请书
     </h1>
     <p class="text-fg-2 mt-5 max-w-xl leading-relaxed">
-      系统只转写指南写明的内容，不替你臆测未写明的信息。方向与选题由你决定，
+      上传指南、模板、选题等文件，解析后可逐项编辑。方向与选题由你确定，
       正文、配图、Word 与评审报告由系统产出。
     </p>
   </div>
@@ -113,41 +113,29 @@ tailwind.config = {
       <svg viewBox="0 0 24 24" class="w-9 h-9 mx-auto mb-4 stroke-fg-3" fill="none" stroke-width="1.5" stroke-linecap="round">
         <path d="M12 16V4m0 0L8 8m4-4 4 4"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg>
       <div class="text-[15px]">拖入文件，或点击选择</div>
-      <div class="text-fg-3 text-[13px] mt-1.5">支持 .docx / .txt / .md，可一次上传多份</div>
+      <div class="text-fg-3 text-[13px] mt-1.5">支持 .docx / .txt / .md，可多选</div>
     </div>
     <input type="file" x-ref="file" class="hidden" multiple accept=".docx,.txt,.md,.markdown"
            @change="addFiles($event.target.files); $event.target.value=''">
 
-    <!-- 待上传文件与角色指派 -->
     <div class="mt-5 space-y-2" x-show="pending.length">
-      <div class="text-[13px] text-fg-2 mb-3">为每份文件指定用途 —— 系统已按文件名猜了一个，可以改：</div>
       <template x-for="(f,i) in pending" :key="i">
         <div class="flex items-center gap-3 bg-ink-2 border border-line rounded-xl px-4 py-3">
           <svg viewBox="0 0 24 24" class="w-4 h-4 stroke-fg-3 shrink-0" fill="none" stroke-width="1.6">
             <path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg>
           <div class="min-w-0 flex-1">
-            <div class="text-[13.5px] truncate" x-text="f.file.name"></div>
-            <div class="text-fg-3 text-[11.5px]" x-text="(f.file.size/1024).toFixed(0)+' KB'"></div>
-          </div>
-          <div class="flex gap-1">
-            <template x-for="r in roles" :key="r.id">
-              <button class="text-[12px] px-2.5 py-1 rounded-lg border transition"
-                      :class="f.role===r.id ? 'border-brand bg-brand/12 text-fg' : 'border-line text-fg-3 hover:text-fg-2'"
-                      @click="f.role=r.id" x-text="r.label"></button>
-            </template>
+            <div class="text-[13.5px] truncate" x-text="f.name"></div>
+            <div class="text-fg-3 text-[11.5px]" x-text="(f.size/1024).toFixed(0)+' KB'"></div>
           </div>
           <button class="text-fg-3 hover:text-bad text-lg leading-none px-1" @click="pending.splice(i,1)">×</button>
         </div>
       </template>
-      <div class="flex items-center gap-3 pt-3">
+      <div class="pt-3">
         <button class="px-5 py-2.5 rounded-xl bg-fg text-ink font-medium text-sm hover:bg-white transition disabled:opacity-40"
-                :disabled="busy || !pending.some(f=>f.role==='guideline')" @click="doUpload()">
-          <span x-show="!busy">解析文件</span>
-          <span x-show="busy" class="flex items-center gap-2"><span class="spinner"></span> 解析中…</span>
+                :disabled="busy" @click="doUpload()">
+          <span x-show="!busy">解析</span>
+          <span x-show="busy" class="flex items-center gap-2"><span class="spinner"></span> 解析中</span>
         </button>
-        <span class="text-fg-3 text-[12.5px]" x-show="!pending.some(f=>f.role==='guideline')">
-          至少需要一份「资助指南」
-        </span>
       </div>
     </div>
     <div x-show="err" class="mt-4 text-[13px] text-bad bg-bad/8 border border-bad/30 rounded-xl px-4 py-3 whitespace-pre-wrap" x-text="err"></div>
@@ -157,44 +145,65 @@ tailwind.config = {
   <section x-show="step===1" class="rise space-y-5">
     <div>
       <h2 class="text-xl font-semibold tracking-tight">指南解析结果</h2>
-      <p class="text-fg-2 text-sm mt-1.5">以下均转写自原文。请核对硬性交付物与约束 —— 它们会贯穿写作与评审。</p>
+      <p class="text-fg-2 text-sm mt-1.5">各字段均可编辑。硬性交付物与约束将贯穿写作与评审。</p>
     </div>
 
-    <div class="bg-ink-2 border border-line rounded-2xl p-6 space-y-4" x-show="call">
-      <div class="grid sm:grid-cols-[110px_1fr] gap-x-6 gap-y-3.5 text-[13.5px]">
-        <div class="text-fg-3">资助计划</div><div x-text="call?.program||'—'"></div>
-        <template x-if="call?.sponsor"><div class="text-fg-3">资助方</div></template>
-        <template x-if="call?.sponsor"><div x-text="call.sponsor"></div></template>
-        <template x-if="budgetText()"><div class="text-fg-3">经费</div></template>
-        <template x-if="budgetText()"><div>
-          <span x-text="budgetText()"></span>
-          <div class="text-fg-3 text-[12px] mt-0.5" x-text="call?.budget?.note"></div>
-        </div></template>
-        <template x-if="call?.eligibility"><div class="text-fg-3">申请资格</div></template>
-        <template x-if="call?.eligibility"><div class="text-fg-2" x-text="call.eligibility"></div></template>
+    <div class="bg-ink-2 border border-line rounded-2xl p-6 space-y-5" x-show="call">
+      <div class="grid sm:grid-cols-[92px_1fr] gap-x-5 gap-y-3 items-start">
+        <div "text-fg-3 text-[12.5px] pt-2">资助计划</div><input class="w-full bg-ink border border-line rounded-lg px-3 py-2 text-[13.5px] text-fg focus:border-brand focus:outline-none" x-model="call.program">
+        <div "text-fg-3 text-[12.5px] pt-2">资助方</div><input class="w-full bg-ink border border-line rounded-lg px-3 py-2 text-[13.5px] text-fg focus:border-brand focus:outline-none" x-model="call.sponsor" placeholder="指南未写明">
+        <div "text-fg-3 text-[12.5px] pt-2">申请资格</div><textarea class="w-full bg-ink border border-line rounded-lg px-3 py-2 text-[13.5px] text-fg focus:border-brand focus:outline-none" rows="2" x-model="call.eligibility" placeholder="指南未写明"></textarea>
+        <div "text-fg-3 text-[12.5px] pt-2">经费</div>
+        <div class="grid grid-cols-[1fr_78px_78px_auto] gap-2 items-center">
+          <input class="w-full bg-ink border border-line rounded-lg px-3 py-2 text-[13.5px] text-fg focus:border-brand focus:outline-none" type="number" x-model.number="call.budget.amount" placeholder="金额">
+          <input class="w-full bg-ink border border-line rounded-lg px-3 py-2 text-[13.5px] text-fg focus:border-brand focus:outline-none" x-model="call.budget.currency" placeholder="币种">
+          <input class="w-full bg-ink border border-line rounded-lg px-3 py-2 text-[13.5px] text-fg focus:border-brand focus:outline-none" type="number" x-model.number="call.budget.dur" placeholder="月数">
+          <label class="flex items-center gap-1.5 text-[12.5px] text-fg-3 whitespace-nowrap">
+            <input type="checkbox" x-model="call.budget.is_cap" class="accent-brand">上限</label>
+        </div>
+      </div>
 
-        <div class="text-fg-3">硬性交付物</div>
-        <ul class="space-y-1"><template x-for="r in (call?.requirements||[])" :key="r">
-          <li class="flex gap-2"><span class="text-brand">·</span><span x-text="r"></span></li></template>
-          <li x-show="!call?.requirements?.length" class="text-fg-3">（指南未列明）</li>
-        </ul>
+      <div>
+        <div class="flex items-center gap-2 mb-2">
+          <span class="text-fg-3 text-[12.5px]">硬性交付物</span>
+          <button class="text-brand text-[12.5px] hover:underline" @click="call.requirements.push('')">添加</button>
+        </div>
+        <div class="space-y-1.5">
+          <template x-for="(r,i) in call.requirements" :key="i">
+            <div class="flex gap-2">
+              <input class="w-full bg-ink border border-line rounded-lg px-3 py-2 text-[13.5px] text-fg focus:border-brand focus:outline-none" :value="r" @input="call.requirements[i]=$event.target.value">
+              <button class="text-fg-3 hover:text-bad px-1.5" @click="call.requirements.splice(i,1)">×</button>
+            </div></template>
+          <div x-show="!call.requirements.length" class="text-fg-3 text-[12.5px]">无</div>
+        </div>
+      </div>
 
-        <div class="text-fg-3">硬性约束</div>
-        <ul class="space-y-1"><template x-for="c in (call?.constraints||[])" :key="c">
-          <li class="flex gap-2"><span class="text-brand">·</span><span x-text="c"></span></li></template>
-          <li x-show="!call?.constraints?.length" class="text-fg-3">（指南未列明）</li>
-        </ul>
+      <div>
+        <div class="flex items-center gap-2 mb-2">
+          <span class="text-fg-3 text-[12.5px]">硬性约束</span>
+          <button class="text-brand text-[12.5px] hover:underline" @click="call.constraints.push('')">添加</button>
+        </div>
+        <div class="space-y-1.5">
+          <template x-for="(c,i) in call.constraints" :key="i">
+            <div class="flex gap-2">
+              <input class="w-full bg-ink border border-line rounded-lg px-3 py-2 text-[13.5px] text-fg focus:border-brand focus:outline-none" :value="c" @input="call.constraints[i]=$event.target.value">
+              <button class="text-fg-3 hover:text-bad px-1.5" @click="call.constraints.splice(i,1)">×</button>
+            </div></template>
+          <div x-show="!call.constraints.length" class="text-fg-3 text-[12.5px]">无</div>
+        </div>
+      </div>
 
-        <div class="text-fg-3">行文结构</div>
-        <div>
-          <span x-show="structure" class="text-ok text-[12px] mr-2">来自你上传的模板</span>
+      <div class="grid sm:grid-cols-[92px_1fr] gap-x-5 items-start">
+        <div "text-fg-3 text-[12.5px] pt-2">行文结构</div>
+        <div class="text-[13.5px] pt-1.5">
+          <span x-show="structure" class="text-ok text-[12px] mr-2">来自上传模板</span>
           <span x-text="structureText()"></span>
         </div>
       </div>
 
-      <div x-show="call?.uncertain?.length" class="pt-1">
-        <div class="text-[12.5px] text-warn mb-2">需你核对</div>
-        <template x-for="u in (call?.uncertain||[])" :key="u">
+      <div x-show="call.uncertain?.length" class="pt-1">
+        <div class="text-[12.5px] text-warn mb-2">待核对</div>
+        <template x-for="u in call.uncertain" :key="u">
           <div class="border-l-2 border-warn/60 pl-3 text-[13px] text-fg-2 my-1.5" x-text="u"></div></template>
       </div>
     </div>
@@ -211,10 +220,16 @@ tailwind.config = {
   <section x-show="step===2" class="rise space-y-5">
     <div>
       <h2 class="text-xl font-semibold tracking-tight">选择研究方向</h2>
-      <p class="text-fg-2 text-sm mt-1.5">指南通常只圈定方向、不指定课题。选一个，或交给系统。</p>
+      <p class="text-fg-2 text-sm mt-1.5">选择一个方向，或交由系统判断。</p>
+    </div>
+    <div class="relative" x-show="(call?.directions||[]).length>4">
+      <svg viewBox="0 0 24 24" class="w-4 h-4 stroke-fg-3 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke-width="2">
+        <circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input class="w-full bg-ink-2 border border-line rounded-xl pl-9 pr-3 py-2.5 text-[13.5px] focus:border-brand focus:outline-none"
+             placeholder="搜索方向" x-model="dirQuery">
     </div>
     <div class="space-y-2.5">
-      <template x-for="d in (call?.directions||[])" :key="d.id">
+      <template x-for="d in filteredDirs()" :key="d.id">
         <div class="border rounded-xl p-4 cursor-pointer transition"
              :class="direction?.id===d.id ? 'border-brand bg-brand/8' : 'border-line hover:border-line-2 bg-ink-2'"
              @click="direction=d; topics=[]; topic=null">
@@ -223,6 +238,7 @@ tailwind.config = {
           <div class="text-brand text-[12.5px] mt-2" x-show="d.reason" x-text="'系统推荐：'+d.reason"></div>
         </div>
       </template>
+      <div x-show="!filteredDirs().length" class="text-fg-3 text-[13px] py-4">无匹配方向</div>
     </div>
     <div class="flex flex-wrap gap-2.5">
       <button class="px-5 py-2.5 rounded-xl bg-fg text-ink font-medium text-sm hover:bg-white transition disabled:opacity-40"
@@ -240,10 +256,34 @@ tailwind.config = {
   <section x-show="step===3" class="rise space-y-5">
     <div>
       <h2 class="text-xl font-semibold tracking-tight">确定课题</h2>
-      <p class="text-fg-2 text-sm mt-1.5">
-        <span x-show="uploadedTopic">已使用你上传的选题文档。也可以让系统另出候选。</span>
-        <span x-show="!uploadedTopic">这是系统唯一的"创作"环节，其余内容均来自指南。</span>
-      </p>
+      <p class="text-fg-2 text-sm mt-1.5">可填写要求后生成候选，或直接使用自己的课题。</p>
+    </div>
+
+    <div class="bg-ink-2 border border-line rounded-2xl p-5 space-y-3">
+      <div class="flex items-center gap-4 text-[13px]">
+        <label class="flex items-center gap-2 cursor-pointer">
+          <input type="radio" value="ai" x-model="topicMode" class="accent-brand">系统生成候选</label>
+        <label class="flex items-center gap-2 cursor-pointer">
+          <input type="radio" value="own" x-model="topicMode" class="accent-brand">使用自己的课题</label>
+      </div>
+
+      <div x-show="topicMode==='ai'" class="space-y-3">
+        <textarea class="w-full bg-ink border border-line rounded-lg px-3 py-2 text-[13.5px] text-fg focus:border-brand focus:outline-none" rows="3" x-model="guidance"
+          placeholder="对选题的要求（可选）：想用的技术、想避开的方向、已有的粗略想法"></textarea>
+        <button class="px-5 py-2.5 rounded-xl bg-fg text-ink font-medium text-sm hover:bg-white transition disabled:opacity-40"
+                :disabled="busy" @click="loadTopics()">
+          <span x-show="!busy" x-text="topics.length?'重新生成':'生成候选课题'"></span>
+          <span x-show="busy" class="flex items-center gap-2"><span class="spinner"></span> 生成中</span>
+        </button>
+      </div>
+
+      <div x-show="topicMode==='own'" class="space-y-2.5">
+        <input class="w-full bg-ink border border-line rounded-lg px-3 py-2 text-[13.5px] text-fg focus:border-brand focus:outline-none" x-model="own.title" placeholder="课题名称">
+        <textarea class="w-full bg-ink border border-line rounded-lg px-3 py-2 text-[13.5px] text-fg focus:border-brand focus:outline-none" rows="4" x-model="own.background" placeholder="立项依据：存在什么技术缺口，现有做法为何不足"></textarea>
+        <textarea class="w-full bg-ink border border-line rounded-lg px-3 py-2 text-[13.5px] text-fg focus:border-brand focus:outline-none" rows="2" x-model="own.challengesText" placeholder="关键难点，一行一条（可选）"></textarea>
+        <button class="px-5 py-2.5 rounded-xl bg-fg text-ink font-medium text-sm hover:bg-white transition disabled:opacity-40"
+                :disabled="!own.title.trim()" @click="useOwn()">使用该课题</button>
+      </div>
     </div>
 
     <div x-show="busy && !topics.length" class="border border-line bg-ink-2 rounded-xl p-8 text-center text-fg-3 text-sm">
@@ -257,8 +297,8 @@ tailwind.config = {
              @click="topic=t">
           <div class="flex items-start gap-2">
             <div class="font-medium text-[14.5px] flex-1" x-text="t.title"></div>
-            <span x-show="t.source==='uploaded'"
-                  class="text-[11px] px-2 py-0.5 rounded-full bg-ok/12 text-ok border border-ok/30 shrink-0">来自上传</span>
+            <span x-show="t.source" class="text-[11px] px-2 py-0.5 rounded-full bg-ok/12 text-ok border border-ok/30 shrink-0"
+                  x-text="t.source==='own'?'自填':'来自上传'"></span>
           </div>
           <div class="text-fg-2 text-[13px] mt-2 leading-relaxed" x-text="t.background"></div>
           <div class="text-fg-3 text-[12.5px] mt-2.5" x-show="t.challenges?.length"
@@ -271,8 +311,6 @@ tailwind.config = {
     <div class="flex flex-wrap gap-2.5">
       <button class="px-5 py-2.5 rounded-xl bg-fg text-ink font-medium text-sm hover:bg-white transition disabled:opacity-40"
               :disabled="!topic" @click="start()">开始生成申请书</button>
-      <button class="px-5 py-2.5 rounded-xl border border-line text-sm text-fg-2 hover:text-fg transition disabled:opacity-40"
-              :disabled="busy" @click="loadTopics()" x-text="topics.length?'换一批':'生成候选'"></button>
       <div class="flex-1"></div>
       <button class="px-4 py-2.5 rounded-xl text-sm text-fg-3 hover:text-fg transition" @click="step=2">上一步</button>
     </div>
@@ -442,28 +480,33 @@ function agent(){
     cfg:{debug:false,stages:[],model:''},
     step:0, busy:false, err:'', dragging:false,
     pending:[], call:null, structure:null, uploadedTopic:null,
+    dirQuery:'', topicMode:'ai', guidance:'',
+    own:{title:'',background:'',challengesText:''},
     direction:null, topics:[], topic:null,
     job:null, result:null, tab:'doc', t0:0, elapsed:'0:00', timer:null,
 
     async boot(){
       try{ this.cfg = await (await fetch('/api/config')).json(); }catch(e){}
     },
-    addFiles(list){
-      this.err='';
-      for(const f of list) this.pending.push({file:f, role:this.guess(f.name)});
+    addFiles(list){ this.err=''; for(const f of list) this.pending.push(f); },
+    filteredDirs(){
+      const q=this.dirQuery.trim().toLowerCase();
+      const all=this.call?.directions||[];
+      return q ? all.filter(d=>((d.name||'')+' '+(d.detail||'')).toLowerCase().includes(q)) : all;
     },
-    guess(n){
-      const s=(n||'').toLowerCase();
-      if(/模板|template|提纲|格式|样表/.test(s)) return 'template';
-      if(/选题|课题|topic|构思/.test(s)) return 'topic';
-      return 'guideline';
+    useOwn(){
+      const t={title:this.own.title.trim(), domain:'general',
+               background:this.own.background.trim(),
+               challenges:this.own.challengesText.split('
+').map(s=>s.trim()).filter(Boolean),
+               fit:'', source:'own'};
+      this.topics=[t, ...this.topics.filter(x=>x.source!=='own')]; this.topic=t;
     },
     async doUpload(){
       this.busy=true; this.err='';
       try{
-        const fd=new FormData(); const roles={};
-        this.pending.forEach(p=>{ fd.append('files', p.file); roles[p.file.name]=p.role; });
-        fd.append('roles', JSON.stringify(roles));
+        const fd=new FormData();
+        this.pending.forEach(f=>fd.append('files', f));
         const r=await fetch('/api/upload',{method:'POST',body:fd});
         const j=await r.json();
         if(!r.ok) throw new Error(j.detail||'上传失败');
@@ -497,16 +540,17 @@ function agent(){
     },
     goTopics(){
       this.step=3;
-      if(this.uploadedTopic){ this.topics=[this.uploadedTopic]; this.topic=this.uploadedTopic; }
-      else if(!this.topics.length) this.loadTopics();
+      if(this.uploadedTopic && !this.topics.length){
+        this.topics=[this.uploadedTopic]; this.topic=this.uploadedTopic;
+      }
     },
     async loadTopics(){
       this.busy=true; this.err='';
       try{
         const r=await fetch('/api/topics',{method:'POST',headers:{'Content-Type':'application/json'},
-              body:JSON.stringify({call:this.call,direction:this.direction,n:3})});
+              body:JSON.stringify({call:this.call,direction:this.direction,n:3,guidance:this.guidance})});
         const j=await r.json(); if(!r.ok) throw new Error(j.detail||'生成失败');
-        const kept=this.uploadedTopic?[this.uploadedTopic]:[];
+        const kept=this.topics.filter(x=>x.source==='uploaded'||x.source==='own');
         this.topics=[...kept,...j.topics]; this.topic=null;
       }catch(e){ this.err=e.message; } finally{ this.busy=false; }
     },
@@ -561,7 +605,9 @@ function agent(){
     reset(){
       clearInterval(this.timer);
       Object.assign(this,{step:0,pending:[],call:null,structure:null,uploadedTopic:null,
-                          direction:null,topics:[],topic:null,job:null,result:null,err:''});
+                          direction:null,topics:[],topic:null,job:null,result:null,err:'',
+                          dirQuery:'',topicMode:'ai',guidance:'',
+                          own:{title:'',background:'',challengesText:''}});
     },
   }
 }
