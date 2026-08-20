@@ -267,6 +267,11 @@ def _normalize_md(text: str, section_names=None) -> str:
     subsub = [0]              # #### counter within the current ### subsection
     out: list[str] = []
     for ln in text.split("\n"):
+        # Two trailing spaces are a Markdown hard line break. The writer ends
+        # enumerated items with them out of habit; pandoc then puts a <w:br/> at
+        # the end of the list item, which Word draws as an extra empty line
+        # inside the bullet. Nothing in a proposal needs a manual line break.
+        ln = ln.rstrip()
         prev = out[-1] if out else ""
 
         # figure caption "*图N：…*" -> plain text (styling done post-conversion)
