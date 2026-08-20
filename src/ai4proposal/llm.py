@@ -25,12 +25,22 @@ def _extract_response_text(response: Any) -> str:
     return "\n".join(piece.strip() for piece in pieces if piece and piece.strip()).strip()
 
 
+def _message_text(message: Any) -> str:
+    """Text out of a chat.completions message, which may be a string or blocks."""
+    if isinstance(message, list):
+        parts = [b.get("text", "") for b in message
+                 if isinstance(b, dict) and b.get("type") == "text"]
+        return "\n".join(p.strip() for p in parts if p and p.strip()).strip()
+    return str(message or "").strip()
+
+
 @dataclass
 class LLMBackend:
     model: str
     api_key: str
     base_url: Optional[str] = None
-    timeout_seconds: float = 90.0
+    timeout_seconds: float = 300.0
+    max_retries: int = 1
 
     @classmethod
     def from_env(cls) -> Optional["LLMBackend"]:
@@ -54,12 +64,13 @@ class LLMBackend:
             or os.getenv("CUSTOM_BASE_URL")
             or ""
         ).strip() or None
-        timeout_seconds = float(os.getenv("AI4PROPOSAL_TIMEOUT_SECONDS", "90"))
+        timeout_seconds = float(os.getenv("AI4PROPOSAL_TIMEOUT_SECONDS", "300"))
         return cls(
             model=model,
             api_key=api_key,
             base_url=base_url,
             timeout_seconds=timeout_seconds,
+            max_retries=int(os.getenv("AI4PROPOSAL_SDK_RETRIES", "1")),
         )
 
     def _make_client(self) -> Any:
@@ -67,43 +78,61 @@ class LLMBackend:
             from openai import OpenAI
         except ImportError as exc:
             raise RuntimeError("openai package is required for AI4Proposal LLM mode.") from exc
+        # max_retries is set explicitly: the SDK's default of 2 means one visible
+        # call can silently become three requests, so a stalled run shows no trace
+        # of where its time went.
         return OpenAI(
             api_key=self.api_key,
             base_url=self.base_url,
             timeout=self.timeout_seconds,
+            max_retries=self.max_retries,
         )
+
+    def _trace(self, endpoint: str, t0: float, text: str, error: str = "") -> None:
+        """One line per HTTP call. Without it a slow run is unattributable: a
+        30-minute gap in the log looked identical to a fast call, because the
+        endpoint fallback swallowed its own failures."""
+        if os.getenv("AI4PROPOSAL_QUIET_LLM", "").strip().lower() in {"1", "true", "yes", "on"}:
+            return
+        took = time.time() - t0
+        tail = f"FAILED {error[:120]}" if error else f"{len(text)}字"
+        print(f"    [llm] {endpoint} {took:.1f}s {tail}", flush=True)
 
     def generate_text(self, system_prompt: str, user_prompt: str) -> str:
-        client = self._make_client()
-        try:
-            response = client.responses.create(
-                model=self.model,
-                input=[
-                    {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": user_prompt},
-                ],
-            )
-            text = _extract_response_text(response)
-            if text:
-                return text
-        except Exception:
-            pass
+        """Prefer chat.completions; fall back to /responses.
 
-        completion = client.chat.completions.create(
-            model=self.model,
-            messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_prompt},
-            ],
-        )
-        message = completion.choices[0].message.content
-        if isinstance(message, list):
-            parts = []
-            for block in message:
-                if isinstance(block, dict) and block.get("type") == "text":
-                    parts.append(block.get("text", ""))
-            return "\n".join(part.strip() for part in parts if part and part.strip()).strip()
-        return str(message).strip()
+        The order used to be the other way round. Both work on the DeepSeek
+        endpoint, so the fallback never ran — and on a 4000-word chapter
+        /responses measured 206s against 92s for chat.completions, so every call
+        in the pipeline paid roughly double for nothing.
+        """
+        client = self._make_client()
+        messages = [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_prompt},
+        ]
+
+        t0 = time.time()
+        try:
+            completion = client.chat.completions.create(model=self.model, messages=messages)
+            text = _message_text(completion.choices[0].message.content)
+            if text:
+                self._trace("chat", t0, text)
+                return text
+            why = "empty reply"
+        except Exception as exc:
+            why = f"{type(exc).__name__}: {exc}"
+        self._trace("chat", t0, "", why)
+
+        t1 = time.time()
+        try:
+            response = client.responses.create(model=self.model, input=messages)
+            text = _extract_response_text(response)
+        except Exception as exc:
+            self._trace("responses", t1, "", f"{type(exc).__name__}: {exc}")
+            raise
+        self._trace("responses", t1, text)
+        return text
 
 
 def cheap_backend(main: LLMBackend) -> LLMBackend:
@@ -115,6 +144,7 @@ def cheap_backend(main: LLMBackend) -> LLMBackend:
         api_key=main.api_key,
         base_url=main.base_url,
         timeout_seconds=main.timeout_seconds,
+        max_retries=main.max_retries,
     )
 
 

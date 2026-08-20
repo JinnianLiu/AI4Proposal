@@ -8,7 +8,7 @@ def get_llm_config() -> dict:
         "api_key": os.environ.get("AI4PROPOSAL_API_KEY", ""),
         "base_url": os.environ.get("AI4PROPOSAL_BASE_URL", "https://api.openai.com/v1"),
         "model": os.environ.get("AI4PROPOSAL_MODEL", "gpt-4.1"),
-        "timeout": int(os.environ.get("AI4PROPOSAL_TIMEOUT_SECONDS", "180")),
+        "timeout": int(os.environ.get("AI4PROPOSAL_TIMEOUT_SECONDS", "300")),
     }
 
 

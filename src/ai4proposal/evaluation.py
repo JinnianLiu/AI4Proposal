@@ -30,7 +30,30 @@ from typing import Any, Dict, List, Optional
 
 from .evidence import NEUTRAL_EVIDENCE
 
-MAX_PROPOSAL_CHARS = 24000
+# Raised from 24000, which 7 of 23 archived outputs exceeded — the worst by 33%,
+# so its whole last chapter went unread and the judges then faulted it for being
+# unfinished. 26k Chinese characters is nowhere near the context limit.
+MAX_PROPOSAL_CHARS = 40000
+
+# Appended when the text above is cut. Deliberately self-identifying: the earlier
+# marker read "[... 截断 ...]", which matches the writing judge's own definition of
+# a leftover placeholder, so every over-long proposal reported one and got its
+# verdict capped at revise_resubmit by the placeholder gate.
+TRUNCATION_SENTINEL = "评审系统插入"
+TRUNCATION_NOTE = (
+    f"\n\n〔以上为正文节选。文档超长，由{TRUNCATION_SENTINEL}的长度提示，"
+    "本身不是申请书内容，也不是占位符。〕"
+)
+
+
+def _truncate_for_judges(text: str) -> str:
+    """Cut over-long text at the last blank line that fits, so a judge never
+    reads half a sentence or half a table."""
+    if len(text) <= MAX_PROPOSAL_CHARS:
+        return text
+    head = text[:MAX_PROPOSAL_CHARS]
+    cut = head.rfind("\n\n")
+    return (head[:cut] if cut > MAX_PROPOSAL_CHARS * 0.9 else head) + TRUNCATION_NOTE
 
 # ── Aggregation weights (code-computed overall). Tunable; must sum to 1.00 ──
 # Rationale: what a panel actually decides on — the science and its novelty —
@@ -301,6 +324,8 @@ WRITING_USER = _judge_prompt(
 - 对照"期望章节"逐节核对，输出 section_checklist：
   每节给 {"section": "...", "present": true/false, "note": "缺失或不完整之处，完整则填空字符串"}。
 - 列出占位符/模板残留 placeholders（如"待补充""TBD""xxx""【】"及未填充的模板句），无则空数组。
+  **例外**：正文末尾若出现〔…评审系统插入的长度提示…〕一类说明，那是本系统对超长文档的截取提示，
+  不是申请书内容，**不得列入 placeholders，也不得据此判定正文不完整或章节缺失**。
 - 列出违反"指南硬性约束"之处 constraint_violations，无则空数组。""",
     _dim_schema("writing", ["clarity", "compliance"],
                 '\n  "section_checklist": [{"section": "...", "present": true, "note": "..."}],'
@@ -477,7 +502,10 @@ class RubricPanel:
                  evidence: Optional[Any] = None) -> EvaluationResult:
         """`proposal_text` is the proposal Markdown; `task` is the full task dict."""
         if len(proposal_text) > MAX_PROPOSAL_CHARS:
-            proposal_text = proposal_text[:MAX_PROPOSAL_CHARS] + "\n\n[... 截断 ...]"
+            print(f"    [warn] 正文 {len(proposal_text)} 字符，超出评审上限 "
+                  f"{MAX_PROPOSAL_CHARS}，末尾 {len(proposal_text) - MAX_PROPOSAL_CHARS} "
+                  f"字符不参与评审")
+            proposal_text = _truncate_for_judges(proposal_text)
 
         ctx = {
             "title": task.get("title", ""),
@@ -526,7 +554,10 @@ class RubricPanel:
         fea, wri = reviews.get("feasibility", {}), reviews.get("writing", {})
         coverage = val.get("requirement_coverage") or []
         checklist = wri.get("section_checklist") or []
-        placeholders = wri.get("placeholders") or []
+        # Backstop for the prompt-level exemption above: a judge that reports the
+        # truncation note anyway must not trip the placeholder gate.
+        placeholders = [p for p in (wri.get("placeholders") or [])
+                        if TRUNCATION_SENTINEL not in str(p) and "截断" not in str(p)]
 
         verdict = decide_verdict(
             overall,

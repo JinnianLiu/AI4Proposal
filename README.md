@@ -48,7 +48,9 @@ export AI4PROPOSAL_IMAGE_API_KEY=sk-...        # 出图（可选）
 | `AI4PROPOSAL_API_KEY` | ✅ | — | 文本 LLM 密钥 |
 | `AI4PROPOSAL_BASE_URL` | | `https://api.deepseek.com` | OpenAI 兼容端点 |
 | `AI4PROPOSAL_MODEL` | | `deepseek-chat` | 正式跑建议 `deepseek-v4-pro` |
-| `AI4PROPOSAL_TIMEOUT_SECONDS` | | `180` | 单次调用超时 |
+| `AI4PROPOSAL_TIMEOUT_SECONDS` | | `300` | 单次调用超时；长章节实测可达 200s |
+| `AI4PROPOSAL_SDK_RETRIES` | | `1` | openai SDK 内部重试次数。SDK 默认 2，会让一次可见调用静默变成三次请求 |
+| `AI4PROPOSAL_QUIET_LLM` | | — | 置 `1` 关闭每次调用的 `[llm] <端点> <耗时> <字数>` 日志 |
 | `AI4PROPOSAL_IMAGE_API_KEY` | | — | 留空则跳过出图，退化为文字占位符 |
 | `AI4PROPOSAL_IMAGE_BASE_URL` | | `https://api.chatanywhere.tech/v1` | |
 | `AI4PROPOSAL_IMAGE_MODEL` | | `gpt-image-2` | |
@@ -82,7 +84,7 @@ python scripts/md_to_docx.py outputs/task_001/proposal_final.md
 |---|---|
 | **Step 0 蓝图** | 从 task 提炼统一主线 thesis、可交付成果体系、关键方法、创新角度，写入 `blueprint.json`。后续每章回扣它，避免模块平铺 |
 | **逐章撰写** | 按 `task.structure.core_sections` 逐节生成，**一次成稿**（不在流水线内做 review-revise）。每章带上前文摘要，防重复 |
-| **出图** | 正文中的 `[figure: 图注 \|\| 详细描述]` 标记 → 调图像模型 → 回填 Markdown |
+| **出图** | 正文中的 `[figure: 图注 \|\| 图位描述]` 标记 → **两阶段**：LLM 规划图件（构图类型 / 论点 / 中文图题 / 英文生图提示词）→ 图像模型渲染 → 回填 Markdown。图内只出极短英文标签，中文只出现在图题与图注 |
 | **评分** | 可选，`--judge rubric` 直接串联评审框架 |
 
 ### 提示词设计
@@ -104,14 +106,14 @@ python scripts/md_to_docx.py outputs/task_001/proposal_final.md
 ```bash
 --task <path|id>          # cases/tasks/ 下可只给 id
 --sections N              # 只跑前 N 章，调试用
---figures {go,dry,off}    # dry = 只出 prompt 不生图，人工确认后再补
---figures-from <dir>      # 用已确认的 prompt 补生图，不重跑文本
+--figures {go,dry,off}    # dry = 只规划不生图，人工确认后再补
+--figures-from <dir>      # 用已确认的图件规划补生图，不重跑文本与规划
 --max-figures N           # 默认 5
 --judge rubric            # 生成后直接评审
 --judge-evidence          # 评审时开外部检索
 ```
 
-`--figures dry` → 人工看 prompt → `--figures-from` 是推荐的出图工作流，避免图不满意就得重跑全文。
+`--figures dry` → 人工看图件规划 → `--figures-from` 是推荐的出图工作流，避免图不满意就得重跑全文。
 
 ---
 
@@ -217,7 +219,7 @@ src/ai4proposal/        核心库
 ├── writer_prompts.py   域中立提示词集（蓝图 / 结构规划 / 通则 / writer / 格式修饰符）
 ├── evaluation.py       7 维细则 · 4 评委 + 主席 · 代码算总分与硬闸
 ├── evidence.py         论断抽取 + OpenAlex/arXiv 检索 + LLM 重排 → 证据卡
-├── image_gen.py        [figure:] 标记 → PNG（Renderer 模板 + 色板 + 语言跟随）
+├── image_gen.py        [figure:] 标记 → 图件规划（JSON）→ PNG（两阶段）
 └── config.py           （保留待兼容，当前无调用方）
 
 scripts/                生产 CLI
@@ -249,7 +251,8 @@ outputs/<task_id>/
 ├── blueprint.json         Step-0 蓝图
 ├── <section>.md           各章单独文件
 ├── figures/fig_*.png      配图
-├── figure_prompts.json    生图 prompt（供 --figures-from 复用）
+├── figure_plans.json      图件规划（供 --figures-from 复用）
+├── figures/fig_*.plan.json 每张图的规划留底
 ├── figure_manifest.json
 ├── task.json              输入快照
 ├── result.json            运行元数据

@@ -40,7 +40,7 @@ except Exception:
     pass
 
 from ai4proposal.llm import LLMBackend, generate_with_retry, parse_json
-from ai4proposal.image_gen import generate_image, image_config_from_env, build_image_prompt
+from ai4proposal.image_gen import plan_figure, render_figure, image_config_from_env, write_plan_record
 from ai4proposal import writer_prompts as WP
 
 # Fallback structure for tasks that don't declare one (keeps pipeline general).
@@ -77,6 +77,23 @@ def _fmt_deliverables(dels: List[dict]) -> str:
     return "\n".join(lines)
 
 
+def _fmt_facts(facts) -> str:
+    """The blueprint's shared numeric ledger, as it appears in every chapter's
+    rules block. Sections are written in independent calls and cannot see each
+    other's prose, so anything quantitative that recurs has to be pinned here."""
+    if not facts:
+        return "（无统一台账）"
+    lines = []
+    for f in facts:
+        if isinstance(f, dict):
+            name, value = str(f.get("name", "")).strip(), str(f.get("value", "")).strip()
+            if name and value:
+                lines.append(f"   - {name}：{value}")
+        elif str(f).strip():
+            lines.append(f"   - {str(f).strip()}")
+    return "\n".join(lines) if lines else "（无统一台账）"
+
+
 def run_step0(llm, base_vars: Dict[str, Any], verbose=True) -> dict:
     """Generate the writing blueprint. Degrades to a minimal blueprint on failure."""
     raw = generate_with_retry(
@@ -93,13 +110,19 @@ def run_step0(llm, base_vars: Dict[str, Any], verbose=True) -> dict:
             "deliverables": [{"name": r[:24], "requirement": r, "metrics_direction": ""} for r in reqs],
             "key_methods": [],
             "novelty_angles": [],
+            "facts": [],
         }
         if verbose:
             print("    [step0] blueprint fallback (parse failed)")
+    data.setdefault("facts", [])
     if verbose:
         print(f"    [step0] thesis: {data.get('thesis','')[:50]}")
         print(f"    [step0] {len(data.get('deliverables',[]))} deliverables, "
-              f"{len(data.get('key_methods',[]))} methods, {len(data.get('novelty_angles',[]))} novelty")
+              f"{len(data.get('key_methods',[]))} methods, {len(data.get('novelty_angles',[]))} novelty, "
+              f"{len(data.get('facts',[]))} facts")
+        for f in data.get("facts", []):
+            if isinstance(f, dict):
+                print(f"      · {f.get('name','')}：{f.get('value','')}")
     return data
 
 
@@ -154,6 +177,7 @@ def write_one_section(llm, sec, base_vars, blueprint, prev_summary):
         "deliverables": _fmt_deliverables(blueprint.get("deliverables", [])),
         "key_methods": _lst(blueprint.get("key_methods", [])),
         "novelty_angles": _lst(blueprint.get("novelty_angles", [])),
+        "facts": _fmt_facts(blueprint.get("facts", [])),
     })
 
     # build writer system: 通则 + writer role + triggered modifiers, one substitution pass
@@ -202,67 +226,104 @@ def _split_marker(inner):
     return (cap or desc[:24]), desc
 
 
-def extract_figure_prompts(proposal_text, language="zh"):
-    """Each [figure:] marker -> short caption (for the proposal) + detailed prompt
-    (for the image model) + the exact marker text to replace."""
+def extract_figure_slots(proposal_text):
+    """Each [figure:] marker -> one figure slot: the caption the writer wrote, the
+    slot description handed to the planner, and the exact marker to replace."""
     out = []
     for i, m in enumerate(re.finditer(r"\[figure:\s*([^\]]+)\]", proposal_text)):
         cap, desc = _split_marker(m.group(1))
         out.append({"id": f"fig_{i+1:02d}", "caption": cap, "description": desc,
-                    "full_prompt": build_image_prompt(desc, language=language), "marker": m.group(0)})
+                    "marker": m.group(0)})
     return out
 
 
-def process_figures(proposal_text, out_dir, img_cfg, max_figures, mode="go", language="zh"):
-    """mode: 'go' generate+patch | 'dry' keep markers, no gen | 'off' text placeholder."""
-    prompts = extract_figure_prompts(proposal_text, language=language)
-    manifest, made = [], 0
-    for i, p in enumerate(prompts):
-        fig_id, desc, cap, marker = p["id"], p["description"], p["caption"], p["marker"]
-        if mode == "dry":
-            manifest.append({"id": fig_id, "caption": cap, "description": desc, "image": None})
-            continue  # leave marker untouched for a later --figures-from pass
-        if mode == "go" and made < max_figures and img_cfg.get("api_key"):
-            print(f"    [img] {fig_id}: {cap[:40]}...")
-            path = generate_image(desc, out_dir / "figures" / f"{fig_id}.png",
-                                  api_key=img_cfg["api_key"], base_url=img_cfg["base_url"],
-                                  model=img_cfg["model"], size=img_cfg.get("size") or "1536x1024",
-                                  language=language)
+def figure_context(proposal_text, task):
+    """Context for the planner: the task's own framing plus the opening of the
+    draft. Without it the planner invents research objects to fill the canvas."""
+    head = "\n".join([
+        task.get("title", ""),
+        task.get("background", ""),
+        _lst(task.get("requirements", [])),
+    ]).strip()
+    return f"{head}\n\n{proposal_text[:5000]}"
+
+
+def plan_slots(llm, slots, title, context, max_figures):
+    """Stage 1 for every slot, in order. Slots past --max-figures are not planned
+    at all — planning costs an LLM call each."""
+    for i, slot in enumerate(slots):
+        if i >= max_figures:
+            slot["plan"] = {"action": "skip", "reason": f"超出 --max-figures={max_figures}"}
+            continue
+        print(f"    [plan] {slot['id']}: {slot['caption'][:40]}...")
+        plan = plan_figure(llm, slot["id"], title, slot["description"], context=context)
+        if plan.get("action") != "draw":
+            print(f"    [plan] {slot['id']} SKIP: {plan.get('reason','')[:80]}")
+        else:
+            print(f"    [plan] {slot['id']} -> {plan['composition']} | {plan['title']}")
+        slot["plan"] = plan
+    return slots
+
+
+def _patch(text, slots, out_dir, img_cfg, draw=True):
+    """Replace each marker with an image reference (rendering it first when
+    `draw`) or with a text placeholder. Returns (text, manifest)."""
+    manifest = []
+    for i, slot in enumerate(slots):
+        plan = slot.get("plan") or {}
+        # The planner's 中文图题 beats the writer's caption: it was written after
+        # the figure's content was decided.
+        cap = plan.get("title") or slot["caption"]
+        path = None
+        if draw and plan.get("action") == "draw" and img_cfg.get("api_key"):
+            print(f"    [img] {slot['id']}: {cap[:40]}...")
+            path = render_figure(plan["image_prompt_en"], out_dir / "figures" / f"{slot['id']}.png",
+                                 cfg=img_cfg)
             if path:
-                made += 1
-                proposal_text = proposal_text.replace(marker, _img_md(fig_id, i, cap), 1)
-                manifest.append({"id": fig_id, "caption": cap, "description": desc, "image": f"figures/{fig_id}.png"})
-                continue
-            print(f"    [img] {fig_id} FAILED -> text placeholder")
-        proposal_text = proposal_text.replace(marker, f"\n\n**[图{i+1}：{cap}]**\n\n", 1)
-        manifest.append({"id": fig_id, "caption": cap, "description": desc, "image": None})
-    return proposal_text, manifest, prompts
+                write_plan_record(path, plan)
+            else:
+                print(f"    [img] {slot['id']} FAILED -> 文字占位")
+        if path:
+            text = text.replace(slot["marker"], _img_md(slot["id"], i, cap), 1)
+        else:
+            text = text.replace(slot["marker"], f"\n\n**[图{i+1}：{cap}]**\n\n", 1)
+        manifest.append({
+            "id": slot["id"], "caption": cap, "note": plan.get("caption", ""),
+            "composition": plan.get("composition", ""),
+            "description": slot["description"],
+            "skip_reason": plan.get("reason", ""),
+            "image": f"figures/{slot['id']}.png" if path else None,
+        })
+    return text, manifest
+
+
+def process_figures(proposal_text, out_dir, img_cfg, max_figures, mode, llm, task):
+    """mode: 'go' plan+draw+patch | 'dry' plan only, keep markers | 'off' text placeholder."""
+    slots = extract_figure_slots(proposal_text)
+    if mode == "off" or not slots:
+        return _patch(proposal_text, slots, out_dir, img_cfg, draw=False) + (slots,)
+
+    slots = plan_slots(llm, slots, task.get("title", ""),
+                       figure_context(proposal_text, task), max_figures)
+    if mode == "dry":
+        # Keep the markers in place so --figures-from can patch them later.
+        manifest = [{"id": s["id"], "caption": (s.get("plan") or {}).get("title") or s["caption"],
+                     "description": s["description"], "image": None} for s in slots]
+        return proposal_text, manifest, slots
+
+    text, manifest = _patch(proposal_text, slots, out_dir, img_cfg, draw=True)
+    return text, manifest, slots
 
 
 def generate_from_dir(out_dir: Path, img_cfg, max_figures):
-    """Generate images for a prior --figures dry run, using its saved prompts, and
-    patch proposal_final.md in place. Does NOT regenerate any text."""
-    prompts = json.loads((out_dir / "figure_prompts.json").read_text(encoding="utf-8"))
+    """Render images for a prior --figures dry run from its saved plans, and patch
+    proposal_final.md in place. Does NOT regenerate any text or re-plan."""
+    slots = json.loads((out_dir / "figure_plans.json").read_text(encoding="utf-8"))
     md = (out_dir / "proposal_final.md").read_text(encoding="utf-8")
-    manifest, made = [], 0
-    for i, p in enumerate(prompts):
-        fig_id, full = p["id"], p["full_prompt"]
-        cap = p.get("caption") or p.get("description", "")[:24]
-        marker = p.get("marker") or f"[figure: {p.get('description', '')}]"
-        if made < max_figures and img_cfg.get("api_key"):
-            print(f"    [img] {fig_id}: {cap[:40]}...")
-            # use the exact saved prompt (style already baked in) -> style_prefix=False
-            path = generate_image(full, out_dir / "figures" / f"{fig_id}.png", style_prefix=False,
-                                  api_key=img_cfg["api_key"], base_url=img_cfg["base_url"],
-                                  model=img_cfg["model"], size=img_cfg.get("size") or "1536x1024")
-            if path:
-                made += 1
-                md = md.replace(marker, _img_md(fig_id, i, cap), 1)
-                manifest.append({"id": fig_id, "caption": cap, "image": f"figures/{fig_id}.png"})
-                continue
-            print(f"    [img] {fig_id} FAILED -> text placeholder")
-        md = md.replace(marker, f"\n\n**[图{i+1}：{cap}]**\n\n", 1)
-        manifest.append({"id": fig_id, "caption": cap, "image": None})
+    md, manifest = _patch(md, slots[:max_figures] + [
+        dict(s, plan={"action": "skip", "reason": f"超出 --max-figures={max_figures}"})
+        for s in slots[max_figures:]
+    ], out_dir, img_cfg, draw=True)
     (out_dir / "proposal_final.md").write_text(md, encoding="utf-8")
     json.dump(manifest, (out_dir / "figure_manifest.json").open("w", encoding="utf-8"), indent=2, ensure_ascii=False)
     imgs = sum(1 for m in manifest if m["image"])
@@ -302,7 +363,8 @@ def main():
         model=os.environ.get("AI4PROPOSAL_MODEL", "deepseek-chat"),
         api_key=os.environ.get("AI4PROPOSAL_API_KEY", ""),
         base_url=os.environ.get("AI4PROPOSAL_BASE_URL", "https://api.deepseek.com"),
-        timeout_seconds=float(os.environ.get("AI4PROPOSAL_TIMEOUT_SECONDS", "180")),
+        timeout_seconds=float(os.environ.get("AI4PROPOSAL_TIMEOUT_SECONDS", "300")),
+        max_retries=int(os.environ.get("AI4PROPOSAL_SDK_RETRIES", "1")),
     )
     if not llm.api_key:
         sys.exit("ERROR: AI4PROPOSAL_API_KEY not set")
@@ -360,19 +422,22 @@ def main():
     fig_mode = "off" if args.no_images else args.figures
     print(f"  [3/4] 出图 (mode={fig_mode}) ...")
     img_cfg = {"api_key": "", "base_url": "", "model": "", "size": ""} if fig_mode == "off" else image_config_from_env()
-    language = task.get("language", "zh")
-    proposal_text, manifest, fig_prompts = process_figures(
-        proposal_text, out_dir, img_cfg, args.max_figures, mode=fig_mode, language=language
+    proposal_text, manifest, fig_slots = process_figures(
+        proposal_text, out_dir, img_cfg, args.max_figures, fig_mode, llm, task
     )
 
     (out_dir / "proposal_final.md").write_text(proposal_text, encoding="utf-8")
     json.dump(manifest, (out_dir / "figure_manifest.json").open("w", encoding="utf-8"), indent=2, ensure_ascii=False)
-    json.dump(fig_prompts, (out_dir / "figure_prompts.json").open("w", encoding="utf-8"), indent=2, ensure_ascii=False)
+    json.dump(fig_slots, (out_dir / "figure_plans.json").open("w", encoding="utf-8"), indent=2, ensure_ascii=False)
 
     if fig_mode == "dry":
-        print(f"\n  [dry] 共 {len(fig_prompts)} 张图，最终 prompt 如下（未生图，markers 保留）：")
-        for p in fig_prompts:
-            print(f"\n  ── {p['id']} ──\n  图注: {p['caption']}\n  生图描述: {p['description']}\n  最终prompt: {p['full_prompt']}")
+        print(f"\n  [dry] 共 {len(fig_slots)} 个图位（已规划，未生图，markers 保留）：")
+        for s in fig_slots:
+            p = s.get("plan") or {}
+            if p.get("action") != "draw":
+                print(f"\n  ── {s['id']} ── SKIP: {p.get('reason','')}")
+                continue
+            print(f"\n  ── {s['id']} ── {p['composition']}\n  图题: {p['title']}\n  论点: {p['main_message']}\n  prompt: {p['image_prompt_en']}")
         print(f"\n  确认后执行：python scripts/run_pipeline.py --figures-from {out_dir}")
     json.dump(blueprint, (out_dir / "blueprint.json").open("w", encoding="utf-8"), indent=2, ensure_ascii=False)
     json.dump(task, (out_dir / "task.json").open("w", encoding="utf-8"), indent=2, ensure_ascii=False)

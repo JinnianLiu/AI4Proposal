@@ -50,7 +50,7 @@ def main() -> int:
         model=os.environ.get("AI4PROPOSAL_MODEL", "deepseek-chat"),
         api_key=os.environ.get("AI4PROPOSAL_API_KEY", ""),
         base_url=os.environ.get("AI4PROPOSAL_BASE_URL", "https://api.deepseek.com"),
-        timeout_seconds=float(os.environ.get("AI4PROPOSAL_TIMEOUT_SECONDS", "180")),
+        timeout_seconds=float(os.environ.get("AI4PROPOSAL_TIMEOUT_SECONDS", "300")),
     )
     if not llm.api_key:
         sys.exit("ERROR: AI4PROPOSAL_API_KEY not set")
