@@ -157,6 +157,7 @@ def main() -> int:
         base_url=os.environ.get("AI4PROPOSAL_BASE_URL", "https://api.deepseek.com"),
         timeout_seconds=float(os.environ.get("AI4PROPOSAL_TIMEOUT_SECONDS", "300")),
         max_retries=int(os.environ.get("AI4PROPOSAL_SDK_RETRIES", "1")),
+        deadline_seconds=float(os.environ.get("AI4PROPOSAL_CALL_DEADLINE_SECONDS", "600")),
     )
     if not llm.api_key:
         sys.exit("ERROR: AI4PROPOSAL_API_KEY not set")

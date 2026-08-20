@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import os
+import threading
 import time
 from dataclasses import dataclass
 from typing import Any, Dict, Optional
@@ -25,6 +26,37 @@ def _extract_response_text(response: Any) -> str:
     return "\n".join(piece.strip() for piece in pieces if piece and piece.strip()).strip()
 
 
+class CallDeadlineExceeded(TimeoutError):
+    """A single HTTP call outran its wall-clock budget."""
+
+
+def _with_deadline(fn, seconds: float, label: str):
+    """Run `fn` under a wall-clock deadline.
+
+    The SDK's `timeout` is httpx's, which is an *idle* timeout — it resets on
+    every byte received. A backend that dribbles a response therefore never
+    trips it: one observed chat.completions call ran 2041s and returned
+    normally under a 300s setting. Nothing can cancel the in-flight request, so
+    the worker is a daemon and is simply abandoned; the caller retries.
+    """
+    box: Dict[str, Any] = {}
+
+    def run() -> None:
+        try:
+            box["ok"] = fn()
+        except BaseException as exc:            # noqa: BLE001 - re-raised below
+            box["err"] = exc
+
+    worker = threading.Thread(target=run, name=f"llm-{label}", daemon=True)
+    worker.start()
+    worker.join(seconds)
+    if worker.is_alive():
+        raise CallDeadlineExceeded(f"{label} exceeded {seconds:.0f}s wall clock")
+    if "err" in box:
+        raise box["err"]
+    return box.get("ok")
+
+
 def _message_text(message: Any) -> str:
     """Text out of a chat.completions message, which may be a string or blocks."""
     if isinstance(message, list):
@@ -41,6 +73,8 @@ class LLMBackend:
     base_url: Optional[str] = None
     timeout_seconds: float = 300.0
     max_retries: int = 1
+    # Wall-clock ceiling per HTTP call, enforced above the SDK's idle timeout.
+    deadline_seconds: float = 600.0
 
     @classmethod
     def from_env(cls) -> Optional["LLMBackend"]:
@@ -71,6 +105,7 @@ class LLMBackend:
             base_url=base_url,
             timeout_seconds=timeout_seconds,
             max_retries=int(os.getenv("AI4PROPOSAL_SDK_RETRIES", "1")),
+            deadline_seconds=float(os.getenv("AI4PROPOSAL_CALL_DEADLINE_SECONDS", "600")),
         )
 
     def _make_client(self) -> Any:
@@ -112,9 +147,13 @@ class LLMBackend:
             {"role": "user", "content": user_prompt},
         ]
 
+        deadline = self.deadline_seconds
+
         t0 = time.time()
         try:
-            completion = client.chat.completions.create(model=self.model, messages=messages)
+            completion = _with_deadline(
+                lambda: client.chat.completions.create(model=self.model, messages=messages),
+                deadline, "chat")
             text = _message_text(completion.choices[0].message.content)
             if text:
                 self._trace("chat", t0, text)
@@ -126,7 +165,9 @@ class LLMBackend:
 
         t1 = time.time()
         try:
-            response = client.responses.create(model=self.model, input=messages)
+            response = _with_deadline(
+                lambda: client.responses.create(model=self.model, input=messages),
+                deadline, "responses")
             text = _extract_response_text(response)
         except Exception as exc:
             self._trace("responses", t1, "", f"{type(exc).__name__}: {exc}")
@@ -145,20 +186,34 @@ def cheap_backend(main: LLMBackend) -> LLMBackend:
         base_url=main.base_url,
         timeout_seconds=main.timeout_seconds,
         max_retries=main.max_retries,
+        deadline_seconds=main.deadline_seconds,
     )
 
 
 def generate_with_retry(llm: Optional[LLMBackend], system: str, prompt: str,
                         fallback: str = "", attempts: int = 4) -> str:
-    """Call the backend with linear backoff; return `fallback` if every try fails."""
+    """Call the backend with linear backoff; return `fallback` if every try fails.
+
+    Retrying a call that died on its wall-clock deadline could cost more than
+    the stall it was meant to cut (4 x 600s beats the 2041s stall we saw), so
+    the whole sequence is bounded by twice one deadline. Fast failures — a 429,
+    a bad key — barely consume that budget and still get all their attempts.
+    """
     if llm is None:
         return fallback
-    for attempt in range(attempts):
+    budget = llm.deadline_seconds * 2
+    spent = 0.0                     # time inside calls only; backoff sleeps are
+    for attempt in range(attempts):  # deliberately excluded from the budget
+        t0 = time.time()
         try:
             return llm.generate_text(system_prompt=system, user_prompt=prompt)
         except Exception as e:
+            spent += time.time() - t0
             print(f"    [retry {attempt + 1}: {str(e)[:100]}]")
-            if attempt < attempts - 1:
+            if spent > budget:
+                print(f"    [retry] 放弃：调用累计 {spent:.0f}s 超出 {budget:.0f}s 预算")
+                break
+            if attempt < attempts - 1 and not isinstance(e, CallDeadlineExceeded):
                 time.sleep((attempt + 1) * 10)
     return fallback
 

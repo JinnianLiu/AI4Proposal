@@ -28,7 +28,10 @@ import zipfile
 from io import BytesIO
 from typing import Any, Dict, List, Optional
 
-MAX_GUIDELINE_CHARS = 20000
+# Raised from 20000, which showed only 27% of a Wellcome application form to
+# parse_template: two sections that belong in the proposal (Research involving
+# animals, Risks of research misuse) sat past the cut and were never seen.
+MAX_GUIDELINE_CHARS = 60000
 
 
 # ═══════════════════════════════ text extraction ═══════════════════════════════
@@ -283,27 +286,55 @@ def parse_topic_doc(llm: Any, topic_text: str) -> Dict[str, Any]:
     }
 
 
+# English filename markers are matched as whole tokens, not substrings: "form"
+# is inside "reform" and "information", "call" is inside "recall".
+_NON_WORD = re.compile(r"[^a-z0-9一-鿿]+")
+
+_EN_TEMPLATE_WORDS = {"template", "form", "sample", "proforma", "blank", "worksheet"}
+_EN_TOPIC_LIST_WORDS = {"topics", "topiclist"}
+_EN_GUIDELINE_WORDS = {"call", "guidance", "guidelines", "guide", "scheme",
+                       "funding", "award", "awards", "grant", "opportunity"}
+_EN_TOPIC_WORDS = {"topic", "idea", "concept", "abstract"}
+
+
 def guess_role(filename: str) -> str:
-    """Filename-only guess, used as the fallback when classification fails."""
-    n = (filename or "").lower()
-    if any(w in n for w in ("模板", "template", "提纲", "格式", "样表", "表格")):
+    """Filename-only guess, used as the fallback when classification fails.
+
+    Chinese markers are matched as substrings (no word boundaries to rely on);
+    English ones as whole tokens. A Wellcome application form arrives as
+    `sample-full-app-form-wellcome-discovery-award.pdf`, which matched none of
+    the original template words and fell through to the `guideline` default.
+    """
+    raw = (filename or "").lower()
+    toks = set(_NON_WORD.sub(" ", raw).split())
+
+    def hit(cn, en):
+        return any(w in raw for w in cn) or bool(toks & en)
+
+    if hit(("模板", "提纲", "格式", "样表", "样张", "表格", "申请表", "投标书"),
+           _EN_TEMPLATE_WORDS):
         return "template"
-    if any(w in n for w in ("选题", "课题目录", "topic list")):
+    if hit(("选题", "课题目录", "topic list"), _EN_TOPIC_LIST_WORDS):
         return "topic_list"
     # Checked before "课题": a file called 课题申报指南 is a call, not a topic.
-    if any(w in n for w in ("指南", "通知", "公告", "申报要求", "call", "招标")):
+    if hit(("指南", "通知", "公告", "申报要求", "招标"), _EN_GUIDELINE_WORDS):
         return "guideline"
-    if any(w in n for w in ("课题", "topic", "idea", "构思", "方案书")):
+    if hit(("课题", "构思", "方案书"), _EN_TOPIC_WORDS):
         return "topic"
     return "guideline"
 
 
 # Wording that only a call document uses. A single topic description states what
 # will be studied; it does not set a budget, a duration or deliverable counts.
+# The English half exists because the Chinese markers scored 0 on both Wellcome
+# PDFs, leaving the classifier with no deterministic backstop at all.
 _CALL_MARKERS = (
     "经费", "资助", "万元", "预算", "申报", "申请人", "申报单位", "资格",
     "课题周期", "研究周期", "执行期", "不少于", "不超过", "遴选", "指南",
     "方向之一", "评审", "立项", "结题",
+    "funding", "award", "grant", "eligib", "applicant", "deadline",
+    "budget", "£", "apply", "scheme", "peer review", "must not exceed",
+    "who can apply", "how to apply",
 )
 
 
@@ -311,7 +342,7 @@ def _call_score(text: str) -> int:
     """How call-like a document reads. Used only to break a tie the classifier
     got wrong — a short call that describes one funding direction is easily
     mistaken for a topic description."""
-    head = text[:4000]
+    head = text[:4000].lower()
     return sum(1 for w in _CALL_MARKERS if w in head)
 
 
