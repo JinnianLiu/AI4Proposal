@@ -4,32 +4,38 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AI4Proposal · 科研项目申请书智能体</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-tailwind.config = {
-  darkMode: 'class',
-  theme: { extend: {
-    colors: {
-      ink:  { DEFAULT:'#0a0a0a', 2:'#111111', 3:'#171717' },
-      line: { DEFAULT:'#262626', 2:'#333333' },
-      fg:   { DEFAULT:'#fafafa', 2:'#a3a3a3', 3:'#737373' },
-      brand:{ DEFAULT:'#5b8cff', soft:'#1a2540' },
-      ok:'#22c55e', warn:'#eab308', bad:'#ef4444',
-    },
-    fontFamily: { sans:['Inter','PingFang SC','Microsoft YaHei','Noto Sans CJK SC','system-ui','sans-serif'] },
-    maxWidth: { content:'1080px' },
-  }}
-}
-</script>
-<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
+<!-- 本地依赖：cdn.tailwindcss.com 在部分网络下不可达，一旦加载失败整页无样式 -->
+<script src="/vendor/tailwind.js"></script>
+<style type="text/tailwindcss">
+  @theme {
+    --color-ink:    #0a0a0a;
+    --color-ink-2:  #111111;
+    --color-ink-3:  #171717;
+    --color-line:   #262626;
+    --color-line-2: #333333;
+    --color-fg:     #fafafa;
+    --color-fg-2:   #a3a3a3;
+    --color-fg-3:   #737373;
+    --color-brand:  #5b8cff;
+    --color-ok:     #22c55e;
+    --color-warn:   #eab308;
+    --color-bad:    #ef4444;
+    --container-content: 1080px;
+    --font-sans: Inter, "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", system-ui, sans-serif;
+  }
+</style>
+<script defer src="/vendor/alpine.js"></script>
 <style>
   html,body{background:#0a0a0a}
-  /* 线框纹理：极淡的网格，只在顶部铺开 */
-  .wireframe{
-    background-image:linear-gradient(rgba(255,255,255,.028) 1px,transparent 1px),
-                     linear-gradient(90deg,rgba(255,255,255,.028) 1px,transparent 1px);
+  /* 线框纹理走伪元素：遮罩若加在容器上会连同文字一起淡出 */
+  .wireframe{position:relative;isolation:isolate}
+  .wireframe::before{
+    content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+    background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
+                     linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
     background-size:46px 46px;
-    mask-image:radial-gradient(120% 70% at 50% 0%,#000 30%,transparent 78%);
+    -webkit-mask-image:radial-gradient(120% 80% at 50% 0%,#000 20%,transparent 85%);
+    mask-image:radial-gradient(120% 80% at 50% 0%,#000 20%,transparent 85%);
   }
   .prose-doc{color:#d4d4d4;font-size:15px;line-height:1.9}
   .prose-doc h1{font-size:24px;font-weight:600;color:#fafafa;margin:0 0 22px;padding-bottom:14px;border-bottom:1px solid #262626}
@@ -50,12 +56,16 @@ tailwind.config = {
   ::-webkit-scrollbar-thumb{background:#333;border-radius:5px}
   ::-webkit-scrollbar-track{background:transparent}
   [x-cloak]{display:none!important}
+  /* Alpine 未就绪时给出可读提示，而不是一片空白 */
+  #boot-note{display:none;padding:48px 24px;text-align:center;color:#a3a3a3;font-size:14px}
+  html.no-alpine #boot-note{display:block}
+  html.no-alpine main,html.no-alpine .wireframe .max-w-content{display:none}
   @keyframes rise{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
   .rise{animation:rise .32s cubic-bezier(.2,.7,.3,1) both}
 </style>
 </head>
 
-<body class="bg-ink text-fg font-sans antialiased" x-data="agent()" x-init="boot()" x-cloak>
+<body class="bg-ink text-fg font-sans antialiased" x-data="agent()" x-init="boot()">
 
 <!-- ══ 顶部 ══ -->
 <div class="wireframe border-b border-line">
@@ -87,6 +97,8 @@ tailwind.config = {
   </div>
 </div>
 
+<div id="boot-note">前端脚本未能加载，请刷新页面；若仍失败，检查 web/vendor/ 下的文件是否存在。</div>
+
 <main class="max-w-content mx-auto px-6 py-10">
 
   <!-- ══ 步骤条 ══ -->
@@ -113,12 +125,23 @@ tailwind.config = {
       <svg viewBox="0 0 24 24" class="w-9 h-9 mx-auto mb-4 stroke-fg-3" fill="none" stroke-width="1.5" stroke-linecap="round">
         <path d="M12 16V4m0 0L8 8m4-4 4 4"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg>
       <div class="text-[15px]">拖入文件，或点击选择</div>
-      <div class="text-fg-3 text-[13px] mt-1.5">支持 .docx / .txt / .md，可多选</div>
+      <div class="text-fg-3 text-[13px] mt-1.5">支持 .docx / .pdf / .txt / .md，可多选</div>
     </div>
-    <input type="file" x-ref="file" class="hidden" multiple accept=".docx,.txt,.md,.markdown"
+    <input type="file" x-ref="file" class="hidden" multiple accept=".docx,.pdf,.txt,.md,.markdown"
            @change="addFiles($event.target.files); $event.target.value=''">
 
-    <div class="mt-5 space-y-2" x-show="pending.length">
+    <div class="mt-4">
+      <button class="text-fg-3 text-[13px] hover:text-fg-2 transition flex items-center gap-1.5"
+              @click="showPaste=!showPaste">
+        <span x-text="showPaste ? '收起' : '或直接粘贴文本'"></span>
+        <span class="text-[11px]" x-text="showPaste ? '▲' : '▼'"></span>
+      </button>
+      <textarea x-show="showPaste" x-model="pasted" rows="8"
+        class="w-full mt-2.5 bg-ink-2 border border-line rounded-xl px-4 py-3 text-[13.5px] text-fg focus:border-brand focus:outline-none"
+        placeholder="粘贴指南、选题列表或申请书要求的正文"></textarea>
+    </div>
+
+    <div class="mt-5 space-y-2" x-show="pending.length || pasted.trim()">
       <template x-for="(f,i) in pending" :key="i">
         <div class="flex items-center gap-3 bg-ink-2 border border-line rounded-xl px-4 py-3">
           <svg viewBox="0 0 24 24" class="w-4 h-4 stroke-fg-3 shrink-0" fill="none" stroke-width="1.6">
@@ -132,7 +155,7 @@ tailwind.config = {
       </template>
       <div class="pt-3">
         <button class="px-5 py-2.5 rounded-xl bg-fg text-ink font-medium text-sm hover:bg-white transition disabled:opacity-40"
-                :disabled="busy" @click="doUpload()">
+                :disabled="busy || (!pending.length && !pasted.trim())" @click="doUpload()">
           <span x-show="!busy">解析</span>
           <span x-show="busy" class="flex items-center gap-2"><span class="spinner"></span> 解析中</span>
         </button>
@@ -194,7 +217,7 @@ tailwind.config = {
       </div>
 
       <div class="grid sm:grid-cols-[92px_1fr] gap-x-5 items-start">
-        <div "text-fg-3 text-[12.5px] pt-2">行文结构</div>
+        <div class="text-fg-3 text-[12.5px] pt-2">行文结构</div>
         <div class="text-[13.5px] pt-1.5">
           <span x-show="structure" class="text-ok text-[12px] mr-2">来自上传模板</span>
           <span x-text="structureText()"></span>
@@ -480,7 +503,7 @@ function agent(){
     cfg:{debug:false,stages:[],model:''},
     step:0, busy:false, err:'', dragging:false,
     pending:[], call:null, structure:null, uploadedTopic:null,
-    dirQuery:'', topicMode:'ai', guidance:'',
+    dirQuery:'', topicMode:'ai', guidance:'', showPaste:false, pasted:'',
     own:{title:'',background:'',challengesText:''},
     direction:null, topics:[], topic:null,
     job:null, result:null, tab:'doc', t0:0, elapsed:'0:00', timer:null,
@@ -497,19 +520,28 @@ function agent(){
     useOwn(){
       const t={title:this.own.title.trim(), domain:'general',
                background:this.own.background.trim(),
-               challenges:this.own.challengesText.split('
-').map(s=>s.trim()).filter(Boolean),
+               challenges:this.own.challengesText.split(/\r?\n/).map(s=>s.trim()).filter(Boolean),
                fit:'', source:'own'};
       this.topics=[t, ...this.topics.filter(x=>x.source!=='own')]; this.topic=t;
+    },
+    // A failed request does not always carry a JSON body — an unhandled server
+    // error or a proxy returns plain text, and r.json() then throws a parse error
+    // that tells the user nothing about what actually went wrong.
+    async body(r, fallback){
+      const raw=await r.text();
+      let j=null; try{ j=JSON.parse(raw); }catch(e){}
+      if(!r.ok) throw new Error((j&&j.detail) || raw.slice(0,300) || `${fallback}（HTTP ${r.status}）`);
+      if(!j) throw new Error(fallback+'：服务端返回的不是 JSON');
+      return j;
     },
     async doUpload(){
       this.busy=true; this.err='';
       try{
         const fd=new FormData();
         this.pending.forEach(f=>fd.append('files', f));
+        fd.append('pasted', this.pasted);
         const r=await fetch('/api/upload',{method:'POST',body:fd});
-        const j=await r.json();
-        if(!r.ok) throw new Error(j.detail||'上传失败');
+        const j=await this.body(r,'上传失败');
         const bad=(j.files||[]).filter(f=>f.error);
         if(bad.length) this.err=bad.map(f=>`${f.filename}：${f.error}`).join('\n');
         this.call=j.call; this.structure=j.structure; this.uploadedTopic=j.topic;
@@ -534,7 +566,7 @@ function agent(){
       try{
         const r=await fetch('/api/direction',{method:'POST',headers:{'Content-Type':'application/json'},
               body:JSON.stringify({call:this.call,mode:'auto'})});
-        const j=await r.json(); if(!r.ok) throw new Error(j.detail||'选择失败');
+        const j=await this.body(r,'选择失败');
         this.direction=j.direction; this.topics=[]; this.topic=null;
       }catch(e){ this.err=e.message; } finally{ this.busy=false; }
     },
@@ -549,7 +581,7 @@ function agent(){
       try{
         const r=await fetch('/api/topics',{method:'POST',headers:{'Content-Type':'application/json'},
               body:JSON.stringify({call:this.call,direction:this.direction,n:3,guidance:this.guidance})});
-        const j=await r.json(); if(!r.ok) throw new Error(j.detail||'生成失败');
+        const j=await this.body(r,'生成失败');
         const kept=this.topics.filter(x=>x.source==='uploaded'||x.source==='own');
         this.topics=[...kept,...j.topics]; this.topic=null;
       }catch(e){ this.err=e.message; } finally{ this.busy=false; }
@@ -560,7 +592,7 @@ function agent(){
         const r=await fetch('/api/run',{method:'POST',headers:{'Content-Type':'application/json'},
               body:JSON.stringify({call:this.call,direction:this.direction,topic:this.topic,
                                    structure:this.structure,review:true})});
-        const j=await r.json(); if(!r.ok) throw new Error(j.detail||'启动失败');
+        const j=await this.body(r,'启动失败');
         this.job=j.job_id; this.stage='queued'; this.step=4; this.t0=Date.now();
         this.timer=setInterval(()=>this.poll(), this.cfg.debug?800:3000); this.poll();
       }catch(e){ this.err=e.message; }
@@ -589,10 +621,15 @@ function agent(){
       if(this.result?.evaluation) t.push({id:'eval',label:'评审报告'});
       return t;
     },
+    // 静态类：Tailwind 扫不到运行时拼出来的类名
     verdictBadge(v){
-      const m={recommend_submit:['建议提交','ok'],revise_resubmit:['修改后重投','warn'],reject:['不予推荐','bad']};
-      const [label,c]=m[v]||[v,'warn'];
-      return `<span class="text-[12.5px] px-3 py-1 rounded-full border border-${c}/40 bg-${c}/10 text-${c}">${label}</span>`;
+      const m={
+        recommend_submit:['建议提交','border-ok/40 bg-ok/10 text-ok'],
+        revise_resubmit :['修改后重投','border-warn/40 bg-warn/10 text-warn'],
+        reject          :['不予推荐','border-bad/40 bg-bad/10 text-bad'],
+      };
+      const [label,cls]=m[v]||[v,'border-warn/40 bg-warn/10 text-warn'];
+      return `<span class="text-[12.5px] px-3 py-1 rounded-full border ${cls}">${label}</span>`;
     },
     flags(){
       const e=this.result?.evaluation||{}; const out=[];
@@ -606,7 +643,7 @@ function agent(){
       clearInterval(this.timer);
       Object.assign(this,{step:0,pending:[],call:null,structure:null,uploadedTopic:null,
                           direction:null,topics:[],topic:null,job:null,result:null,err:'',
-                          dirQuery:'',topicMode:'ai',guidance:'',
+                          dirQuery:'',topicMode:'ai',guidance:'',showPaste:false,pasted:'',
                           own:{title:'',background:'',challengesText:''}});
     },
   }

@@ -38,12 +38,13 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 import markdown as md_lib  # noqa: E402
-from fastapi import Body, FastAPI, File, HTTPException, UploadFile  # noqa: E402
+from fastapi import Body, FastAPI, File, Form, HTTPException, UploadFile  # noqa: E402
 from fastapi.responses import FileResponse, HTMLResponse  # noqa: E402
 
 from ai4proposal.intake import (  # noqa: E402
     build_task, classify_documents, extract_text, parse_call, parse_template,
-    parse_topic_doc, pick_direction, propose_topics,
+    parse_topic_doc, parse_topic_list, pick_direction, propose_topics,
+    topics_as_directions,
 )
 from ai4proposal.llm import LLMBackend  # noqa: E402
 
@@ -75,7 +76,8 @@ def _llm() -> LLMBackend:
         model=os.environ.get("AI4PROPOSAL_MODEL", "deepseek-chat"),
         api_key=key,
         base_url=os.environ.get("AI4PROPOSAL_BASE_URL", "https://api.deepseek.com"),
-        timeout_seconds=float(os.environ.get("AI4PROPOSAL_TIMEOUT_SECONDS", "180")),
+        timeout_seconds=float(os.environ.get("AI4PROPOSAL_TIMEOUT_SECONDS", "300")),
+        max_retries=int(os.environ.get("AI4PROPOSAL_SDK_RETRIES", "1")),
     )
 
 
@@ -201,6 +203,16 @@ async def index() -> str:
     return (WEB_DIR / "app.html").read_text(encoding="utf-8")
 
 
+@app.get("/vendor/{name}")
+async def vendor(name: str):
+    """Tailwind and Alpine are served locally: cdn.tailwindcss.com is unreachable
+    on some networks, and a missing stylesheet leaves the page unreadable."""
+    path = (WEB_DIR / "vendor" / Path(name).name).resolve()
+    if path.suffix != ".js" or not path.exists():
+        raise HTTPException(404, "not found")
+    return FileResponse(path, media_type="application/javascript")
+
+
 @app.get("/api/config")
 async def config() -> Dict[str, Any]:
     replay = _find_replay_job() if SETTINGS["debug"] else None
@@ -214,39 +226,81 @@ async def config() -> Dict[str, Any]:
 
 
 @app.post("/api/upload")
-async def upload(files: List[UploadFile] = File(...)) -> Dict[str, Any]:
-    """Parse one or more documents. Roles are decided server-side from content —
-    the user should not have to tell us which file is which."""
+async def upload(files: List[UploadFile] = File(default=[]),
+                 pasted: str = Form(default="")) -> Dict[str, Any]:
+    """Parse uploaded documents and/or text pasted from a call web page.
+
+    Roles are decided from content, not from the user: asking which file is the
+    call, which the template and which the topic is work the system can do.
+    """
     llm = _llm()
     docs, failed = [], []
     for f in files:
         data = await f.read()
+        if not data:
+            continue
         try:
             docs.append({"filename": f.filename, "text": extract_text(f.filename, data)})
         except ValueError as exc:
             failed.append({"filename": f.filename, "error": str(exc)})
+    if pasted.strip():
+        docs.append({"filename": "粘贴的文本", "text": pasted.strip()})
 
     if not docs:
-        raise HTTPException(400, "；".join(f["error"] for f in failed) or "没有可解析的文件")
+        raise HTTPException(400, "；".join(f["error"] for f in failed) or "没有可解析的内容")
 
-    roles = classify_documents(llm, docs)
-    out: Dict[str, Any] = {"call": None, "structure": None, "topic": None, "files": list(failed)}
+    # Classification is a convenience, not a precondition: if the model call fails
+    # here we still try to parse, treating everything as a call document.
+    try:
+        roles = classify_documents(llm, docs)
+    except Exception as exc:
+        print(f"  [warn] 文件分类失败，全部按指南处理：{exc}")
+        roles = {}
+    out: Dict[str, Any] = {"call": None, "structure": None, "topic": None,
+                           "topic_list": None, "files": list(failed)}
     for d in docs:
         role = roles.get(d["filename"], "guideline")
         entry = {"filename": d["filename"], "role": role, "chars": len(d["text"])}
         try:
             if role == "template":
                 out["structure"] = parse_template(llm, d["text"])
+                entry["sections"] = len((out["structure"] or {}).get("core_sections") or [])
+            elif role == "topic_list":
+                out["topic_list"] = parse_topic_list(llm, d["text"])
+                entry["topics"] = len(out["topic_list"] or [])
             elif role == "topic":
                 out["topic"] = parse_topic_doc(llm, d["text"])
             else:
                 out["call"] = parse_call(llm, d["text"])
         except ValueError as exc:
             entry["error"] = str(exc)
+        except Exception as exc:
+            # A timeout, a rejected key or a proxy error must not surface as an
+            # opaque 500: the browser cannot even read the body of one.
+            entry["error"] = f"解析中断（{type(exc).__name__}）：{str(exc)[:200]}"
         out["files"].append(entry)
 
+    # Nothing parsed at all: report why instead of handing back an empty form.
+    if not any(out[k] for k in ("call", "structure", "topic", "topic_list")):
+        reasons = "；".join(f["error"] for f in out["files"] if f.get("error"))
+        raise HTTPException(502, reasons or "未能从上传内容中解析出任何信息")
+
+    # A template or topic on its own is legitimate — the call may only exist on a
+    # web page. Hand back a blank call for the user to fill in; every field is
+    # editable anyway, and inventing one here would be worse than leaving it empty.
     if not out["call"]:
-        raise HTTPException(400, "未能从上传文件中解析出资助指南")
+        out["call"] = {"program": "", "sponsor": "", "language": "zh",
+                       "budget": {"amount": None, "currency": "", "dur": None,
+                                  "is_cap": False, "note": ""},
+                       "eligibility": "", "requirements": [], "constraints": [],
+                       "directions": [{"id": "d1", "name": "（未提供方向，可自行填写）", "detail": ""}],
+                       "structure": None,
+                       "uncertain": ["未能从上传内容中识别出资助指南，以下字段需自行填写"]}
+
+    # A catalogue of mandated topics IS the set of directions for calls that
+    # refuse self-chosen subjects, so it replaces whatever the call enumerated.
+    if out["topic_list"]:
+        out["call"]["directions"] = topics_as_directions(out["topic_list"])
     return out
 
 

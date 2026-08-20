@@ -61,18 +61,27 @@ def extract_text(filename: str, data: bytes) -> str:
     name = (filename or "").lower()
     if name.endswith(".docx"):
         text = _docx_text(data)
+    elif name.endswith(".pdf"):
+        text = _pdf_text(data)
     elif name.endswith((".txt", ".md", ".markdown")):
         text = data.decode("utf-8", errors="ignore")
     elif name.endswith(".doc"):
         raise ValueError("旧版 .doc 不受支持，请先另存为 .docx")
-    elif name.endswith(".pdf"):
-        raise ValueError("PDF 暂不支持，请转存为 .docx 或纯文本后上传")
     else:
-        raise ValueError(f"不支持的文件类型：{filename}（支持 .docx / .txt / .md）")
+        raise ValueError(f"不支持的文件类型：{filename}（支持 .docx / .pdf / .txt / .md）")
     text = text.strip()
     if not text:
-        raise ValueError("未能从文件中提取到任何文字，请确认文件内容")
+        raise ValueError("未能从文件中提取到文字。若是扫描件，请先做文字识别或改用可复制文本")
     return text
+
+
+def _pdf_text(data: bytes) -> str:
+    try:
+        from pypdf import PdfReader
+    except ImportError as exc:
+        raise ValueError("缺少 pypdf，无法读取 PDF") from exc
+    reader = PdfReader(BytesIO(data))
+    return "\n".join((page.extract_text() or "") for page in reader.pages)
 
 
 # ═══════════════════════════════ call parsing ═══════════════════════════════
@@ -90,17 +99,28 @@ PARSE_USER = """请把下面的资助指南转写为结构化 JSON。
 ## 关键区分
 - **requirements（硬性交付物）**：项目**必须产出**的东西，可数、可验收，能回答"交付了几个/几项"。
   例："新增申请发明专利不少于1项""开发不少于5个算子并开源至指定仓库"
-- **constraints（硬性约束）**：对项目**形式、范围或呈现方式**的限定，**本身不是产出物**。
-  例："课题周期1年""创新范围须为指南所列方向之一""发表文章须提及某语言""成果须标注为基于某平台"
+- **constraints（硬性约束）**：对**研究本身或其成果**的限定，**本身不是产出物**。
+  例："课题周期1年""创新范围须为指南所列方向之一""发表文章须提及某语言""论证正文不超过4万字"
 
-  判据：若一句话规定的是"产出什么"，归 requirements；若规定的是"产出必须满足什么条件、
-  必须怎么标注、必须落在什么范围内"，归 constraints。
+  判据：若一句话规定的是"产出什么"，归 requirements；若规定的是"研究或成果必须满足什么条件、
+  必须落在什么范围内"，归 constraints。
   **原文用分号并列的一长句，可能同时包含两类，必须拆开分别归类**，不要整句塞进一边。
+
+  **以下一律不要收录**（本系统只撰写申请书的核心研究内容，这些与撰写无关）：
+  填表格式说明（如"封面某栏填写阿拉伯数字""按公章填写全称""关键词不超过3个"）、
+  签字盖章与报送流程、表格页码与加页规则、人员编制与职称限制、
+  经费预算编制办法、附件清单、审核意见栏的填写方式。
+  判断方法：这条规定约束的是**研究内容本身**，还是**表格怎么填、材料怎么交**？后者一律丢弃。
 - **directions（可选方向）**：指南列出的**并列研究方向**。这类计划通常只圈定方向、
   不指定具体课题，申请人自行选题。把每个方向单列一条，`detail` 保留该方向下列举的具体技术点。
   若指南只有一个方向，也放进数组（长度为 1）。
 - **structure（行文结构）**：仅当指南**明确规定**了申请书须包含哪些章节时才填；
   只是提了一句"须包含研究内容"不算规定结构，此时填 null。
+
+  **只保留属于"核心研究内容"的章节**：研究现状与选题价值、研究框架与目标、研究内容、
+  研究方法与可行性、重点难点与创新、子课题结构、研究进度、预期成果一类。
+  **必须排除**：数据表、学术简历、已发表成果目录、参考文献目录、经费预算表、
+  各类承诺书与审核意见栏。若剔除后不剩几章，说明这份文件只是表格，structure 填 null。
 
 ## 指南原文
 ${guideline_text}
@@ -178,8 +198,10 @@ TEMPLATE_SYSTEM = """你是科研项目管理专家。用户提供了一份申�
 TEMPLATE_USER = """把下面的申请书模板转写为章节结构。
 
 ## 只保留"核心研究内容"相关的章节
-团队组成、研究基础、经费预算、知识产权、附件清单等**不属于核心研究内容**的章节请**排除**，
-本系统只生成核心内容部分。
+**排除**以下章节，它们不由本系统生成：数据表、学术简历、已承担项目与已发表成果目录、
+**参考文献与研究资料目录**、经费预算表、团队组成与分工表、知识产权归属、附件清单、
+各类承诺书与审核意见栏。
+判据：这一章要写的是**本课题的研究内容**，还是**申请人的既往情况、钱、人、或行政手续**？后者排除。
 
 ## 模板原文
 ${template_text}
@@ -266,9 +288,94 @@ def guess_role(filename: str) -> str:
     n = (filename or "").lower()
     if any(w in n for w in ("模板", "template", "提纲", "格式", "样表", "表格")):
         return "template"
-    if any(w in n for w in ("选题", "课题", "topic", "idea", "构思", "方案书")):
+    if any(w in n for w in ("选题", "课题目录", "topic list")):
+        return "topic_list"
+    # Checked before "课题": a file called 课题申报指南 is a call, not a topic.
+    if any(w in n for w in ("指南", "通知", "公告", "申报要求", "call", "招标")):
+        return "guideline"
+    if any(w in n for w in ("课题", "topic", "idea", "构思", "方案书")):
         return "topic"
     return "guideline"
+
+
+# Wording that only a call document uses. A single topic description states what
+# will be studied; it does not set a budget, a duration or deliverable counts.
+_CALL_MARKERS = (
+    "经费", "资助", "万元", "预算", "申报", "申请人", "申报单位", "资格",
+    "课题周期", "研究周期", "执行期", "不少于", "不超过", "遴选", "指南",
+    "方向之一", "评审", "立项", "结题",
+)
+
+
+def _call_score(text: str) -> int:
+    """How call-like a document reads. Used only to break a tie the classifier
+    got wrong — a short call that describes one funding direction is easily
+    mistaken for a topic description."""
+    head = text[:4000]
+    return sum(1 for w in _CALL_MARKERS if w in head)
+
+
+TOPIC_LIST_SYSTEM = """你是文档转写助手。用户提供了一份招标选题清单，你要把其中每一条选题原样抽取出来。
+
+**逐条照抄，不要改写、归并、概括或补充**。清单里有多少条就抽多少条。只输出 JSON。"""
+
+TOPIC_LIST_USER = """抽取下面清单中的全部选题。
+
+## 要求
+- 每条给出序号（原文的编号，没有就按出现顺序编）与选题名称原文。
+- 部分选题名称末尾带 `*` 或类似标记（通常表示"方向性选题"，可自拟具体题目），保留该标记。
+- 页眉页脚、栏目标题（如"一、马克思主义"）不是选题；栏目标题放进 `category` 字段，
+  归属于其后各条选题。
+- **不要遗漏**：宁可多抽，不要漏抽。
+
+## 清单原文
+${list_text}
+
+只输出：{"topics": [{"no": "1", "title": "选题名称原文", "category": "所属栏目，无则空字符串"}]}"""
+
+
+def parse_topic_list(llm: Any, list_text: str, chunk_chars: int = 6000) -> List[Dict[str, str]]:
+    """Extract every entry from a catalogue of candidate topics.
+
+    Chunked because these run to hundreds of entries: asking for all of them in
+    one response invites the model to summarise or stop early, and a truncated
+    catalogue silently removes options the applicant is required to choose from.
+    """
+    text = list_text.strip()
+    chunks = [text[i:i + chunk_chars] for i in range(0, len(text), chunk_chars)] or [""]
+    out: List[Dict[str, str]] = []
+    seen = set()
+    for chunk in chunks:
+        try:
+            raw = llm.generate_text(
+                system_prompt=TOPIC_LIST_SYSTEM,
+                user_prompt=TOPIC_LIST_USER.replace("${list_text}", chunk))
+            items = (_parse_json(raw) or {}).get("topics") or []
+        except Exception:
+            continue
+        for it in items:
+            if not isinstance(it, dict):
+                continue
+            title = str(it.get("title") or "").strip()
+            key = re.sub(r"\s+", "", title)
+            if len(title) < 6 or key in seen:
+                continue
+            seen.add(key)
+            out.append({"no": str(it.get("no") or len(out) + 1).strip(),
+                        "title": title,
+                        "category": str(it.get("category") or "").strip()})
+    return out
+
+
+def topics_as_directions(topics: List[Dict[str, str]]) -> List[Dict[str, str]]:
+    """Present a topic catalogue as selectable directions.
+
+    For calls that mandate bidding on a listed topic — "自选课题不予受理" — the
+    catalogue *is* the set of directions, so it belongs in the same picker rather
+    than a parallel one.
+    """
+    return [{"id": f"t{i}", "name": t["title"], "detail": t.get("category", "")}
+            for i, t in enumerate(topics, 1)]
 
 
 CLASSIFY_SYSTEM = """你是文档分类助手。给定若干份文档的文件名与开头片段，判断每份属于哪一类。只输出 JSON。"""
@@ -279,12 +386,31 @@ CLASSIFY_USER = """判断每份文档的类别：
   申报资格、须交付的成果、可选研究方向。
 - template：**申请书模板或提纲**。特征是列出申请书应包含哪些章节、每章写什么、字数限制，
   本身不含具体研究内容。
-- topic：**已确定的选题说明**。特征是描述一个具体课题要做什么、为什么做，不规定申报规则。
+- topic_list：**招标选题清单 / 选题指南 / 课题目录**。特征是**成批罗列大量并列的课题名称**
+  （常带序号，几十到数百条），供申请人从中挑选，而不是描述某一个课题。
+- topic：**单个已确定的选题说明**。特征是围绕**一个**具体课题展开，说明它要做什么、为什么做。
+
+  topic 与 topic_list 的区别只看数量：罗列多条备选 → topic_list；只讲一个 → topic。
+
+## 判定优先级（按顺序判断，命中即定）
+
+1. 文档主体是**待填写的表格、栏目名、填写说明、字数限制**，没有实质研究内容
+   → **template**。文档里出现"经费预算""申报资格""成果形式"等**栏目名**不改变这一判定：
+   模板会列出这些栏目，但不会规定具体数额与条件。
+2. 文档**规定**了经费额度、课题周期、申报资格、须交付的成果数量、评审或立项流程中的任意一项
+   （给出了具体数值或条件，而不只是留出填写位置）→ **guideline**。
+   哪怕它篇幅很短、只描述一个研究方向、读起来像在介绍某个课题，也仍是 guideline ——
+   规定"谁能申报、给多少钱、要交什么"的只可能是指南。
+3. 文档成批罗列并列的课题名称 → **topic_list**。
+4. 以上都不是，文档只讲一个具体课题要做什么、为什么做，且**不涉及经费与申报规定**
+   → **topic**。
+
+同一批文档中可以有多份同类，也可以缺某一类，不要为了凑齐四类而强行分配。
 
 ## 文档
 ${docs}
 
-只输出：{"roles": {"文件名": "guideline|template|topic"}}"""
+只输出：{"roles": {"文件名": "guideline|template|topic_list|topic"}}"""
 
 
 def classify_documents(llm: Any, docs: List[Dict[str, str]]) -> Dict[str, str]:
@@ -294,24 +420,30 @@ def classify_documents(llm: Any, docs: List[Dict[str, str]]) -> Dict[str, str]:
     heuristic for anything the model does not classify.
     """
     result = {d["filename"]: guess_role(d["filename"]) for d in docs}
-    if len(docs) == 1:
-        # A lone document is the call; nothing else makes sense on its own.
-        result[docs[0]["filename"]] = "guideline"
-        return result
+    # 1500 rather than a few hundred characters: a short call fits entirely, and
+    # its budget and deliverable clauses — the things that identify it — usually
+    # sit after the opening paragraph.
     listing = "\n\n".join(
-        f"【{d['filename']}】\n{d['text'][:600]}" for d in docs)
+        f"【{d['filename']}】\n{d['text'][:1500]}" for d in docs)
     try:
         raw = llm.generate_text(system_prompt=CLASSIFY_SYSTEM,
                                 user_prompt=CLASSIFY_USER.replace("${docs}", listing))
         roles = (_parse_json(raw) or {}).get("roles") or {}
         for name, role in roles.items():
-            if name in result and role in ("guideline", "template", "topic"):
+            if name in result and role in ("guideline", "template", "topic_list", "topic"):
                 result[name] = role
     except Exception:
         pass
-    # Exactly one call is expected; if none was identified, promote the longest.
-    if "guideline" not in result.values() and docs:
-        result[max(docs, key=lambda d: len(d["text"]))["filename"]] = "guideline"
+
+    # Deterministic backstop. The classifier is unstable on short calls that
+    # describe a single funding direction: it labels them `topic`, the call is
+    # then never parsed, and the user is handed an empty form. If nothing was
+    # called a guideline, promote whichever document reads most like one.
+    if "guideline" not in result.values():
+        cands = [d for d in docs if result[d["filename"]] == "topic"]
+        best = max(cands, key=lambda d: _call_score(d["text"]), default=None)
+        if best is not None and _call_score(best["text"]) >= 4:
+            result[best["filename"]] = "guideline"
     return result
 
 
