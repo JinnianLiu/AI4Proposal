@@ -135,6 +135,7 @@ def plan_structure(llm, task, verbose=True) -> dict:
         "background": task.get("background", ""),
         "requirements": _lst(task.get("requirements", [])),
         "constraints": _lst(task.get("constraints", [])),
+        "output_language": WP.language_name(task.get("language")),
     }
     raw = generate_with_retry(llm, WP.STRUCTURE_PLANNER_SYSTEM, WP.fill(WP.STRUCTURE_PLANNER_USER, v))
     data = parse_json(raw) if raw else {}
@@ -210,8 +211,9 @@ def strip_leading_heading(draft: str, name: str) -> str:
     return draft
 
 
-def _img_md(fig_id, i, caption):
-    return f"\n\n![{fig_id}](figures/{fig_id}.png)\n\n*图{i+1}：{caption}*\n\n"
+def _img_md(fig_id, i, caption, lang="zh"):
+    return (f"\n\n![{fig_id}](figures/{fig_id}.png)\n\n"
+            f"*{WP.figure_label(lang, i + 1, caption)}*\n\n")
 
 
 def _split_marker(inner):
@@ -248,7 +250,7 @@ def figure_context(proposal_text, task):
     return f"{head}\n\n{proposal_text[:5000]}"
 
 
-def plan_slots(llm, slots, title, context, max_figures):
+def plan_slots(llm, slots, title, context, max_figures, lang="zh"):
     """Stage 1 for every slot, in order. Slots past --max-figures are not planned
     at all — planning costs an LLM call each."""
     for i, slot in enumerate(slots):
@@ -256,7 +258,8 @@ def plan_slots(llm, slots, title, context, max_figures):
             slot["plan"] = {"action": "skip", "reason": f"超出 --max-figures={max_figures}"}
             continue
         print(f"    [plan] {slot['id']}: {slot['caption'][:40]}...")
-        plan = plan_figure(llm, slot["id"], title, slot["description"], context=context)
+        plan = plan_figure(llm, slot["id"], title, slot["description"], context=context,
+                           language=lang)
         if plan.get("action") != "draw":
             print(f"    [plan] {slot['id']} SKIP: {plan.get('reason','')[:80]}")
         else:
@@ -265,14 +268,14 @@ def plan_slots(llm, slots, title, context, max_figures):
     return slots
 
 
-def _patch(text, slots, out_dir, img_cfg, draw=True):
+def _patch(text, slots, out_dir, img_cfg, draw=True, lang="zh"):
     """Replace each marker with an image reference (rendering it first when
     `draw`) or with a text placeholder. Returns (text, manifest)."""
     manifest = []
     for i, slot in enumerate(slots):
         plan = slot.get("plan") or {}
-        # The planner's 中文图题 beats the writer's caption: it was written after
-        # the figure's content was decided.
+        # The planner's 图题 beats the writer's caption: it was written after the
+        # figure's content was decided. Both follow the document's language.
         cap = plan.get("title") or slot["caption"]
         path = None
         if draw and plan.get("action") == "draw" and img_cfg.get("api_key"):
@@ -284,9 +287,10 @@ def _patch(text, slots, out_dir, img_cfg, draw=True):
             else:
                 print(f"    [img] {slot['id']} FAILED -> 文字占位")
         if path:
-            text = text.replace(slot["marker"], _img_md(slot["id"], i, cap), 1)
+            text = text.replace(slot["marker"], _img_md(slot["id"], i, cap, lang), 1)
         else:
-            text = text.replace(slot["marker"], f"\n\n**[图{i+1}：{cap}]**\n\n", 1)
+            text = text.replace(slot["marker"],
+                                f"\n\n**[{WP.figure_label(lang, i + 1, cap)}]**\n\n", 1)
         manifest.append({
             "id": slot["id"], "caption": cap, "note": plan.get("caption", ""),
             "composition": plan.get("composition", ""),
@@ -299,19 +303,20 @@ def _patch(text, slots, out_dir, img_cfg, draw=True):
 
 def process_figures(proposal_text, out_dir, img_cfg, max_figures, mode, llm, task):
     """mode: 'go' plan+draw+patch | 'dry' plan only, keep markers | 'off' text placeholder."""
+    lang = WP.normalize_language(task.get("language"))
     slots = extract_figure_slots(proposal_text)
     if mode == "off" or not slots:
-        return _patch(proposal_text, slots, out_dir, img_cfg, draw=False) + (slots,)
+        return _patch(proposal_text, slots, out_dir, img_cfg, draw=False, lang=lang) + (slots,)
 
     slots = plan_slots(llm, slots, task.get("title", ""),
-                       figure_context(proposal_text, task), max_figures)
+                       figure_context(proposal_text, task), max_figures, lang)
     if mode == "dry":
         # Keep the markers in place so --figures-from can patch them later.
         manifest = [{"id": s["id"], "caption": (s.get("plan") or {}).get("title") or s["caption"],
                      "description": s["description"], "image": None} for s in slots]
         return proposal_text, manifest, slots
 
-    text, manifest = _patch(proposal_text, slots, out_dir, img_cfg, draw=True)
+    text, manifest = _patch(proposal_text, slots, out_dir, img_cfg, draw=True, lang=lang)
     return text, manifest, slots
 
 
@@ -320,10 +325,14 @@ def generate_from_dir(out_dir: Path, img_cfg, max_figures):
     proposal_final.md in place. Does NOT regenerate any text or re-plan."""
     slots = json.loads((out_dir / "figure_plans.json").read_text(encoding="utf-8"))
     md = (out_dir / "proposal_final.md").read_text(encoding="utf-8")
+    task_path = out_dir / "task.json"
+    lang = WP.normalize_language(
+        json.loads(task_path.read_text(encoding="utf-8")).get("language")
+        if task_path.exists() else "zh")
     md, manifest = _patch(md, slots[:max_figures] + [
         dict(s, plan={"action": "skip", "reason": f"超出 --max-figures={max_figures}"})
         for s in slots[max_figures:]
-    ], out_dir, img_cfg, draw=True)
+    ], out_dir, img_cfg, draw=True, lang=lang)
     (out_dir / "proposal_final.md").write_text(md, encoding="utf-8")
     json.dump(manifest, (out_dir / "figure_manifest.json").open("w", encoding="utf-8"), indent=2, ensure_ascii=False)
     imgs = sum(1 for m in manifest if m["image"])
@@ -383,7 +392,10 @@ def main():
     out_dir.mkdir(parents=True, exist_ok=True)
 
     # base variables shared by all prompts
+    lang = WP.normalize_language(task.get("language"))
     base_vars = {
+        "lang_rules": WP.lang_rules_for(lang),
+        "output_language": WP.language_name(lang),
         "title": task.get("title", ""),
         "background": task.get("background", ""),
         "challenges": _lst(task.get("challenges", [])),
@@ -395,7 +407,8 @@ def main():
     }
 
     print(f"== {case_id}  {task.get('title','')}")
-    print(f"   template: {base_vars['template']} | model: {llm.model} | sections: {len(core_sections)}")
+    print(f"   template: {base_vars['template']} | model: {llm.model} | "
+          f"sections: {len(core_sections)} | 正文语言: {base_vars['output_language']}")
 
     t0 = time.time()
     print("  [1/4] Step0 蓝图 ...")

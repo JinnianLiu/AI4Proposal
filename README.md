@@ -51,6 +51,8 @@ export AI4PROPOSAL_IMAGE_API_KEY=sk-...        # 出图（可选）
 | `AI4PROPOSAL_TIMEOUT_SECONDS` | | `300` | 单次调用超时；长章节实测可达 200s |
 | `AI4PROPOSAL_SDK_RETRIES` | | `1` | openai SDK 内部重试次数。SDK 默认 2，会让一次可见调用静默变成三次请求 |
 | `AI4PROPOSAL_QUIET_LLM` | | — | 置 `1` 关闭每次调用的 `[llm] <端点> <耗时> <字数>` 日志 |
+| `AI4PROPOSAL_CALL_DEADLINE_SECONDS` | | `600` | 单次调用的**墙钟**上限。SDK 的 timeout 是空闲超时，服务端持续吐字节就永不触发 |
+| `AI4PROPOSAL_VISION_MODEL` | | `deepseek-v4-flash-vision-exp` | 配图审查用的多模态模型；置空则关闭配图审查 |
 | `AI4PROPOSAL_IMAGE_API_KEY` | | — | 留空则跳过出图，退化为文字占位符 |
 | `AI4PROPOSAL_IMAGE_BASE_URL` | | `https://api.chatanywhere.tech/v1` | |
 | `AI4PROPOSAL_IMAGE_MODEL` | | `gpt-image-2` | |
@@ -139,6 +141,19 @@ python scripts/md_to_docx.py outputs/task_001/proposal_final.md
 
 权重在 `WEIGHTS` 一处定义，改它即可，聚合逻辑自动跟随。某维解析失败时其权重**重分配**给其余维度，而非记 0 分。
 
+### 配图审查（多模态，不计入总分）
+
+上面四位评委只读得到 `![fig_01](figures/fig_01.png)` 和一行图注 —— 图是空白、乱码、与图注不符还是画了编造的数值，他们一律看不出来。
+
+第五位评委是多模态的：**逐图输入 图 + 图注 + 该图所在的正文段落**，只考察两件事 ——
+
+- **与正文的匹配度**：只看这张图能否抓住这段正文的核心内容（不是"图里的元素在正文出现过没有"）
+- **图片表现**：标签可读性、乱码、布局遮挡、箭头指向、编造数值、无关装饰
+
+**只出结构化发现，不打分、不进硬闸**（`figure_findings`）—— 刻意如此：它没有可比的分档锚点，硬塞进加权会污染跨本子可比性。
+
+有渲染出的图才会触发；`AI4PROPOSAL_VISION_MODEL` 置空即关闭。`--figures off` 可单次跳过。
+
 ### 硬闸
 
 分数再高，命中以下任一项也不会给出 `recommend_submit`（可通过修改补救）：
@@ -173,11 +188,12 @@ TLS 证书**默认校验**；仅当证书链确实失败（公司网/VPN 拆包�
 
 ### 输出
 
-除七个维度分数外，`evaluation.json` 还结构化收集：过度声称、识别到的科学假设、指南要求逐条覆盖情况、跑题内容、存疑指标、风险预案、章节 checklist、占位符、约束违反。
+除七个维度分数外，`evaluation.json` 还结构化收集：过度声称、识别到的科学假设、指南要求逐条覆盖情况、跑题内容、存疑指标、风险预案、章节 checklist、占位符、约束违反、配图审查发现（`figure_findings`）。
 
 ```bash
 python scripts/evaluate.py <md>              # task.json 自动从同目录读取
 python scripts/evaluate.py <md> --evidence   # 开外部检索
+python scripts/evaluate.py <md> --figures off  # 跳过配图审查
 python scripts/evaluate.py --show-rubric     # 只看细则，不消耗 token
 python tests/test_evaluation.py            # 离线自检，无需密钥与网络
 ```

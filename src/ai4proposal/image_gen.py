@@ -145,19 +145,22 @@ PLANNER_USER = """请为以下申请书图位生成正式科研插图规划。
 图位描述：
 {description}
 
+正文语言（title / subtitle / caption 必须用该语言）：
+{doc_language}
+
 仅输出下列合法 JSON：
 
 {{
   "action": "draw | skip",
   "composition": "dashboard | pipeline | system_loop | architecture",
-  "title": "用于正文的中文图题",
-  "subtitle": "不超过50字的中文副标题",
+  "title": "用于正文的图题，语言同正文",
+  "subtitle": "不超过50字的副标题，语言同正文",
   "main_message": "该图需要论证的核心科研关系",
   "overall_design": "中文说明：总体关系区展示哪些真实对象、层次、过程和关系",
   "mechanism_or_method_case": "中文说明：关键机制或方法如何以输入—过程—输出展示；不适用则填空字符串",
   "case_or_validation": "中文说明：代表性案例、实验设计或验证逻辑如何展示；不适用则填空字符串",
   "image_prompt_en": "供图像模型使用的详细英文提示词，220至650个英文单词",
-  "caption": "中文图注",
+  "caption": "图注，语言同正文",
   "reason": "仅 action=skip 时填写"
 }}
 
@@ -179,7 +182,9 @@ no Chinese text; no long paragraphs; no timeline; no Gantt chart; no project sch
 
 6. 不得要求图片生成：中文文字、长标题、长段文字、复杂公式；真实或虚构的精确数字、样本量、统计结果、显著性标记、性能百分比、排名；未由输入支持的数据集、机构、人物、品牌或应用场景；项目进度、年度计划、甘特图或里程碑。
 
-7. title、subtitle、caption 用中文，可直接写入正式申请书；但 image_prompt_en 中不得要求生成中文。"""
+7. title、subtitle、caption 用上面给出的**正文语言**书写，可直接写入正式申请书；overall_design 等
+   规划说明字段仍用中文（它们不进正文，只供人工复核）。无论正文是哪种语言，image_prompt_en 始终是
+   英文，且图内标签只能是极短英文——图像模型画不好小号中日韩字形。"""
 
 
 def _one_line(value: Any, limit: int = 80) -> str:
@@ -227,14 +232,21 @@ def _english_words(text: str) -> int:
     return len(re.findall(r"[A-Za-z]+(?:['-][A-Za-z]+)?", text))
 
 
+DEFAULT_TITLES = {"zh": "研究内容示意图", "en": "Overview of the proposed work"}
+
+
 def plan_figure(llm, figure_id: str, proposal_title: str, description: str,
-                context: str = "") -> Dict[str, Any]:
-    """Turn one Chinese figure slot into a drawing plan.
+                context: str = "", language: str = "zh") -> Dict[str, Any]:
+    """Turn one figure slot into a drawing plan.
 
     `context` should carry the abstract / objectives / approach text: without it
-    the planner invents research objects to fill the canvas. Returns a dict whose
-    `action` is "draw" or "skip"; callers never need to handle exceptions.
+    the planner invents research objects to fill the canvas. `language` is the
+    document's language: the title and caption go straight into the proposal, so
+    they follow it, while `image_prompt_en` stays English whatever it is.
+    Returns a dict whose `action` is "draw" or "skip"; callers never need to
+    handle exceptions.
     """
+    lang = language if language in DEFAULT_TITLES else "zh"
     if any(re.search(p, f"{proposal_title} {description}") for p in PROGRESS_PATTERNS):
         return _skip("进度类图件", "项目进度、时间线或里程碑类图件不生成。")
     if llm is None:
@@ -248,6 +260,7 @@ def plan_figure(llm, figure_id: str, proposal_title: str, description: str,
                 context=_block(context, 6000),
                 figure_id=_one_line(figure_id, 30),
                 description=_block(description, 1500),
+                doc_language={"zh": "简体中文", "en": "英文（English）"}[lang],
             ),
         )
     except Exception as exc:
@@ -271,7 +284,7 @@ def plan_figure(llm, figure_id: str, proposal_title: str, description: str,
     plan.update({
         "action": "draw",
         "composition": composition if composition in VALID_COMPOSITIONS else "architecture",
-        "title": _one_line(plan.get("title")) or "研究内容示意图",
+        "title": _one_line(plan.get("title")) or DEFAULT_TITLES[lang],
         "subtitle": _one_line(plan.get("subtitle"), 120),
         "main_message": _one_line(plan.get("main_message"), 300),
         "overall_design": _one_line(plan.get("overall_design"), 1200),

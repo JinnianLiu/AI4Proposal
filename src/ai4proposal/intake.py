@@ -206,6 +206,22 @@ TEMPLATE_USER = """把下面的申请书模板转写为章节结构。
 各类承诺书与审核意见栏。
 判据：这一章要写的是**本课题的研究内容**，还是**申请人的既往情况、钱、人、或行政手续**？后者排除。
 
+## 摘要表与正文重复时，只保留正文章节
+很多模板（名字里常带"含课题情况简表""基本情况表""申请书摘要表"）在正文之前先放一张**摘要表**，
+表里的栏目名（如"课题目标""主要成果""考核指标""成果推广"）与后面的正文章节是**同一批内容的两套写法**，
+摘要表是正文的缩写版。
+
+这种情况下：
+- **只输出正文章节，不要把摘要表的栏目也列成章节**——否则同一部分内容会被撰写两遍。
+- 摘要表栏目若提到了正文章节没写明的要素，把该要素**并入**语义对应的正文章节的 `required`。
+- 判断哪边是正文：篇幅更长、有独立标题层级、填写说明更详细的那一套是正文；被排在最前、
+  以表格形式逐栏罗列、每栏只留几行的那一套是摘要表。
+- 若整份模板**只有**摘要表而没有正文（确实有这种纯表格模板），则照常转写摘要表的栏目。
+
+## 章节顺序
+`core_sections` **必须保持模板原文的先后顺序**，不要按你认为更合理的逻辑重排——
+资助方期望的就是模板的顺序。
+
 ## 模板原文
 ${template_text}
 
@@ -236,6 +252,72 @@ ${topic_text}
 只输出：{"title": "...", "domain": "英文小写领域标识", "background": "...", "challenges": ["..."]}"""
 
 
+# Two names for one chapter differ by decoration, not by content:「预期成果及推广、
+# 转化措施」vs「项目（课题）成果及推广措施」. Normalising the string is too brittle to
+# see that (转化 alone breaks equality), so each name is reduced to the set of
+# section concepts it mentions instead.
+_SECTION_CONCEPTS = (
+    ("目标", ("目标", "objective", "aim", "vision")),
+    ("指标", ("考核指标", "验收指标", "指标", "kpi", "milestone" "指标值")),
+    ("内容", ("研究内容", "研发内容", "内容", "content", "workplan")),
+    ("创新", ("创新", "novel")),
+    ("方案", ("技术方案", "方案", "设计", "design", "method")),
+    ("路线", ("技术路线", "路线", "route", "pathway")),
+    ("进度", ("进度", "里程碑", "计划", "schedule", "timeline")),
+    ("成果", ("成果", "产出", "outcome", "output", "deliverable")),
+    ("推广", ("推广", "转化", "应用", "dissemination", "translation", "impact")),
+)
+
+
+def _section_key(name: str) -> frozenset:
+    """The set of section concepts a name mentions, for spotting the
+    summary-table twin of a body chapter after the prompt failed to merge them."""
+    low = str(name or "").lower()
+    return frozenset(tag for tag, words in _SECTION_CONCEPTS if any(w in low for w in words))
+
+
+def _dedupe_sections(sections: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """Merge sections covering the same set of concepts, keeping the FIRST
+    occurrence's position and the richest content.
+
+    Only exact concept-set equality merges. Subset merging was tried and
+    rejected: a template that legitimately separates 课题目标 from 考核指标 would
+    have had one folded into the other. This is a narrow backstop — the primary
+    fix is the summary-table rule in TEMPLATE_USER — so it errs toward leaving
+    sections alone.
+
+    Order is preserved deliberately: the funder expects the template's own
+    sequence, so nothing here reorders. The keeper is the entry with the most
+    `required` elements — the summary-table twin is always the thinner one — but
+    it keeps the earlier slot in the list.
+    """
+    out: List[Dict[str, Any]] = []
+    seen: Dict[frozenset, int] = {}
+    for sec in sections:
+        key = _section_key(sec.get("name"))
+        if not key or key not in seen:
+            if key:
+                seen[key] = len(out)
+            out.append(sec)
+            continue
+        keep = out[seen[key]]
+        merged = list(keep.get("required") or [])
+        for r in sec.get("required") or []:
+            if r not in merged:
+                merged.append(r)
+        richer = sec if len(sec.get("required") or []) > len(keep.get("required") or []) else keep
+        out[seen[key]] = {
+            "id": richer.get("id") or keep.get("id"),
+            "name": richer.get("name") or keep.get("name"),
+            "required": merged,
+            # A summary column caps at a few hundred words; the body chapter is
+            # the one that may be uncapped. Never inherit the tighter cap.
+            "word_limit": (None if keep.get("word_limit") is None or sec.get("word_limit") is None
+                           else max(keep["word_limit"], sec["word_limit"])),
+        }
+    return out
+
+
 def parse_template(llm: Any, template_text: str) -> Optional[Dict[str, Any]]:
     """Transcribe a proposal template into a `structure` block, or None if it
     yields nothing usable — in which case the pipeline plans a layout itself."""
@@ -259,9 +341,12 @@ def parse_template(llm: Any, template_text: str) -> Optional[Dict[str, Any]]:
         })
     if not clean:
         return None
+    merged = _dedupe_sections(clean)
+    if len(merged) < len(clean):
+        print(f"  [template] 合并重复章节 {len(clean)} -> {len(merged)}")
     return {
         "template": str(data.get("template") or "申请书模板").strip(),
-        "core_sections": clean,
+        "core_sections": merged,
         "rules": [str(r).strip() for r in (data.get("rules") or []) if str(r).strip()],
     }
 

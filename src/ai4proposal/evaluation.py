@@ -39,6 +39,8 @@ MAX_PROPOSAL_CHARS = 40000
 # marker read "[... 截断 ...]", which matches the writing judge's own definition of
 # a leftover placeholder, so every over-long proposal reported one and got its
 # verdict capped at revise_resubmit by the placeholder gate.
+MAX_FIGURE_CONTEXT = 6000       # body text handed to the figure judge, per figure
+
 TRUNCATION_SENTINEL = "评审系统插入"
 TRUNCATION_NOTE = (
     f"\n\n〔以上为正文节选。文档超长，由{TRUNCATION_SENTINEL}的长度提示，"
@@ -332,6 +334,63 @@ WRITING_USER = _judge_prompt(
                 '\n  "placeholders": ["..."],\n  "constraint_violations": ["..."]'),
 )
 
+# ══════════════════════════ Figure judge (multimodal) ══════════════════════════
+# The four text judges never see a figure: the Markdown gives them an image tag
+# and a caption line, so a blank, garbled or fabricated picture reads exactly
+# like a good one. This judge looks at the image itself. It reports findings
+# only — it owns no rubric dimension and does not enter the verdict.
+
+FIGURE_SYSTEM = """你是科研项目申请书的插图审查专家。评审组的其他专家只能读到正文，看不到图；
+你是唯一看得到图的人。
+
+你只做两件事，其余一概不评：
+
+一、**与正文的匹配度**——这张图能否清晰、直观地呈现它所在正文段落的核心内容。
+    你要回答的是"读者只看这张图，能不能抓住这段正文要讲的那件事"，而不是"图里的元素在正文里有没有出现过"。
+    典型失分：图画的是另一个层面的东西；图只是把正文的名词摆成方框，没有体现它们之间的关系；
+    图注承诺了某个机制或流程，图里找不到；正文的核心论点在图上完全看不出来。
+
+二、**图片表现**——图本身作为一张学术插图的质量。
+    看：文字标签是否清晰可读、有无乱码或残缺字符；布局是否清楚、有无重叠遮挡；
+    箭头与连线的指向是否明确；有无编造的具体数值（百分比、倍数、样本量、显著性）；
+    有无与内容无关的装饰、卡通、照片写实渲染；整体是否达到可放进正式申请书的水准。
+
+**读图容差**：你对细小文字的识别本身可能出错。只有当字符明显残缺、重叠、方块化或非目标语言乱码时才判为乱码；
+仅仅是你不确定某个专有名词怎么拼，不算问题。
+
+先写观察依据，再下判断。只输出 JSON，不要 markdown 代码块。"""
+
+FIGURE_USER = Template("""审查以下配图。
+
+## 图号
+${figure_id}
+
+## 正文里的图题（图注）
+${caption}
+
+## 该图所在的正文段落
+${section_text}
+
+## 附图
+见随附图片。
+
+只输出：
+{
+  "figure_id": "${figure_id}",
+  "match": {
+    "verdict": "good | partial | mismatch",
+    "reason": "指出图上的具体元素与正文的具体表述，说明为什么匹配或不匹配"
+  },
+  "quality": {
+    "verdict": "good | acceptable | poor",
+    "reason": "指出图上的具体现象作为依据"
+  },
+  "issues": ["图上确实存在的具体问题，逐条；无则空数组"],
+  "fabricated_numbers": ["图中出现的具体数值原文（百分比/倍数/样本量/显著性），无则空数组"],
+  "suggestion": "一句话改进建议；无需改进则填空字符串"
+}""")
+
+
 CHAIR_SYSTEM = """你是评审组主席。你已收到各位专家的独立评分与依据，现在负责汇总定性意见。
 
 你不重新打分，也不修改专家分数——总分由系统计算。你只负责综合出优点、缺点与总体评语。只输出 JSON。"""
@@ -393,6 +452,10 @@ class EvaluationResult:
     section_checklist: List[Dict[str, Any]] = field(default_factory=list)
     placeholders: List[str] = field(default_factory=list)
     constraint_violations: List[str] = field(default_factory=list)
+    # Findings only, by design: the figure judge owns no rubric dimension and is
+    # not a verdict gate. It exists because nothing else in the panel can see a
+    # figure at all.
+    figure_findings: List[Dict[str, Any]] = field(default_factory=list)
     errors: List[str] = field(default_factory=list)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -498,8 +561,50 @@ class RubricPanel:
                     print(f"      [retry {attempt + 1}: {str(e)[:80]}]")
         raise RuntimeError(f"judge call failed after {self.max_retries + 1} tries: {last}")
 
+    def review_figures(self, vision_llm: Any, figures: List[Dict[str, Any]],
+                       errors: Optional[List[str]] = None) -> List[Dict[str, Any]]:
+        """One multimodal call per figure. A failure on one figure is recorded
+        and the rest still get reviewed — a broken picture must not cost the
+        whole panel."""
+        out: List[Dict[str, Any]] = []
+        for fig in figures:
+            fid = str(fig.get("id") or "fig")
+            if self.verbose:
+                print(f"    [figure] {fid}: {str(fig.get('caption',''))[:40]}")
+            try:
+                raw = vision_llm.generate_with_images(
+                    FIGURE_SYSTEM,
+                    FIGURE_USER.safe_substitute(
+                        figure_id=fid,
+                        caption=str(fig.get("caption") or "（无图注）"),
+                        section_text=str(fig.get("section_text") or "")[:MAX_FIGURE_CONTEXT],
+                    ),
+                    [fig["path"]],
+                )
+                data = _parse_json(raw)
+            except Exception as e:
+                msg = f"figure {fid}: {type(e).__name__}: {e}"
+                if errors is not None:
+                    errors.append(msg)
+                if self.verbose:
+                    print(f"    [figure] {fid} FAILED: {str(e)[:100]}")
+                continue
+            if not data:
+                if errors is not None:
+                    errors.append(f"figure {fid}: 返回无法解析为 JSON")
+                continue
+            data.setdefault("figure_id", fid)
+            data["image"] = str(fig.get("rel") or fig["path"])
+            out.append(data)
+            if self.verbose:
+                print(f"      匹配度 {(data.get('match') or {}).get('verdict','?')} | "
+                      f"图片表现 {(data.get('quality') or {}).get('verdict','?')}")
+        return out
+
     def evaluate(self, proposal_text: str, task: Dict[str, Any],
-                 evidence: Optional[Any] = None) -> EvaluationResult:
+                 evidence: Optional[Any] = None,
+                 figures: Optional[List[Dict[str, Any]]] = None,
+                 vision_llm: Optional[Any] = None) -> EvaluationResult:
         """`proposal_text` is the proposal Markdown; `task` is the full task dict."""
         if len(proposal_text) > MAX_PROPOSAL_CHARS:
             print(f"    [warn] 正文 {len(proposal_text)} 字符，超出评审上限 "
@@ -567,6 +672,9 @@ class RubricPanel:
             alignment=scores.get("alignment"),
         )
 
+        figure_findings = (self.review_figures(vision_llm, figures, errors)
+                           if (figures and vision_llm is not None) else [])
+
         chair = self._chair(task, reviews, overall, errors)
 
         return EvaluationResult(
@@ -590,6 +698,7 @@ class RubricPanel:
             section_checklist=checklist,
             placeholders=placeholders,
             constraint_violations=wri.get("constraint_violations") or [],
+            figure_findings=figure_findings,
             errors=errors,
         )
 

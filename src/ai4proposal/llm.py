@@ -1,11 +1,14 @@
 from __future__ import annotations
 
+import base64
 import json
+import mimetypes
 import os
 import threading
 import time
 from dataclasses import dataclass
-from typing import Any, Dict, Optional
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Sequence, Union
 
 
 def _extract_response_text(response: Any) -> str:
@@ -175,6 +178,38 @@ class LLMBackend:
         self._trace("responses", t1, text)
         return text
 
+    def generate_with_images(self, system_prompt: str, user_prompt: str,
+                             images: Sequence[Union[str, Path]]) -> str:
+        """Same contract as generate_text, with images attached to the user turn.
+
+        Images are inlined as data URIs rather than URLs: the figures live on
+        local disk and there is nothing to serve them from. chat.completions
+        only — the fallback endpoint is not in play for a vision model.
+        """
+        client = self._make_client()
+        parts: List[Dict[str, Any]] = [{"type": "text", "text": user_prompt}]
+        for path in images:
+            p = Path(path)
+            mime = mimetypes.guess_type(p.name)[0] or "image/png"
+            b64 = base64.b64encode(p.read_bytes()).decode()
+            parts.append({"type": "image_url",
+                          "image_url": {"url": f"data:{mime};base64,{b64}"}})
+
+        t0 = time.time()
+        try:
+            completion = _with_deadline(
+                lambda: client.chat.completions.create(
+                    model=self.model,
+                    messages=[{"role": "system", "content": system_prompt},
+                              {"role": "user", "content": parts}]),
+                self.deadline_seconds, "vision")
+            text = _message_text(completion.choices[0].message.content)
+        except Exception as exc:
+            self._trace("vision", t0, "", f"{type(exc).__name__}: {exc}")
+            raise
+        self._trace("vision", t0, text)
+        return text
+
 
 def cheap_backend(main: LLMBackend) -> LLMBackend:
     """A smaller/faster model on the same endpoint, for auxiliary calls such as
@@ -182,6 +217,23 @@ def cheap_backend(main: LLMBackend) -> LLMBackend:
     Override with AI4PROPOSAL_CHEAP_MODEL."""
     return LLMBackend(
         model=os.getenv("AI4PROPOSAL_CHEAP_MODEL", "deepseek-v4-flash").strip() or main.model,
+        api_key=main.api_key,
+        base_url=main.base_url,
+        timeout_seconds=main.timeout_seconds,
+        max_retries=main.max_retries,
+        deadline_seconds=main.deadline_seconds,
+    )
+
+
+def vision_backend(main: LLMBackend) -> LLMBackend:
+    """A multimodal model on the same endpoint, for looking at the figures the
+    text judges cannot see. Override with AI4PROPOSAL_VISION_MODEL; set it empty
+    to turn figure review off."""
+    model = os.getenv("AI4PROPOSAL_VISION_MODEL", "deepseek-v4-flash-vision-exp").strip()
+    if not model:
+        raise ValueError("AI4PROPOSAL_VISION_MODEL is empty: figure review disabled")
+    return LLMBackend(
+        model=model,
         api_key=main.api_key,
         base_url=main.base_url,
         timeout_seconds=main.timeout_seconds,

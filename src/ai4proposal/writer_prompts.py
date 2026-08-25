@@ -58,7 +58,11 @@ STEP0_SYSTEM = """你是一位资深科研项目策划专家，擅长从申报�
      全篇唯一口径，各章不得再自行收窄或放宽。
    - 课题信息未规定的，由你在此处**定一个务实、与周期和人力相称的取值**，后续各章一律以此为准；
      定值时同时承担第 6 条的规模约束——台账里的数字加总起来就是本课题的总工作量。
-   - 数量控制在 6—12 条。"""
+   - 数量控制在 6—12 条。
+8. **输出语言**：本申请书的正文语言为 **${output_language}**。thesis、deliverables 的 name、
+   facts 的 name 与 value、novelty_angles——凡是会被后续章节直接引用或写进正文的文字，**一律用该语言书写**
+   （key_methods 里的方法、基准、工具名保留其通行原名）。这些字段会原样注入每一章的写作约束，
+   语言不一致会直接把另一种语言的片段带进正文。"""
 
 STEP0_USER = """请根据以下课题信息生成写作蓝图 JSON。
 
@@ -75,7 +79,10 @@ ${challenges}
 ${requirements}
 
 ## 硬性约束（周期/预算/强制技术/方向限定等）
-${constraints}"""
+${constraints}
+
+## 申请书正文应使用的语言
+${output_language}"""
 
 
 # ─────────────────── A'. structure planner (only when task has no structure) ───────────────────
@@ -88,7 +95,7 @@ STRUCTURE_PLANNER_SYSTEM = """你是科研项目申请书的结构规划专家�
 {
   "template": "本申请书对应的文书模板名或体裁（能推断则填，否则填通用名如'科研项目申请书'）",
   "core_sections": [
-    {"id": "英文短标识", "name": "章节中文名", "required": ["该章必须覆盖的要素1", "要素2"], "word_limit": null}
+    {"id": "英文短标识", "name": "章节名", "required": ["该章必须覆盖的要素1", "要素2"], "word_limit": null}
   ],
   "rules": ["该体裁应遵守的行文规则（如指标须量化、外文首现给全称缩写等）"]
 }
@@ -96,7 +103,8 @@ STRUCTURE_PLANNER_SYSTEM = """你是科研项目申请书的结构规划专家�
 规则：
 1. core_sections 一般 4-6 节，覆盖"目标→指标→研究内容与创新→技术方案/路线/进度→预期成果"这一逻辑链，但**命名与要素须贴合本任务的资助计划与学科**。
 2. word_limit 仅在该资助计划确有明确字数规定时填数字，否则填 null（不臆造字数限制）。
-3. required 要具体、可据以写作与核查，覆盖资助方硬性交付要求相关的要素（如"逐条给出可量化考核指标及考核方式"）。"""
+3. required 要具体、可据以写作与核查，覆盖资助方硬性交付要求相关的要素（如"逐条给出可量化考核指标及考核方式"）。
+4. **章节名（name）与要素（required）用 ${output_language} 书写**——它们会成为正文里的小标题与写作清单。"""
 
 STRUCTURE_PLANNER_USER = """请为以下任务规划核心内容章节结构。
 
@@ -113,7 +121,75 @@ ${background}
 ${requirements}
 
 ## 硬性约束
-${constraints}"""
+${constraints}
+
+## 申请书正文应使用的语言
+${output_language}"""
+
+
+# ─────────────────────────── A''. output language ───────────────────────────
+# One prompt set, one injected language module — not two parallel prompt sets.
+# Everything here is language-*specific*: an empty-intensifier blacklist and an
+# abbreviation convention only mean anything in the language being written. The
+# rest of the prompts describe structure and stay shared, because two full
+# copies would drift the moment either side is edited.
+
+LANG_RULES: Dict[str, str] = {
+    "zh": """### 输出语言：简体中文
+
+正文、小标题、图题、表头一律用简体中文；技术名词可保留英文原名。
+
+**禁用表达**（不承载具体信息的套语，一律不得出现）：
+- "具有重要意义""意义重大""至关重要"
+- "大幅提升""显著改善""明显优化"（须替换为具体幅度）
+- "国际领先""国内首创""填补空白"（除非有可引用的客观依据）
+- "深入研究""系统研究""全面研究"
+
+**术语约定**：外文术语首现时给出全称与缩写，如"大规模预训练模型（Large Language Model, LLM）"；后续可只用缩写。""",
+
+    "en": """### Output language: English
+
+**这一条优先于本提示词中的其他一切表述惯例。** 本提示词用中文书写，那是给你的工作指令，
+**不是**输出语言的示范。正文必须**全部用英文**撰写——章节小标题、列表项、图题、表头、
+`[figure:]` 标记里的图注，无一例外；正文中不得出现任何中文字符（确需引用的中文机构名、
+法规名、专有名词可保留原文并紧跟英文说明）。
+
+Write as a subject-matter expert drafting for this funder's reviewers.
+
+**Banned wording** — empty intensifiers that carry no information:
+- "of great significance", "extremely important", "plays a vital role"
+- "significantly improve", "greatly enhance", "dramatically better" — state the actual magnitude instead
+- "world-leading", "first of its kind", "fills a gap" — unless you can point to objective grounds
+- "in-depth study of", "comprehensive study of", "systematic study of"
+
+**Terminology**: give the full form with its abbreviation on first use — "large language model (LLM)" —
+then the abbreviation alone. Follow the funder's spelling convention (British English for UK and Irish
+funders such as Wellcome and UKRI; American English otherwise) and keep it consistent throughout.""",
+}
+
+LANGUAGE_NAMES: Dict[str, str] = {"zh": "简体中文", "en": "英文（English）"}
+
+# Figure captions are written into the document, so their label follows it too.
+FIGURE_LABEL: Dict[str, str] = {"zh": "图{n}：{cap}", "en": "Figure {n}. {cap}"}
+
+
+def normalize_language(language: Any) -> str:
+    """Anything unrecognised falls back to zh, which is what every task carried
+    before `language` had a consumer."""
+    code = str(language or "").strip().lower()[:2]
+    return code if code in LANG_RULES else "zh"
+
+
+def lang_rules_for(language: Any) -> str:
+    return LANG_RULES[normalize_language(language)]
+
+
+def language_name(language: Any) -> str:
+    return LANGUAGE_NAMES[normalize_language(language)]
+
+
+def figure_label(language: Any, n: int, caption: str) -> str:
+    return FIGURE_LABEL[normalize_language(language)].format(n=n, cap=caption)
 
 
 # ─────────────────────────── B. general rules (通则) ───────────────────────────
@@ -127,16 +203,13 @@ GENERAL_RULES = """## 写作通则（本章必须遵守）
 
 本章写作须回扣上述主线——读者读完本章后应能清晰感知它如何服务于这条主线。
 
+${lang_rules}
+
 ### 纪律条款
 
 1. **字数约束**：本章字数上限为 ${word_limit}。若该值为空则不限字数，但仍须精炼。字数紧张时，优先保留量化信息与技术细节，删减修饰性语句。
-2. **具体优先**：结合本课题实际，点名真实的方法/工具/基准/标准/前沿工作，并给出具体数值、口径或参数。以下表达一律禁止出现：
-   - "具有重要意义""意义重大""至关重要"
-   - "大幅提升""显著改善""明显优化"（须替换为具体幅度）
-   - "国际领先""国内首创""填补空白"（除非有可引用的客观依据）
-   - "深入研究""系统研究""全面研究"
-   - 其他不承载具体信息的修饰性、总结性套语
-3. **术语规范**：外文术语首现时给出全称与缩写，如"大规模预训练模型（Large Language Model, LLM）"；后续可只用缩写。
+2. **具体优先**：结合本课题实际，点名真实的方法/工具/基准/标准/前沿工作，并给出具体数值、口径或参数。上文"输出语言"列出的禁用表达一律不得出现，其他不承载具体信息的修饰性、总结性套语同样禁止。
+3. **术语规范**：按上文"输出语言"给出的术语与缩写约定处理。
 4. **紧扣要求**：严格围绕以下资助方要求展开，不得跑题或承诺其外目标：
    ${requirements}
    硬性约束：${constraints}
@@ -166,7 +239,7 @@ WRITER_SYSTEM = """## 你的角色
 2. **写实写细**：每个要素下，结合课题实际内容给出具体的技术描述、方法说明或指标数据。避免概念化、泛泛而谈。
 3. **逻辑衔接**：要素之间须有逻辑过渡，形成连贯叙事，而非孤立罗列。
 4. **图示标记**：**仅当本章属于核心专业内容（研发内容/关键技术/技术方案/技术路线）时**，才可在确有助于理解处插入占位标记，格式固定为 `[figure: <图注> || <详细生图描述>]`（用竖线 `||` 分隔两部分），本章至多 1–2 处；**课题目标、考核指标、预期成果与推广等章节不要配图**。两部分是不同的东西，都要写：
-   - **图注**（`||` 之前）：一句话、简短准确，是将**出现在正文里的图题**（如"跨芯片无损加速的编译流程"），**不要**把冗长的生图描述塞进图注。
+   - **图注**（`||` 之前）：一句话、简短准确，是将**出现在正文里的图题**（如"跨芯片无损加速的编译流程"），**用正文的输出语言书写**，**不要**把冗长的生图描述塞进图注。
    - **图位描述**（`||` 之后）：供作图程序使用、不出现在正文，100–300 字。**版式、配色、画风由作图程序统一规划，你只提供内容**，必须写清下面四项：
      ① **论证目标**：这张图要证明或澄清的那一个论点（一句话）。不是"展示技术路线"这种笼统说法，而是"为什么 X 条件下 Y 会发生"或"本方法与现有做法在哪一步分岔"；
      ② **对象**：至少两个本课题真实存在、可辨认的具体对象（模块、环节、材料、样本、数据结构、主体、场景……），逐个点名；
