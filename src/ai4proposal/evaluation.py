@@ -24,16 +24,29 @@ verdict, and degrades to a neutral placeholder when retrieval is unavailable.
 from __future__ import annotations
 
 import json
+import re
 from dataclasses import dataclass, field
 from string import Template
 from typing import Any, Dict, List, Optional
 
 from .evidence import NEUTRAL_EVIDENCE
 
-# Raised from 24000, which 7 of 23 archived outputs exceeded — the worst by 33%,
-# so its whole last chapter went unread and the judges then faulted it for being
-# unfinished. 26k Chinese characters is nowhere near the context limit.
-MAX_PROPOSAL_CHARS = 40000
+# Budget in approximate tokens, not characters. Counting characters was calibrated
+# on Chinese and silently halved the English budget: task_003 came out at 72961
+# characters — about 12k words — and lost 45% of itself to a limit that leaves a
+# Chinese proposal of the same substance untouched. Raised from 24000 characters
+# first, which 7 of 23 archived outputs had already exceeded.
+MAX_PROPOSAL_TOKENS = 40000
+
+_CJK = re.compile(r"[　-鿿豈-﫿＀-￯]")
+
+
+def approx_tokens(text: str) -> int:
+    """Rough token count that holds across languages: one per CJK character,
+    one per ~4 characters otherwise. Good enough to size a budget; it is not a
+    tokenizer and is not meant to be."""
+    cjk = len(_CJK.findall(text))
+    return cjk + (len(text) - cjk) // 4
 
 # Appended when the text above is cut. Deliberately self-identifying: the earlier
 # marker read "[... 截断 ...]", which matches the writing judge's own definition of
@@ -51,11 +64,13 @@ TRUNCATION_NOTE = (
 def _truncate_for_judges(text: str) -> str:
     """Cut over-long text at the last blank line that fits, so a judge never
     reads half a sentence or half a table."""
-    if len(text) <= MAX_PROPOSAL_CHARS:
+    tokens = approx_tokens(text)
+    if tokens <= MAX_PROPOSAL_TOKENS:
         return text
-    head = text[:MAX_PROPOSAL_CHARS]
+    limit = int(len(text) * MAX_PROPOSAL_TOKENS / tokens)
+    head = text[:limit]
     cut = head.rfind("\n\n")
-    return (head[:cut] if cut > MAX_PROPOSAL_CHARS * 0.9 else head) + TRUNCATION_NOTE
+    return (head[:cut] if cut > limit * 0.9 else head) + TRUNCATION_NOTE
 
 # ── Aggregation weights (code-computed overall). Tunable; must sum to 1.00 ──
 # Rationale: what a panel actually decides on — the science and its novelty —
@@ -358,7 +373,10 @@ FIGURE_SYSTEM = """你是科研项目申请书的插图审查专家。评审组�
 **读图容差**：你对细小文字的识别本身可能出错。只有当字符明显残缺、重叠、方块化或非目标语言乱码时才判为乱码；
 仅仅是你不确定某个专有名词怎么拼，不算问题。
 
-先写观察依据，再下判断。只输出 JSON，不要 markdown 代码块。"""
+先写观察依据，再下判断。**reason、issues、suggestion 一律用中文书写**——被审的申请书可能是任何语言，
+但评审报告是中文的，同一份报告里三张图一半中文一半英文没法读。引用图上或正文里的原文时保留原文。
+
+只输出 JSON，不要 markdown 代码块。"""
 
 FIGURE_USER = Template("""审查以下配图。
 
@@ -606,11 +624,11 @@ class RubricPanel:
                  figures: Optional[List[Dict[str, Any]]] = None,
                  vision_llm: Optional[Any] = None) -> EvaluationResult:
         """`proposal_text` is the proposal Markdown; `task` is the full task dict."""
-        if len(proposal_text) > MAX_PROPOSAL_CHARS:
-            print(f"    [warn] 正文 {len(proposal_text)} 字符，超出评审上限 "
-                  f"{MAX_PROPOSAL_CHARS}，末尾 {len(proposal_text) - MAX_PROPOSAL_CHARS} "
-                  f"字符不参与评审")
-            proposal_text = _truncate_for_judges(proposal_text)
+        if approx_tokens(proposal_text) > MAX_PROPOSAL_TOKENS:
+            kept = _truncate_for_judges(proposal_text)
+            print(f"    [warn] 正文约 {approx_tokens(proposal_text)} token，超出评审上限 "
+                  f"{MAX_PROPOSAL_TOKENS}，末尾 {len(proposal_text) - len(kept)} 字符不参与评审")
+            proposal_text = kept
 
         ctx = {
             "title": task.get("title", ""),

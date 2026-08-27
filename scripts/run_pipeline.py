@@ -454,6 +454,12 @@ def main():
             print(f"\n  ── {s['id']} ── {p['composition']}\n  图题: {p['title']}\n  论点: {p['main_message']}\n  prompt: {p['image_prompt_en']}")
         print(f"\n  确认后执行：python scripts/run_pipeline.py --figures-from {out_dir}")
     json.dump(blueprint, (out_dir / "blueprint.json").open("w", encoding="utf-8"), indent=2, ensure_ascii=False)
+    # Write the structure actually used back onto the task. A planned structure
+    # used to be discarded here, so evaluate.py fell through to a hardcoded
+    # Chinese section list and reported an English proposal as missing
+    # 项目成果及推广措施 — a section it never had. That tripped the missing-section
+    # gate and capped an 81/100 run at revise_resubmit.
+    task["structure"] = structure
     json.dump(task, (out_dir / "task.json").open("w", encoding="utf-8"), indent=2, ensure_ascii=False)
 
     result = {

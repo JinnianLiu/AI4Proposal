@@ -234,6 +234,13 @@ def _english_words(text: str) -> int:
 
 DEFAULT_TITLES = {"zh": "研究内容示意图", "en": "Overview of the proposed work"}
 
+# Character caps on the fields that reach the document. They are runaway guards,
+# not style rules — but a cap sized for Chinese cuts English mid-word: 80
+# characters held a whole 图题 and left task_003 with "…framework for resolving
+# revers". Non-CJK languages get roughly the 2.5x they need for the same content.
+_FIELD_CAPS = {"zh": {"title": 80, "subtitle": 120, "caption": 180},
+               "en": {"title": 200, "subtitle": 300, "caption": 450}}
+
 
 def plan_figure(llm, figure_id: str, proposal_title: str, description: str,
                 context: str = "", language: str = "zh") -> Dict[str, Any]:
@@ -281,17 +288,18 @@ def plan_figure(llm, figure_id: str, proposal_title: str, description: str,
         return _skip(_one_line(plan.get("title")), f"image_prompt_en 过短（{words} 词）。")
 
     composition = _one_line(plan.get("composition"), 30).lower()
+    caps = _FIELD_CAPS[lang]
     plan.update({
         "action": "draw",
         "composition": composition if composition in VALID_COMPOSITIONS else "architecture",
-        "title": _one_line(plan.get("title")) or DEFAULT_TITLES[lang],
-        "subtitle": _one_line(plan.get("subtitle"), 120),
+        "title": _one_line(plan.get("title"), caps["title"]) or DEFAULT_TITLES[lang],
+        "subtitle": _one_line(plan.get("subtitle"), caps["subtitle"]),
         "main_message": _one_line(plan.get("main_message"), 300),
         "overall_design": _one_line(plan.get("overall_design"), 1200),
         "mechanism_or_method_case": _one_line(plan.get("mechanism_or_method_case"), 1200),
         "case_or_validation": _one_line(plan.get("case_or_validation"), 1200),
         "image_prompt_en": prompt,
-        "caption": _one_line(plan.get("caption"), 180),
+        "caption": _one_line(plan.get("caption"), caps["caption"]),
         "reason": "",
     })
     return plan
