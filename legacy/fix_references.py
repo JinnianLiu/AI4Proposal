@@ -100,7 +100,7 @@ def search_semantic_scholar(query: str, limit: int = 5) -> list:
 
 
 def main():
-    topics_dir = Path("cases/research_topics")
+    topics_dir = Path("legacy/research_topics")
     fixed = 0
 
     for fpath in sorted(topics_dir.glob("*.json")):

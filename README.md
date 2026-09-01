@@ -219,9 +219,9 @@ python tests/test_evaluation.py            # 离线自检，无需密钥与网�
 
 `provenance.origin_type` 全部为 `public_guideline_plus_expert_reconstruction`：资助方、额度、周期、资格、交付物来自官方原文；具体选题为该方向下的合理重构（指南本身不指定课题）。
 
-### `cases/research_topics/` —— 合成选题（继承，价值待评估）
+### `legacy/research_topics/` —— 合成选题（继承物，不参与当前流水线）
 
-88 个纯合成的学术选题，由项目前任维护者用 `legacy/build_topics.py` 生成、`legacy/fix_references.py` 替换过参考文献。**与当前流水线不兼容**（无 `structure` / `requirements` / `constraints`），保留待评估。
+88 个纯合成的学术选题，由项目前任维护者用 `legacy/build_topics.py` 生成、`legacy/fix_references.py` 替换过参考文献。它们**没有** `structure` / `requirements` / `constraints`，当前流水线读不了，也不作为评审样本。与生成它们的两个脚本一起归入 `legacy/`，`cases/` 下只留真实指南锚定的 task。
 
 ---
 
@@ -231,12 +231,13 @@ python tests/test_evaluation.py            # 离线自检，无需密钥与网�
 
 ```
 src/ai4proposal/        核心库
-├── llm.py              OpenAI 兼容后端 + generate_with_retry / parse_json / cheap_backend
+├── llm.py              OpenAI 兼容后端 · backend_from_env / generate_with_retry / parse_json
+│                       / cheap_backend / vision_backend
 ├── writer_prompts.py   域中立提示词集（蓝图 / 结构规划 / 通则 / writer / 格式修饰符）
 ├── evaluation.py       7 维细则 · 4 评委 + 主席 · 代码算总分与硬闸
 ├── evidence.py         论断抽取 + OpenAlex/arXiv 检索 + LLM 重排 → 证据卡
 ├── image_gen.py        [figure:] 标记 → 图件规划（JSON）→ PNG（两阶段）
-└── config.py           （保留待兼容，当前无调用方）
+└── intake.py           指南文档 → call → 方向/选题 → task（web 入口用）
 
 scripts/                生产 CLI
 ├── run_pipeline.py     写作流水线
@@ -249,12 +250,12 @@ tools/                  开发与校准（会消耗 API 额度）
 tests/                  离线自检（无需密钥与网络）
 └── test_evaluation.py
 
-legacy/                 继承脚本，保留备查
+legacy/                 继承物，保留备查，不参与当前流水线
 ├── build_topics.py     合成选题生成
-└── fix_references.py   一次性参考文献替换，已执行完毕
+├── fix_references.py   一次性参考文献替换，已执行完毕
+└── research_topics/    88 个合成选题（上面两个脚本的产物）
 
 cases/tasks/            指南锚定 task + INDEX.md
-cases/research_topics/  合成选题（继承）
 assets/reference.docx   Word 样式模板（宋体正文 / 黑体标题）
 outputs/                生成产物（不入库）
 ```
@@ -283,12 +284,10 @@ outputs/<task_id>/
 |---|---|
 | 写作流水线 | 基本完善 |
 | 文本 / 生图 prompt | 待调优，等待领域专家意见 |
-| 现行流水线的产出 | 仅 **task_001**（多轮，最新 v8）与 **task_002**（v1）|
-| task_003 – 006 | `outputs/` 下的产出来自**上一代流水线**，无 `blueprint.json`，不代表现状，需重跑 |
+| 现行流水线的产出 | **task_001**（多轮，最新 v13）、**task_002**（v1）、**task_003**（v2）|
+| task_004 – 006 | `outputs/` 下的产出来自**上一代流水线**，无 `blueprint.json`，不代表现状，需重跑 |
 | 评审框架 | 已重做完成，权重为初版，待跨学科样本后微调 |
 | `md_to_docx.py` | 待增强兼容性，需先有新产出以暴露排版问题 |
-
-已知问题：`proposal_final.md` 中章节标题重复一次（组装时写入一次，writer 正文自带一次）。
 
 产出目录是否由现行流水线生成，看有无 `blueprint.json` 即可判断。
 

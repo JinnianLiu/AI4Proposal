@@ -2,7 +2,7 @@
 
 基于**真实公开资助指南**转写的初始 task（跨学科），作为后续 evaluation / pipeline / 大规模 benchmark 的种子。
 
-与 `cases/research_topics/topic_*.json`（纯合成学术选题）的区别：每个 task 带有真实指南的**硬约束** —— 经费上限 (`budget.is_cap`)、资格 (`eligibility`)、硬交付物 (`requirements`)、强制约束 (`constraints`)、以及溯源 (`provenance`)。
+与 `legacy/research_topics/topic_*.json`（纯合成学术选题）的区别：每个 task 带有真实指南的**硬约束** —— 经费上限 (`budget.is_cap`)、资格 (`eligibility`)、硬交付物 (`requirements`)、强制约束 (`constraints`)、以及溯源 (`provenance`)。
 
 ## Schema 新增字段
 

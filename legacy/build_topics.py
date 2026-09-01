@@ -218,7 +218,7 @@ Create a comprehensive research topic. Write in {lang}."""
 
 
 def main():
-    out = Path("cases/research_topics")
+    out = Path("legacy/research_topics")
     if out.exists():
         import shutil
         shutil.rmtree(out)
