@@ -249,6 +249,81 @@ def _number_subsub(title: str, counter: list) -> str:
     return f"#### {counter[0]}. {title}"
 
 
+# ── Generator artefacts: AI disclaimers and placeholder lines ───────────────
+# Ported from the collaborator's document_exporter.py (see legacy/collab notes).
+# Only the artefact patterns come across. That exporter also stripped Markdown
+# decoration — lone asterisks, bold markers, runs of spaces — which it could
+# afford because it wrote runs through python-docx and had no Markdown left to
+# protect. Here it would destroy the "*图1：…*" captions and the "**[图N：…]**"
+# placeholders that _normalize_md below matches on.
+#
+# One of their alternatives is deliberately not ported: a line merely STARTING
+# with 自动生成/AI 生成 was dropped whole. In a proposal about code generation
+# that eats real sentences ("自动生成的算子在…"), so only self-referential
+# phrasings about the document itself are matched here.
+#
+# This runs on the copy handed to pandoc, never on proposal_final.md. The panel
+# reads the .md, and evaluation.decide_verdict caps the verdict at
+# revise_resubmit on any leftover placeholder — cleaning the source would hide
+# the defect from the judge rather than fix it.
+
+_NOTICE_PAREN = re.compile(
+    r"[（(][^（）()]{0,120}"
+    r"(?:自动生成|AI\s*生成|人工智能生成|提交前.{0,80}(?:核验|审核|校验|确认))"
+    r"[^（）()]{0,80}[）)]",
+    re.I,
+)
+
+# Self-referential disclaimers — the line names the document AND says it was
+# generated. Unambiguous, so trailing text is allowed ("本申请书由人工智能生成，
+# 提交前请人工核验。" carries a second clause the original port's anchor missed).
+_NOTICE_SELF = re.compile(
+    r"^(?:(?:本)?项目申请书|本文档|本文|本申请书)"
+    r".*?(?:自动生成|AI\s*生成|人工智能生成).*$",
+    re.I,
+)
+
+# Looser phrasings, kept strictly anchored: without the end anchor, "提交前…确认"
+# would also swallow a genuine 考核方式 sentence such as "提交前完成第三方检测
+# 确认，检测报告作为交付物。"
+_NOTICE_LINE = re.compile(
+    r"^(?:"
+    r"(?:注|说明|提示)?[：:]?\s*提交前.*?(?:核验|审核|校验|确认)"
+    r"|请.*?(?:人工审核|人工核验|自行核验|核验确认)"
+    r")[。；;！!]?$",
+    re.I,
+)
+
+_PLACEHOLDER_LINE = re.compile(
+    r"^(?:"
+    r"以下(?:内容)?(?:为)?(?:示例|模板|参考)"
+    r"|此处(?:填写|补充|待补充)|待补充|待完善"
+    r"|请(?:根据|按)实际情况(?:填写|补充|修改)"
+    r")[。；;：:]?$",
+    re.I,
+)
+
+_EMPTY_PAREN = re.compile(r"[（(]\s*[）)]")
+
+
+def strip_generator_artifacts(text: str) -> tuple[str, int]:
+    """Drop AI disclaimers and placeholder lines from the export copy.
+
+    Returns the cleaned text and how many artefacts were removed, so the caller
+    can say so rather than silently shortening a deliverable.
+    """
+    text, removed = _NOTICE_PAREN.subn("", text)
+    kept = []
+    for line in text.split("\n"):
+        stripped = line.strip()
+        if stripped and (_NOTICE_SELF.match(stripped) or _NOTICE_LINE.match(stripped)
+                         or _PLACEHOLDER_LINE.match(stripped)):
+            removed += 1
+            continue
+        kept.append(_EMPTY_PAREN.sub("", line))   # "（…自动生成）" can leave "（）"
+    return "\n".join(kept), removed
+
+
 def _normalize_md(text: str, section_names=None) -> str:
     """Polish generator markdown for Word:
     - blank line before pipe tables AND lists (pandoc needs it, else they collapse
@@ -517,11 +592,12 @@ def convert(md_path: Path, out_path: Path | None = None, ref_path: Path | None =
 
     # normalize into a temp file in the same folder so relative image paths still resolve
     section_names = _load_section_names(md_path)
+    cleaned, removed = strip_generator_artifacts(md_path.read_text(encoding="utf-8"))
+    if removed:
+        print(f"[clean] 移除 {removed} 处生成痕迹（免责声明 / 占位行）"
+              f"—— 只影响导出的 .docx，{md_path.name} 未改动")
     tmp = md_path.with_name(".__pandoc_tmp.md")
-    tmp.write_text(
-        _normalize_md(md_path.read_text(encoding="utf-8"), section_names),
-        encoding="utf-8",
-    )
+    tmp.write_text(_normalize_md(cleaned, section_names), encoding="utf-8")
     extra = [
         f"--reference-doc={ref_path}",
         f"--resource-path={md_path.parent}",  # resolve figures/xxx.png
