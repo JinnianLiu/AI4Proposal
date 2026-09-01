@@ -270,7 +270,17 @@ def plan_slots(llm, slots, title, context, max_figures, lang="zh"):
 
 def _patch(text, slots, out_dir, img_cfg, draw=True, lang="zh"):
     """Replace each marker with an image reference (rendering it first when
-    `draw`) or with a text placeholder. Returns (text, manifest)."""
+    `draw`), or drop it. Returns (text, manifest).
+
+    A slot with no image leaves NOTHING behind. It used to emit a bracketed
+    caption, `**[图2：…]**`, which is indistinguishable from a leftover template
+    placeholder — and the writing judge duly reported it as one, so the
+    placeholder gate in decide_verdict capped the verdict at revise_resubmit.
+    task_003 lost an 84.0/100 that way, on a figure the planner had refused ON
+    PURPOSE (a Gantt chart, which PROGRESS_PATTERNS forbids). The pipeline was
+    penalising itself for obeying its own rule. The slot is not lost: id,
+    caption and skip_reason are all recorded in figure_manifest.json.
+    """
     manifest = []
     for i, slot in enumerate(slots):
         plan = slot.get("plan") or {}
@@ -285,12 +295,11 @@ def _patch(text, slots, out_dir, img_cfg, draw=True, lang="zh"):
             if path:
                 write_plan_record(path, plan)
             else:
-                print(f"    [img] {slot['id']} FAILED -> 文字占位")
+                print(f"    [img] {slot['id']} FAILED -> 移除图位标记")
         if path:
             text = text.replace(slot["marker"], _img_md(slot["id"], i, cap, lang), 1)
         else:
-            text = text.replace(slot["marker"],
-                                f"\n\n**[{WP.figure_label(lang, i + 1, cap)}]**\n\n", 1)
+            text = text.replace(slot["marker"], "", 1)
         manifest.append({
             "id": slot["id"], "caption": cap, "note": plan.get("caption", ""),
             "composition": plan.get("composition", ""),
@@ -298,7 +307,8 @@ def _patch(text, slots, out_dir, img_cfg, draw=True, lang="zh"):
             "skip_reason": plan.get("reason", ""),
             "image": f"figures/{slot['id']}.png" if path else None,
         })
-    return text, manifest
+    # A dropped marker that sat on its own line leaves a triple blank behind.
+    return re.sub(r"\n{4,}", "\n\n\n", text), manifest
 
 
 def process_figures(proposal_text, out_dir, img_cfg, max_figures, mode, llm, task):
