@@ -33,7 +33,9 @@ import time
 import urllib.error
 import urllib.request
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, Optional
+
+from .llm import parse_json
 
 # Landscape by default: a square canvas forces multi-zone figures to stack
 # vertically and cramps them. Override with AI4PROPOSAL_IMAGE_SIZE.
@@ -198,17 +200,6 @@ def _block(value: Any, limit: int = 12000) -> str:
     return re.sub(r"\n{3,}", "\n\n", text)[:limit]
 
 
-def _safe_json(raw: str) -> Dict[str, Any]:
-    try:
-        start, end = raw.find("{"), raw.rfind("}") + 1
-        if start < 0 or end <= start:
-            return {}
-        parsed = json.loads(raw[start:end])
-        return parsed if isinstance(parsed, dict) else {}
-    except Exception:
-        return {}
-
-
 def _skip(title: str = "", reason: str = "") -> Dict[str, Any]:
     return {
         "action": "skip", "composition": "", "title": title, "subtitle": "",
@@ -273,7 +264,7 @@ def plan_figure(llm, figure_id: str, proposal_title: str, description: str,
     except Exception as exc:
         return _skip("", f"图件规划调用失败：{_one_line(exc, 180)}")
 
-    plan = _safe_json(raw)
+    plan = parse_json(raw)
     if _one_line(plan.get("action"), 20).lower() == "skip":
         return _skip(_one_line(plan.get("title")), _one_line(plan.get("reason"), 180))
 

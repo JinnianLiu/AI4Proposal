@@ -39,7 +39,7 @@ try:
 except Exception:
     pass
 
-from ai4proposal.llm import LLMBackend, generate_with_retry, parse_json
+from ai4proposal.llm import backend_from_env, generate_with_retry, parse_json
 from ai4proposal.image_gen import plan_figure, render_figure, image_config_from_env, write_plan_record
 from ai4proposal import writer_prompts as WP
 
@@ -368,14 +368,7 @@ def main():
         task_path = Path("cases/tasks") / (args.task if args.task.endswith(".json") else f"{args.task}.json")
     task = json.loads(task_path.read_text(encoding="utf-8"))
 
-    llm = LLMBackend(
-        model=os.environ.get("AI4PROPOSAL_MODEL", "deepseek-chat"),
-        api_key=os.environ.get("AI4PROPOSAL_API_KEY", ""),
-        base_url=os.environ.get("AI4PROPOSAL_BASE_URL", "https://api.deepseek.com"),
-        timeout_seconds=float(os.environ.get("AI4PROPOSAL_TIMEOUT_SECONDS", "300")),
-        max_retries=int(os.environ.get("AI4PROPOSAL_SDK_RETRIES", "1")),
-        deadline_seconds=float(os.environ.get("AI4PROPOSAL_CALL_DEADLINE_SECONDS", "600")),
-    )
+    llm = backend_from_env()
     if not llm.api_key:
         sys.exit("ERROR: AI4PROPOSAL_API_KEY not set")
 

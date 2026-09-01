@@ -29,7 +29,7 @@ except Exception:
     pass
 
 from ai4proposal.evaluation import RubricPanel, WEIGHTS, DIMENSION_NAMES  # noqa: E402
-from ai4proposal.llm import LLMBackend  # noqa: E402
+from ai4proposal.llm import backend_from_env  # noqa: E402
 
 
 def main() -> int:
@@ -46,12 +46,7 @@ def main() -> int:
     task_path = Path(args.task) if args.task else md.parent / "task.json"
     task = json.loads(task_path.read_text(encoding="utf-8"))
 
-    llm = LLMBackend(
-        model=os.environ.get("AI4PROPOSAL_MODEL", "deepseek-chat"),
-        api_key=os.environ.get("AI4PROPOSAL_API_KEY", ""),
-        base_url=os.environ.get("AI4PROPOSAL_BASE_URL", "https://api.deepseek.com"),
-        timeout_seconds=float(os.environ.get("AI4PROPOSAL_TIMEOUT_SECONDS", "300")),
-    )
+    llm = backend_from_env()
     if not llm.api_key:
         sys.exit("ERROR: AI4PROPOSAL_API_KEY not set")
 

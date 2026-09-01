@@ -79,38 +79,6 @@ class LLMBackend:
     # Wall-clock ceiling per HTTP call, enforced above the SDK's idle timeout.
     deadline_seconds: float = 600.0
 
-    @classmethod
-    def from_env(cls) -> Optional["LLMBackend"]:
-        enabled = os.getenv("AI4PROPOSAL_USE_LLM", "").strip().lower()
-        if enabled not in {"1", "true", "yes", "on"}:
-            return None
-        model = os.getenv("AI4PROPOSAL_MODEL", "").strip()
-        if not model:
-            raise ValueError("AI4PROPOSAL_USE_LLM is enabled but AI4PROPOSAL_MODEL is not set.")
-        api_key = (
-            os.getenv("AI4PROPOSAL_API_KEY")
-            or os.getenv("OPENAI_API_KEY")
-            or os.getenv("CUSTOM_API_KEY")
-            or ""
-        ).strip()
-        if not api_key:
-            raise ValueError("No API key found for AI4Proposal LLM mode.")
-        base_url = (
-            os.getenv("AI4PROPOSAL_BASE_URL")
-            or os.getenv("OPENAI_BASE_URL")
-            or os.getenv("CUSTOM_BASE_URL")
-            or ""
-        ).strip() or None
-        timeout_seconds = float(os.getenv("AI4PROPOSAL_TIMEOUT_SECONDS", "300"))
-        return cls(
-            model=model,
-            api_key=api_key,
-            base_url=base_url,
-            timeout_seconds=timeout_seconds,
-            max_retries=int(os.getenv("AI4PROPOSAL_SDK_RETRIES", "1")),
-            deadline_seconds=float(os.getenv("AI4PROPOSAL_CALL_DEADLINE_SECONDS", "600")),
-        )
-
     def _make_client(self) -> Any:
         try:
             from openai import OpenAI
@@ -211,6 +179,25 @@ class LLMBackend:
         return text
 
 
+def backend_from_env(api_key: Optional[str] = None) -> LLMBackend:
+    """The text backend every entry point uses, built from the documented env vars.
+
+    Each of run_pipeline / evaluate / measure_variance / web.server used to inline
+    this same block, so a changed default (the 300s timeout, the SDK_RETRIES=1 that
+    stops one visible call becoming three requests) had to be edited in four
+    places. `api_key` is a parameter because the web app can take the key from a
+    request instead of the environment.
+    """
+    return LLMBackend(
+        model=os.environ.get("AI4PROPOSAL_MODEL", "deepseek-chat"),
+        api_key=api_key if api_key is not None else os.environ.get("AI4PROPOSAL_API_KEY", ""),
+        base_url=os.environ.get("AI4PROPOSAL_BASE_URL", "https://api.deepseek.com"),
+        timeout_seconds=float(os.environ.get("AI4PROPOSAL_TIMEOUT_SECONDS", "300")),
+        max_retries=int(os.environ.get("AI4PROPOSAL_SDK_RETRIES", "1")),
+        deadline_seconds=float(os.environ.get("AI4PROPOSAL_CALL_DEADLINE_SECONDS", "600")),
+    )
+
+
 def cheap_backend(main: LLMBackend) -> LLMBackend:
     """A smaller/faster model on the same endpoint, for auxiliary calls such as
     evidence reranking where judgement quality is not the bottleneck.
@@ -271,12 +258,21 @@ def generate_with_retry(llm: Optional[LLMBackend], system: str, prompt: str,
 
 
 def parse_json(text: str) -> Dict[str, Any]:
-    """Best-effort JSON extraction from an LLM reply (tolerates prose/fences)."""
+    """Best-effort JSON extraction from an LLM reply (tolerates prose/fences).
+
+    The one extractor for the whole package. There used to be five near-copies
+    (here, evaluation, evidence, intake, image_gen) that had quietly drifted
+    apart — only two guarded against empty input, only one checked that the
+    parse actually produced an object — so how tolerant a judge was of a
+    malformed reply depended on which module happened to call it.
+    """
+    if not text:
+        return {}
     try:
-        start = text.find("{")
-        end = text.rfind("}") + 1
-        if start >= 0 and end > start:
-            return json.loads(text[start:end])
+        start, end = text.find("{"), text.rfind("}") + 1
+        if start < 0 or end <= start:
+            return {}
+        parsed = json.loads(text[start:end])
+        return parsed if isinstance(parsed, dict) else {}
     except Exception:
-        pass
-    return {}
+        return {}

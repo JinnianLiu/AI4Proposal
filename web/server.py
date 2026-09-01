@@ -46,7 +46,7 @@ from ai4proposal.intake import (  # noqa: E402
     parse_topic_doc, parse_topic_list, pick_direction, propose_topics,
     topics_as_directions,
 )
-from ai4proposal.llm import LLMBackend  # noqa: E402
+from ai4proposal.llm import LLMBackend, backend_from_env  # noqa: E402
 
 WEB_DIR = Path(__file__).resolve().parent
 JOBS_DIR = ROOT / "outputs" / "_web"
@@ -72,14 +72,7 @@ def _llm() -> LLMBackend:
     key = os.environ.get("AI4PROPOSAL_API_KEY", "").strip()
     if not key:
         raise HTTPException(500, "服务端未配置 AI4PROPOSAL_API_KEY")
-    return LLMBackend(
-        model=os.environ.get("AI4PROPOSAL_MODEL", "deepseek-chat"),
-        api_key=key,
-        base_url=os.environ.get("AI4PROPOSAL_BASE_URL", "https://api.deepseek.com"),
-        timeout_seconds=float(os.environ.get("AI4PROPOSAL_TIMEOUT_SECONDS", "300")),
-        max_retries=int(os.environ.get("AI4PROPOSAL_SDK_RETRIES", "1")),
-        deadline_seconds=float(os.environ.get("AI4PROPOSAL_CALL_DEADLINE_SECONDS", "600")),
-    )
+    return backend_from_env(key)
 
 
 def _set(job_id: str, **fields) -> None:

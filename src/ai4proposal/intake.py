@@ -28,6 +28,8 @@ import zipfile
 from io import BytesIO
 from typing import Any, Dict, List, Optional
 
+from .llm import parse_json
+
 # Raised from 20000, which showed only 27% of a Wellcome application form to
 # parse_template: two sections that belong in the proposal (Research involving
 # animals, Risks of research misuse) sat past the cut and were never seen.
@@ -157,7 +159,7 @@ def parse_call(llm: Any, guideline_text: str) -> Dict[str, Any]:
         system_prompt=PARSE_SYSTEM,
         user_prompt=PARSE_USER.replace("${guideline_text}", text),
     )
-    data = _parse_json(raw)
+    data = parse_json(raw)
     if not isinstance(data, dict) or not data.get("program"):
         raise ValueError("指南解析失败：模型未返回可用的结构化结果，请重试或检查文件内容")
 
@@ -325,7 +327,7 @@ def parse_template(llm: Any, template_text: str) -> Optional[Dict[str, Any]]:
         system_prompt=TEMPLATE_SYSTEM,
         user_prompt=TEMPLATE_USER.replace("${template_text}", template_text[:MAX_GUIDELINE_CHARS]),
     )
-    data = _parse_json(raw)
+    data = parse_json(raw)
     sections = data.get("core_sections") if isinstance(data, dict) else None
     if not isinstance(sections, list) or not sections:
         return None
@@ -357,7 +359,7 @@ def parse_topic_doc(llm: Any, topic_text: str) -> Dict[str, Any]:
         system_prompt=TOPIC_DOC_SYSTEM,
         user_prompt=TOPIC_DOC_USER.replace("${topic_text}", topic_text[:MAX_GUIDELINE_CHARS]),
     )
-    data = _parse_json(raw)
+    data = parse_json(raw)
     title = str(data.get("title") or "").strip()
     if not title:
         raise ValueError("选题文档解析失败：未能识别出课题名称")
@@ -466,7 +468,7 @@ def parse_topic_list(llm: Any, list_text: str, chunk_chars: int = 6000) -> List[
             raw = llm.generate_text(
                 system_prompt=TOPIC_LIST_SYSTEM,
                 user_prompt=TOPIC_LIST_USER.replace("${list_text}", chunk))
-            items = (_parse_json(raw) or {}).get("topics") or []
+            items = (parse_json(raw) or {}).get("topics") or []
         except Exception:
             continue
         for it in items:
@@ -544,7 +546,7 @@ def classify_documents(llm: Any, docs: List[Dict[str, str]]) -> Dict[str, str]:
     try:
         raw = llm.generate_text(system_prompt=CLASSIFY_SYSTEM,
                                 user_prompt=CLASSIFY_USER.replace("${docs}", listing))
-        roles = (_parse_json(raw) or {}).get("roles") or {}
+        roles = (parse_json(raw) or {}).get("roles") or {}
         for name, role in roles.items():
             if name in result and role in ("guideline", "template", "topic_list", "topic"):
                 result[name] = role
@@ -601,7 +603,7 @@ def pick_direction(llm: Any, call: Dict[str, Any]) -> Dict[str, Any]:
             user_prompt=(PICK_USER.replace("${program}", call.get("program", ""))
                                   .replace("${directions}", listing)
                                   .replace("${requirements}", reqs)))
-        data = _parse_json(raw)
+        data = parse_json(raw)
         chosen = next((d for d in dirs if d["id"] == data.get("id")), None)
         if chosen:
             return {**chosen, "reason": data.get("reason", "")}
@@ -674,7 +676,7 @@ def propose_topics(llm: Any, call: Dict[str, Any], direction: Dict[str, Any],
             .replace("${constraints}", "\n".join(f"- {c}" for c in call.get("constraints", [])) or "（未列明）")
             .replace("${n}", str(n))) + steer
     raw = llm.generate_text(system_prompt=TOPIC_SYSTEM, user_prompt=user)
-    data = _parse_json(raw)
+    data = parse_json(raw)
     topics = data.get("topics") if isinstance(data, dict) else None
     if not isinstance(topics, list) or not topics:
         raise ValueError("选题生成失败：模型未返回候选课题，请重试")
@@ -754,15 +756,3 @@ def build_task(call: Dict[str, Any], direction: Dict[str, Any],
 
 # ═══════════════════════════════ helpers ═══════════════════════════════
 
-def _parse_json(text: str) -> Dict[str, Any]:
-    """Best-effort JSON extraction from an LLM reply."""
-    if not text:
-        return {}
-    try:
-        start = text.find("{")
-        end = text.rfind("}") + 1
-        if start >= 0 and end > start:
-            return json.loads(text[start:end])
-    except Exception:
-        pass
-    return {}

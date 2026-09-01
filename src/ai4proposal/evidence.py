@@ -24,6 +24,8 @@ from dataclasses import dataclass, field
 from xml.etree import ElementTree
 from typing import Any, Callable, Dict, List, Optional
 
+from .llm import parse_json
+
 MAX_PROPOSAL_CHARS = 24000
 
 CLAIM_TYPES = ("novelty", "metric", "method")
@@ -160,17 +162,6 @@ ${proposal_text}
 }"""
 
 
-def _parse_json(text: str) -> Dict[str, Any]:
-    try:
-        s = text.find("{")
-        e = text.rfind("}") + 1
-        if s >= 0 and e > s:
-            return json.loads(text[s:e])
-    except Exception:
-        pass
-    return {}
-
-
 def extract_claims(llm: Any, proposal_text: str, max_claims: int = 6) -> List[Claim]:
     """One LLM call → list of check-worthy claims. Returns [] on any failure."""
     if len(proposal_text) > MAX_PROPOSAL_CHARS:
@@ -182,7 +173,7 @@ def extract_claims(llm: Any, proposal_text: str, max_claims: int = 6) -> List[Cl
         raw = llm.generate_text(system_prompt=EXTRACT_SYSTEM, user_prompt=user)
     except Exception:
         return []
-    data = _parse_json(raw)
+    data = parse_json(raw)
     claims: List[Claim] = []
     for item in (data.get("claims", []) if isinstance(data, dict) else [])[:max_claims]:
         if not isinstance(item, dict):
@@ -469,7 +460,7 @@ def rerank_papers(llm: Any, claim: str, papers: List[dict]) -> List[dict]:
         raw = llm.generate_text(system_prompt=RERANK_SYSTEM, user_prompt=user)
     except Exception:
         return papers
-    data = _parse_json(raw)
+    data = parse_json(raw)
     keep = data.get("keep")
     if not isinstance(keep, list):
         return papers

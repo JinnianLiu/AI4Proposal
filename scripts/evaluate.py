@@ -220,15 +220,8 @@ def main() -> int:
     task = resolve_task(md_path, args.task)
 
     import os
-    from ai4proposal.llm import LLMBackend
-    llm = LLMBackend(
-        model=os.environ.get("AI4PROPOSAL_MODEL", "deepseek-chat"),
-        api_key=os.environ.get("AI4PROPOSAL_API_KEY", ""),
-        base_url=os.environ.get("AI4PROPOSAL_BASE_URL", "https://api.deepseek.com"),
-        timeout_seconds=float(os.environ.get("AI4PROPOSAL_TIMEOUT_SECONDS", "300")),
-        max_retries=int(os.environ.get("AI4PROPOSAL_SDK_RETRIES", "1")),
-        deadline_seconds=float(os.environ.get("AI4PROPOSAL_CALL_DEADLINE_SECONDS", "600")),
-    )
+    from ai4proposal.llm import backend_from_env
+    llm = backend_from_env()
     if not llm.api_key:
         sys.exit("ERROR: AI4PROPOSAL_API_KEY not set")
 

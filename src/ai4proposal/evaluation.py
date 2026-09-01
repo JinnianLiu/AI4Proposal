@@ -29,6 +29,7 @@ from dataclasses import dataclass, field
 from string import Template
 from typing import Any, Dict, List, Optional
 
+from .llm import parse_json
 from .evidence import NEUTRAL_EVIDENCE
 
 # Budget in approximate tokens, not characters. Counting characters was calibrated
@@ -517,16 +518,6 @@ def decide_verdict(overall: float, has_uncovered_requirement: bool,
 
 # ══════════════════════════════════ Helpers ══════════════════════════════════
 
-def _parse_json(text: str) -> Dict[str, Any]:
-    try:
-        s = text.find("{")
-        e = text.rfind("}") + 1
-        if s >= 0 and e > s:
-            return json.loads(text[s:e])
-    except Exception:
-        pass
-    return {}
-
 
 def _fmt_numbered(items: Any) -> str:
     if not items:
@@ -599,7 +590,7 @@ class RubricPanel:
                     ),
                     [fig["path"]],
                 )
-                data = _parse_json(raw)
+                data = parse_json(raw)
             except Exception as e:
                 msg = f"figure {fid}: {type(e).__name__}: {e}"
                 if errors is not None:
@@ -651,7 +642,7 @@ class RubricPanel:
                 print(f"    [judge] {role} → {', '.join(dims)}")
             try:
                 raw = self._call(system, user_tpl.safe_substitute(ctx))
-                data = _parse_json(raw)
+                data = parse_json(raw)
             except Exception as e:
                 errors.append(f"{role}: {e}")
                 data = {}
@@ -733,7 +724,7 @@ class RubricPanel:
         try:
             raw = self._call(CHAIR_SYSTEM, CHAIR_USER.safe_substitute(
                 title=task.get("title", ""), reviews="\n".join(digest), overall=overall))
-            return _parse_json(raw)
+            return parse_json(raw)
         except Exception as e:
             errors.append(f"chair: {e}")
             return {"strengths": [], "weaknesses": [], "summary": ""}
