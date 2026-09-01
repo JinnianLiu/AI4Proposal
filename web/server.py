@@ -215,7 +215,9 @@ async def config() -> Dict[str, Any]:
         "replay_source": replay.name if replay else None,
         "stages": STAGES,
         "has_image_key": bool(os.environ.get("AI4PROPOSAL_IMAGE_API_KEY")),
-        "model": os.environ.get("AI4PROPOSAL_MODEL", "deepseek-chat"),
+        # Ask the backend rather than re-reading the env with a second default,
+        # which would report a model the run does not actually use.
+        "model": backend_from_env("unused").model,
     }
 
 

@@ -15,7 +15,7 @@ Env (no keys in source):
 
 Example (PowerShell):
   $env:PYTHONUTF8=1
-  $env:AI4PROPOSAL_API_KEY="sk-..."; $env:AI4PROPOSAL_BASE_URL="https://api.deepseek.com"; $env:AI4PROPOSAL_MODEL="deepseek-chat"
+  $env:AI4PROPOSAL_API_KEY="sk-..."; $env:AI4PROPOSAL_BASE_URL="https://api.deepseek.com"; $env:AI4PROPOSAL_MODEL="deepseek-v4-pro"
   $env:AI4PROPOSAL_IMAGE_API_KEY="sk-..."
   python scripts/run_pipeline.py --task cases/tasks/task_001.json
 """

@@ -189,7 +189,7 @@ def backend_from_env(api_key: Optional[str] = None) -> LLMBackend:
     request instead of the environment.
     """
     return LLMBackend(
-        model=os.environ.get("AI4PROPOSAL_MODEL", "deepseek-chat"),
+        model=os.environ.get("AI4PROPOSAL_MODEL", "deepseek-v4-pro"),
         api_key=api_key if api_key is not None else os.environ.get("AI4PROPOSAL_API_KEY", ""),
         base_url=os.environ.get("AI4PROPOSAL_BASE_URL", "https://api.deepseek.com"),
         timeout_seconds=float(os.environ.get("AI4PROPOSAL_TIMEOUT_SECONDS", "300")),

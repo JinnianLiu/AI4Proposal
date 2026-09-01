@@ -47,7 +47,7 @@ export AI4PROPOSAL_IMAGE_API_KEY=sk-...        # 出图（可选）
 |---|:--:|---|---|
 | `AI4PROPOSAL_API_KEY` | ✅ | — | 文本 LLM 密钥 |
 | `AI4PROPOSAL_BASE_URL` | | `https://api.deepseek.com` | OpenAI 兼容端点 |
-| `AI4PROPOSAL_MODEL` | | `deepseek-chat` | 正式跑建议 `deepseek-v4-pro` |
+| `AI4PROPOSAL_MODEL` | | `deepseek-v4-pro` | 调试想快可换 `deepseek-chat`，但分数与正式跑不可比 |
 | `AI4PROPOSAL_TIMEOUT_SECONDS` | | `300` | 单次调用超时；长章节实测可达 200s |
 | `AI4PROPOSAL_SDK_RETRIES` | | `1` | openai SDK 内部重试次数。SDK 默认 2，会让一次可见调用静默变成三次请求 |
 | `AI4PROPOSAL_QUIET_LLM` | | — | 置 `1` 关闭每次调用的 `[llm] <端点> <耗时> <字数>` 日志 |
