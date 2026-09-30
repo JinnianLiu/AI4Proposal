@@ -1,0 +1,112 @@
+{
+  "task_id": "task_007",
+  "program": "NSF Faculty Early Career Development Program (CAREER), NSF 22-586",
+  "direction": "CISE / Information and Intelligent Systems (IIS): machine learning for ecological monitoring",
+  "title": "CAREER: Reliable machine learning for automated biodiversity monitoring under distribution shift",
+  "domain": "computer_science_x_ecology",
+  "language": "en",
+  "background": "Camera traps, passive acoustic recorders and drone imagery now generate far more ecological observations than experts can label, and machine-learning classifiers have become the default way to turn these streams into species occurrence and abundance data. Yet models trained at one set of sites, seasons or sensor types degrade sharply when deployed elsewhere, and the errors are not random: rare, cryptic and nocturnal species are systematically under-detected, which biases the very population trends that conservation decisions rely on. Ecologists have few tools to know when a model's output can be trusted at a new site, or how its errors propagate into downstream estimates such as occupancy or trend models. This CAREER project will develop machine-learning methods that detect and adapt to distribution shift in ecological sensor data, quantify prediction uncertainty in a form that ecological models can ingest, and prioritise the scarce expert labels where they most improve population estimates. The integrated education plan will train undergraduate and graduate students from ecology and computer science to build and critically evaluate such tools together.",
+  "challenges": [
+    "Detecting and adapting to distribution shift across sites, seasons and sensors when labelled data from the new deployment are scarce or absent",
+    "Class imbalance and long-tailed species distributions: rare and cryptic species are the most ecologically important and the most often missed",
+    "Propagating classifier uncertainty into ecological inference (occupancy, abundance, trend models) instead of treating predicted labels as ground truth",
+    "Allocating limited expert annotation effort where it most improves the ecological estimate rather than classifier accuracy alone",
+    "Designing education activities that genuinely integrate with the research rather than running alongside it"
+  ],
+  "references": [],
+  "sponsor": "U.S. National Science Foundation (NSF), Directorate for Computer and Information Science and Engineering (CISE)",
+  "budget": {
+    "amount": 400000,
+    "currency": "USD",
+    "dur": 60,
+    "is_cap": false,
+    "note": "CAREER awards must total a minimum of $400,000 over 5 years ($500,000 for BIO, ENG and OPP). The minimum is a floor, not a cap; this task is placed in CISE, so the $400,000 / 60-month minimum applies."
+  },
+  "eligibility": "The PI must hold a tenure-track or tenure-track-equivalent assistant professor position (or equivalent untenured title) at a US institution of higher education, with an appointment of at least 50% that includes both research and educational responsibilities. An eligible PI may submit only one CAREER proposal per annual competition. No co-PIs are permitted.",
+  "requirements": [
+    "Present a single integrated plan of research and education, not a research plan with a separate outreach add-on",
+    "Describe the proposed research: specific objectives, methods and procedures, and expected significance of the results (preliminary supporting data where appropriate)",
+    "Describe the proposed educational activities, including plans to evaluate their impact",
+    "Describe how the research and educational activities are integrated with each other",
+    "Describe other broader impacts, beyond the education plan, that will result from the project"
+  ],
+  "constraints": [
+    "Project duration is 5 years",
+    "Total award of at least $400,000 over 5 years (CISE)",
+    "Single PI; no co-PIs",
+    "Project Description is limited to 15 pages"
+  ],
+  "structure": {
+    "template": "NSF CAREER Project Description (NSF 22-586 and the NSF PAPPG)",
+    "core_sections": [
+      {
+        "id": "research_plan",
+        "name": "Research Plan",
+        "word_limit": null,
+        "required": [
+          "Research objectives and the specific questions addressed",
+          "Intellectual merit: how the work advances knowledge in machine learning and in ecological inference",
+          "Methods and procedures for each research thrust, with evaluation design and datasets",
+          "Preliminary supporting data where appropriate",
+          "Expected significance of the results"
+        ]
+      },
+      {
+        "id": "education_plan",
+        "name": "Education Plan",
+        "word_limit": null,
+        "required": [
+          "Proposed educational activities and the students or audiences they reach",
+          "Plan to evaluate the impact of the educational activities"
+        ]
+      },
+      {
+        "id": "integration",
+        "name": "Integration of Research and Education",
+        "word_limit": null,
+        "required": [
+          "How specific research thrusts feed specific education activities and vice versa"
+        ]
+      },
+      {
+        "id": "broader_impacts",
+        "name": "Broader Impacts",
+        "word_limit": null,
+        "required": [
+          "Broader impacts beyond the education plan (e.g., open tools and data for the conservation community, partnerships)"
+        ]
+      },
+      {
+        "id": "timeline",
+        "name": "Five-Year Timeline",
+        "word_limit": null,
+        "required": [
+          "Year-by-year milestones covering both research and education activities"
+        ]
+      }
+    ],
+    "rules": [
+      "The whole Project Description must fit within 15 pages (roughly 7,000-8,000 words including figures); keep every section proportionate to that limit",
+      "Broader Impacts must appear as a separate section with that heading, as the NSF PAPPG requires",
+      "Results from Prior NSF Support, the Departmental Letter, the Data Management Plan and the Mentoring Plan are outside the scope of this document"
+    ]
+  },
+  "provenance": {
+    "origin_type": "public_guideline_plus_expert_reconstruction",
+    "retrieved_at": "2026-09-30",
+    "basis_urls": [
+      "https://www.nsf.gov/funding/opportunities/career-faculty-early-career-development-program",
+      "https://www.nsf.gov/funding/opportunities/career-faculty-early-career-development-program/nsf22-586/solicitation"
+    ],
+    "reference_proposals": [
+      "ogrants bahlai_christie_2021 — 'CAREER: What's next? Developing novel quantitative tools to address conflicting evidence in temporal ecology', NSF CAREER, funded — https://github.com/BahlaiLab/CAREER2020",
+      "ogrants zare_alina_2013 — 'CAREER: Supervised Learning for Uncertain and Incomplete Data', NSF CAREER (CS), funded"
+    ],
+    "note": "Transcribed from NSF 22-586: minimum award ($400,000 / $500,000 for BIO, ENG, OPP) over 5 years, eligibility, one proposal per PI per competition, no co-PIs, the five required elements of the Project Description, and the 15-page limit. The 'Broader Impacts' heading rule comes from the NSF PAPPG. The research topic is a reconstruction in the ecology x machine-learning space that the two ogrants CAREER proposals occupy; it does not copy either proposal. The 'Five-Year Timeline' section is a common CAREER convention, not a solicitation requirement. TO VERIFY: that NSF 22-586 is still the solicitation in force for the 2026-2027 cycle, and the exact wording of the five Project Description elements (the fetch returned them truncated)."
+  },
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

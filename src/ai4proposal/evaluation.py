@@ -62,13 +62,13 @@ TRUNCATION_NOTE = (
 )
 
 
-def _truncate_for_judges(text: str) -> str:
+def _truncate_for_judges(text: str, max_tokens: int = MAX_PROPOSAL_TOKENS) -> str:
     """Cut over-long text at the last blank line that fits, so a judge never
     reads half a sentence or half a table."""
     tokens = approx_tokens(text)
-    if tokens <= MAX_PROPOSAL_TOKENS:
+    if tokens <= max_tokens:
         return text
-    limit = int(len(text) * MAX_PROPOSAL_TOKENS / tokens)
+    limit = int(len(text) * max_tokens / tokens)
     head = text[:limit]
     cut = head.rfind("\n\n")
     return (head[:cut] if cut > limit * 0.9 else head) + TRUNCATION_NOTE
@@ -363,13 +363,33 @@ FIGURE_SYSTEM = """你是科研项目申请书的插图审查专家。评审组�
 
 一、**与正文的匹配度**——这张图能否清晰、直观地呈现它所在正文段落的核心内容。
     你要回答的是"读者只看这张图，能不能抓住这段正文要讲的那件事"，而不是"图里的元素在正文里有没有出现过"。
-    典型失分：图画的是另一个层面的东西；图只是把正文的名词摆成方框，没有体现它们之间的关系；
-    图注承诺了某个机制或流程，图里找不到；正文的核心论点在图上完全看不出来。
+    分两层看，并分别写依据：
+    - **与图注**：图注承诺的机制、流程或对比，图里是否画出来了；
+    - **与所在段落**：图是否抓住了这段正文的核心论点，对象之间的关系（方向、因果、层级）是否与正文一致。
+
+    分档锚点：
+    - good：只看图就能抓住该段正文的核心论点；图注承诺的内容都能在图里找到；对象之间的关系与正文一致。
+    - partial：主题一致，但只呈现了核心论点的一部分；或只把正文的名词摆成方框、没有画出它们之间的关系；
+      或图注承诺的某个关键要素在图里找不到。
+    - mismatch：图画的是另一件事或另一个层面；或图里的关系与正文矛盾；读者只看图会得出与正文不同的理解。
 
 二、**图片表现**——图本身作为一张学术插图的质量。
     看：文字标签是否清晰可读、有无乱码或残缺字符；布局是否清楚、有无重叠遮挡；
-    箭头与连线的指向是否明确；有无编造的具体数值（百分比、倍数、样本量、显著性）；
-    有无与内容无关的装饰、卡通、照片写实渲染；整体是否达到可放进正式申请书的水准。
+    箭头与连线的指向是否明确；有无编造的具体数值；有无与内容无关的装饰、卡通、照片写实渲染。
+
+    分档锚点：
+    - good：标签清晰可读、无乱码；布局清楚、无遮挡；指向明确；无编造数值；无无关装饰；可以直接放进正式申请书。
+    - acceptable：有个别小问题（个别标签偏小、局部拥挤、轻微装饰），不影响理解，稍作修改即可使用。
+    - poor：存在影响理解或可信度的问题，如大面积乱码或不可读、严重遮挡、指向错误、编造数值、照片写实或卡通风格。
+
+三、**三类严重问题**，逐项判断是否存在（true / false）：
+    - garbled（乱码或不可读）：字符明显残缺、重叠、方块化或出现非目标语言乱码，并且影响理解。
+    - fabricated_numbers（编造数值）：图中出现了**正文段落和图注里都没有**的具体数值（百分比、倍数、时延、精度、
+      样本量、显著性等）。正文或图注里本来就有的数值不算编造。
+    - contradicts_text（与正文矛盾）：图中内容与正文表述相矛盾。只是没画全、画得简略，不算矛盾。
+
+    判定须前后一致：garbled 或 fabricated_numbers 为 true 时，图片表现只能判 poor；
+    contradicts_text 为 true 时，匹配度只能判 mismatch。
 
 **读图容差**：你对细小文字的识别本身可能出错。只有当字符明显残缺、重叠、方块化或非目标语言乱码时才判为乱码；
 仅仅是你不确定某个专有名词怎么拼，不算问题。
@@ -398,14 +418,20 @@ ${section_text}
   "figure_id": "${figure_id}",
   "match": {
     "verdict": "good | partial | mismatch",
-    "reason": "指出图上的具体元素与正文的具体表述，说明为什么匹配或不匹配"
+    "caption_reason": "图注承诺的内容在图里是否画出：指出具体元素",
+    "section_reason": "图是否抓住所在段落的核心论点、关系是否一致：指出图上的具体元素与正文的具体表述"
   },
   "quality": {
     "verdict": "good | acceptable | poor",
     "reason": "指出图上的具体现象作为依据"
   },
+  "severe": {
+    "garbled": false,
+    "fabricated_numbers": false,
+    "contradicts_text": false
+  },
   "issues": ["图上确实存在的具体问题，逐条；无则空数组"],
-  "fabricated_numbers": ["图中出现的具体数值原文（百分比/倍数/样本量/显著性），无则空数组"],
+  "fabricated_numbers": ["图中出现、但正文段落与图注里都没有的具体数值原文；无则空数组"],
   "suggestion": "一句话改进建议；无需改进则填空字符串"
 }""")
 
@@ -554,10 +580,14 @@ class RubricPanel:
     """Four rubric-driven specialist judges + a chair. Scores come from the judges,
     the overall score and verdict come from the code."""
 
-    def __init__(self, llm: Any, max_retries: int = 2, verbose: bool = False):
+    def __init__(self, llm: Any, max_retries: int = 2, verbose: bool = False,
+                 max_proposal_tokens: Optional[int] = MAX_PROPOSAL_TOKENS):
+        """max_proposal_tokens=None sends the full text: for judges whose context
+        window holds any proposal, cutting it only hides the ending."""
         self.llm = llm
         self.max_retries = max_retries
         self.verbose = verbose
+        self.max_proposal_tokens = max_proposal_tokens
 
     def _call(self, system: str, user: str) -> str:
         last = ""
@@ -615,10 +645,11 @@ class RubricPanel:
                  figures: Optional[List[Dict[str, Any]]] = None,
                  vision_llm: Optional[Any] = None) -> EvaluationResult:
         """`proposal_text` is the proposal Markdown; `task` is the full task dict."""
-        if approx_tokens(proposal_text) > MAX_PROPOSAL_TOKENS:
-            kept = _truncate_for_judges(proposal_text)
+        cap = self.max_proposal_tokens
+        if cap is not None and approx_tokens(proposal_text) > cap:
+            kept = _truncate_for_judges(proposal_text, cap)
             print(f"    [warn] 正文约 {approx_tokens(proposal_text)} token，超出评审上限 "
-                  f"{MAX_PROPOSAL_TOKENS}，末尾 {len(proposal_text) - len(kept)} 字符不参与评审")
+                  f"{cap}，末尾 {len(proposal_text) - len(kept)} 字符不参与评审")
             proposal_text = kept
 
         ctx = {

@@ -1,0 +1,107 @@
+{
+  "task_id": "task_008",
+  "program": "NIH Exploratory/Developmental Research Project Grant (Parent R21 Clinical Trial Not Allowed), PA-25-304",
+  "direction": "Biomedical informatics: machine learning on multimodal clinical data for neurodegenerative disease",
+  "title": "Graph-based multimodal learning for early prediction of motor progression in Parkinson's disease",
+  "domain": "computer_science_x_biomedicine",
+  "language": "en",
+  "background": "Parkinson's disease progresses at very different rates across patients, and this heterogeneity is a major reason disease-modifying trials fail: trials enrol patients whose symptoms will barely change within the trial window. Large open cohorts now pair longitudinal clinical ratings with structural and diffusion MRI, dopamine transporter imaging and biofluid markers, but most predictive models either use a single modality or concatenate hand-picked features, ignoring the network organisation of the brain and the missingness patterns typical of real cohorts. This exploratory project will test whether representing each patient's brain as a graph of regions, and learning jointly over imaging-derived graphs and clinical covariates with explicit handling of missing modalities, predicts two-year motor progression better than established clinical and imaging baselines. As an R21, the project is scoped to establish feasibility and effect size on existing de-identified cohort data, and to produce the validated model and analysis code needed to justify a larger prospective study.",
+  "challenges": [
+    "Heterogeneous and incomplete modalities: not every participant has every scan or visit, and missingness is not random",
+    "Small effective sample size relative to model capacity, creating a high risk of overfitting and optimistic evaluation",
+    "Site and scanner effects that can masquerade as biological signal",
+    "Establishing a clinically meaningful comparison against strong, simple baselines rather than weak strawmen",
+    "Interpretability sufficient for clinicians to judge whether the learned signal is biologically plausible"
+  ],
+  "references": [],
+  "sponsor": "U.S. National Institutes of Health (NIH)",
+  "budget": {
+    "amount": 275000,
+    "currency": "USD",
+    "dur": 24,
+    "is_cap": true,
+    "note": "The combined budget for direct costs for the two-year project period may not exceed $275,000; no more than $200,000 may be requested in any single year."
+  },
+  "eligibility": "Standard NIH eligibility for PA-25-304 (see the NOFO); investigator and environment are scored under Factor 3, which is outside the scope of this document.",
+  "requirements": [
+    "Scope the work as exploratory/developmental research at an early and conceptual stage, not a full-scale study",
+    "Preliminary data are not required but may be included",
+    "Address the scored review factors: Factor 1 Importance of the Research (Significance and Innovation) and Factor 2 Rigor and Feasibility (Approach)",
+    "Propose no clinical trial (this NOFO is Clinical Trial Not Allowed); use existing de-identified data"
+  ],
+  "constraints": [
+    "Total project period may not exceed 2 years",
+    "Combined direct costs may not exceed $275,000 over two years, and no more than $200,000 in any single year",
+    "Specific Aims limited to 1 page; Research Strategy limited to 6 pages"
+  ],
+  "structure": {
+    "template": "NIH R21 Research Plan: Specific Aims and Research Strategy",
+    "core_sections": [
+      {
+        "id": "specific_aims",
+        "name": "Specific Aims",
+        "word_limit": 550,
+        "required": [
+          "The gap or problem and why it matters now",
+          "Long-term goal, objective of this application and central hypothesis",
+          "Two to three specific aims, each with its expected outcome",
+          "Expected payoff: what the results enable next"
+        ]
+      },
+      {
+        "id": "significance",
+        "name": "Significance",
+        "word_limit": null,
+        "required": [
+          "The important problem or critical barrier the project addresses",
+          "Rigor of the prior research the project builds on, and its weaknesses",
+          "How success would change scientific knowledge, technical capability or clinical practice"
+        ]
+      },
+      {
+        "id": "innovation",
+        "name": "Innovation",
+        "word_limit": null,
+        "required": [
+          "How the concepts, approaches or methods depart from current research paradigms",
+          "Refinement or new application of methods, stated concretely against named existing approaches"
+        ]
+      },
+      {
+        "id": "approach",
+        "name": "Approach",
+        "word_limit": null,
+        "required": [
+          "Overall strategy, methodology and analyses for each aim",
+          "Data sources, cohort definition, outcome definition and evaluation design, including baselines",
+          "Strategies for scientific rigor and to guard against overfitting and site effects",
+          "Potential problems, alternative strategies and benchmarks for success",
+          "Timeline across the two-year project period"
+        ]
+      }
+    ],
+    "rules": [
+      "Significance, Innovation and Approach together form the Research Strategy and must fit within 6 pages (roughly 3,000-3,300 words including figures)",
+      "Specific Aims is limited to 1 page",
+      "Investigators, Environment, budget, human subjects and data sharing sections are outside the scope of this document"
+    ]
+  },
+  "provenance": {
+    "origin_type": "public_guideline_plus_expert_reconstruction",
+    "retrieved_at": "2026-09-30",
+    "basis_urls": [
+      "https://grants.nih.gov/grants/guide/pa-files/PA-25-304.html",
+      "https://grants.nih.gov/grants/how-to-apply-application-guide/format-and-write/page-limits.htm"
+    ],
+    "reference_proposals": [
+      "ogrants klein_arno_2016e — 'Graph-based clinical diagnosis and prediction using multi-modal neuroimaging data', NIH R21 (PA-10-069), unfunded — https://doi.org/10.3897/rio.2.e8816",
+      "ogrants klein_arno_2016c — 'Brain Graph Interface', NIH R21 (PAR-09-219 Exploratory Innovations in Biomedical Computational Science and Technology), unfunded"
+    ],
+    "note": "Transcribed from PA-25-304: exploratory/developmental purpose, project period of at most 2 years, direct-cost caps ($275,000 combined, $200,000 in any year), preliminary data not required, Clinical Trial Not Allowed, and the three review factors (posted 2024-12-18, expires 2028-01-08). Page limits (Specific Aims 1 page, R21 Research Strategy 6 pages) are from the NIH page-limits table. The Significance / Innovation / Approach subsection headings and their required elements follow the NIH How to Apply application guide. The topic is a reconstruction in the graph-based multimodal neuroimaging space of the two ogrants R21 proposals, updated to current open cohorts. TO VERIFY: the Research Strategy subsection wording in the current application guide (not confirmed in this session), and whether the task should name a specific open cohort."
+  },
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

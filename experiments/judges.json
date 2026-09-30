@@ -1,0 +1,23 @@
+{
+  "_note": "Judge panel for experiment 1 (PLAN §5). Keys come from the named environment variables, never from this file. base_url is any OpenAI-compatible endpoint; change it if you reach a model through a different provider or proxy.",
+  "judges": [
+    {
+      "name": "qwen",
+      "model": "qwen3.8-max-0902",
+      "base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+      "api_key_env": "QWEN_API_KEY"
+    },
+    {
+      "name": "deepseek",
+      "model": "deepseek-v4-pro",
+      "base_url": "https://api.deepseek.com",
+      "api_key_env": "AI4PROPOSAL_API_KEY"
+    },
+    {
+      "name": "gemini",
+      "model": "gemini-3.8-flash",
+      "base_url": "https://generativelanguage.googleapis.com/v1beta/openai/",
+      "api_key_env": "GEMINI_API_KEY"
+    }
+  ]
+}

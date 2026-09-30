@@ -1,0 +1,88 @@
+{
+  "task_id": "task_003",
+  "program": "Wellcome Discovery Awards",
+  "direction": "Discovery research in health — mechanistic understanding of disease",
+  "title": "Dissecting the tissue-immune crosstalk that drives chronic inflammation into organ fibrosis",
+  "domain": "biomedical",
+  "language": "en",
+  "background": "Chronic inflammation is a shared driver of progression to irreversible organ fibrosis across the lung, liver, kidney and heart, yet the mechanisms by which persistent immune activation is converted into a self-sustaining, matrix-depositing fibrotic programme remain poorly understood. Single-cell and spatial technologies have revealed remarkable heterogeneity of fibroblast and macrophage states, but a unifying, causal account of how tissue-resident stromal cells and infiltrating immune cells co-evolve over time to reach a fibrotic 'point of no return' is lacking. Establishing this mechanistic understanding is a prerequisite for stage-appropriate, tissue-agnostic anti-fibrotic strategies. This programme proposes an integrated, longitudinal and cross-organ investigation combining spatial multi-omics, lineage tracing, organoid/organ-on-chip perturbation and in vivo intervention to define the causal cellular circuits and molecular switches that commit chronically inflamed tissue to fibrosis.",
+  "challenges": [
+    "Distinguishing causal drivers from bystander cell states: high-resolution atlases describe fibroblast/macrophage heterogeneity but do not establish which transitions are necessary and sufficient for fibrotic commitment",
+    "Capturing temporal dynamics and the fibrotic 'point of no return': most human data are cross-sectional snapshots; longitudinal, perturbable models are needed to identify reversible vs irreversible stages",
+    "Achieving cross-organ generalisability: identifying shared, tissue-agnostic immune-stromal circuits versus organ-specific mechanisms, to support therapies that transfer across fibrotic diseases",
+    "Bridging mechanism to intervention: translating identified molecular switches into testable, stage-appropriate intervention points while managing the risk of impairing normal wound healing"
+  ],
+  "references": [],
+  "sponsor": "Wellcome Trust",
+  "budget": {
+    "amount": 5000000,
+    "currency": "GBP",
+    "dur": 84,
+    "is_cap": false,
+    "note": "Wellcome Discovery Awards have no fixed upper funding limit; the average award is ~£3.5M and applications above £5M undergo additional scrutiny. Duration may run from 3 to 8 years; ~7 years (84 months) used here as a representative figure. Budget must be fully justified against the proposed research."
+  },
+  "eligibility": "Established researchers with the experience to drive and lead a research programme, a track record of managing/training others, and a permanent, open-ended or long-term rolling contract. Applicants must be based in the UK, the Republic of Ireland, or low- and middle-income countries (excluding India and mainland China). An award may be held by an individual or a team of typically 2–8 applicants led by an established researcher.",
+  "requirements": [
+    "Deliver discovery research that advances mechanistic understanding within Wellcome's health remit",
+    "Provide a Data Management Plan and make outputs openly available in line with Wellcome's open-access and open-data policies",
+    "Justify all requested costs against the scientific programme"
+  ],
+  "constraints": [
+    "The proposed research must fall within Wellcome's remit of discovery research that improves human life and health",
+    "Applications exceeding £5,000,000 are subject to additional scrutiny",
+    "Lead applicant and organisation must meet Wellcome's eligibility and location requirements"
+  ],
+  "structure": {
+    "template": "Wellcome Discovery Awards full application form (last updated 7 April 2026) — Research proposal",
+    "core_sections": [
+      {
+        "id": "research_summary",
+        "name": "Research Summary",
+        "word_limit": 200,
+        "required": [
+          "Summary of the proposed research and its key goals, written for an expert audience",
+          "Key words that best describe the research"
+        ]
+      },
+      {
+        "id": "research_vision",
+        "name": "Research Vision",
+        "word_limit": 3000,
+        "required": [
+          "Aims and research questions",
+          "Expected outcomes of the work",
+          "Background and the work that has led up to the project",
+          "Approach and methods, and how challenges will be addressed",
+          "Key stages of the research plan with location and milestones (a detailed workplan for the first five years; an outline only for later years)"
+        ]
+      },
+      {
+        "id": "outputs",
+        "name": "Outputs Management and Sharing",
+        "word_limit": 500,
+        "required": [
+          "Data, software and materials outputs: what will be generated, accompanying metadata and documentation, when and where they will be available, how they will be discovered and accessed, any sharing restrictions, storage and preservation, and resources for outputs management",
+          "Intellectual property outputs: what IP may arise, how it will be protected, and how it will be used to achieve health benefits"
+        ]
+      }
+    ],
+    "rules": [
+      "Research Vision must not exceed 3,000 words and must not contain graphs, figures or tables (Wellcome takes these as a separate 'Additional information' upload of at most two A4 pages)",
+      "The research must fit Wellcome's Discovery Research remit",
+      "References, human participants, animal research, ethics, research environment, people and costs sections are outside the scope of this document"
+    ]
+  },
+  "provenance": {
+    "origin_type": "public_guideline_plus_expert_reconstruction",
+    "basis_urls": [
+      "https://wellcome.org/research-funding/schemes/wellcome-discovery-awards"
+    ],
+    "note": "Scheme framework (eligibility, career stage, applicant location incl. exclusion of India & mainland China, team size 2–8, average award ~£3.5M, >£5M extra scrutiny, no upper limit, 3–8 year duration, open-access/open-data conditions) transcribed from the official Wellcome Discovery Awards scheme description via web search (the official page returned HTTP 403 on direct fetch, so facts are drawn from the scheme summary and corroborating sources). The specific research topic (immune–stromal drivers of organ fibrosis) is a reasonable reconstruction within Wellcome's discovery-research health remit; Wellcome does not prescribe topics. references to be filled with real literature later. STRUCTURE (added 2026-09-30): transcribed from Wellcome's sample full application form for Discovery Awards (last updated 7 April 2026; local copy docs/_scratch/sample-full-app-form-wellcome-discovery-award.pdf). The three sections, their word limits (200 / 3,000 / 500) and the five required elements of the Research Vision follow the form's own wording; the no-figures rule is from the same question. TO VERIFY: that this sample form matches the form currently used in Wellcome's Grant Funding Portal.",
+    "retrieved_at": "2026-09-30"
+  },
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

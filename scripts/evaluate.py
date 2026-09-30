@@ -171,14 +171,24 @@ def print_report(r) -> None:
             mv, qv = match.get("verdict", "?"), qual.get("verdict", "?")
             print(f"\n  [{f.get('figure_id', '?')}] 与正文匹配度: {marks.get(mv, mv)} | "
                   f"图片表现: {marks.get(qv, qv)}")
-            if match.get("reason"):
-                print(f"    匹配度依据：{match['reason']}")
+            severe = f.get("severe") or {}
+            flagged = [label for key, label in (("garbled", "乱码/不可读"),
+                                                ("fabricated_numbers", "编造数值"),
+                                                ("contradicts_text", "与正文矛盾"))
+                       if severe.get(key) is True]
+            if flagged:
+                print(f"    严重问题：{'、'.join(flagged)}")
+            # match.reason is the pre-split field; older evaluation.json files carry it.
+            for key, label in (("caption_reason", "与图注"), ("section_reason", "与段落"),
+                               ("reason", "匹配度依据")):
+                if match.get(key):
+                    print(f"    {label}：{match[key]}")
             if qual.get("reason"):
                 print(f"    表现依据：{qual['reason']}")
             for x in f.get("issues") or []:
                 print(f"    - 问题：{x}")
             for x in f.get("fabricated_numbers") or []:
-                print(f"    - 图中数值：{x}")
+                print(f"    - 正文未出现的图中数值：{x}")
             if f.get("suggestion"):
                 print(f"    改进：{f['suggestion']}")
 

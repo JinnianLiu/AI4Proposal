@@ -1,0 +1,101 @@
+{
+  "task_id": "task_009",
+  "program": "ERC Starting Grant (ERC-2027-StG, Horizon Europe ERC Work Programme)",
+  "direction": "Computational social science: generative AI and political information ecosystems",
+  "title": "How generative AI reshapes political information ecosystems: a multilingual, causal account across Europe",
+  "domain": "computer_science_x_social_science",
+  "language": "en",
+  "background": "Generative AI now writes a growing share of the text that citizens encounter about politics: news summaries, search answers, social-media posts and campaign material. Existing research is fragmented. Computer scientists measure the prevalence of machine-generated text with detectors that fail across languages and model generations, while social scientists study effects on attitudes in small, English-language survey experiments that say little about what happens at the scale of whole information ecosystems. The field lacks an account of how generative AI changes the supply of political information (who produces it, at what volume, with what diversity of viewpoints) and whether those supply changes alter what citizens know and believe, particularly in the smaller European language communities where platform moderation and detection tools are weakest. This project will build a multilingual observatory of political text across several EU languages, develop measurement methods for AI-mediated content that remain valid as models change, and combine them with natural experiments and preregistered field experiments to estimate causal effects on information diversity and political knowledge.",
+  "challenges": [
+    "Measurement validity: AI-text detection is unreliable, degrades with each model generation and is weakest in lower-resource languages",
+    "Moving from description to causal identification at ecosystem scale, not only individual-level survey effects",
+    "Comparability across languages, platforms and national media systems",
+    "Research ethics and data protection (GDPR) when collecting and analysing political content and running field experiments",
+    "Ground-breaking ambition that goes beyond incremental measurement studies, as ERC's sole criterion of excellence demands"
+  ],
+  "references": [],
+  "sponsor": "European Research Council (ERC)",
+  "budget": {
+    "amount": 1500000,
+    "currency": "EUR",
+    "dur": 60,
+    "is_cap": true,
+    "note": "Starting Grants may be awarded up to EUR 1.5 million for a period of 5 years. An additional EUR 1 million can be made available for further eligible costs when necessary (and up to EUR 2 million for PIs relocating from non-associated third countries); this task uses the standard EUR 1.5 million / 60 months."
+  },
+  "eligibility": "Researchers of any nationality within the Starting Grant window of experience since completion of the PhD (the ERC page read on 2026-09-30 states 0-10 years; to verify against the ERC-2027 Work Programme). The host institution must be in an EU Member State or Associated Country.",
+  "requirements": [
+    "Excellence is the sole evaluation criterion, applied to the research project and the PI together",
+    "Part I must present the overall vision: current state of knowledge, the scientific questions, the project objectives and the overall research strategy",
+    "Part II must explain implementation: research methodology, work plan, risk assessment and mitigating measures",
+    "The step-1 panel reads Part I (with the CV and track record) only and judges the ambition and novelty of the idea, so Part I must stand on its own"
+  ],
+  "constraints": [
+    "Up to EUR 1.5 million over 5 years",
+    "Scientific Proposal Part I limited to 5 pages; Part II limited to 7 pages for Starting Grants (references excluded)",
+    "Call ERC-2027-StG opened 2026-07-22 with a deadline of 2026-10-14"
+  ],
+  "structure": {
+    "template": "ERC Starting Grant Scientific Proposal (Part I and Part II, 2026 onward format)",
+    "core_sections": [
+      {
+        "id": "part1_concept",
+        "name": "Part I: State of the Art, Research Questions and Objectives",
+        "word_limit": 1800,
+        "required": [
+          "Current state of knowledge and its specific limitations",
+          "The scientific questions the project will answer",
+          "Project objectives and why they are ground-breaking and beyond the state of the art"
+        ]
+      },
+      {
+        "id": "part1_strategy",
+        "name": "Part I: Overall Research Strategy",
+        "word_limit": 1000,
+        "required": [
+          "The overall research strategy connecting objectives to work",
+          "High-risk / high-gain elements and why the risk is worth taking"
+        ]
+      },
+      {
+        "id": "part2_methodology",
+        "name": "Part II: Methodology",
+        "word_limit": 2200,
+        "required": [
+          "Research methodology for each objective: data, measurement, identification strategy, analyses",
+          "Ethics and data protection approach where it shapes the methodology"
+        ]
+      },
+      {
+        "id": "part2_workplan",
+        "name": "Part II: Work Plan, Risk Assessment and Mitigation",
+        "word_limit": 1300,
+        "required": [
+          "Work plan with work packages, milestones and timing over five years",
+          "Main risks, their likelihood and impact, and mitigating measures or fallback routes"
+        ]
+      }
+    ],
+    "rules": [
+      "Part I (the first two sections) must not exceed 5 pages and Part II (the last two sections) must not exceed 7 pages; the word limits approximate those page limits",
+      "Part I must be understandable without Part II: the step-1 panel reads Part I only",
+      "The CV, track record and the budget/resources justification in Part II are outside the scope of this document"
+    ]
+  },
+  "provenance": {
+    "origin_type": "public_guideline_plus_expert_reconstruction",
+    "retrieved_at": "2026-09-30",
+    "basis_urls": [
+      "https://erc.europa.eu/apply-grant/starting-grant",
+      "https://casrai.org/news/erc-2026-scientific-proposal-part-i-part-ii"
+    ],
+    "reference_proposals": [
+      "ogrants bekkers_rene_2011 — 'Dynamics of Altruism, Religion and Education', ERC Starting Grant, social sciences, unfunded — https://renebekkers.files.wordpress.com/2021/02/erc_bekkers_submitted.pdf (uses the pre-2026 B1/B2 format)"
+    ],
+    "note": "Transcribed from the ERC Starting Grant page: up to EUR 1.5M for 5 years, the additional EUR 1M / 2M, excellence as the sole criterion, and the 2027 call dates. The Part I / Part II content and page limits (5 + 7 pages for StG) and the step-1 reading of Part I only come from a secondary source (CASRAI) describing the 2026 restructuring; the official ERC guide read in this session was a password-protected PDF. Splitting each Part into two sections, and the per-section word limits, are this task's own choices so that the pipeline has chapters to write; ERC mandates the Part contents, not these sub-headings. The topic is a reconstruction in computational social science. TO VERIFY: the Part I / Part II headings and page limits against the official ERC-2027 Information for Applicants, and the PhD-experience window (the ERC page summary said 0-10 years, while earlier calls used 2-7 years)."
+  },
+  "team": {
+    "pi_name": "",
+    "institution": "",
+    "members": []
+  }
+}

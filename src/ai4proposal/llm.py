@@ -6,7 +6,7 @@ import mimetypes
 import os
 import threading
 import time
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Sequence, Union
 
@@ -69,6 +69,19 @@ def _message_text(message: Any) -> str:
     return str(message or "").strip()
 
 
+_STATS_LOCK = threading.Lock()
+
+
+def _usage_tokens(usage: Any) -> tuple:
+    """(prompt, completion) tokens from either endpoint's usage object; the two
+    name them differently (prompt/completion vs input/output)."""
+    if usage is None:
+        return 0, 0
+    prompt = getattr(usage, "prompt_tokens", None) or getattr(usage, "input_tokens", None) or 0
+    completion = getattr(usage, "completion_tokens", None) or getattr(usage, "output_tokens", None) or 0
+    return int(prompt), int(completion)
+
+
 @dataclass
 class LLMBackend:
     model: str
@@ -78,6 +91,30 @@ class LLMBackend:
     max_retries: int = 1
     # Wall-clock ceiling per HTTP call, enforced above the SDK's idle timeout.
     deadline_seconds: float = 600.0
+    # None leaves the server default in force. The single-call baseline sets it
+    # to the model's maximum: a server default can cut a whole-document answer
+    # that a chapter-sized call never reaches, which would bias the comparison.
+    max_output_tokens: Optional[int] = None
+    # Running totals over this backend's successful calls, and the finish_reason
+    # of the most recent one. Experiments report cost per run from these, and a
+    # single-call baseline needs finish_reason to tell a complete answer from one
+    # cut off at the output limit.
+    stats: Dict[str, int] = field(default_factory=lambda: {
+        "calls": 0, "failed_calls": 0, "prompt_tokens": 0, "completion_tokens": 0},
+        repr=False, compare=False)
+    last_finish_reason: Optional[str] = field(default=None, repr=False, compare=False)
+
+    def _record(self, usage: Any, finish_reason: Optional[str]) -> None:
+        prompt, completion = _usage_tokens(usage)
+        with _STATS_LOCK:
+            self.stats["calls"] += 1
+            self.stats["prompt_tokens"] += prompt
+            self.stats["completion_tokens"] += completion
+            self.last_finish_reason = finish_reason
+
+    def _record_failure(self) -> None:
+        with _STATS_LOCK:
+            self.stats["failed_calls"] += 1
 
     def _make_client(self) -> Any:
         try:
@@ -119,30 +156,44 @@ class LLMBackend:
         ]
 
         deadline = self.deadline_seconds
+        chat_extra: Dict[str, Any] = {}
+        resp_extra: Dict[str, Any] = {}
+        if self.max_output_tokens:
+            chat_extra["max_tokens"] = self.max_output_tokens
+            resp_extra["max_output_tokens"] = self.max_output_tokens
 
         t0 = time.time()
         try:
             completion = _with_deadline(
-                lambda: client.chat.completions.create(model=self.model, messages=messages),
+                lambda: client.chat.completions.create(model=self.model, messages=messages,
+                                                       **chat_extra),
                 deadline, "chat")
             text = _message_text(completion.choices[0].message.content)
             if text:
+                self._record(getattr(completion, "usage", None),
+                             getattr(completion.choices[0], "finish_reason", None))
                 self._trace("chat", t0, text)
                 return text
             why = "empty reply"
         except Exception as exc:
             why = f"{type(exc).__name__}: {exc}"
+        self._record_failure()
         self._trace("chat", t0, "", why)
 
         t1 = time.time()
         try:
             response = _with_deadline(
-                lambda: client.responses.create(model=self.model, input=messages),
+                lambda: client.responses.create(model=self.model, input=messages, **resp_extra),
                 deadline, "responses")
             text = _extract_response_text(response)
         except Exception as exc:
+            self._record_failure()
             self._trace("responses", t1, "", f"{type(exc).__name__}: {exc}")
             raise
+        # /responses reports truncation as status "incomplete", not a finish_reason.
+        status = getattr(response, "status", None)
+        self._record(getattr(response, "usage", None),
+                     "length" if status == "incomplete" else "stop")
         self._trace("responses", t1, text)
         return text
 

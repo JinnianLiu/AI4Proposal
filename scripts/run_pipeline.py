@@ -57,12 +57,7 @@ DEFAULT_STRUCTURE = {
 }
 
 
-def _lst(items) -> str:
-    if not items:
-        return "（无）"
-    if isinstance(items, str):
-        return items
-    return "\n".join(f"- {x}" for x in items)
+_lst = WP.fmt_list
 
 
 def _fmt_deliverables(dels: List[dict]) -> str:
@@ -111,6 +106,9 @@ def run_step0(llm, base_vars: Dict[str, Any], verbose=True) -> dict:
             "key_methods": [],
             "novelty_angles": [],
             "facts": [],
+            # Recorded so a run whose blueprint silently degraded is not mistaken
+            # for a full-system run: without Step 0 it is effectively no-blueprint.
+            "_fallback": True,
         }
         if verbose:
             print("    [step0] blueprint fallback (parse failed)")
@@ -161,18 +159,24 @@ def summarize(name: str, text: str, limit=220) -> str:
     return f"【{name}】{body[:limit]}{'…' if len(body) > limit else ''}"
 
 
-def write_one_section(llm, sec, base_vars, blueprint, prev_summary):
-    """One-pass draft for a section (一次成稿, no in-pipeline review)."""
+SECTION_FAILED = "[待补充]"
+
+
+def write_one_section(llm, sec, base_vars, blueprint, prev_summary, language="zh",
+                      use_blueprint=True):
+    """One-pass draft for a section (一次成稿, no in-pipeline review).
+
+    use_blueprint=False is experiment condition C2: the writer gets prompts with
+    every blueprint instruction removed (see writer_prompts.writer_prompts)."""
     name = sec.get("name", "")
     required = sec.get("required", [])
-    wl = sec.get("word_limit")
     required_str = _lst(required)
 
     v = dict(base_vars)
     v.update({
         "section_name": name,
         "required_elements": required_str,
-        "word_limit": (f"{wl}字" if wl else "不限"),
+        "word_limit": WP.word_limit_text(language, sec.get("word_limit")),
         "prev_summary": prev_summary or "（暂无，已写章节为空）",
         "thesis": blueprint.get("thesis", ""),
         "deliverables": _fmt_deliverables(blueprint.get("deliverables", [])),
@@ -182,9 +186,9 @@ def write_one_section(llm, sec, base_vars, blueprint, prev_summary):
     })
 
     # build writer system: 通则 + writer role + triggered modifiers, one substitution pass
-    raw_system = WP.GENERAL_RULES + "\n\n" + WP.WRITER_SYSTEM + WP.modifiers_for(required_str, name)
+    raw_system, raw_user = WP.writer_prompts(required_str, name, blueprint=use_blueprint)
     system = WP.fill(raw_system, v)
-    return generate_with_retry(llm, system, WP.fill(WP.WRITER_USER, v)) or f"## {name}\n\n[待补充]"
+    return generate_with_retry(llm, system, WP.fill(raw_user, v)) or f"## {name}\n\n{SECTION_FAILED}"
 
 
 _LEADING_HEADING = re.compile(r"^\s*#{1,2}\s+(.+?)\s*$")
@@ -363,6 +367,8 @@ def main():
                     help="rubric = 7-dimension panel (see scripts/evaluate.py)")
     ap.add_argument("--judge-evidence", action="store_true",
                     help="retrieve external literature for the science judge")
+    ap.add_argument("--no-blueprint", action="store_true",
+                    help="skip Step 0 and write with blueprint-free prompts (experiment condition C2)")
     args = ap.parse_args()
 
     if args.figures_from:
@@ -396,33 +402,30 @@ def main():
 
     # base variables shared by all prompts
     lang = WP.normalize_language(task.get("language"))
-    base_vars = {
-        "lang_rules": WP.lang_rules_for(lang),
-        "output_language": WP.language_name(lang),
-        "title": task.get("title", ""),
-        "background": task.get("background", ""),
-        "challenges": _lst(task.get("challenges", [])),
-        "requirements": _lst(task.get("requirements", [])),
-        "constraints": _lst(task.get("constraints", [])),
-        "template": structure.get("template", "科研项目申请书"),
-        "rules": _lst(structure.get("rules", [])),
-        "_requirements_list": task.get("requirements", []),
-    }
+    base_vars = WP.task_vars(task, structure)
 
     print(f"== {case_id}  {task.get('title','')}")
     print(f"   template: {base_vars['template']} | model: {llm.model} | "
           f"sections: {len(core_sections)} | 正文语言: {base_vars['output_language']}")
 
     t0 = time.time()
-    print("  [1/4] Step0 蓝图 ...")
-    blueprint = run_step0(llm, base_vars)
+    if args.no_blueprint:
+        print("  [1/4] Step0 蓝图 — 跳过（--no-blueprint）")
+        blueprint = {}
+    else:
+        print("  [1/4] Step0 蓝图 ...")
+        blueprint = run_step0(llm, base_vars)
 
     print("  [2/4] 逐章撰写 ...")
     sections: Dict[str, str] = {}
+    failed_sections: List[str] = []
     prev_summary = ""
     for sec in core_sections:
-        draft = write_one_section(llm, sec, base_vars, blueprint, prev_summary)
+        draft = write_one_section(llm, sec, base_vars, blueprint, prev_summary,
+                                  language=lang, use_blueprint=not args.no_blueprint)
         sid = sec.get("id", sec.get("name"))
+        if draft.rstrip().endswith(SECTION_FAILED):
+            failed_sections.append(sec.get("name", sid))
         sections[sid] = draft
         prev_summary = (prev_summary + "\n" + summarize(sec.get("name", ""), draft)).strip()
         print(f"    [OK] {sec.get('name','')} ({len(draft)}字)")
@@ -456,7 +459,8 @@ def main():
                 continue
             print(f"\n  ── {s['id']} ── {p['composition']}\n  图题: {p['title']}\n  论点: {p['main_message']}\n  prompt: {p['image_prompt_en']}")
         print(f"\n  确认后执行：python scripts/run_pipeline.py --figures-from {out_dir}")
-    json.dump(blueprint, (out_dir / "blueprint.json").open("w", encoding="utf-8"), indent=2, ensure_ascii=False)
+    if not args.no_blueprint:
+        json.dump(blueprint, (out_dir / "blueprint.json").open("w", encoding="utf-8"), indent=2, ensure_ascii=False)
     # Write the structure actually used back onto the task. A planned structure
     # used to be discarded here, so evaluate.py fell through to a hardcoded
     # Chinese section list and reported an English proposal as missing
@@ -470,6 +474,12 @@ def main():
         "figures": manifest,
         "char_count": len(proposal_text), "model": llm.model,
         "generated_at": datetime.now(timezone.utc).isoformat(),
+        "blueprint": not args.no_blueprint,
+        "blueprint_fallback": bool(blueprint.get("_fallback")),
+        "failed_sections": failed_sections,
+        # Taken before judging so it counts generation (text + figure planning) only.
+        "llm_stats": dict(llm.stats),
+        "elapsed_seconds": round(time.time() - t0, 1),
     }
 
     print("  [4/4] 评分 ...")

@@ -347,7 +347,8 @@ MODIFIERS = [
 
 # ─────────────────────────── helpers ───────────────────────────
 
-def modifiers_for(required_elements: str, section_name: str = "") -> str:
+def modifiers_for(required_elements: str, section_name: str = "",
+                  modifiers: Any = None) -> str:
     """Return concatenated modifier text triggered by this section.
 
     Matches the section name as well as its required elements. Matching the
@@ -357,7 +358,7 @@ def modifiers_for(required_elements: str, section_name: str = "") -> str:
     """
     haystack = f"{section_name}\n{required_elements}"
     out: List[str] = []
-    for keywords, text in MODIFIERS:
+    for keywords, text in (MODIFIERS if modifiers is None else modifiers):
         if any(k in haystack for k in keywords):
             out.append(text)
     return ("\n\n" + "\n\n".join(out)) if out else ""
@@ -367,3 +368,129 @@ def fill(template_text: str, variables: Dict[str, Any]) -> str:
     """Substitute ${identifier} placeholders; leave JSON braces and unknown
     (e.g. Chinese) placeholders untouched."""
     return Template(template_text).safe_substitute(variables)
+
+
+def fmt_list(items: Any) -> str:
+    """A task field as prompt text: bullets for a list, as-is for a string."""
+    if not items:
+        return "（无）"
+    if isinstance(items, str):
+        return items
+    return "\n".join(f"- {x}" for x in items)
+
+
+# The unit follows the document. "800字" in an English task was read as
+# ambiguous at best; no English task carried a word limit until the
+# experiment tasks did, so it never surfaced.
+WORD_UNIT: Dict[str, str] = {"zh": "{n}字", "en": "{n} words"}
+
+
+def word_limit_text(language: Any, word_limit: Any) -> str:
+    if not word_limit:
+        return "不限"
+    return WORD_UNIT[normalize_language(language)].format(n=word_limit)
+
+
+def task_vars(task: Dict[str, Any], structure: Dict[str, Any]) -> Dict[str, Any]:
+    """The task fields every writer prompt draws on.
+
+    One function, so the pipeline and the single-prompt baselines of the
+    experiment see exactly the same information rendered the same way — a
+    comparison of architectures means nothing if one side was told more.
+    """
+    lang = normalize_language(task.get("language"))
+    return {
+        "lang_rules": lang_rules_for(lang),
+        "output_language": language_name(lang),
+        "title": task.get("title", ""),
+        "background": task.get("background", ""),
+        "challenges": fmt_list(task.get("challenges", [])),
+        "requirements": fmt_list(task.get("requirements", [])),
+        "constraints": fmt_list(task.get("constraints", [])),
+        "template": structure.get("template", "科研项目申请书"),
+        "rules": fmt_list(structure.get("rules", [])),
+        "_requirements_list": task.get("requirements", []),
+    }
+
+
+def sections_outline(structure: Dict[str, Any], language: Any) -> str:
+    """The chapter list for a prompt that writes the whole document at once."""
+    lines = []
+    for i, s in enumerate(structure.get("core_sections") or [], 1):
+        req = "；".join(str(r) for r in (s.get("required") or [])) or "（无）"
+        lines.append(f"{i}. {s.get('name', '')}"
+                     f"（字数上限：{word_limit_text(language, s.get('word_limit'))}）"
+                     f"——必备要素：{req}")
+    return "\n".join(lines)
+
+
+# ─────────────────── no-blueprint variant (experiment condition C2) ───────────────────
+# C2 skips Step 0, so every instruction that points at the blueprint has to go —
+# not be filled with "（无）". A writer told to "回扣上述主线" with no 主线 above is
+# a broken prompt, and measuring that would measure the breakage, not the absence
+# of orchestration. The variants are derived from the originals by exact edits so
+# the two cannot drift: if an original is reworded, the matching edit fails loudly
+# at import instead of silently leaving a blueprint reference behind.
+
+CONSISTENCY_RULE = (
+    "**全文口径一致**：凡在多章出现的数值与命名——项目周期与阶段划分、子课题或子任务的"
+    "数量与名称、指标体系的维度、每个核心指标的目标阈值与单位、样本或数据规模、成果数量"
+    "承诺——全文只能有一个口径，本章须与已完成章节保持一致。")
+
+
+def _edit(text: str, edits: List[tuple]) -> str:
+    for old, new in edits:
+        if old not in text:
+            raise AssertionError(f"no-blueprint edit target not found: {old[:40]!r}")
+        text = text.replace(old, new, 1)
+    return text
+
+
+_GR_7_TO_8 = GENERAL_RULES[GENERAL_RULES.index("7. **成果清单参照**"):
+                           GENERAL_RULES.index("9. **工作量务实**")]
+
+GENERAL_RULES_NO_BLUEPRINT = _edit(GENERAL_RULES, [
+    ("全篇统一主线为：\n\n> ${thesis}\n\n本章写作须回扣上述主线——读者读完本章后应能清晰感知它如何服务于这条主线。\n\n", "\n\n"),
+    (_GR_7_TO_8, f"7. {CONSISTENCY_RULE}\n"),
+    ("9. **工作量务实**", "8. **工作量务实**"),
+    ("台账中的数字是全篇总量的分解，不是本章可以再加码的起点。", ""),
+    ("10. **技术表述真实**", "9. **技术表述真实**"),
+    ("11. **不外露写作脚手架**", "10. **不外露写作脚手架**"),
+    ("\"所回应的主线问题\"", ""),
+    ("\"本章旨在回扣主线\"\"对应成果清单\"", "\"本章旨在\""),
+    ("对主线、资助方要求、成果清单的贴合", "对资助方要求的贴合"),
+])
+
+WRITER_SYSTEM_NO_BLUEPRINT = _edit(WRITER_SYSTEM, [
+    ("\n6. **回扣主线**：章节开头或结尾处自然回扣全篇主线 thesis，但不要机械重复原文。", ""),
+])
+
+WRITER_USER_NO_BLUEPRINT = _edit(WRITER_USER, [
+    ("## 全篇主线\n${thesis}\n\n## 成果清单\n${deliverables}\n\n"
+     "## 本领域应点名的真实方法/基准/前沿工作\n${key_methods}\n\n"
+     "## 创新角度参考\n${novelty_angles}\n\n", ""),
+])
+
+MOD_KPI_NO_BLUEPRINT = _edit(MOD_KPI, [
+    ("以 deliverables 中的每项成果为一级条目", "以每项成果为一级条目"),
+])
+
+MOD_NOVELTY_NO_BLUEPRINT = _edit(MOD_NOVELTY, [
+    (MOD_NOVELTY[MOD_NOVELTY.index("2. **参考创新角度**"):MOD_NOVELTY.index("3. **层次覆盖**")], ""),
+    ("3. **层次覆盖**", "2. **层次覆盖**"),
+    ("4. **避免自说自话**", "3. **避免自说自话**"),
+])
+
+_NO_BLUEPRINT_MODS = {id(MOD_KPI): MOD_KPI_NO_BLUEPRINT, id(MOD_NOVELTY): MOD_NOVELTY_NO_BLUEPRINT}
+MODIFIERS_NO_BLUEPRINT = [(kw, _NO_BLUEPRINT_MODS.get(id(text), text)) for kw, text in MODIFIERS]
+
+
+def writer_prompts(required_elements: str, section_name: str,
+                   blueprint: bool = True) -> tuple:
+    """(system template, user template) for one chapter, before substitution."""
+    if blueprint:
+        system = GENERAL_RULES + "\n\n" + WRITER_SYSTEM + modifiers_for(required_elements, section_name)
+        return system, WRITER_USER
+    system = (GENERAL_RULES_NO_BLUEPRINT + "\n\n" + WRITER_SYSTEM_NO_BLUEPRINT
+              + modifiers_for(required_elements, section_name, MODIFIERS_NO_BLUEPRINT))
+    return system, WRITER_USER_NO_BLUEPRINT
