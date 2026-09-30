@@ -3,9 +3,9 @@
   "judges": [
     {
       "name": "qwen",
-      "model": "qwen3.8-max-0902",
+      "model": "qwen3.8-flash",
       "base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
-      "api_key_env": "QWEN_API_KEY"
+      "api_key_env": "DASHSCOPE_API_KEY"
     },
     {
       "name": "deepseek",
@@ -16,8 +16,8 @@
     {
       "name": "gemini",
       "model": "gemini-3.8-flash",
-      "base_url": "https://generativelanguage.googleapis.com/v1beta/openai/",
-      "api_key_env": "GEMINI_API_KEY"
+      "base_url": "https://api.chatanywhere.tech/v1",
+      "api_key_env": "GPT_IMAGE_API_KEY"
     }
   ]
 }

@@ -57,6 +57,9 @@ def main() -> int:
                 s_full == WP.GENERAL_RULES + "\n\n" + WP.WRITER_SYSTEM + WP.modifiers_for("考核指标", "考核指标")
                 and u_full == WP.WRITER_USER)
     ok &= check("the consistency rule replaces the ledger rule", WP.CONSISTENCY_RULE in WP.GENERAL_RULES_NO_BLUEPRINT)
+    _, u_nb = WP.writer_prompts("x", "章节", blueprint=False)
+    ok &= check("C2 writer still sees the title, background and challenges the blueprint came from",
+                all(v in u_nb for v in ("${title}", "${background}", "${challenges}")))
     ok &= check("word limits carry the document's unit",
                 (WP.word_limit_text("en", 550), WP.word_limit_text("zh", 800), WP.word_limit_text("zh", None))
                 == ("550 words", "800字", "不限"))

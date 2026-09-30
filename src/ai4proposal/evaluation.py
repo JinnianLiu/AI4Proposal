@@ -674,6 +674,11 @@ class RubricPanel:
             try:
                 raw = self._call(system, user_tpl.safe_substitute(ctx))
                 data = parse_json(raw)
+                if not data:
+                    # Without this the failure is silent: every dimension comes back
+                    # unscored, but the per-dimension check below only fires when the
+                    # reply parsed, so errors stayed empty.
+                    errors.append(f"{role}: reply was not parseable JSON ({len(raw or '')} chars)")
             except Exception as e:
                 errors.append(f"{role}: {e}")
                 data = {}

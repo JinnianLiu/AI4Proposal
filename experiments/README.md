@@ -10,8 +10,8 @@
 |---|---|---|
 | `AI4PROPOSAL_API_KEY` | DeepSeek 密钥 | 生成（C1–C4 都用 `deepseek-flash`）、DeepSeek 评委 |
 | `AI4PROPOSAL_BASE_URL` | 默认 `https://api.deepseek.com`，一般不用改 | 生成 |
-| `QWEN_API_KEY` | Qwen 评委密钥 | 评审 |
-| `GEMINI_API_KEY` | Gemini 评委密钥 | 评审 |
+| `DASHSCOPE_API_KEY` | Qwen 评委密钥（阿里云百炼 DashScope） | 评审 |
+| `GPT_IMAGE_API_KEY` | Gemini 评委密钥（经 chatanywhere 访问） | 评审 |
 | `PYTHONUTF8=1` | Windows 下避免中文乱码 | 全部 |
 
 生成用的模型固定为 `deepseek-flash`，由脚本自动设置，不读 `AI4PROPOSAL_MODEL`。
@@ -21,8 +21,8 @@ PowerShell 示例：
 ```powershell
 $env:PYTHONUTF8 = "1"
 $env:AI4PROPOSAL_API_KEY = "sk-..."
-$env:QWEN_API_KEY = "sk-..."
-$env:GEMINI_API_KEY = "..."
+$env:DASHSCOPE_API_KEY = "sk-..."
+$env:GPT_IMAGE_API_KEY = "sk-..."
 ```
 
 ### 评委配置

@@ -82,7 +82,12 @@ def is_complete(result: Dict[str, Any]) -> bool:
 
 def evaluate_one(judge: Dict[str, Any], run: Dict[str, Any], jrep: int, force: bool = False) -> str:
     path = out_path(judge["name"], run, jrep)
-    if not force and (read_json(path, {}) or {}).get("status") == "valid":
+    prev = read_json(path, {}) or {}
+    # A valid evaluation is reused only if it is newer than the generation it
+    # scored; a regenerated run must be judged again, not matched to old scores.
+    # Both timestamps come from now_iso(), so they compare as strings.
+    fresh = str(prev.get("evaluated_at", "")) >= str(run.get("finished_at", ""))
+    if not force and prev.get("status") == "valid" and fresh:
         return "skip"
     text = (run["_dir"] / "proposal.md").read_text(encoding="utf-8")
     task = read_json(run["_dir"] / "task.json")

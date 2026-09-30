@@ -465,10 +465,18 @@ WRITER_SYSTEM_NO_BLUEPRINT = _edit(WRITER_SYSTEM, [
     ("\n6. **回扣主线**：章节开头或结尾处自然回扣全篇主线 thesis，但不要机械重复原文。", ""),
 ])
 
+# The blueprint is the only channel through which the full pipeline's chapter
+# writer learns what the project is: title, background and challenges go into
+# Step 0 and reach the chapters as thesis/deliverables. Deleting the blueprint
+# without putting that source text back left C2 writing blind — on task_008 it
+# invented a different project altogether and every judge rejected it on
+# alignment. So C2 gets the same task fields C1/C4 get, in place of the blueprint
+# derived from them: the ablation removes orchestration, not information.
 WRITER_USER_NO_BLUEPRINT = _edit(WRITER_USER, [
     ("## 全篇主线\n${thesis}\n\n## 成果清单\n${deliverables}\n\n"
      "## 本领域应点名的真实方法/基准/前沿工作\n${key_methods}\n\n"
-     "## 创新角度参考\n${novelty_angles}\n\n", ""),
+     "## 创新角度参考\n${novelty_angles}\n\n",
+     "## 课题标题\n${title}\n\n## 立项依据\n${background}\n\n## 关键挑战\n${challenges}\n\n"),
 ])
 
 MOD_KPI_NO_BLUEPRINT = _edit(MOD_KPI, [
