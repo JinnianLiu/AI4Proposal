@@ -1,0 +1,67 @@
+{
+  "_comment": [
+    "首页六格示例。dir 指向 outputs/ 下的真实产出，分数、图数、字数、语言全部由",
+    "server.py 从 evaluation.json 与 task.json 现读，不在这里写死 —— 重跑之后首页",
+    "数字自动跟着变。",
+    "",
+    "这里只放读不出来的东西：这一格要展示产品的哪个侧面（tag + blurb）。六格刻意",
+    "各领一面，而不是六张同构卡片。",
+    "",
+    "eval 字段可选，只在评审结果不叫 evaluation.json 时才写 —— task_005 的有效评审",
+    "是修掉资格条款闸之后重跑的那一份。",
+    "",
+    "outputs/ 不入库，所以新克隆的仓库里这些目录不存在。server.py 会跳过缺失项，",
+    "六格全缺时首页不显示这一节。"
+  ],
+  "samples": [
+    {
+      "id": "flagos",
+      "dir": "outputs/task_001_v20260901",
+      "tag": "硬约束落地",
+      "name": "众智 FlagOS · 智源学者",
+      "field": "AI / 系统软件",
+      "blurb": "12 个月周期、经费上限、逐条量化的考核指标，均在正文中逐项落实。"
+    },
+    {
+      "id": "nssfc",
+      "dir": "outputs/task_002_v20260901",
+      "tag": "结构来自指南",
+      "name": "国家社科基金重大项目",
+      "field": "历史 / 文献学",
+      "blurb": "六章结构解析自上传的指南模板。人文学科同样适用。"
+    },
+    {
+      "id": "wellcome",
+      "dir": "outputs/task_003_v20260901b",
+      "tag": "按 call 的语言写",
+      "name": "Wellcome Discovery Awards",
+      "field": "生物医学",
+      "blurb": "全英文产出，术语与拼写惯例跟随资助方，由同一套提示词生成。"
+    },
+    {
+      "id": "synbio",
+      "dir": "outputs/task_004_v20260901b",
+      "tag": "配图分两阶段",
+      "name": "国家重点研发计划",
+      "field": "合成生物学",
+      "blurb": "先规划图件的论点与构图，再交图像模型渲染。甘特图一类会编造数值的图件被拒绝。"
+    },
+    {
+      "id": "moe",
+      "dir": "outputs/task_005_v20260901",
+      "eval": "evaluation_postfix2.json",
+      "tag": "七维评审",
+      "name": "教育部人文社科",
+      "field": "社会科学",
+      "blurb": "五档锚点，四位评委分维打分，总分与判定由代码计算。"
+    },
+    {
+      "id": "dmref",
+      "dir": "outputs/task_006_v20260901b",
+      "tag": "跨章不漂移",
+      "name": "NSF DMREF",
+      "field": "材料 / 物理",
+      "blurb": "各章独立生成，指标阈值在动笔前一次定死，全篇沿用。"
+    }
+  ]
+}
