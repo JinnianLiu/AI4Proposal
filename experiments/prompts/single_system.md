@@ -111,7 +111,7 @@ ${output_language}
 
 这是 C1 与 C4 提示词**唯一的差别**。两个版本的注入方式：
 - C1-CC（Claude Code）：用 `--append-system-prompt-file` 追加在统一 system 之后；
-- C1-CX（Codex）：写进 `config.toml` 的 `developer_instructions`。
+- C1-CX（Codex）：与统一 system 提示词一起写进 `config.toml` 的 `developer_instructions`；Codex 保留自己的内置指令（整体替换会让它失去文件编辑工具，见 PLAN.md §2.2）。
 
 内容如下：
 
@@ -134,7 +134,7 @@ ${output_language}
   换成别的模型时，C1 只能算"外部产品基线"。
 - **干净状态**：每个 task 用一个新的空工作目录。
   - C1-CC：加 `--bare`，不加载 CLAUDE.md、记忆、MCP 和插件；
-  - C1-CX：用独立的 `CODEX_HOME`，设置 `project_doc_max_bytes = 0`，不读 AGENTS.md。
+  - C1-CX：每次运行用独立的 `CODEX_HOME`，设置 `project_doc_max_bytes = 0`，不读 AGENTS.md；Windows 下开启原生沙箱（`[windows] sandbox = "unelevated"`）。
 - **工具**：两边都没有检索，也没有子智能体。
   - C1-CC 只有 `Read,Write,Edit`；
   - C1-CX 有 shell，但沙箱为 `workspace-write`，只能写工作目录，且不联网。

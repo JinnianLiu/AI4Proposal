@@ -130,14 +130,16 @@ def main() -> int:
         rr, jr = collect.run_rows(), collect.judge_rows()
         ok &= check("run record collected", len(rr) == 1 and rr[0][0] == "C4__task_001__r1" and "length" in rr[0])
         ok &= check("judge record collected", len(jr) == 1 and 71.0 in jr[0] and "revise_resubmit" in jr[0])
-        home = run_c1._cx_home("## 工作方式\n\n写入 proposal.md。")
+        home = run_c1._cx_home(runs / "codex_home", "统一 system 提示词", "## 工作方式\n\n写入 proposal.md。")
         try:
             import tomllib
             cfg = tomllib.loads((home / "config.toml").read_text(encoding="utf-8"))
             ok &= check("Codex config parses, search off, sandboxed, DeepSeek via /responses",
                         cfg["web_search"] == "disabled" and cfg["sandbox_mode"] == "workspace-write"
                         and cfg["model_providers"]["deepseek"]["wire_api"] == "responses"
-                        and "proposal.md" in cfg["developer_instructions"])
+                        and "proposal.md" in cfg["developer_instructions"]
+                        and "统一 system 提示词" in cfg["developer_instructions"]
+                        and "model_instructions_file" not in cfg)
         except ModuleNotFoundError:
             print("  [skip] tomllib unavailable (Python < 3.11)")
     ok &= check("task sheet lists every frozen task", len(collect.task_rows()) == 12)

@@ -106,13 +106,22 @@ def _cc_summary(events: List[Dict[str, Any]]) -> Dict[str, Any]:
 
 # ──────────────────────────────── Codex ────────────────────────────────
 
-def _cx_home(c1_text: str) -> Path:
-    """An isolated CODEX_HOME so a personal ~/.codex config never leaks in."""
-    home = RUNS / "c1_codex_home"
+def _cx_home(home: Path, system_text: str, c1_text: str) -> Path:
+    """A CODEX_HOME per run, so a personal ~/.codex config never leaks in, parallel
+    runs cannot overwrite each other's config, and `resume --last` can only find
+    this run's own session.
+
+    Codex keeps its built-in instructions and gets the unified prompt as
+    developer_instructions. Replacing the built-in instructions (as C1-CC does)
+    was tried on 2026-09-30 and failed: they are where Codex learns its file-edit
+    tool, so the agent fell back to shell writes, every one of which the Windows
+    workspace-write sandbox rejected under approval_policy=never, and no
+    proposal.md was ever written. See PLAN §2.2.
+    """
     home.mkdir(parents=True, exist_ok=True)
-    if "'''" in c1_text:    # would end the TOML literal string early
-        raise ValueError("C1 addendum contains ''' and cannot be embedded in config.toml")
-    dev = c1_text
+    dev = system_text + "\n\n" + c1_text
+    if "'''" in dev:    # would end the TOML literal string early
+        raise ValueError("prompt contains ''' and cannot be embedded in config.toml")
     (home / "config.toml").write_text(f"""model = "{GEN_MODEL}"
 model_provider = "deepseek"
 web_search = "disabled"
@@ -122,6 +131,11 @@ project_doc_max_bytes = 0
 developer_instructions = '''
 {dev}
 '''
+
+[windows]
+# Without the native Windows sandbox, workspace-write silently degrades to
+# read-only and every write is rejected. "unelevated" needs no admin rights.
+sandbox = "unelevated"
 
 [model_providers.deepseek]
 name = "DeepSeek"
@@ -136,8 +150,7 @@ def _cx_invoke(exe: str, work: Path, files: Dict[str, Path], prompt: str, log: P
                cont: bool, home: Path) -> int:
     env = dict(os.environ)
     env.update({"CODEX_HOME": str(home), "DEEPSEEK_API_KEY": _key(), "PYTHONUTF8": "1"})
-    common = ["-c", f'model_instructions_file="{files["system"].as_posix()}"',
-              "--skip-git-repo-check", "--json", "-o", str(work.parent / "last_message.txt")]
+    common = ["--skip-git-repo-check", "--json", "-o", str(work.parent / "last_message.txt")]
     if cont:
         args = [exe, "exec", "resume", "--last", *common, prompt]
     else:
@@ -188,7 +201,7 @@ def run_one(fw: str, tid: str, rep: int) -> Dict[str, Any]:
               "model": GEN_MODEL, "started_at": now_iso(), **git_state(),
               "framework": ("Claude Code " if fw == "CC" else "Codex ") + _version(exe)}
     log = d / "transcript.jsonl"
-    home = _cx_home(c1) if fw == "CX" else None
+    home = _cx_home(d / "codex_home", system, c1) if fw == "CX" else None
 
     t0 = time.time()
     exit_codes: List[int] = []

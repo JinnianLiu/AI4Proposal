@@ -79,17 +79,19 @@ claude -p --bare --model deepseek-flash `
 
 Codex 的自定义模型提供方只支持 `responses` 协议。项目自己的 [llm.py](../src/ai4proposal/llm.py) 注释里记录过 DeepSeek 端点同时支持 chat.completions 和 `/responses`，所以可以接入；冒烟检查时第一件事就是确认这一点。
 
-**配置。** 用一个独立的 `CODEX_HOME` 目录，不读你个人的 Codex 配置，相当于 Claude Code 的 `--bare`。其中的 `config.toml`：
+**配置。** 每次运行用一个独立的 `CODEX_HOME` 目录（在该次运行的目录下），由 `run_c1.py` 自动生成。这样不会读到你个人的 Codex 配置（相当于 Claude Code 的 `--bare`），并行运行时不会互相覆盖配置，续跑也只会接上本次运行的会话。其中的 `config.toml`：
 
 ```toml
 model = "deepseek-flash"
 model_provider = "deepseek"
-model_instructions_file = "<rendered>/task_XXX.system.md"   # 整体替换内置指令；每个 task 覆盖一次
-developer_instructions = "<c1_workspace.md 的内容>"          # 对应 C1 追加说明
+developer_instructions = '''<统一 system 提示词 + c1_workspace 追加段>'''   # 保留 Codex 内置指令，统一提示词以开发者指令注入
 web_search = "disabled"
 sandbox_mode = "workspace-write"                              # 只能写工作目录；该模式默认不联网
 approval_policy = "never"
 project_doc_max_bytes = 0                                     # 不读 AGENTS.md
+
+[windows]
+sandbox = "unelevated"                                        # Windows 必须开启原生沙箱，否则 workspace-write 会退化为只读
 
 [model_providers.deepseek]
 name = "DeepSeek"
@@ -101,17 +103,22 @@ wire_api = "responses"
 **运行（PowerShell）。** 每个 task 开一个空的工作目录：
 
 ```powershell
-$env:CODEX_HOME = "<experiments>/c1_codex_home"
+$env:CODEX_HOME = "<本次运行目录>/codex_home"
 $env:DEEPSEEK_API_KEY = "<DeepSeek API key>"
 Get-Content <rendered>/task_XXX.user.md -Raw | codex exec `
-  -c model_instructions_file="<rendered>/task_XXX.system.md" `
-  --cd <工作目录> --skip-git-repo-check `
+  --cd <工作目录> -s workspace-write --skip-git-repo-check `
   --json -o last_message.txt - > transcript.jsonl
 ```
 
 - 与 C1-CC 相同：全文写入 `proposal.md`；缺章时允许用 `codex exec resume --last "<同一句固定续跑语句>"` 续跑，最多 2 次；运行前记录 `codex --version`。
 
-**两个版本共同需要在冒烟检查中确认的风险。** 两者都把框架内置的 system prompt 整体替换掉了，而内置指令里本来有教模型如何用工具的内容。如果替换后模型不会调用工具、写不出 `proposal.md`，退路是保留内置指令，把统一提示词改为追加：Claude Code 用 `--append-system-prompt-file`，Codex 用 `developer_instructions`。这样 C1 与 C4 的 system prompt 差别会变大，需要在报告中说明。
+**冒烟检查结论（2026-09-30，task_001）。**
+
+- **C1-CC**：整体替换内置 system prompt 后工作正常。
+- **C1-CX**：原设计（`model_instructions_file` 整体替换内置指令）没有跑通，改动了两处：
+  1. **保留 Codex 内置指令，统一提示词改以 `developer_instructions` 注入。** 智能体收到的课题信息和质量要求与 C4 相同，但另外还带着 Codex 自己的内置指令。所以 C1-CX 与 C4 的 system prompt 差别比 C1-CC 大，报告中要说明这一点。
+  2. **开启 Windows 原生沙箱（`[windows] sandbox = "unelevated"`）。** 不开启时，`workspace-write` 会静默退化为只读，智能体的每一次写文件都被拒绝，一直写不出 `proposal.md`。这次失败的运行记录已被后续重跑覆盖。
+- Codex 没有 deepseek-flash 的模型元数据，每轮都会给出一条警告；这不影响运行。
 
 ## 3. 固定设置
 

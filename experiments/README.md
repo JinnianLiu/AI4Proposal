@@ -198,10 +198,11 @@ runs/exp1/
 │   ├── pipeline/       C2、C3：流水线原始输出（C3 含图件规划，供配图评估使用）
 │   ├── pipeline.log    C2、C3：流水线日志
 │   ├── work/           C1：智能体的工作目录
+│   ├── codex_home/     C1-CX：本次运行专用的 Codex 配置与会话（自动生成）
 │   └── transcript.jsonl  C1：完整过程记录（含工具调用）
 ├── judge/<评委>/<条件>/<task>/r<k>_j<m>.json   一次完整评审团的结果
 ├── prompts/            渲染好的 C1/C4 提示词
-├── c1_codex_home/      C1-CX 专用的 Codex 配置（自动生成）
+├── logs/               后台批量运行的日志
 └── results.xlsx        collect.py 生成的结果表
 ```
 
