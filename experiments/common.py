@@ -19,6 +19,10 @@ RUNS = ROOT / "runs" / "exp1"          # runs*/ is gitignored
 
 CONDITIONS = ["C1-CC", "C1-CX", "C2", "C3", "C4"]
 GEN_MODEL = "deepseek-flash"
+# deepseek-flash's maximum output (384K, confirmed 2026-09-30). C4 asks for all of
+# it so a server default never truncates the single-call baseline.
+C4_MAX_OUTPUT_TOKENS = 384000
+C4_DEADLINE_SECONDS = 3600.0
 
 
 def task_ids() -> List[str]:

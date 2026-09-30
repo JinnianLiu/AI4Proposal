@@ -23,8 +23,9 @@ import time
 from pathlib import Path
 from typing import Any, Dict, Optional
 
-from common import (GEN_MODEL, ROOT, gen_env, git_state, load_task, now_iso, read_json,
-                    run_dir, run_id, task_ids, write_json)
+from common import (C4_DEADLINE_SECONDS, C4_MAX_OUTPUT_TOKENS, GEN_MODEL, ROOT, gen_env,
+                    git_state, load_task, now_iso, read_json, run_dir, run_id, task_ids,
+                    write_json)
 from normalize import normalize, over_limit_sections, void_reasons
 from prompts_render import render
 
@@ -83,8 +84,8 @@ def run_pipeline_condition(cond: str, tid: str, rep: int) -> Dict[str, Any]:
     return _finish(d, record, raw, task, extra, result)
 
 
-def run_single_call(tid: str, rep: int, max_output_tokens: Optional[int],
-                    deadline_seconds: float = 3600.0) -> Dict[str, Any]:
+def run_single_call(tid: str, rep: int, max_output_tokens: Optional[int] = C4_MAX_OUTPUT_TOKENS,
+                    deadline_seconds: float = C4_DEADLINE_SECONDS) -> Dict[str, Any]:
     """C4: the unified prompt, one call, no tools, no continuation."""
     from ai4proposal.llm import backend_from_env, generate_with_retry
     cond = "C4"
@@ -127,9 +128,9 @@ def main() -> int:
     ap.add_argument("--conditions", nargs="+", default=["C2", "C3", "C4"], choices=["C2", "C3", "C4"])
     ap.add_argument("--tasks", nargs="+", default=None, help="default: all frozen tasks")
     ap.add_argument("--rep", type=int, default=1)
-    ap.add_argument("--max-output-tokens", type=int, default=None,
-                    help="C4 only: request this many output tokens (set to the model's maximum)")
-    ap.add_argument("--c4-deadline", type=float, default=3600.0,
+    ap.add_argument("--max-output-tokens", type=int, default=C4_MAX_OUTPUT_TOKENS,
+                    help="C4 only: output tokens requested (default: deepseek-flash's maximum)")
+    ap.add_argument("--c4-deadline", type=float, default=C4_DEADLINE_SECONDS,
                     help="C4 only: wall-clock seconds allowed for the single call")
     ap.add_argument("--attempts", type=int, default=3, help="tries per run before it is left void")
     ap.add_argument("--force", action="store_true", help="re-run even if a valid run exists")

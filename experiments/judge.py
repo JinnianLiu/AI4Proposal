@@ -80,9 +80,9 @@ def is_complete(result: Dict[str, Any]) -> bool:
     return not result.get("errors") and set(result.get("scores") or {}) >= set(WEIGHTS)
 
 
-def evaluate_one(judge: Dict[str, Any], run: Dict[str, Any], jrep: int) -> str:
+def evaluate_one(judge: Dict[str, Any], run: Dict[str, Any], jrep: int, force: bool = False) -> str:
     path = out_path(judge["name"], run, jrep)
-    if (read_json(path, {}) or {}).get("status") == "valid":
+    if not force and (read_json(path, {}) or {}).get("status") == "valid":
         return "skip"
     text = (run["_dir"] / "proposal.md").read_text(encoding="utf-8")
     task = read_json(run["_dir"] / "task.json")
